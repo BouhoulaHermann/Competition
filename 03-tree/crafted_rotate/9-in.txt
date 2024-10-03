@@ -1,0 +1,11 @@
+specification CraftedTrees
+
+include <size> <rotateright>
+
+precedence
+	size > rotR > + > node > leaf > s > 0
+
+conjectures
+	size(rotR(x)) = size(x);
+
+end

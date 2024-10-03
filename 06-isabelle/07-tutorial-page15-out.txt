@@ -1,0 +1,115 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 07-tutorial-page15-in.txt
++++ output      = 07-tutorial-page15-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification TREE from 07-tutorial-page15-in.txt successfully parsed
++++ Listing
+         1: specification TREE
+         2: sorts
+         3:      nat tree
+         4: constructors
+         5:      0: -> nat
+         6:      leaf: -> tree
+         7:      node: tree nat tree -> tree
+         8:      s: nat -> nat
+         9: defined functions
+        10:      mirror: tree -> tree
+        11: precedence
+        12:      mirror > node > leaf > s > 0
+        13: axioms
+        14:      mirror(leaf) = leaf;
+        15:      mirror(node(xl, ya, xr)) = node(mirror(xr), ya, mirror(xl));
+        16: conjectures
+        17:      mirror(mirror(x)) = x;
+        18: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	mirror(leaf) -> leaf
+	mirror(node(xl, ya, xr)) -> node(mirror(xr), ya, mirror(xl))
++++ inductive positions:
+... for mirror: 0
++++ maximal depths of left-hand sides:
+... for mirror: 2
++++ general maximal depth = 2
++++ sort dependence: nat < tree
++++ test sets for defined functions and sorts:
+... for mirror
+... ... tree
+		leaf
+		node(x, y, z)
+
++++ conjecture(s)
+	mirror(mirror(x)) = x
+
++++ inference system initiated
++++ treating clause
+	mirror(mirror(x)) = x
++++ inductive narrowing on conjecture
+	mirror(mirror(x)) = x
+... induction variables of
+	mirror(mirror(x)) = x
+... are:
+	x:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	mirror(mirror(x)) = x
+... with variable x
++++ creating new conjecture
+	mirror(mirror(leaf)) = leaf
++++ creating new conjecture
+	mirror(mirror(node(xts, yts, zts))) = node(xts, yts, zts)
+--- clause
+	mirror(mirror(leaf)) = leaf
+... reduced to tautology
+	leaf = leaf
+--- clause
+	mirror(mirror(node(xts, yts, zts))) = node(xts, yts, zts)
+... reduced in 2 steps to
+	node(mirror(mirror(xts)), yts, mirror(mirror(zts))) = node(xts, yts, zts)
+... decomposed into new clause(s)
+	mirror(mirror(xts)) = xts
+	mirror(mirror(zts)) = zts
++++ inductive narrowing succeeded
+--- clause
+	mirror(mirror(x)) = x
+... oriented to rule
+	mirror(mirror(x)) -> x
++++ added new clause(s)
+	mirror(mirror(xts)) = xts
+	mirror(mirror(zts)) = zts
+... to conjectures
+--- clause
+	mirror(mirror(xts)) = xts
+... reduced to tautology
+	xts = xts
+--- clause
+	mirror(mirror(zts)) = zts
+... reduced to tautology
+	zts = zts
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	mirror(mirror(x)) -> x
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 1
+... Number of induction steps      = 1
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0

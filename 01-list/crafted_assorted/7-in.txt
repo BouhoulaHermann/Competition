@@ -1,0 +1,14 @@
+specification ListPrefixLength
+
+include <prefix>
+	<length>
+	<eqlist>
+
+precedence
+	=: = == > && > pref > len > app > cons > nil > s > 0 > true = false
+
+conjectures
+
+	pref(x, y) = true & len(x) = len(y) => x =: y = true;
+
+end

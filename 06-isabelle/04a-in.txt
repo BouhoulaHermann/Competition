@@ -1,0 +1,27 @@
+# Programming and Proving In Isabelle/HOL
+# page 14
+#
+# Proof that number of occurrences of a given symbol
+# is smaller or equal than the length of list
+
+specification LenghtCount
+
+include <eq> <leq> <lengthsymb> <countsymb>
+
+precedence
+
+	count >
+	len >
+	<= >
+	== >
+	.. >
+	nil >
+	s >
+	0 >
+	false = true
+
+conjectures
+
+	count(x, xs) <= len(xs) = true;
+
+end

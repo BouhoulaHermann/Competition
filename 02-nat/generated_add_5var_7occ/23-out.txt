@@ -1,0 +1,125 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 23-in.txt
++++ output      = 23-out.txt
++++ trace       = 3
++++ direction   = last-to-first
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification Generated from 23-in.txt successfully parsed
++++ Listing
+         1: specification Generated
+         2: sorts
+         3:      nat
+         4: constructors
+         5:      0: -> nat
+         6:      s: nat -> nat
+         7: defined functions
+         8:      +: nat nat -> nat
+         9: precedence
+        10:      + > s > 0
+        11: axioms
+        12:      x + 0 = x;
+        13:      x + s(y) = s(x + y);
+        14: conjectures
+        15:      (v + x) + (u + (v + (y + (x + w)))) = v + (x + (w + (u + (y + (x + v)))));
+        16: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	x + 0 -> x
+	x + s(y) -> s(x + y)
++++ inductive positions:
+... for +: 1
++++ maximal depths of left-hand sides:
+... for +: 2
++++ general maximal depth = 2
++++ sort dependence: <empty>
++++ test sets for defined functions and sorts:
+... for +
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	(v + x) + (u + (v + (y + (x + w)))) = v + (x + (w + (u + (y + (x + v)))))
+
++++ inference system initiated
++++ treating clause
+	(v + x) + (u + (v + (y + (x + w)))) = v + (x + (w + (u + (y + (x + v)))))
++++ inductive narrowing on conjecture
+	(v + x) + (u + (v + (y + (x + w)))) = v + (x + (w + (u + (y + (x + v)))))
+... induction variables of
+	(v + x) + (u + (v + (y + (x + w)))) = v + (x + (w + (u + (y + (x + v)))))
+... are:
+	x:nat
+	w:nat
+	v:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	(v + x) + (u + (v + (y + (x + w)))) = v + (x + (w + (u + (y + (x + v)))))
+... with variable x
++++ creating new conjecture
+	(v + 0) + (u + (v + (y + (0 + w)))) = v + (0 + (w + (u + (y + (0 + v)))))
++++ creating new conjecture
+	(v + s(xts)) + (u + (v + (y + (s(xts) + w)))) = v + (s(xts) + (w + (u + (y + (s(xts) + v)))))
+--- clause
+	(v + 0) + (u + (v + (y + (0 + w)))) = v + (0 + (w + (u + (y + (0 + v)))))
+... reduced in 1 step to
+	v + (u + (v + (y + (0 + w)))) = v + (0 + (w + (u + (y + (0 + v)))))
+--- clause
+	(v + s(xts)) + (u + (v + (y + (s(xts) + w)))) = v + (s(xts) + (w + (u + (y + (s(xts) + v)))))
+... reduced in 1 step to
+	s(v + xts) + (u + (v + (y + (s(xts) + w)))) = v + (s(xts) + (w + (u + (y + (s(xts) + v)))))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	(v + x) + (u + (v + (y + (x + w)))) = v + (x + (w + (u + (y + (x + v)))))
++++ moved
+	(v + x) + (u + (v + (y + (x + w)))) = v + (x + (w + (u + (y + (x + v)))))
+... to non-orientable hypotheses
++++ added new clause(s)
+	v + (u + (v + (y + (0 + w)))) = v + (0 + (w + (u + (y + (0 + v)))))
+	s(v + xts) + (u + (v + (y + (s(xts) + w)))) = v + (s(xts) + (w + (u + (y + (s(xts) + v)))))
+... to conjectures
+--- succeeded to apply non-orientable hypothese
+	(v + x) + (u + (v + (y + (x + w)))) = v + (x + (w + (u + (y + (x + v)))))
+... to clause
+	v + (u + (v + (y + (0 + w)))) = v + (0 + (w + (u + (y + (0 + v)))))
+... modified clause
+	v + (u + (v + (y + (0 + w)))) = (v + 0) + (u + (v + (y + (0 + w))))
+--- clause
+	v + (u + (v + (y + (0 + w)))) = (v + 0) + (u + (v + (y + (0 + w))))
+... reduced to tautology
+	v + (u + (v + (y + (0 + w)))) = v + (u + (v + (y + (0 + w))))
+--- succeeded to apply non-orientable hypothese
+	(v + x) + (u + (v + (y + (x + w)))) = v + (x + (w + (u + (y + (x + v)))))
+... to clause
+	s(v + xts) + (u + (v + (y + (s(xts) + w)))) = v + (s(xts) + (w + (u + (y + (s(xts) + v)))))
+... modified clause
+	s(v + xts) + (u + (v + (y + (s(xts) + w)))) = (v + s(xts)) + (u + (v + (y + (s(xts) + w))))
+--- clause
+	s(v + xts) + (u + (v + (y + (s(xts) + w)))) = (v + s(xts)) + (u + (v + (y + (s(xts) + w))))
+... reduced to tautology
+	s(v + xts) + (u + (v + (y + (s(xts) + w)))) = s(v + xts) + (u + (v + (y + (s(xts) + w))))
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	(v + x) + (u + (v + (y + (x + w)))) = v + (x + (w + (u + (y + (x + v)))))
+--- Oriented hypotheses:
+	<empty>
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 1
+... Number of induction steps      = 1
+... Number of equational steps     = 2
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.006

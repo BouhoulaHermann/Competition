@@ -1,0 +1,11 @@
+specification Generated
+
+include <addalt>
+
+precedence
+	+ > s > 0 
+
+conjectures
+	((y + w) + (u + (x + (x + w + v)))) = (y + (w + (u + x)) + ((x + v) + w));
+
+end

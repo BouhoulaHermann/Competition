@@ -1,0 +1,36 @@
+# Programming and Proving In Isabelle/HOL
+# page 14
+#
+# Definition of snoc which adds an element at the end of list
+# Proof of twice reverse = original list
+
+specification LenghtCount
+
+include <nat> <listsymb>
+
+defined functions
+	snoc: nat list -> list
+	reverse: list -> list
+
+precedence
+
+	reverse >
+	snoc >
+	.. >
+	nil >
+	s >
+	0
+
+axioms
+
+	snoc(x, y .. ys) = y .. snoc(x, ys);
+	snoc(x, nil) = x .. nil;
+
+	reverse(nil) = nil;
+	reverse(x .. xs) = snoc(x, reverse(xs));
+
+conjectures
+
+	reverse(reverse(xs)) = xs;
+
+end

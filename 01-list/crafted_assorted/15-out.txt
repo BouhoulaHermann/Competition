@@ -1,0 +1,713 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 15-in.txt
++++ output      = 15-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 13
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LIST from list successfully parsed
++++ specification LENGTH from length successfully parsed
++++ specification BOOL from bool successfully parsed
++++ specification EQ from eq successfully parsed
++++ specification COUNT from count successfully parsed
++++ specification EQlist from eqlist successfully parsed
++++ specification ListCount from 15-in.txt successfully parsed
++++ Listing
+         1: specification ListCount
+         2: sorts
+         3:      bool list nat
+         4: constructors
+         5:      0: -> nat
+         6:      cons: nat list -> list
+         7:      false: -> bool
+         8:      nil: -> list
+         9:      s: nat -> nat
+        10:      true: -> bool
+        11: defined functions
+        12:      =:: list list -> bool
+        13:      ==: nat nat -> bool
+        14:      count: nat list -> nat
+        15:      len: list -> nat
+        16: precedence
+        17:      count > len > =: > == > cons > nil > s > 0 > false = true
+        18: axioms
+        19:      len(nil) = 0;
+        20:      0 == 0 = true;
+        21:      0 == s(x) = false;
+        22:      count(x, nil) = 0;
+        23:      nil =: nil = true;
+        24:      s(x) == 0 = false;
+        25:      s(x) == s(y) = x == y;
+        26:      cons(x, y) =: nil = false;
+        27:      nil =: cons(x, y) = false;
+        28:      len(cons(x, y)) = s(len(y));
+        29:      cons(x, y) =: cons(x, z) = y =: z;
+        30:      x == y = false => count(x, cons(y, ys)) = count(x, ys);
+        31:      x == y = true => count(x, cons(y, ys)) = s(count(x, ys));
+        32: conjectures
+        33:      x =: y = false => count(z, x) == count(z, y) = false;
+        34: end
++++ finitary sorts: bool
++++ Rewrite System 
+	len(nil) -> 0
+	0 == 0 -> true
+	0 == s(x) -> false
+	count(x, nil) -> 0
+	nil =: nil -> true
+	s(x) == 0 -> false
+	s(x) == s(y) -> x == y
+	cons(x, y) =: nil -> false
+	nil =: cons(x, y) -> false
+	len(cons(x, y)) -> s(len(y))
+	cons(x, y) =: cons(x, z) -> y =: z
+	x == y = false => count(x, cons(y, ys)) -> count(x, ys)
+	x == y = true => count(x, cons(y, ys)) -> s(count(x, ys))
++++ inductive positions:
+... for =:: 0 1
+... for ==: 0 1
+... for count: 1
+... for len: 0
++++ maximal depths of left-hand sides:
+... for =:: 2
+... for count: 2
+... for ==: 2
+... for len: 2
++++ general maximal depth = 2
++++ sort dependence: nat < list
++++ test sets for defined functions and sorts:
+... for count
+... ... list
+		nil
+		cons(x, y)
+... for len
+... ... list
+		nil
+		cons(x, y)
+... for ==
+... ... nat
+		0
+		s(x)
+... for =:
+... ... list
+		nil
+		cons(x, y)
+
++++ conjecture(s)
+	x =: y = false => count(z, x) == count(z, y) = false
+
++++ inference system initiated
++++ treating clause
+	x =: y = false => count(z, x) == count(z, y) = false
++++ inductive narrowing on conjecture
+	x =: y = false => count(z, x) == count(z, y) = false
+... induction variables of
+	x =: y = false => count(z, x) == count(z, y) = false
+... are:
+	x:list
+	y:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	x =: y = false => count(z, x) == count(z, y) = false
+... with variable x
++++ creating new conjecture
+	nil =: y = false => count(z, nil) == count(z, y) = false
++++ creating new conjecture
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) = false
+--- clause
+	nil =: y = false => count(z, nil) == count(z, y) = false
+... reduced in 1 step to
+	nil =: y = false => 0 == count(z, y) = false
++++ inductive narrowing succeeded
+--- clause
+	x =: y = false => count(z, x) == count(z, y) = false
+... oriented to rule
+	x =: y = false => count(z, x) == count(z, y) -> false
++++ added new clause(s)
+	nil =: y = false => 0 == count(z, y) = false
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) = false
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	nil =: y = false => 0 == count(z, y) = false
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) = false
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	x =: y = false => count(z, x) == count(z, y) -> false
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	nil =: y = false => 0 == count(z, y) = false
++++ inductive narrowing on conjecture
+	nil =: y = false => 0 == count(z, y) = false
+... induction variables of
+	nil =: y = false => 0 == count(z, y) = false
+... are:
+	y:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	nil =: y = false => 0 == count(z, y) = false
+... with variable y
++++ creating new conjecture
+	nil =: nil = false => 0 == count(z, nil) = false
++++ creating new conjecture
+	nil =: cons(xts, yts) = false => 0 == count(z, cons(xts, yts)) = false
+--- clause
+	nil =: nil = false => 0 == count(z, nil) = false
+... reduced in 3 steps to
+	true = false => true = false
+--- condition
+	true = false
+... is equal to consequent
+	true = false
+... in clause
+	true = false => true = false
+... and is therefore discared (always true)
+--- clause
+	nil =: cons(xts, yts) = false => 0 == count(z, cons(xts, yts)) = false
+... reduced in 1 step to
+	0 == count(z, cons(xts, yts)) = false
++++ inductive narrowing succeeded
+--- clause
+	nil =: y = false => 0 == count(z, y) = false
+... oriented to rule
+	nil =: y = false => 0 == count(z, y) -> false
++++ added new clause(s)
+	0 == count(z, cons(xts, yts)) = false
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) = false
+	0 == count(z, cons(xts, yts)) = false
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	nil =: y = false => 0 == count(z, y) -> false
+	x =: y = false => count(z, x) == count(z, y) -> false
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) = false
++++ inductive narrowing on conjecture
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) = false
+... induction variables of
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) = false
+... are:
+	y:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) = false
+... with variable y
++++ creating new conjecture
+	cons(xts, yts) =: nil = false => count(z, cons(xts, yts)) == count(z, nil) = false
++++ creating new conjecture
+	cons(xts2, yts2) =: cons(xts1, yts1) = false => count(z, cons(xts2, yts2)) == count(z, cons(xts1, yts1)) = false
+--- clause
+	cons(xts, yts) =: nil = false => count(z, cons(xts, yts)) == count(z, nil) = false
+... reduced in 2 steps to
+	count(z, cons(xts, yts)) == 0 = false
++++ inductive narrowing succeeded
+--- clause
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) = false
+... oriented to rule
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) -> false
++++ added new clause(s)
+	count(z, cons(xts, yts)) == 0 = false
+	cons(xts2, yts2) =: cons(xts1, yts1) = false => count(z, cons(xts2, yts2)) == count(z, cons(xts1, yts1)) = false
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	0 == count(z, cons(xts, yts)) = false
+	count(z, cons(xts, yts)) == 0 = false
+	cons(xts2, yts2) =: cons(xts1, yts1) = false => count(z, cons(xts2, yts2)) == count(z, cons(xts1, yts1)) = false
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	nil =: y = false => 0 == count(z, y) -> false
+	x =: y = false => count(z, x) == count(z, y) -> false
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) -> false
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	0 == count(z, cons(xts, yts)) = false
+--- no new clauses created
++++ attempting case rewriting
+--- case rewriting generated new conjectures
+	z == xts = true => 0 == s(count(z, yts)) = false
+	z == xts = false => 0 == count(z, yts) = false
++++ added new clause(s)
+	z == xts = true => 0 == s(count(z, yts)) = false
+	z == xts = false => 0 == count(z, yts) = false
+... to conjectures
+--- clause
+	z == xts = true => 0 == s(count(z, yts)) = false
+... reduced to tautology
+	z == xts = true => false = false
+
++++ Status of the Inference System
+--- Conjectures:
+	count(z, cons(xts, yts)) == 0 = false
+	cons(xts2, yts2) =: cons(xts1, yts1) = false => count(z, cons(xts2, yts2)) == count(z, cons(xts1, yts1)) = false
+	z == xts = false => 0 == count(z, yts) = false
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	nil =: y = false => 0 == count(z, y) -> false
+	x =: y = false => count(z, x) == count(z, y) -> false
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) -> false
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	count(z, cons(xts, yts)) == 0 = false
+--- no new clauses created
++++ attempting case rewriting
+--- case rewriting generated new conjectures
+	z == xts = true => s(count(z, yts)) == 0 = false
+	z == xts = false => count(z, yts) == 0 = false
++++ added new clause(s)
+	z == xts = true => s(count(z, yts)) == 0 = false
+	z == xts = false => count(z, yts) == 0 = false
+... to conjectures
+--- clause
+	z == xts = true => s(count(z, yts)) == 0 = false
+... reduced to tautology
+	z == xts = true => false = false
+
++++ Status of the Inference System
+--- Conjectures:
+	cons(xts2, yts2) =: cons(xts1, yts1) = false => count(z, cons(xts2, yts2)) == count(z, cons(xts1, yts1)) = false
+	z == xts = false => 0 == count(z, yts) = false
+	z == xts = false => count(z, yts) == 0 = false
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	nil =: y = false => 0 == count(z, y) -> false
+	x =: y = false => count(z, x) == count(z, y) -> false
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) -> false
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	cons(xts2, yts2) =: cons(xts1, yts1) = false => count(z, cons(xts2, yts2)) == count(z, cons(xts1, yts1)) = false
+--- no new clauses created
++++ attempting case rewriting
+--- case rewriting generated new conjectures
+	(z == xts2 = false) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => count(z, yts2) == count(z, cons(xts1, yts1)) = false
+	(z == xts2 = true) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts1, yts1)) = false
++++ added new clause(s)
+	(z == xts2 = false) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => count(z, yts2) == count(z, cons(xts1, yts1)) = false
+	(z == xts2 = true) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts1, yts1)) = false
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	z == xts = false => 0 == count(z, yts) = false
+	z == xts = false => count(z, yts) == 0 = false
+	(z == xts2 = false) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => count(z, yts2) == count(z, cons(xts1, yts1)) = false
+	(z == xts2 = true) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts1, yts1)) = false
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	nil =: y = false => 0 == count(z, y) -> false
+	x =: y = false => count(z, x) == count(z, y) -> false
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) -> false
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	z == xts = false => 0 == count(z, yts) = false
++++ inductive narrowing on conjecture
+	z == xts = false => 0 == count(z, yts) = false
+... induction variables of
+	z == xts = false => 0 == count(z, yts) = false
+... are:
+	xts:nat
+	yts:list
+	z:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	z == xts = false => 0 == count(z, yts) = false
+... with variable xts
++++ creating new conjecture
+	z == 0 = false => 0 == count(z, yts) = false
++++ creating new conjecture
+	z == s(xts) = false => 0 == count(z, yts) = false
++++ non-reduced clause(s)
+	z == 0 = false => 0 == count(z, yts) = false
+... need recursive treatment for next inductive variable
++++ perform INDUCTIVE NARROWING on conjecture 
+	z == 0 = false => 0 == count(z, yts) = false
+... with variable yts
++++ creating new conjecture
+	z == 0 = false => 0 == count(z, nil) = false
++++ creating new conjecture
+	z == 0 = false => 0 == count(z, cons(xts, yts)) = false
+--- clause
+	z == 0 = false => 0 == count(z, nil) = false
+... reduced in 2 steps to
+	z == 0 = false => true = false
++++ inductive narrowing succeeded
+--- clause
+	z == 0 = false => 0 == count(z, yts) = false
+... oriented to rule
+	z == 0 = false => 0 == count(z, yts) -> false
++++ added new clause(s)
+	z == s(xts) = false => 0 == count(z, yts) = false
+	z == 0 = false => true = false
+	z == 0 = false => 0 == count(z, cons(xts, yts)) = false
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	z == xts = false => count(z, yts) == 0 = false
+	(z == xts2 = false) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => count(z, yts2) == count(z, cons(xts1, yts1)) = false
+	(z == xts2 = true) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts1, yts1)) = false
+	z == s(xts) = false => 0 == count(z, yts) = false
+	z == 0 = false => true = false
+	z == 0 = false => 0 == count(z, cons(xts, yts)) = false
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	nil =: y = false => 0 == count(z, y) -> false
+	z == 0 = false => 0 == count(z, yts) -> false
+	x =: y = false => count(z, x) == count(z, y) -> false
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) -> false
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	z == xts = false => count(z, yts) == 0 = false
++++ inductive narrowing on conjecture
+	z == xts = false => count(z, yts) == 0 = false
+... induction variables of
+	z == xts = false => count(z, yts) == 0 = false
+... are:
+	xts:nat
+	yts:list
+	z:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	z == xts = false => count(z, yts) == 0 = false
+... with variable xts
++++ creating new conjecture
+	z == 0 = false => count(z, yts) == 0 = false
++++ creating new conjecture
+	z == s(xts) = false => count(z, yts) == 0 = false
++++ non-reduced clause(s)
+	z == 0 = false => count(z, yts) == 0 = false
+... need recursive treatment for next inductive variable
++++ perform INDUCTIVE NARROWING on conjecture 
+	z == 0 = false => count(z, yts) == 0 = false
+... with variable yts
++++ creating new conjecture
+	z == 0 = false => count(z, nil) == 0 = false
++++ creating new conjecture
+	z == 0 = false => count(z, cons(xts, yts)) == 0 = false
+--- clause
+	z == 0 = false => count(z, nil) == 0 = false
+... reduced in 2 steps to
+	z == 0 = false => true = false
+--- clause
+	z == 0 = false => true = false
+... subsumed by an existing conjecture
++++ inductive narrowing succeeded
+--- clause
+	z == 0 = false => count(z, yts) == 0 = false
+... oriented to rule
+	z == 0 = false => count(z, yts) == 0 -> false
++++ added new clause(s)
+	z == s(xts) = false => count(z, yts) == 0 = false
+	z == 0 = false => count(z, cons(xts, yts)) == 0 = false
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(z == xts2 = false) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => count(z, yts2) == count(z, cons(xts1, yts1)) = false
+	(z == xts2 = true) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts1, yts1)) = false
+	z == s(xts) = false => 0 == count(z, yts) = false
+	z == 0 = false => true = false
+	z == 0 = false => 0 == count(z, cons(xts, yts)) = false
+	z == s(xts) = false => count(z, yts) == 0 = false
+	z == 0 = false => count(z, cons(xts, yts)) == 0 = false
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	nil =: y = false => 0 == count(z, y) -> false
+	z == 0 = false => 0 == count(z, yts) -> false
+	z == 0 = false => count(z, yts) == 0 -> false
+	x =: y = false => count(z, x) == count(z, y) -> false
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) -> false
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(z == xts2 = false) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => count(z, yts2) == count(z, cons(xts1, yts1)) = false
++++ inductive narrowing on conjecture
+	(z == xts2 = false) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => count(z, yts2) == count(z, cons(xts1, yts1)) = false
+... induction variables of
+	(z == xts2 = false) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => count(z, yts2) == count(z, cons(xts1, yts1)) = false
+... are:
+	xts2:nat
+	yts2:list
+	z:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	(z == xts2 = false) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => count(z, yts2) == count(z, cons(xts1, yts1)) = false
+... with variable xts2
++++ creating new conjecture
+	(z == 0 = false) & (cons(0, yts2) =: cons(xts, yts1) = false) => count(z, yts2) == count(z, cons(xts, yts1)) = false
++++ creating new conjecture
+	(z == s(xts2) = false) & (cons(s(xts2), yts2) =: cons(xts1, yts1) = false) => count(z, yts2) == count(z, cons(xts1, yts1)) = false
++++ non-reduced clause(s)
+	(z == 0 = false) & (cons(0, yts2) =: cons(xts, yts1) = false) => count(z, yts2) == count(z, cons(xts, yts1)) = false
+... need recursive treatment for next inductive variable
++++ perform INDUCTIVE NARROWING on conjecture 
+	(z == 0 = false) & (cons(0, yts2) =: cons(xts, yts1) = false) => count(z, yts2) == count(z, cons(xts, yts1)) = false
+... with variable yts2
++++ creating new conjecture
+	(z == 0 = false) & (cons(0, nil) =: cons(xts, yts) = false) => count(z, nil) == count(z, cons(xts, yts)) = false
++++ creating new conjecture
+	(z == 0 = false) & (cons(0, cons(xts2, yts2)) =: cons(xts1, yts1) = false) => count(z, cons(xts2, yts2)) == count(z, cons(xts1, yts1)) = false
+--- clause
+	(z == 0 = false) & (cons(0, nil) =: cons(xts, yts) = false) => count(z, nil) == count(z, cons(xts, yts)) = false
+... reduced in 1 step to
+	(z == 0 = false) & (cons(0, nil) =: cons(xts, yts) = false) => 0 == count(z, cons(xts, yts)) = false
++++ inductive narrowing succeeded
+--- clause
+	(z == 0 = false) & (cons(0, yts2) =: cons(xts, yts1) = false) => count(z, yts2) == count(z, cons(xts, yts1)) = false
+... oriented to rule
+	cons(0, yts2) =: cons(xts, yts1) = false & z == 0 = false => count(z, yts2) == count(z, cons(xts, yts1)) -> false
++++ added new clause(s)
+	(z == s(xts2) = false) & (cons(s(xts2), yts2) =: cons(xts1, yts1) = false) => count(z, yts2) == count(z, cons(xts1, yts1)) = false
+	(z == 0 = false) & (cons(0, nil) =: cons(xts, yts) = false) => 0 == count(z, cons(xts, yts)) = false
+	(z == 0 = false) & (cons(0, cons(xts2, yts2)) =: cons(xts1, yts1) = false) => count(z, cons(xts2, yts2)) == count(z, cons(xts1, yts1)) = false
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(z == xts2 = true) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts1, yts1)) = false
+	z == s(xts) = false => 0 == count(z, yts) = false
+	z == 0 = false => true = false
+	z == 0 = false => 0 == count(z, cons(xts, yts)) = false
+	z == s(xts) = false => count(z, yts) == 0 = false
+	z == 0 = false => count(z, cons(xts, yts)) == 0 = false
+	(z == s(xts2) = false) & (cons(s(xts2), yts2) =: cons(xts1, yts1) = false) => count(z, yts2) == count(z, cons(xts1, yts1)) = false
+	(z == 0 = false) & (cons(0, nil) =: cons(xts, yts) = false) => 0 == count(z, cons(xts, yts)) = false
+	(z == 0 = false) & (cons(0, cons(xts2, yts2)) =: cons(xts1, yts1) = false) => count(z, cons(xts2, yts2)) == count(z, cons(xts1, yts1)) = false
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	nil =: y = false => 0 == count(z, y) -> false
+	z == 0 = false => 0 == count(z, yts) -> false
+	z == 0 = false => count(z, yts) == 0 -> false
+	x =: y = false => count(z, x) == count(z, y) -> false
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) -> false
+	cons(0, yts2) =: cons(xts, yts1) = false & z == 0 = false => count(z, yts2) == count(z, cons(xts, yts1)) -> false
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(z == xts2 = true) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts1, yts1)) = false
++++ inductive narrowing on conjecture
+	(z == xts2 = true) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts1, yts1)) = false
+... induction variables of
+	(z == xts2 = true) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts1, yts1)) = false
+... are:
+	xts2:nat
+	yts2:list
+	z:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	(z == xts2 = true) & (cons(xts2, yts2) =: cons(xts1, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts1, yts1)) = false
+... with variable xts2
++++ creating new conjecture
+	(z == 0 = true) & (cons(0, yts2) =: cons(xts, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts, yts1)) = false
++++ creating new conjecture
+	(z == s(xts2) = true) & (cons(s(xts2), yts2) =: cons(xts1, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts1, yts1)) = false
++++ non-reduced clause(s)
+	(z == 0 = true) & (cons(0, yts2) =: cons(xts, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts, yts1)) = false
+... need recursive treatment for next inductive variable
++++ perform INDUCTIVE NARROWING on conjecture 
+	(z == 0 = true) & (cons(0, yts2) =: cons(xts, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts, yts1)) = false
+... with variable yts2
++++ creating new conjecture
+	(z == 0 = true) & (cons(0, nil) =: cons(xts, yts) = false) => s(count(z, nil)) == count(z, cons(xts, yts)) = false
++++ creating new conjecture
+	(z == 0 = true) & (cons(0, cons(xts2, yts2)) =: cons(xts1, yts1) = false) => s(count(z, cons(xts2, yts2))) == count(z, cons(xts1, yts1)) = false
+--- clause
+	(z == 0 = true) & (cons(0, nil) =: cons(xts, yts) = false) => s(count(z, nil)) == count(z, cons(xts, yts)) = false
+... reduced in 1 step to
+	(z == 0 = true) & (cons(0, nil) =: cons(xts, yts) = false) => s(0) == count(z, cons(xts, yts)) = false
++++ inductive narrowing succeeded
+--- clause
+	(z == 0 = true) & (cons(0, yts2) =: cons(xts, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts, yts1)) = false
+... oriented to rule
+	cons(0, yts2) =: cons(xts, yts1) = false & z == 0 = true => s(count(z, yts2)) == count(z, cons(xts, yts1)) -> false
++++ added new clause(s)
+	(z == s(xts2) = true) & (cons(s(xts2), yts2) =: cons(xts1, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts1, yts1)) = false
+	(z == 0 = true) & (cons(0, nil) =: cons(xts, yts) = false) => s(0) == count(z, cons(xts, yts)) = false
+	(z == 0 = true) & (cons(0, cons(xts2, yts2)) =: cons(xts1, yts1) = false) => s(count(z, cons(xts2, yts2))) == count(z, cons(xts1, yts1)) = false
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	z == s(xts) = false => 0 == count(z, yts) = false
+	z == 0 = false => true = false
+	z == 0 = false => 0 == count(z, cons(xts, yts)) = false
+	z == s(xts) = false => count(z, yts) == 0 = false
+	z == 0 = false => count(z, cons(xts, yts)) == 0 = false
+	(z == s(xts2) = false) & (cons(s(xts2), yts2) =: cons(xts1, yts1) = false) => count(z, yts2) == count(z, cons(xts1, yts1)) = false
+	(z == 0 = false) & (cons(0, nil) =: cons(xts, yts) = false) => 0 == count(z, cons(xts, yts)) = false
+	(z == 0 = false) & (cons(0, cons(xts2, yts2)) =: cons(xts1, yts1) = false) => count(z, cons(xts2, yts2)) == count(z, cons(xts1, yts1)) = false
+	(z == s(xts2) = true) & (cons(s(xts2), yts2) =: cons(xts1, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts1, yts1)) = false
+	(z == 0 = true) & (cons(0, nil) =: cons(xts, yts) = false) => s(0) == count(z, cons(xts, yts)) = false
+	(z == 0 = true) & (cons(0, cons(xts2, yts2)) =: cons(xts1, yts1) = false) => s(count(z, cons(xts2, yts2))) == count(z, cons(xts1, yts1)) = false
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	nil =: y = false => 0 == count(z, y) -> false
+	z == 0 = false => 0 == count(z, yts) -> false
+	z == 0 = false => count(z, yts) == 0 -> false
+	x =: y = false => count(z, x) == count(z, y) -> false
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) -> false
+	cons(0, yts2) =: cons(xts, yts1) = false & z == 0 = false => count(z, yts2) == count(z, cons(xts, yts1)) -> false
+	cons(0, yts2) =: cons(xts, yts1) = false & z == 0 = true => s(count(z, yts2)) == count(z, cons(xts, yts1)) -> false
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	z == s(xts) = false => 0 == count(z, yts) = false
++++ inductive narrowing on conjecture
+	z == s(xts) = false => 0 == count(z, yts) = false
+... induction variables of
+	z == s(xts) = false => 0 == count(z, yts) = false
+... are:
+	yts:list
+	z:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	z == s(xts) = false => 0 == count(z, yts) = false
+... with variable yts
++++ creating new conjecture
+	z == s(xts) = false => 0 == count(z, nil) = false
++++ creating new conjecture
+	z == s(xts2) = false => 0 == count(z, cons(xts1, yts)) = false
+--- clause
+	z == s(xts) = false => 0 == count(z, nil) = false
+... reduced in 2 steps to
+	z == s(xts) = false => true = false
++++ inductive narrowing succeeded
+--- clause
+	z == s(xts) = false => 0 == count(z, yts) = false
+... oriented to rule
+	z == s(xts) = false => 0 == count(z, yts) -> false
++++ added new clause(s)
+	z == s(xts) = false => true = false
+	z == s(xts2) = false => 0 == count(z, cons(xts1, yts)) = false
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	z == 0 = false => true = false
+	z == 0 = false => 0 == count(z, cons(xts, yts)) = false
+	z == s(xts) = false => count(z, yts) == 0 = false
+	z == 0 = false => count(z, cons(xts, yts)) == 0 = false
+	(z == s(xts2) = false) & (cons(s(xts2), yts2) =: cons(xts1, yts1) = false) => count(z, yts2) == count(z, cons(xts1, yts1)) = false
+	(z == 0 = false) & (cons(0, nil) =: cons(xts, yts) = false) => 0 == count(z, cons(xts, yts)) = false
+	(z == 0 = false) & (cons(0, cons(xts2, yts2)) =: cons(xts1, yts1) = false) => count(z, cons(xts2, yts2)) == count(z, cons(xts1, yts1)) = false
+	(z == s(xts2) = true) & (cons(s(xts2), yts2) =: cons(xts1, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts1, yts1)) = false
+	(z == 0 = true) & (cons(0, nil) =: cons(xts, yts) = false) => s(0) == count(z, cons(xts, yts)) = false
+	(z == 0 = true) & (cons(0, cons(xts2, yts2)) =: cons(xts1, yts1) = false) => s(count(z, cons(xts2, yts2))) == count(z, cons(xts1, yts1)) = false
+	z == s(xts) = false => true = false
+	z == s(xts2) = false => 0 == count(z, cons(xts1, yts)) = false
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	nil =: y = false => 0 == count(z, y) -> false
+	z == 0 = false => 0 == count(z, yts) -> false
+	z == 0 = false => count(z, yts) == 0 -> false
+	z == s(xts) = false => 0 == count(z, yts) -> false
+	x =: y = false => count(z, x) == count(z, y) -> false
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) -> false
+	cons(0, yts2) =: cons(xts, yts1) = false & z == 0 = false => count(z, yts2) == count(z, cons(xts, yts1)) -> false
+	cons(0, yts2) =: cons(xts, yts1) = false & z == 0 = true => s(count(z, yts2)) == count(z, cons(xts, yts1)) -> false
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	z == 0 = false => true = false
++++ inductive narrowing on conjecture
+	z == 0 = false => true = false
+... induction variables of
+	z == 0 = false => true = false
+... are:
+	z:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	z == 0 = false => true = false
+... with variable z
++++ creating new conjecture
+	0 == 0 = false => true = false
++++ creating new conjecture
+	s(xts) == 0 = false => true = false
+--- clause
+	0 == 0 = false => true = false
+... reduced in 1 step to
+	true = false => true = false
+--- condition
+	true = false
+... is equal to consequent
+	true = false
+... in clause
+	true = false => true = false
+... and is therefore discared (always true)
+--- clause
+	s(xts) == 0 = false => true = false
+... reduced in 1 step to
+	true = false
+--- clause
+	true = false
+... contains a falsifying equation
+	true = false
+
++++ Status of the Inference System
+--- Conjectures:
+	z == 0 = false => 0 == count(z, cons(xts, yts)) = false
+	z == s(xts) = false => count(z, yts) == 0 = false
+	z == 0 = false => count(z, cons(xts, yts)) == 0 = false
+	(z == s(xts2) = false) & (cons(s(xts2), yts2) =: cons(xts1, yts1) = false) => count(z, yts2) == count(z, cons(xts1, yts1)) = false
+	(z == 0 = false) & (cons(0, nil) =: cons(xts, yts) = false) => 0 == count(z, cons(xts, yts)) = false
+	(z == 0 = false) & (cons(0, cons(xts2, yts2)) =: cons(xts1, yts1) = false) => count(z, cons(xts2, yts2)) == count(z, cons(xts1, yts1)) = false
+	(z == s(xts2) = true) & (cons(s(xts2), yts2) =: cons(xts1, yts1) = false) => s(count(z, yts2)) == count(z, cons(xts1, yts1)) = false
+	(z == 0 = true) & (cons(0, nil) =: cons(xts, yts) = false) => s(0) == count(z, cons(xts, yts)) = false
+	(z == 0 = true) & (cons(0, cons(xts2, yts2)) =: cons(xts1, yts1) = false) => s(count(z, cons(xts2, yts2))) == count(z, cons(xts1, yts1)) = false
+	z == s(xts) = false => true = false
+	z == s(xts2) = false => 0 == count(z, cons(xts1, yts)) = false
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	nil =: y = false => 0 == count(z, y) -> false
+	z == 0 = false => 0 == count(z, yts) -> false
+	z == 0 = false => count(z, yts) == 0 -> false
+	z == s(xts) = false => 0 == count(z, yts) -> false
+	x =: y = false => count(z, x) == count(z, y) -> false
+	cons(xts, yts) =: y = false => count(z, cons(xts, yts)) == count(z, y) -> false
+	cons(0, yts2) =: cons(xts, yts1) = false & z == 0 = false => count(z, yts2) == count(z, cons(xts, yts1)) -> false
+	cons(0, yts2) =: cons(xts, yts1) = false & z == 0 = true => s(count(z, yts2)) == count(z, cons(xts, yts1)) -> false
+--- Primal Grammar:
+	<empty>
+
++++ DISPROOF: counter example
+	true = false
++++ Statistics:
+... Number of proof steps          = 12
+... Number of induction steps      = 13
+... Number of equational steps     = 0
+... Number of case rewriting steps = 3
+... Elapsed time (seconds)         = 0.03

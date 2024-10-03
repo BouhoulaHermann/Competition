@@ -1,0 +1,13 @@
+specification ListCount
+
+include <length>
+	<count>
+	<leq>
+
+precedence
+	count > len > <= >  == > cons > nil > s > 0 > true = false
+
+conjectures
+	count(y, x) <= len(x) = true;
+
+end

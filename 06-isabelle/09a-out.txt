@@ -1,0 +1,644 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 09a-in.txt
++++ output      = 09a-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LISTsymb from listsymb successfully parsed
++++ specification APPENDsymb from appendsymb successfully parsed
++++ specification TREE from tree successfully parsed
++++ specification PREORDERsymb from preordersymb successfully parsed
++++ specification POSTORDERsymb from postordersymb successfully parsed
++++ specification REVERSEsymb from reversesymb successfully parsed
++++ specification ROTATE from rotate successfully parsed
++++ specification PREandPOSTorder from 09a-in.txt successfully parsed
++++ Listing
+         1: specification PREandPOSTorder
+         2: sorts
+         3:      list nat tree
+         4: constructors
+         5:      ..: nat list -> list
+         6:      0: -> nat
+         7:      :: nat list -> list
+         8:      leaf: -> tree
+         9:      nil: -> list
+        10:      node: tree nat tree -> tree
+        11:      s: nat -> nat
+        12: defined functions
+        13:      @@: list list -> list
+        14:      postorder: tree -> list
+        15:      preorder: tree -> list
+        16:      rev: list -> list
+        17:      rotate: tree -> tree
+        18: precedence
+        19:      postorder = preorder > rotate > rev > @@ > node > .. > leaf > nil > s > 0
+        20: axioms
+        21:      nil @@ y = y;
+        22:      rev(nil) = nil;
+        23:      rotate(leaf) = leaf;
+        24:      preorder(leaf) = nil;
+        25:      postorder(leaf) = nil;
+        26:      (x .. y) @@ z = x .. (y @@ z);
+        27:      rev(x .. y) = rev(y) @@ (x .. nil);
+        28:      rotate(node(xl, ya, xr)) = node(rotate(xr), ya, rotate(xl));
+        29:      preorder(node(xl, y, xr)) = preorder(xl) @@ (y .. preorder(xr));
+        30:      postorder(node(xl, y, xr)) = (postorder(xl) @@ postorder(xr)) @@ (y .. nil);
+        31: conjectures
+        32:      preorder(rotate(xt)) = rev(postorder(xt));
+        33: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	nil @@ y -> y
+	rev(nil) -> nil
+	rotate(leaf) -> leaf
+	preorder(leaf) -> nil
+	postorder(leaf) -> nil
+	(x .. y) @@ z -> x .. (y @@ z)
+	rev(x .. y) -> rev(y) @@ (x .. nil)
+	rotate(node(xl, ya, xr)) -> node(rotate(xr), ya, rotate(xl))
+	preorder(node(xl, y, xr)) -> preorder(xl) @@ (y .. preorder(xr))
+	postorder(node(xl, y, xr)) -> (postorder(xl) @@ postorder(xr)) @@ (y .. nil)
++++ inductive positions:
+... for @@: 0
+... for postorder: 0
+... for preorder: 0
+... for rev: 0
+... for rotate: 0
++++ maximal depths of left-hand sides:
+... for postorder: 2
+... for preorder: 2
+... for rotate: 2
+... for rev: 2
+... for @@: 2
++++ general maximal depth = 2
++++ sort dependence: nat < tree < list
++++ test sets for defined functions and sorts:
+... for rotate
+... ... tree
+		leaf
+		node(x, y, z)
+... for rev
+... ... list
+		nil
+		x : y
+		x .. y
+... for preorder
+... ... tree
+		leaf
+		node(x, y, z)
+... for postorder
+... ... tree
+		leaf
+		node(x, y, z)
+... for @@
+... ... list
+		nil
+		x : y
+		x .. y
+
++++ conjecture(s)
+	preorder(rotate(xt)) = rev(postorder(xt))
+
++++ inference system initiated
++++ treating clause
+	preorder(rotate(xt)) = rev(postorder(xt))
++++ inductive narrowing on conjecture
+	preorder(rotate(xt)) = rev(postorder(xt))
+... induction variables of
+	preorder(rotate(xt)) = rev(postorder(xt))
+... are:
+	xt:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	preorder(rotate(xt)) = rev(postorder(xt))
+... with variable xt
++++ creating new conjecture
+	preorder(rotate(leaf)) = rev(postorder(leaf))
++++ creating new conjecture
+	preorder(rotate(node(xts, yts, zts))) = rev(postorder(node(xts, yts, zts)))
+--- clause
+	preorder(rotate(leaf)) = rev(postorder(leaf))
+... reduced to tautology
+	nil = nil
+--- clause
+	preorder(rotate(node(xts, yts, zts))) = rev(postorder(node(xts, yts, zts)))
+... reduced in 3 steps to
+	preorder(rotate(zts)) @@ (yts .. preorder(rotate(xts))) = rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil))
++++ inductive narrowing succeeded
+--- clause
+	preorder(rotate(xt)) = rev(postorder(xt))
+... oriented to rule
+	preorder(rotate(xt)) -> rev(postorder(xt))
++++ added new clause(s)
+	preorder(rotate(zts)) @@ (yts .. preorder(rotate(xts))) = rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil))
+... to conjectures
+--- clause
+	preorder(rotate(zts)) @@ (yts .. preorder(rotate(xts))) = rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil))
+... reduced in 2 steps to
+	rev(postorder(zts)) @@ (yts .. rev(postorder(xts))) = rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil))
+
++++ Status of the Inference System
+--- Conjectures:
+	rev(postorder(zts)) @@ (yts .. rev(postorder(xts))) = rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(rotate(xt)) -> rev(postorder(xt))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	rev(postorder(zts)) @@ (yts .. rev(postorder(xts))) = rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil))
++++ inductive narrowing on conjecture
+	rev(postorder(zts)) @@ (yts .. rev(postorder(xts))) = rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil))
+... induction variables of
+	rev(postorder(zts)) @@ (yts .. rev(postorder(xts))) = rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil))
+... are:
+	xts:tree
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	rev(postorder(zts)) @@ (yts .. rev(postorder(xts))) = rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil))
+... with variable xts
++++ creating new conjecture
+	rev(postorder(zts)) @@ (yts .. rev(postorder(leaf))) = rev((postorder(leaf) @@ postorder(zts)) @@ (yts .. nil))
++++ creating new conjecture
+	rev(postorder(zts2)) @@ (yts2 .. rev(postorder(node(xts, yts1, zts1)))) = rev((postorder(node(xts, yts1, zts1)) @@ postorder(zts2)) @@ (yts2 .. nil))
+--- clause
+	rev(postorder(zts)) @@ (yts .. rev(postorder(leaf))) = rev((postorder(leaf) @@ postorder(zts)) @@ (yts .. nil))
+... reduced in 4 steps to
+	rev(postorder(zts)) @@ (yts .. nil) = rev(postorder(zts) @@ (yts .. nil))
+--- clause
+	rev(postorder(zts2)) @@ (yts2 .. rev(postorder(node(xts, yts1, zts1)))) = rev((postorder(node(xts, yts1, zts1)) @@ postorder(zts2)) @@ (yts2 .. nil))
+... reduced in 2 steps to
+	rev(postorder(zts2)) @@ (yts2 .. rev((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil))) = rev((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
++++ inductive narrowing succeeded
+--- clause
+	rev(postorder(zts)) @@ (yts .. rev(postorder(xts))) = rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil))
+... oriented to rule
+	rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. rev(postorder(xts)))
++++ added new clause(s)
+	rev(postorder(zts)) @@ (yts .. nil) = rev(postorder(zts) @@ (yts .. nil))
+	rev(postorder(zts2)) @@ (yts2 .. rev((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil))) = rev((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+... to conjectures
+--- clause
+	rev(postorder(zts2)) @@ (yts2 .. rev((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil))) = rev((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+... reduced in 1 step to
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))) = rev((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+
++++ Status of the Inference System
+--- Conjectures:
+	rev(postorder(zts)) @@ (yts .. nil) = rev(postorder(zts) @@ (yts .. nil))
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))) = rev((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(rotate(xt)) -> rev(postorder(xt))
+	rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. rev(postorder(xts)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	rev(postorder(zts)) @@ (yts .. nil) = rev(postorder(zts) @@ (yts .. nil))
++++ inductive narrowing on conjecture
+	rev(postorder(zts)) @@ (yts .. nil) = rev(postorder(zts) @@ (yts .. nil))
+... induction variables of
+	rev(postorder(zts)) @@ (yts .. nil) = rev(postorder(zts) @@ (yts .. nil))
+... are:
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	rev(postorder(zts)) @@ (yts .. nil) = rev(postorder(zts) @@ (yts .. nil))
+... with variable zts
++++ creating new conjecture
+	rev(postorder(leaf)) @@ (yts .. nil) = rev(postorder(leaf) @@ (yts .. nil))
++++ creating new conjecture
+	rev(postorder(node(xts, yts2, zts))) @@ (yts1 .. nil) = rev(postorder(node(xts, yts2, zts)) @@ (yts1 .. nil))
+--- clause
+	rev(postorder(leaf)) @@ (yts .. nil) = rev(postorder(leaf) @@ (yts .. nil))
+... reduced to tautology
+	yts .. nil = yts .. nil
+--- clause
+	rev(postorder(node(xts, yts2, zts))) @@ (yts1 .. nil) = rev(postorder(node(xts, yts2, zts)) @@ (yts1 .. nil))
+... reduced in 3 steps to
+	(rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil) = rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
++++ inductive narrowing succeeded
+--- clause
+	rev(postorder(zts)) @@ (yts .. nil) = rev(postorder(zts) @@ (yts .. nil))
+... oriented to rule
+	rev(postorder(zts) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. nil)
++++ added new clause(s)
+	(rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil) = rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))) = rev((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+	(rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil) = rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(rotate(xt)) -> rev(postorder(xt))
+	rev(postorder(zts) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. nil)
+	rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. rev(postorder(xts)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))) = rev((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
++++ inductive narrowing on conjecture
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))) = rev((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+... induction variables of
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))) = rev((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+... are:
+	xts:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))) = rev((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+... with variable xts
++++ creating new conjecture
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(leaf))))) = rev((((postorder(leaf) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
++++ creating new conjecture
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. rev(postorder(node(xts, yts1, zts1)))))) = rev((((postorder(node(xts, yts1, zts1)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+--- clause
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(leaf))))) = rev((((postorder(leaf) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+... reduced in 4 steps to
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil))) = rev(((postorder(zts1) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+--- clause
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. rev(postorder(node(xts, yts1, zts1)))))) = rev((((postorder(node(xts, yts1, zts1)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+... reduced in 3 steps to
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))) = rev((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
++++ inductive narrowing succeeded
+--- clause
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))) = rev((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+... oriented to rule
+	rev((((postorder(xts) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts)))))
++++ added new clause(s)
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil))) = rev(((postorder(zts1) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))) = rev((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil) = rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil))) = rev(((postorder(zts1) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))) = rev((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(rotate(xt)) -> rev(postorder(xt))
+	rev(postorder(zts) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. nil)
+	rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. rev(postorder(xts)))
+	rev((((postorder(xts) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts)))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil) = rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
++++ inductive narrowing on conjecture
+	(rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil) = rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+... induction variables of
+	(rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil) = rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+... are:
+	xts:tree
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	(rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil) = rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+... with variable xts
++++ creating new conjecture
+	(rev(postorder(zts)) @@ (yts2 .. rev(postorder(leaf)))) @@ (yts1 .. nil) = rev(((postorder(leaf) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
++++ creating new conjecture
+	(rev(postorder(zts2)) @@ (yts3 .. rev(postorder(node(xts, yts2, zts1))))) @@ (yts1 .. nil) = rev(((postorder(node(xts, yts2, zts1)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+--- clause
+	(rev(postorder(zts)) @@ (yts2 .. rev(postorder(leaf)))) @@ (yts1 .. nil) = rev(((postorder(leaf) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+... reduced in 4 steps to
+	(rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((postorder(zts) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+--- clause
+	(rev(postorder(zts2)) @@ (yts3 .. rev(postorder(node(xts, yts2, zts1))))) @@ (yts1 .. nil) = rev(((postorder(node(xts, yts2, zts1)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+... reduced in 3 steps to
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))) @@ (yts1 .. nil) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
++++ inductive narrowing succeeded
+--- clause
+	(rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil) = rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+... oriented to rule
+	rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) -> (rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil)
++++ added new clause(s)
+	(rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((postorder(zts) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))) @@ (yts1 .. nil) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil))) = rev(((postorder(zts1) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))) = rev((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+	(rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((postorder(zts) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))) @@ (yts1 .. nil) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(rotate(xt)) -> rev(postorder(xt))
+	rev(postorder(zts) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. nil)
+	rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. rev(postorder(xts)))
+	rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) -> (rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil)
+	rev((((postorder(xts) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts)))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil))) = rev(((postorder(zts1) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
++++ inductive narrowing on conjecture
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil))) = rev(((postorder(zts1) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+... induction variables of
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil))) = rev(((postorder(zts1) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+... are:
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil))) = rev(((postorder(zts1) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+... with variable zts1
++++ creating new conjecture
+	rev(postorder(zts)) @@ (yts2 .. (rev(postorder(leaf)) @@ (yts1 .. nil))) = rev(((postorder(leaf) @@ (yts1 .. nil)) @@ postorder(zts)) @@ (yts2 .. nil))
++++ creating new conjecture
+	rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(node(xts, yts2, zts1))) @@ (yts1 .. nil))) = rev(((postorder(node(xts, yts2, zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil))
+--- clause
+	rev(postorder(zts)) @@ (yts2 .. (rev(postorder(leaf)) @@ (yts1 .. nil))) = rev(((postorder(leaf) @@ (yts1 .. nil)) @@ postorder(zts)) @@ (yts2 .. nil))
+... reduced in 10 steps to
+	rev(postorder(zts)) @@ (yts2 .. (yts1 .. nil)) = (rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+--- clause
+	rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(node(xts, yts2, zts1))) @@ (yts1 .. nil))) = rev(((postorder(node(xts, yts2, zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil))
+... reduced in 3 steps to
+	rev(postorder(zts2)) @@ (yts3 .. ((rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil))) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil))
++++ inductive narrowing succeeded
+--- clause
+	rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil))) = rev(((postorder(zts1) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil))
+... oriented to rule
+	rev(((postorder(zts2) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil)))
++++ added new clause(s)
+	rev(postorder(zts)) @@ (yts2 .. (yts1 .. nil)) = (rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+	rev(postorder(zts2)) @@ (yts3 .. ((rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil))) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))) = rev((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+	(rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((postorder(zts) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))) @@ (yts1 .. nil) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+	rev(postorder(zts)) @@ (yts2 .. (yts1 .. nil)) = (rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+	rev(postorder(zts2)) @@ (yts3 .. ((rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil))) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(rotate(xt)) -> rev(postorder(xt))
+	rev(postorder(zts) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. nil)
+	rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. rev(postorder(xts)))
+	rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) -> (rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil)
+	rev(((postorder(zts2) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil)))
+	rev((((postorder(xts) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts)))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))) = rev((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
++++ inductive narrowing on conjecture
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))) = rev((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+... induction variables of
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))) = rev((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+... are:
+	xts:tree
+	zts1:tree
+	zts2:tree
+	zts3:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))) = rev((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+... with variable xts
++++ creating new conjecture
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(leaf))))))) = rev((((((postorder(leaf) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
++++ creating new conjecture
+	rev(postorder(zts4)) @@ (yts4 .. (rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. rev(postorder(node(xts, yts1, zts1)))))))) = rev((((((postorder(node(xts, yts1, zts1)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil)) @@ postorder(zts4)) @@ (yts4 .. nil))
+--- clause
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(leaf))))))) = rev((((((postorder(leaf) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+... reduced in 4 steps to
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil))))) = rev(((((postorder(zts1) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+--- clause
+	rev(postorder(zts4)) @@ (yts4 .. (rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. rev(postorder(node(xts, yts1, zts1)))))))) = rev((((((postorder(node(xts, yts1, zts1)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil)) @@ postorder(zts4)) @@ (yts4 .. nil))
+... reduced in 3 steps to
+	rev(postorder(zts4)) @@ (yts4 .. (rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))))) = rev((((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil)) @@ postorder(zts4)) @@ (yts4 .. nil))
++++ inductive narrowing succeeded
+--- clause
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))) = rev((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+... oriented to rule
+	rev((((((postorder(xts) @@ postorder(zts3)) @@ (yts3 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts)))))))
++++ added new clause(s)
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil))))) = rev(((((postorder(zts1) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+	rev(postorder(zts4)) @@ (yts4 .. (rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))))) = rev((((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil)) @@ postorder(zts4)) @@ (yts4 .. nil))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((postorder(zts) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))) @@ (yts1 .. nil) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+	rev(postorder(zts)) @@ (yts2 .. (yts1 .. nil)) = (rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+	rev(postorder(zts2)) @@ (yts3 .. ((rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil))) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil))
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil))))) = rev(((((postorder(zts1) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+	rev(postorder(zts4)) @@ (yts4 .. (rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))))) = rev((((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil)) @@ postorder(zts4)) @@ (yts4 .. nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(rotate(xt)) -> rev(postorder(xt))
+	rev(postorder(zts) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. nil)
+	rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. rev(postorder(xts)))
+	rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) -> (rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil)
+	rev(((postorder(zts2) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil)))
+	rev((((postorder(xts) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts)))))
+	rev((((((postorder(xts) @@ postorder(zts3)) @@ (yts3 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts)))))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((postorder(zts) @@ (yts2 .. nil)) @@ (yts1 .. nil))
++++ inductive narrowing on conjecture
+	(rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((postorder(zts) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+... induction variables of
+	(rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((postorder(zts) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+... are:
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	(rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((postorder(zts) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+... with variable zts
++++ creating new conjecture
+	(rev(postorder(leaf)) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((postorder(leaf) @@ (yts2 .. nil)) @@ (yts1 .. nil))
++++ creating new conjecture
+	(rev(postorder(node(xts, yts3, zts))) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((postorder(node(xts, yts3, zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+--- clause
+	(rev(postorder(leaf)) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((postorder(leaf) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+... reduced in 15 steps to
+	yts2 .. (yts1 .. nil) = yts1 .. (yts2 .. nil)
+--- clause
+	(rev(postorder(node(xts, yts3, zts))) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((postorder(node(xts, yts3, zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+... reduced in 3 steps to
+	((rev(postorder(zts)) @@ (yts3 .. rev(postorder(xts)))) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((((postorder(xts) @@ postorder(zts)) @@ (yts3 .. nil)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
++++ inductive narrowing succeeded
+--- clause
+	(rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((postorder(zts) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+... oriented to rule
+	rev((postorder(zts) @@ (yts2 .. nil)) @@ (yts1 .. nil)) -> (rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
++++ added new clause(s)
+	yts2 .. (yts1 .. nil) = yts1 .. (yts2 .. nil)
+	((rev(postorder(zts)) @@ (yts3 .. rev(postorder(xts)))) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((((postorder(xts) @@ postorder(zts)) @@ (yts3 .. nil)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))) @@ (yts1 .. nil) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+	rev(postorder(zts)) @@ (yts2 .. (yts1 .. nil)) = (rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+	rev(postorder(zts2)) @@ (yts3 .. ((rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil))) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil))
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil))))) = rev(((((postorder(zts1) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+	rev(postorder(zts4)) @@ (yts4 .. (rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))))) = rev((((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil)) @@ postorder(zts4)) @@ (yts4 .. nil))
+	yts2 .. (yts1 .. nil) = yts1 .. (yts2 .. nil)
+	((rev(postorder(zts)) @@ (yts3 .. rev(postorder(xts)))) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((((postorder(xts) @@ postorder(zts)) @@ (yts3 .. nil)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(rotate(xt)) -> rev(postorder(xt))
+	rev(postorder(zts) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. nil)
+	rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. rev(postorder(xts)))
+	rev((postorder(zts) @@ (yts2 .. nil)) @@ (yts1 .. nil)) -> (rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+	rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) -> (rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil)
+	rev(((postorder(zts2) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil)))
+	rev((((postorder(xts) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts)))))
+	rev((((((postorder(xts) @@ postorder(zts3)) @@ (yts3 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts)))))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))) @@ (yts1 .. nil) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
++++ inductive narrowing on conjecture
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))) @@ (yts1 .. nil) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+... induction variables of
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))) @@ (yts1 .. nil) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+... are:
+	xts:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))) @@ (yts1 .. nil) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+... with variable xts
++++ creating new conjecture
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(leaf)))))) @@ (yts1 .. nil) = rev(((((postorder(leaf) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
++++ creating new conjecture
+	(rev(postorder(zts3)) @@ (yts4 .. (rev(postorder(zts2)) @@ (yts3 .. rev(postorder(node(xts, yts2, zts1))))))) @@ (yts1 .. nil) = rev(((((postorder(node(xts, yts2, zts1)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ postorder(zts3)) @@ (yts4 .. nil)) @@ (yts1 .. nil))
+--- clause
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(leaf)))))) @@ (yts1 .. nil) = rev(((((postorder(leaf) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+... reduced in 4 steps to
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. nil)))) @@ (yts1 .. nil) = rev((((postorder(zts1) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+--- clause
+	(rev(postorder(zts3)) @@ (yts4 .. (rev(postorder(zts2)) @@ (yts3 .. rev(postorder(node(xts, yts2, zts1))))))) @@ (yts1 .. nil) = rev(((((postorder(node(xts, yts2, zts1)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ postorder(zts3)) @@ (yts4 .. nil)) @@ (yts1 .. nil))
+... reduced in 3 steps to
+	(rev(postorder(zts3)) @@ (yts4 .. (rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))))) @@ (yts1 .. nil) = rev(((((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ postorder(zts3)) @@ (yts4 .. nil)) @@ (yts1 .. nil))
++++ inductive narrowing succeeded
+--- clause
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))) @@ (yts1 .. nil) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+... oriented to rule
+	rev(((((postorder(xts) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) -> (rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))) @@ (yts1 .. nil)
++++ added new clause(s)
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. nil)))) @@ (yts1 .. nil) = rev((((postorder(zts1) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+	(rev(postorder(zts3)) @@ (yts4 .. (rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))))) @@ (yts1 .. nil) = rev(((((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ postorder(zts3)) @@ (yts4 .. nil)) @@ (yts1 .. nil))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	rev(postorder(zts)) @@ (yts2 .. (yts1 .. nil)) = (rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+	rev(postorder(zts2)) @@ (yts3 .. ((rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil))) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil))
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil))))) = rev(((((postorder(zts1) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+	rev(postorder(zts4)) @@ (yts4 .. (rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))))) = rev((((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil)) @@ postorder(zts4)) @@ (yts4 .. nil))
+	yts2 .. (yts1 .. nil) = yts1 .. (yts2 .. nil)
+	((rev(postorder(zts)) @@ (yts3 .. rev(postorder(xts)))) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((((postorder(xts) @@ postorder(zts)) @@ (yts3 .. nil)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. nil)))) @@ (yts1 .. nil) = rev((((postorder(zts1) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+	(rev(postorder(zts3)) @@ (yts4 .. (rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))))) @@ (yts1 .. nil) = rev(((((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ postorder(zts3)) @@ (yts4 .. nil)) @@ (yts1 .. nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(rotate(xt)) -> rev(postorder(xt))
+	rev(postorder(zts) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. nil)
+	rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. rev(postorder(xts)))
+	rev((postorder(zts) @@ (yts2 .. nil)) @@ (yts1 .. nil)) -> (rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+	rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) -> (rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil)
+	rev(((postorder(zts2) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil)))
+	rev((((postorder(xts) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts)))))
+	rev(((((postorder(xts) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) -> (rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))) @@ (yts1 .. nil)
+	rev((((((postorder(xts) @@ postorder(zts3)) @@ (yts3 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts)))))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	rev(postorder(zts)) @@ (yts2 .. (yts1 .. nil)) = (rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
++++ inductive narrowing on conjecture
+	rev(postorder(zts)) @@ (yts2 .. (yts1 .. nil)) = (rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+... induction variables of
+	rev(postorder(zts)) @@ (yts2 .. (yts1 .. nil)) = (rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+... are:
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	rev(postorder(zts)) @@ (yts2 .. (yts1 .. nil)) = (rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+... with variable zts
++++ creating new conjecture
+	rev(postorder(leaf)) @@ (yts2 .. (yts1 .. nil)) = (rev(postorder(leaf)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
++++ creating new conjecture
+	rev(postorder(node(xts, yts3, zts))) @@ (yts2 .. (yts1 .. nil)) = (rev(postorder(node(xts, yts3, zts))) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+--- clause
+	rev(postorder(leaf)) @@ (yts2 .. (yts1 .. nil)) = (rev(postorder(leaf)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+... reduced to tautology
+	yts2 .. (yts1 .. nil) = yts2 .. (yts1 .. nil)
+--- clause
+	rev(postorder(node(xts, yts3, zts))) @@ (yts2 .. (yts1 .. nil)) = (rev(postorder(node(xts, yts3, zts))) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+... reduced in 4 steps to
+	(rev(postorder(zts)) @@ (yts3 .. rev(postorder(xts)))) @@ (yts2 .. (yts1 .. nil)) = ((rev(postorder(zts)) @@ (yts3 .. rev(postorder(xts)))) @@ (yts2 .. nil)) @@ (yts1 .. nil)
++++ inductive narrowing succeeded
+--- clause
+	rev(postorder(zts)) @@ (yts2 .. (yts1 .. nil)) = (rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+... oriented to rule
+	(rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil) -> rev(postorder(zts)) @@ (yts2 .. (yts1 .. nil))
++++ added new clause(s)
+	(rev(postorder(zts)) @@ (yts3 .. rev(postorder(xts)))) @@ (yts2 .. (yts1 .. nil)) = ((rev(postorder(zts)) @@ (yts3 .. rev(postorder(xts)))) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	rev(postorder(zts2)) @@ (yts3 .. ((rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil))) = rev(((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil))
+	rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil))))) = rev(((((postorder(zts1) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil))
+	rev(postorder(zts4)) @@ (yts4 .. (rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts))))))))) = rev((((((((postorder(xts) @@ postorder(zts1)) @@ (yts1 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts3)) @@ (yts3 .. nil)) @@ postorder(zts4)) @@ (yts4 .. nil))
+	yts2 .. (yts1 .. nil) = yts1 .. (yts2 .. nil)
+	((rev(postorder(zts)) @@ (yts3 .. rev(postorder(xts)))) @@ (yts2 .. nil)) @@ (yts1 .. nil) = rev((((postorder(xts) @@ postorder(zts)) @@ (yts3 .. nil)) @@ (yts2 .. nil)) @@ (yts1 .. nil))
+	(rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. nil)))) @@ (yts1 .. nil) = rev((((postorder(zts1) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ (yts1 .. nil))
+	(rev(postorder(zts3)) @@ (yts4 .. (rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))))) @@ (yts1 .. nil) = rev(((((((postorder(xts) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ postorder(zts3)) @@ (yts4 .. nil)) @@ (yts1 .. nil))
+	(rev(postorder(zts)) @@ (yts3 .. rev(postorder(xts)))) @@ (yts2 .. (yts1 .. nil)) = ((rev(postorder(zts)) @@ (yts3 .. rev(postorder(xts)))) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(rotate(xt)) -> rev(postorder(xt))
+	rev(postorder(zts) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. nil)
+	(rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil) -> rev(postorder(zts)) @@ (yts2 .. (yts1 .. nil))
+	rev((postorder(xts) @@ postorder(zts)) @@ (yts .. nil)) -> rev(postorder(zts)) @@ (yts .. rev(postorder(xts)))
+	rev((postorder(zts) @@ (yts2 .. nil)) @@ (yts1 .. nil)) -> (rev(postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)
+	rev(((postorder(xts) @@ postorder(zts)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) -> (rev(postorder(zts)) @@ (yts2 .. rev(postorder(xts)))) @@ (yts1 .. nil)
+	rev(((postorder(zts2) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. nil)))
+	rev((((postorder(xts) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts)))))
+	rev(((((postorder(xts) @@ postorder(zts2)) @@ (yts3 .. nil)) @@ postorder(zts1)) @@ (yts2 .. nil)) @@ (yts1 .. nil)) -> (rev(postorder(zts2)) @@ (yts3 .. (rev(postorder(zts1)) @@ (yts2 .. rev(postorder(xts)))))) @@ (yts1 .. nil)
+	rev((((((postorder(xts) @@ postorder(zts3)) @@ (yts3 .. nil)) @@ postorder(zts2)) @@ (yts2 .. nil)) @@ postorder(zts1)) @@ (yts1 .. nil)) -> rev(postorder(zts3)) @@ (yts3 .. (rev(postorder(zts2)) @@ (yts2 .. (rev(postorder(zts1)) @@ (yts1 .. rev(postorder(xts)))))))
+--- Primal Grammar:
+	<empty>
+
++++ loop limit reached
++++ Statistics:
+... Number of proof steps          = 10
+... Number of induction steps      = 10
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.109

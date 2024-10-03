@@ -1,0 +1,250 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 11-in.txt
++++ output      = 11-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification TREE from tree successfully parsed
++++ specification ROTATEright from rotateright successfully parsed
++++ specification ROTATEleft from rotateleft successfully parsed
++++ specification CraftedTrees from 11-in.txt successfully parsed
++++ Listing
+         1: specification CraftedTrees
+         2: sorts
+         3:      nat tree
+         4: constructors
+         5:      0: -> nat
+         6:      leaf: -> tree
+         7:      node: tree nat tree -> tree
+         8:      s: nat -> nat
+         9: defined functions
+        10:      rotL: tree -> tree
+        11:      rotR: tree -> tree
+        12: precedence
+        13:      rotL = rotR > node > leaf > s > 0
+        14: axioms
+        15:      rotL(leaf) = leaf;
+        16:      rotR(leaf) = leaf;
+        17:      rotL(node(xl, y, leaf)) = node(xl, y, leaf);
+        18:      rotR(node(leaf, y, xr)) = node(leaf, y, xr);
+        19:      rotL(node(xP, x, node(xQ, y, xR))) = rotL(node(node(xP, x, xQ), y, xR));
+        20:      rotR(node(node(xP, x, xQ), y, xR)) = rotR(node(xP, x, node(xQ, y, xR)));
+        21: conjectures
+        22:      rotL(rotR(x)) = x;
+        23: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	rotL(leaf) -> leaf
+	rotR(leaf) -> leaf
+	rotL(node(xl, y, leaf)) -> node(xl, y, leaf)
+	rotR(node(leaf, y, xr)) -> node(leaf, y, xr)
+	rotL(node(node(xP, x, xQ), y, xR)) -> rotL(node(xP, x, node(xQ, y, xR)))
+	rotR(node(node(xP, x, xQ), y, xR)) -> rotR(node(xP, x, node(xQ, y, xR)))
++++ inductive positions:
+... for rotL: 0 0.0 0.2
+... for rotR: 0 0.0
++++ maximal depths of left-hand sides:
+... for rotR: 3
+... for rotL: 3
++++ general maximal depth = 3
++++ sort dependence: nat < tree
++++ test sets for defined functions and sorts:
+... for rotR
+... ... tree
+		leaf
+		node(leaf, 0, leaf)
+		node(leaf, s(x), leaf)
+		node(leaf, 0, node(x, y, z))
+		node(node(x, y, z), 0, leaf)
+		node(leaf, s(x), node(y, z, u))
+		node(node(x, y, z), s(u), leaf)
+		node(node(x, y, z), 0, node(u, v, w))
+		node(node(x, y, z), s(u), node(v, w, xy))
+... for rotL
+... ... tree
+		leaf
+		node(leaf, 0, leaf)
+		node(leaf, s(x), leaf)
+		node(leaf, 0, node(x, y, z))
+		node(node(x, y, z), 0, leaf)
+		node(leaf, s(x), node(y, z, u))
+		node(node(x, y, z), s(u), leaf)
+		node(node(x, y, z), 0, node(u, v, w))
+		node(node(x, y, z), s(u), node(v, w, xy))
+
++++ conjecture(s)
+	rotL(rotR(x)) = x
+
++++ inference system initiated
++++ treating clause
+	rotL(rotR(x)) = x
++++ inductive narrowing on conjecture
+	rotL(rotR(x)) = x
+... induction variables of
+	rotL(rotR(x)) = x
+... are:
+	x:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	rotL(rotR(x)) = x
+... with variable x
++++ creating new conjecture
+	rotL(rotR(leaf)) = leaf
++++ creating new conjecture
+	rotL(rotR(node(leaf, 0, leaf))) = node(leaf, 0, leaf)
++++ creating new conjecture
+	rotL(rotR(node(leaf, s(xts), leaf))) = node(leaf, s(xts), leaf)
++++ creating new conjecture
+	rotL(rotR(node(leaf, 0, node(xts, yts, zts)))) = node(leaf, 0, node(xts, yts, zts))
++++ creating new conjecture
+	rotL(rotR(node(node(xts, yts, zts), 0, leaf))) = node(node(xts, yts, zts), 0, leaf)
++++ creating new conjecture
+	rotL(rotR(node(leaf, s(xts), node(yts, zts, uts)))) = node(leaf, s(xts), node(yts, zts, uts))
++++ creating new conjecture
+	rotL(rotR(node(node(xts, yts, zts), s(uts), leaf))) = node(node(xts, yts, zts), s(uts), leaf)
++++ creating new conjecture
+	rotL(rotR(node(node(xts, yts, zts), 0, node(uts, vts, wts)))) = node(node(xts, yts, zts), 0, node(uts, vts, wts))
++++ creating new conjecture
+	rotL(rotR(node(node(xts, yts, zts), s(uts), node(vts, wts, xyts)))) = node(node(xts, yts, zts), s(uts), node(vts, wts, xyts))
+--- clause
+	rotL(rotR(leaf)) = leaf
+... reduced to tautology
+	leaf = leaf
+--- clause
+	rotL(rotR(node(leaf, 0, leaf))) = node(leaf, 0, leaf)
+... reduced to tautology
+	node(leaf, 0, leaf) = node(leaf, 0, leaf)
+--- clause
+	rotL(rotR(node(leaf, s(xts), leaf))) = node(leaf, s(xts), leaf)
+... reduced to tautology
+	node(leaf, s(xts), leaf) = node(leaf, s(xts), leaf)
+--- clause
+	rotL(rotR(node(leaf, 0, node(xts, yts, zts)))) = node(leaf, 0, node(xts, yts, zts))
+... reduced in 1 step to
+	rotL(node(leaf, 0, node(xts, yts, zts))) = node(leaf, 0, node(xts, yts, zts))
+--- clause
+	rotL(rotR(node(node(xts, yts, zts), 0, leaf))) = node(node(xts, yts, zts), 0, leaf)
+... reduced in 1 step to
+	rotL(rotR(node(xts, yts, node(zts, 0, leaf)))) = node(node(xts, yts, zts), 0, leaf)
+--- clause
+	rotL(rotR(node(leaf, s(xts), node(yts, zts, uts)))) = node(leaf, s(xts), node(yts, zts, uts))
+... reduced in 1 step to
+	rotL(node(leaf, s(xts), node(yts, zts, uts))) = node(leaf, s(xts), node(yts, zts, uts))
+--- clause
+	rotL(rotR(node(node(xts, yts, zts), s(uts), leaf))) = node(node(xts, yts, zts), s(uts), leaf)
+... reduced in 1 step to
+	rotL(rotR(node(xts, yts, node(zts, s(uts), leaf)))) = node(node(xts, yts, zts), s(uts), leaf)
+--- clause
+	rotL(rotR(node(node(xts, yts, zts), 0, node(uts, vts, wts)))) = node(node(xts, yts, zts), 0, node(uts, vts, wts))
+... reduced in 1 step to
+	rotL(rotR(node(xts, yts, node(zts, 0, node(uts, vts, wts))))) = node(node(xts, yts, zts), 0, node(uts, vts, wts))
+--- clause
+	rotL(rotR(node(node(xts, yts, zts), s(uts), node(vts, wts, xyts)))) = node(node(xts, yts, zts), s(uts), node(vts, wts, xyts))
+... reduced in 1 step to
+	rotL(rotR(node(xts, yts, node(zts, s(uts), node(vts, wts, xyts))))) = node(node(xts, yts, zts), s(uts), node(vts, wts, xyts))
++++ inductive narrowing succeeded
+--- clause
+	rotL(rotR(x)) = x
+... oriented to rule
+	rotL(rotR(x)) -> x
++++ added new clause(s)
+	rotL(node(leaf, 0, node(xts, yts, zts))) = node(leaf, 0, node(xts, yts, zts))
+	rotL(rotR(node(xts, yts, node(zts, 0, leaf)))) = node(node(xts, yts, zts), 0, leaf)
+	rotL(node(leaf, s(xts), node(yts, zts, uts))) = node(leaf, s(xts), node(yts, zts, uts))
+	rotL(rotR(node(xts, yts, node(zts, s(uts), leaf)))) = node(node(xts, yts, zts), s(uts), leaf)
+	rotL(rotR(node(xts, yts, node(zts, 0, node(uts, vts, wts))))) = node(node(xts, yts, zts), 0, node(uts, vts, wts))
+	rotL(rotR(node(xts, yts, node(zts, s(uts), node(vts, wts, xyts))))) = node(node(xts, yts, zts), s(uts), node(vts, wts, xyts))
+... to conjectures
+--- clause
+	rotL(rotR(node(xts, yts, node(zts, 0, leaf)))) = node(node(xts, yts, zts), 0, leaf)
+... reduced in 1 step to
+	node(xts, yts, node(zts, 0, leaf)) = node(node(xts, yts, zts), 0, leaf)
+--- clause
+	rotL(rotR(node(xts, yts, node(zts, s(uts), leaf)))) = node(node(xts, yts, zts), s(uts), leaf)
+... reduced in 1 step to
+	node(xts, yts, node(zts, s(uts), leaf)) = node(node(xts, yts, zts), s(uts), leaf)
+--- clause
+	rotL(rotR(node(xts, yts, node(zts, 0, node(uts, vts, wts))))) = node(node(xts, yts, zts), 0, node(uts, vts, wts))
+... reduced in 1 step to
+	node(xts, yts, node(zts, 0, node(uts, vts, wts))) = node(node(xts, yts, zts), 0, node(uts, vts, wts))
+--- clause
+	rotL(rotR(node(xts, yts, node(zts, s(uts), node(vts, wts, xyts))))) = node(node(xts, yts, zts), s(uts), node(vts, wts, xyts))
+... reduced in 1 step to
+	node(xts, yts, node(zts, s(uts), node(vts, wts, xyts))) = node(node(xts, yts, zts), s(uts), node(vts, wts, xyts))
+... decomposed into new clause(s)
+	xts = node(xts, yts, zts)
+	yts = 0
+	node(zts, 0, leaf) = leaf
+... decomposed into new clause(s)
+	xts = node(xts, yts, zts)
+	yts = s(uts)
+	node(zts, s(uts), leaf) = leaf
+... decomposed into new clause(s)
+	xts = node(xts, yts, zts)
+	yts = 0
+	0 = vts
+	node(uts, vts, wts) = wts
+... decomposed into new clause(s)
+	xts = node(xts, yts, zts)
+	yts = s(uts)
+	s(uts) = wts
+	node(vts, wts, xyts) = xyts
+
++++ Status of the Inference System
+--- Conjectures:
+	rotL(node(leaf, 0, node(xts, yts, zts))) = node(leaf, 0, node(xts, yts, zts))
+	rotL(node(leaf, s(xts), node(yts, zts, uts))) = node(leaf, s(xts), node(yts, zts, uts))
+	xts = node(xts, yts, zts)
+	node(zts, 0, leaf) = leaf
+	xts = node(xts, yts, zts)
+	node(zts, s(uts), leaf) = leaf
+	xts = node(xts, yts, zts)
+	node(uts, vts, wts) = wts
+	xts = node(xts, yts, zts)
+	node(vts, wts, xyts) = xyts
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	rotL(rotR(x)) -> x
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	rotL(node(leaf, 0, node(xts, yts, zts))) = node(leaf, 0, node(xts, yts, zts))
+--- no new clauses created
+
++++ Status of the Inference System
+--- Conjectures:
+	rotL(node(leaf, s(xts), node(yts, zts, uts))) = node(leaf, s(xts), node(yts, zts, uts))
+	xts = node(xts, yts, zts)
+	node(zts, 0, leaf) = leaf
+	xts = node(xts, yts, zts)
+	node(zts, s(uts), leaf) = leaf
+	xts = node(xts, yts, zts)
+	node(uts, vts, wts) = wts
+	xts = node(xts, yts, zts)
+	node(vts, wts, xyts) = xyts
+	rotL(node(leaf, 0, node(xts, yts, zts))) = node(leaf, 0, node(xts, yts, zts))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	rotL(rotR(x)) -> x
+--- Primal Grammar:
+	<empty>
+
++++ DISPROOF: counter example
+	rotL(node(leaf, 0, node(xts, yts, zts))) = node(leaf, 0, node(xts, yts, zts))
++++ Statistics:
+... Number of proof steps          = 2
+... Number of induction steps      = 1
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.028

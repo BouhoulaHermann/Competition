@@ -1,0 +1,18 @@
+# HOL/Examples/Seq.thy from Isabelle
+# finite sequences
+
+specification SEQ
+
+include <reversesymb>
+
+precedence
+
+	rev > @@ > .. > nil > s > 0
+
+conjectures
+
+	xs @@ nil = xs;
+	(xs @@ ys) @@ zs = xs @@ (ys @@ zs);
+	rev(xs @@ ys) = rev(ys) @@ rev(xs);
+	rev(rev(xs)) = xs;
+end

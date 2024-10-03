@@ -1,0 +1,11 @@
+specification CraftedTrees
+
+include <rotateright> <rotateleft>
+
+precedence
+	rotR = rotL > node > leaf > s > 0 
+
+conjectures
+	rotL(rotR(x)) = x;
+
+end

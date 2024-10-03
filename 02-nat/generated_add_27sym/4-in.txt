@@ -1,0 +1,13 @@
+specification NatFunc
+
+include <addalt>
+
+precedence
+	+ > s > 0
+
+conjectures
+	((V7 + s(V4)) + (((s(s(V3)) + s((s(V0) + V1))) + (V9 + s(V1))) + s((s(V1) + (s(V5) + s(V6)))))) + s(s(s(s((s(V8) + V2)))))
+	=
+	s(s((((s(V1) + (s(s((s(V2) + s((V4 + s(V1)))))) + s(V6))) + s(s(s(((s(s((s((V8 + (V7 + V0))) + V9))) + V3) + V5))))) + V1)));
+
+end

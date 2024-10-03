@@ -1,0 +1,231 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 0-in.txt
++++ output      = 0-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification ADD from add successfully parsed
++++ specification MULT from mult successfully parsed
++++ specification MULTalt from multalt successfully parsed
++++ specification Crafted from 0-in.txt successfully parsed
++++ Listing
+         1: specification Crafted
+         2: sorts
+         3:      nat
+         4: constructors
+         5:      0: -> nat
+         6:      s: nat -> nat
+         7: defined functions
+         8:      *: nat nat -> nat
+         9:      +: nat nat -> nat
+        10: precedence
+        11:      * > + > s > 0
+        12: axioms
+        13:      0 * y = 0;
+        14:      x * 0 = 0;
+        15:      x + 0 = x;
+        16:      x + s(y) = s(x + y);
+        17:      s(x) * y = (x * y) + x;
+        18:      x * s(y) = (x * y) + x;
+        19: conjectures
+        20:      x * (x * x) = (x * x) * x;
+        21: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	0 * y -> 0
+	x * 0 -> 0
+	x + 0 -> x
+	x + s(y) -> s(x + y)
+	s(x) * y -> (x * y) + x
+	x * s(y) -> (x * y) + x
++++ inductive positions:
+... for *: 0 1
+... for +: 1
++++ maximal depths of left-hand sides:
+... for +: 2
+... for *: 2
++++ general maximal depth = 2
++++ sort dependence: <empty>
++++ test sets for defined functions and sorts:
+... for +
+... ... nat
+		0
+		s(x)
+... for *
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	x * (x * x) = (x * x) * x
+
++++ inference system initiated
++++ treating clause
+	x * (x * x) = (x * x) * x
++++ inductive narrowing on conjecture
+	x * (x * x) = (x * x) * x
+... induction variables of
+	x * (x * x) = (x * x) * x
+... are:
+	x:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	x * (x * x) = (x * x) * x
+... with variable x
++++ creating new conjecture
+	0 * (0 * 0) = (0 * 0) * 0
++++ creating new conjecture
+	s(xts) * (s(xts) * s(xts)) = (s(xts) * s(xts)) * s(xts)
+--- clause
+	0 * (0 * 0) = (0 * 0) * 0
+... reduced to tautology
+	0 = 0
+--- clause
+	s(xts) * (s(xts) * s(xts)) = (s(xts) * s(xts)) * s(xts)
+... reduced in 8 steps to
+	(xts * (((xts * xts) + xts) + xts)) + xts = ((((xts * xts) + xts) + xts) * xts) + (((xts * xts) + xts) + xts)
++++ inductive narrowing succeeded
+--- clause
+	x * (x * x) = (x * x) * x
+... oriented to rule
+	(x * x) * x -> x * (x * x)
++++ added new clause(s)
+	(xts * (((xts * xts) + xts) + xts)) + xts = ((((xts * xts) + xts) + xts) * xts) + (((xts * xts) + xts) + xts)
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(xts * (((xts * xts) + xts) + xts)) + xts = ((((xts * xts) + xts) + xts) * xts) + (((xts * xts) + xts) + xts)
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	(x * x) * x -> x * (x * x)
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(xts * (((xts * xts) + xts) + xts)) + xts = ((((xts * xts) + xts) + xts) * xts) + (((xts * xts) + xts) + xts)
++++ inductive narrowing on conjecture
+	(xts * (((xts * xts) + xts) + xts)) + xts = ((((xts * xts) + xts) + xts) * xts) + (((xts * xts) + xts) + xts)
+... induction variables of
+	(xts * (((xts * xts) + xts) + xts)) + xts = ((((xts * xts) + xts) + xts) * xts) + (((xts * xts) + xts) + xts)
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	(xts * (((xts * xts) + xts) + xts)) + xts = ((((xts * xts) + xts) + xts) * xts) + (((xts * xts) + xts) + xts)
+... with variable xts
++++ creating new conjecture
+	(0 * (((0 * 0) + 0) + 0)) + 0 = ((((0 * 0) + 0) + 0) * 0) + (((0 * 0) + 0) + 0)
++++ creating new conjecture
+	(s(xts) * (((s(xts) * s(xts)) + s(xts)) + s(xts))) + s(xts) = ((((s(xts) * s(xts)) + s(xts)) + s(xts)) * s(xts)) + (((s(xts) * s(xts)) + s(xts)) + s(xts))
+--- clause
+	(0 * (((0 * 0) + 0) + 0)) + 0 = ((((0 * 0) + 0) + 0) * 0) + (((0 * 0) + 0) + 0)
+... reduced to tautology
+	0 = 0
+--- clause
+	(s(xts) * (((s(xts) * s(xts)) + s(xts)) + s(xts))) + s(xts) = ((((s(xts) * s(xts)) + s(xts)) + s(xts)) * s(xts)) + (((s(xts) * s(xts)) + s(xts)) + s(xts))
+... reduced in 26 steps to
+	s((((xts * (s((((xts * xts) + xts) + xts) + xts) + xts)) + xts) + xts) + xts) = s(s((((s((((xts * xts) + xts) + xts) + xts) + xts) * xts) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts))
+... decomposed into new clause(s)
+	(((xts * (s((((xts * xts) + xts) + xts) + xts) + xts)) + xts) + xts) + xts = s((((s((((xts * xts) + xts) + xts) + xts) + xts) * xts) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)
++++ inductive narrowing succeeded
+--- clause
+	(xts * (((xts * xts) + xts) + xts)) + xts = ((((xts * xts) + xts) + xts) * xts) + (((xts * xts) + xts) + xts)
+... oriented to rule
+	((((xts * xts) + xts) + xts) * xts) + (((xts * xts) + xts) + xts) -> (xts * (((xts * xts) + xts) + xts)) + xts
++++ added new clause(s)
+	(((xts * (s((((xts * xts) + xts) + xts) + xts) + xts)) + xts) + xts) + xts = s((((s((((xts * xts) + xts) + xts) + xts) + xts) * xts) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(((xts * (s((((xts * xts) + xts) + xts) + xts) + xts)) + xts) + xts) + xts = s((((s((((xts * xts) + xts) + xts) + xts) + xts) * xts) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	(x * x) * x -> x * (x * x)
+	((((xts * xts) + xts) + xts) * xts) + (((xts * xts) + xts) + xts) -> (xts * (((xts * xts) + xts) + xts)) + xts
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(((xts * (s((((xts * xts) + xts) + xts) + xts) + xts)) + xts) + xts) + xts = s((((s((((xts * xts) + xts) + xts) + xts) + xts) * xts) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)
++++ inductive narrowing on conjecture
+	(((xts * (s((((xts * xts) + xts) + xts) + xts) + xts)) + xts) + xts) + xts = s((((s((((xts * xts) + xts) + xts) + xts) + xts) * xts) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)
+... induction variables of
+	(((xts * (s((((xts * xts) + xts) + xts) + xts) + xts)) + xts) + xts) + xts = s((((s((((xts * xts) + xts) + xts) + xts) + xts) * xts) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	(((xts * (s((((xts * xts) + xts) + xts) + xts) + xts)) + xts) + xts) + xts = s((((s((((xts * xts) + xts) + xts) + xts) + xts) * xts) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)
+... with variable xts
++++ creating new conjecture
+	(((0 * (s((((0 * 0) + 0) + 0) + 0) + 0)) + 0) + 0) + 0 = s((((s((((0 * 0) + 0) + 0) + 0) + 0) * 0) + (s((((0 * 0) + 0) + 0) + 0) + 0)) + (s((((0 * 0) + 0) + 0) + 0) + 0)) + (s((((0 * 0) + 0) + 0) + 0) + 0)
++++ creating new conjecture
+	(((s(xts) * (s((((s(xts) * s(xts)) + s(xts)) + s(xts)) + s(xts)) + s(xts))) + s(xts)) + s(xts)) + s(xts) = s((((s((((s(xts) * s(xts)) + s(xts)) + s(xts)) + s(xts)) + s(xts)) * s(xts)) + (s((((s(xts) * s(xts)) + s(xts)) + s(xts)) + s(xts)) + s(xts))) + (s((((s(xts) * s(xts)) + s(xts)) + s(xts)) + s(xts)) + s(xts))) + (s((((s(xts) * s(xts)) + s(xts)) + s(xts)) + s(xts)) + s(xts))
+--- clause
+	(((0 * (s((((0 * 0) + 0) + 0) + 0) + 0)) + 0) + 0) + 0 = s((((s((((0 * 0) + 0) + 0) + 0) + 0) * 0) + (s((((0 * 0) + 0) + 0) + 0) + 0)) + (s((((0 * 0) + 0) + 0) + 0) + 0)) + (s((((0 * 0) + 0) + 0) + 0) + 0)
+... reduced in 26 steps to
+	0 = s(s(s(s(0))))
+--- clause
+	(((s(xts) * (s((((s(xts) * s(xts)) + s(xts)) + s(xts)) + s(xts)) + s(xts))) + s(xts)) + s(xts)) + s(xts) = s((((s((((s(xts) * s(xts)) + s(xts)) + s(xts)) + s(xts)) + s(xts)) * s(xts)) + (s((((s(xts) * s(xts)) + s(xts)) + s(xts)) + s(xts)) + s(xts))) + (s((((s(xts) * s(xts)) + s(xts)) + s(xts)) + s(xts)) + s(xts))) + (s((((s(xts) * s(xts)) + s(xts)) + s(xts)) + s(xts)) + s(xts))
+... reduced in 52 steps to
+	s(s(s((((xts * (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + xts) + xts) + xts) + xts) + xts) = s(s(s(s(s((((s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts) * xts) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts))) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts))
+... decomposed into new clause(s)
+	s(s((((xts * (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + xts) + xts) + xts) + xts) + xts = s(s(s(s((((s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts) * xts) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts))) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)
++++ inductive narrowing succeeded
+--- clause
+	(((xts * (s((((xts * xts) + xts) + xts) + xts) + xts)) + xts) + xts) + xts = s((((s((((xts * xts) + xts) + xts) + xts) + xts) * xts) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)
+... oriented to rule
+	s((((s((((xts * xts) + xts) + xts) + xts) + xts) * xts) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts) -> (((xts * (s((((xts * xts) + xts) + xts) + xts) + xts)) + xts) + xts) + xts
++++ added new clause(s)
+	0 = s(s(s(s(0))))
+	s(s((((xts * (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + xts) + xts) + xts) + xts) + xts = s(s(s(s((((s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts) * xts) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts))) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	0 = s(s(s(s(0))))
+	s(s((((xts * (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + xts) + xts) + xts) + xts) + xts = s(s(s(s((((s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts) * xts) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts))) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	(x * x) * x -> x * (x * x)
+	((((xts * xts) + xts) + xts) * xts) + (((xts * xts) + xts) + xts) -> (xts * (((xts * xts) + xts) + xts)) + xts
+	s((((s((((xts * xts) + xts) + xts) + xts) + xts) * xts) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts) -> (((xts * (s((((xts * xts) + xts) + xts) + xts) + xts)) + xts) + xts) + xts
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	0 = s(s(s(s(0))))
+--- no new clauses created
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s((((xts * (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + xts) + xts) + xts) + xts) + xts = s(s(s(s((((s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts) * xts) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts))) + (s(s(s(s((((xts * xts) + xts) + xts) + xts) + xts) + xts)) + xts)
+	0 = s(s(s(s(0))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	(x * x) * x -> x * (x * x)
+	((((xts * xts) + xts) + xts) * xts) + (((xts * xts) + xts) + xts) -> (xts * (((xts * xts) + xts) + xts)) + xts
+	s((((s((((xts * xts) + xts) + xts) + xts) + xts) * xts) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts)) + (s((((xts * xts) + xts) + xts) + xts) + xts) -> (((xts * (s((((xts * xts) + xts) + xts) + xts) + xts)) + xts) + xts) + xts
+--- Primal Grammar:
+	<empty>
+
++++ DISPROOF: counter example
+	0 = s(s(s(s(0))))
++++ Statistics:
+... Number of proof steps          = 4
+... Number of induction steps      = 3
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.038

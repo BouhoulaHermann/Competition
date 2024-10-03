@@ -1,0 +1,304 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 0a-in.txt
++++ output      = 0a-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LIST from list successfully parsed
++++ specification APPEND from append successfully parsed
++++ specification REVERSE from reverse successfully parsed
++++ specification ListFunctions from 0a-in.txt successfully parsed
++++ Listing
+         1: specification ListFunctions
+         2: sorts
+         3:      list nat
+         4: constructors
+         5:      0: -> nat
+         6:      cons: nat list -> list
+         7:      nil: -> list
+         8:      s: nat -> nat
+         9: defined functions
+        10:      app: list list -> list
+        11:      rev: list -> list
+        12:      revAcc: list -> list
+        13:      revAccInner: list list -> list
+        14: precedence
+        15:      revAcc > revAccInner > rev > app > cons > nil > s > 0
+        16: axioms
+        17:      rev(nil) = nil;
+        18:      app(nil, y) = y;
+        19:      revAccInner(nil, x) = x;
+        20:      revAcc(x) = revAccInner(x, nil);
+        21:      app(cons(x, y), z) = cons(x, app(y, z));
+        22:      rev(cons(x, y)) = app(rev(y), cons(x, nil));
+        23:      revAccInner(cons(x, y), z) = revAccInner(y, cons(x, z));
+        24: conjectures
+        25:      revAcc(x) = rev(x);
+        26: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	rev(nil) -> nil
+	app(nil, y) -> y
+	revAccInner(nil, x) -> x
+	revAcc(x) -> revAccInner(x, nil)
+	app(cons(x, y), z) -> cons(x, app(y, z))
+	rev(cons(x, y)) -> app(rev(y), cons(x, nil))
+	revAccInner(cons(x, y), z) -> revAccInner(y, cons(x, z))
++++ inductive positions:
+... for app: 0
+... for rev: 0
+... for revAcc:
+... for revAccInner: 0
++++ WARNING: there are no axioms for defined symbol revAcc
++++ maximal depths of left-hand sides:
+... for revAcc: 1
+... for revAccInner: 2
+... for app: 2
+... for rev: 2
++++ general maximal depth = 2
++++ sort dependence: nat < list
++++ test sets for defined functions and sorts:
+... for revAccInner
+... ... list
+		nil
+		cons(x, y)
+... for rev
+... ... list
+		nil
+		cons(x, y)
+... for app
+... ... list
+		nil
+		cons(x, y)
+
++++ conjecture(s)
+	revAcc(x) = rev(x)
+
++++ inference system initiated
+--- clause
+	revAcc(x) = rev(x)
+... reduced in 1 step to
+	revAccInner(x, nil) = rev(x)
++++ treating clause
+	revAccInner(x, nil) = rev(x)
++++ inductive narrowing on conjecture
+	revAccInner(x, nil) = rev(x)
+... induction variables of
+	revAccInner(x, nil) = rev(x)
+... are:
+	x:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	revAccInner(x, nil) = rev(x)
+... with variable x
++++ creating new conjecture
+	revAccInner(nil, nil) = rev(nil)
++++ creating new conjecture
+	revAccInner(cons(xts, yts), nil) = rev(cons(xts, yts))
+--- clause
+	revAccInner(nil, nil) = rev(nil)
+... reduced to tautology
+	nil = nil
+--- clause
+	revAccInner(cons(xts, yts), nil) = rev(cons(xts, yts))
+... reduced in 2 steps to
+	revAccInner(yts, cons(xts, nil)) = app(rev(yts), cons(xts, nil))
++++ inductive narrowing succeeded
+--- clause
+	revAccInner(x, nil) = rev(x)
+... oriented to rule
+	revAccInner(x, nil) -> rev(x)
++++ added new clause(s)
+	revAccInner(yts, cons(xts, nil)) = app(rev(yts), cons(xts, nil))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	revAccInner(yts, cons(xts, nil)) = app(rev(yts), cons(xts, nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	revAccInner(x, nil) -> rev(x)
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	revAccInner(yts, cons(xts, nil)) = app(rev(yts), cons(xts, nil))
++++ inductive narrowing on conjecture
+	revAccInner(yts, cons(xts, nil)) = app(rev(yts), cons(xts, nil))
+... induction variables of
+	revAccInner(yts, cons(xts, nil)) = app(rev(yts), cons(xts, nil))
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	revAccInner(yts, cons(xts, nil)) = app(rev(yts), cons(xts, nil))
+... with variable yts
++++ creating new conjecture
+	revAccInner(nil, cons(xts, nil)) = app(rev(nil), cons(xts, nil))
++++ creating new conjecture
+	revAccInner(cons(xts2, yts), cons(xts1, nil)) = app(rev(cons(xts2, yts)), cons(xts1, nil))
+--- clause
+	revAccInner(nil, cons(xts, nil)) = app(rev(nil), cons(xts, nil))
+... reduced to tautology
+	cons(xts, nil) = cons(xts, nil)
+--- clause
+	revAccInner(cons(xts2, yts), cons(xts1, nil)) = app(rev(cons(xts2, yts)), cons(xts1, nil))
+... reduced in 2 steps to
+	revAccInner(yts, cons(xts2, cons(xts1, nil))) = app(app(rev(yts), cons(xts2, nil)), cons(xts1, nil))
++++ inductive narrowing succeeded
+--- clause
+	revAccInner(yts, cons(xts, nil)) = app(rev(yts), cons(xts, nil))
+... oriented to rule
+	revAccInner(yts, cons(xts, nil)) -> app(rev(yts), cons(xts, nil))
++++ added new clause(s)
+	revAccInner(yts, cons(xts2, cons(xts1, nil))) = app(app(rev(yts), cons(xts2, nil)), cons(xts1, nil))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	revAccInner(yts, cons(xts2, cons(xts1, nil))) = app(app(rev(yts), cons(xts2, nil)), cons(xts1, nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	revAccInner(x, nil) -> rev(x)
+	revAccInner(yts, cons(xts, nil)) -> app(rev(yts), cons(xts, nil))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	revAccInner(yts, cons(xts2, cons(xts1, nil))) = app(app(rev(yts), cons(xts2, nil)), cons(xts1, nil))
++++ inductive narrowing on conjecture
+	revAccInner(yts, cons(xts2, cons(xts1, nil))) = app(app(rev(yts), cons(xts2, nil)), cons(xts1, nil))
+... induction variables of
+	revAccInner(yts, cons(xts2, cons(xts1, nil))) = app(app(rev(yts), cons(xts2, nil)), cons(xts1, nil))
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	revAccInner(yts, cons(xts2, cons(xts1, nil))) = app(app(rev(yts), cons(xts2, nil)), cons(xts1, nil))
+... with variable yts
++++ creating new conjecture
+	revAccInner(nil, cons(xts2, cons(xts1, nil))) = app(app(rev(nil), cons(xts2, nil)), cons(xts1, nil))
++++ creating new conjecture
+	revAccInner(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = app(app(rev(cons(xts3, yts)), cons(xts2, nil)), cons(xts1, nil))
+--- clause
+	revAccInner(nil, cons(xts2, cons(xts1, nil))) = app(app(rev(nil), cons(xts2, nil)), cons(xts1, nil))
+... reduced to tautology
+	cons(xts2, cons(xts1, nil)) = cons(xts2, cons(xts1, nil))
+--- clause
+	revAccInner(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = app(app(rev(cons(xts3, yts)), cons(xts2, nil)), cons(xts1, nil))
+... reduced in 2 steps to
+	revAccInner(yts, cons(xts3, cons(xts2, cons(xts1, nil)))) = app(app(app(rev(yts), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
++++ inductive narrowing succeeded
+--- clause
+	revAccInner(yts, cons(xts2, cons(xts1, nil))) = app(app(rev(yts), cons(xts2, nil)), cons(xts1, nil))
+... oriented to rule
+	revAccInner(yts, cons(xts2, cons(xts1, nil))) -> app(app(rev(yts), cons(xts2, nil)), cons(xts1, nil))
++++ added new clause(s)
+	revAccInner(yts, cons(xts3, cons(xts2, cons(xts1, nil)))) = app(app(app(rev(yts), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	revAccInner(yts, cons(xts3, cons(xts2, cons(xts1, nil)))) = app(app(app(rev(yts), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	revAccInner(x, nil) -> rev(x)
+	revAccInner(yts, cons(xts, nil)) -> app(rev(yts), cons(xts, nil))
+	revAccInner(yts, cons(xts2, cons(xts1, nil))) -> app(app(rev(yts), cons(xts2, nil)), cons(xts1, nil))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	revAccInner(yts, cons(xts3, cons(xts2, cons(xts1, nil)))) = app(app(app(rev(yts), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
++++ inductive narrowing on conjecture
+	revAccInner(yts, cons(xts3, cons(xts2, cons(xts1, nil)))) = app(app(app(rev(yts), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
+... induction variables of
+	revAccInner(yts, cons(xts3, cons(xts2, cons(xts1, nil)))) = app(app(app(rev(yts), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	revAccInner(yts, cons(xts3, cons(xts2, cons(xts1, nil)))) = app(app(app(rev(yts), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
+... with variable yts
++++ creating new conjecture
+	revAccInner(nil, cons(xts3, cons(xts2, cons(xts1, nil)))) = app(app(app(rev(nil), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
++++ creating new conjecture
+	revAccInner(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = app(app(app(rev(cons(xts4, yts)), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
+--- clause
+	revAccInner(nil, cons(xts3, cons(xts2, cons(xts1, nil)))) = app(app(app(rev(nil), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
+... reduced to tautology
+	cons(xts3, cons(xts2, cons(xts1, nil))) = cons(xts3, cons(xts2, cons(xts1, nil)))
+--- clause
+	revAccInner(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = app(app(app(rev(cons(xts4, yts)), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
+... reduced in 2 steps to
+	revAccInner(yts, cons(xts4, cons(xts3, cons(xts2, cons(xts1, nil))))) = app(app(app(app(rev(yts), cons(xts4, nil)), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
++++ inductive narrowing succeeded
+--- clause
+	revAccInner(yts, cons(xts3, cons(xts2, cons(xts1, nil)))) = app(app(app(rev(yts), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
+... oriented to rule
+	revAccInner(yts, cons(xts3, cons(xts2, cons(xts1, nil)))) -> app(app(app(rev(yts), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
++++ added new clause(s)
+	revAccInner(yts, cons(xts4, cons(xts3, cons(xts2, cons(xts1, nil))))) = app(app(app(app(rev(yts), cons(xts4, nil)), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
+... to conjectures
++++ active wrap
+	revAccInner(yts, cons(., .)) = app(., cons(xts, nil))
+... with sequence
+	revAccInner(yts, cons(xts, nil)) = app(rev(yts), cons(xts, nil))
+	revAccInner(yts, cons(xts2, cons(xts1, nil))) = app(app(rev(yts), cons(xts2, nil)), cons(xts1, nil))
+	revAccInner(yts, cons(xts3, cons(xts2, cons(xts1, nil)))) = app(app(app(rev(yts), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
++++ primal grammar found for head
+	{app, cons, nil, rev, revAccInner}
+... and wrap
+	revAccInner(yts, cons(., .)) = app(., cons(xts, nil))
++++ Presburger system  = {
+	^f0(0; xts@) -> nil
+	^f0($n0 + 1; xts@) -> cons(xts$n0, ^f0($n0; xts@))
+	^f1(0; yts, xts@) -> rev(yts)
+	^f1($n1 + 1; yts, xts@) -> app(^f1($n1; yts, xts@), cons(xts$n1, nil))
++++ }
++++ Lemma(s)           = 
+	revAccInner(yts, cons(xts$n, ^f0($n; xts@))) = app(^f1($n; yts, xts@), cons(xts$n, nil))
+--- clause
+	revAccInner(yts, cons(xts4, cons(xts3, cons(xts2, cons(xts1, nil))))) = app(app(app(app(rev(yts), cons(xts4, nil)), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
+... subsumed by lemma
+	revAccInner(yts, cons(xts$n, ^f0($n; xts@))) = app(^f1($n; yts, xts@), cons(xts$n, nil))
+... with substitution
+	$n <- 3
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	revAccInner(x, nil) -> rev(x)
+	revAccInner(yts, cons(xts, nil)) -> app(rev(yts), cons(xts, nil))
+	revAccInner(yts, cons(xts2, cons(xts1, nil))) -> app(app(rev(yts), cons(xts2, nil)), cons(xts1, nil))
+	revAccInner(yts, cons(xts3, cons(xts2, cons(xts1, nil)))) -> app(app(app(rev(yts), cons(xts3, nil)), cons(xts2, nil)), cons(xts1, nil))
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; xts@) -> nil
+	^f0($n0 + 1; xts@) -> cons(xts$n0, ^f0($n0; xts@))
+	^f1(0; yts, xts@) -> rev(yts)
+	^f1($n1 + 1; yts, xts@) -> app(^f1($n1; yts, xts@), cons(xts$n1, nil))
++++ }
++++ Lemma(s)           = 
+	revAccInner(yts, cons(xts$n, ^f0($n; xts@))) = app(^f1($n; yts, xts@), cons(xts$n, nil))
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 4
+... Number of induction steps      = 4
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Number of PG defined symbols   = 2
+... Number of PG lemmas            = 1
+... Elapsed time (seconds)         = 0.004

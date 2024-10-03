@@ -1,0 +1,42 @@
+specification ListFunc
+
+sorts nat lst bool 
+
+constructors
+0: -> nat
+s: nat -> nat
+nil: -> lst
+cons: nat lst -> lst
+true,false: -> bool
+
+defined functions
+app: lst lst -> lst
+pref: lst lst -> bool
+==: nat nat -> bool
+&&: bool bool -> bool
+
+precedence
+app > pref > && > == > cons > nil > s > 0 > true = false
+
+axioms
+app(nil,x) = x;
+app(cons(u,v),w) = cons(u,app(v,w));
+
+0 == s(x) = false;
+s(x) == 0 = false;
+x == x = true;
+s(x) == s(y) = x == y;
+
+x && false = false;
+false && x = false;
+x && true = x;
+true && x = x;
+
+pref(nil,x) = true;
+pref(cons(u,x),nil) = false;
+pref(cons(u,x),cons(v,y)) = (u == v) && pref(x,y);
+
+conjectures
+pref(app(app(app(x, x), app(x, x)), x), app(app(x, x), app(x, app(app(x, app(app(x, x), app(x, x))), x)))) = true;
+
+end

@@ -1,0 +1,16 @@
+specification listFunctions
+
+include <reverse>
+
+precedence
+	rev >
+	app >
+	cons >
+	nil >
+	s >
+	0
+
+conjectures
+	rev(app(x, app(x, x))) = rev(app(app(x, x), x));
+
+end

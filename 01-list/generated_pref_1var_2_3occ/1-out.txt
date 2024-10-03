@@ -1,0 +1,144 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 1-in.txt
++++ output      = 1-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification ListFunctions from 1-in.txt successfully parsed
++++ Listing
+         1: specification ListFunctions
+         2: sorts
+         3:      bool lst nat
+         4: constructors
+         5:      0: -> nat
+         6:      cons: nat lst -> lst
+         7:      false: -> bool
+         8:      nil: -> lst
+         9:      s: nat -> nat
+        10:      true: -> bool
+        11: defined functions
+        12:      &&: bool bool -> bool
+        13:      ==: nat nat -> bool
+        14:      app: lst lst -> lst
+        15:      pref: lst lst -> bool
+        16: precedence
+        17:      pref > app > && > == > cons > nil > s > 0 > false = true
+        18: axioms
+        19:      x == x = true;
+        20:      app(nil, x) = x;
+        21:      true && x = true;
+        22:      x && true = true;
+        23:      0 == s(x) = false;
+        24:      s(x) == 0 = false;
+        25:      false && x = false;
+        26:      x && false = false;
+        27:      pref(nil, x) = true;
+        28:      s(x) == s(y) = x == y;
+        29:      pref(cons(x, y), nil) = false;
+        30:      app(cons(u, v), w) = cons(u, app(v, w));
+        31:      pref(cons(xa, x), cons(xb, y)) = (xa == xb) && pref(x, y);
+        32: conjectures
+        33:      pref(app(v, v), app(v, app(v, v))) = true;
+        34: end
++++ finitary sorts: bool
++++ Rewrite System 
+	x == x -> true
+	app(nil, x) -> x
+	true && x -> true
+	x && true -> true
+	0 == s(x) -> false
+	s(x) == 0 -> false
+	false && x -> false
+	x && false -> false
+	pref(nil, x) -> true
+	s(x) == s(y) -> x == y
+	pref(cons(x, y), nil) -> false
+	app(cons(u, v), w) -> cons(u, app(v, w))
+	pref(cons(xa, x), cons(xb, y)) -> (xa == xb) && pref(x, y)
++++ inductive positions:
+... for &&: 0 1
+... for ==: 0 1
+... for app: 0
+... for pref: 0 1
++++ maximal depths of left-hand sides:
+... for pref: 2
+... for &&: 1
+... for app: 2
+... for ==: 2
++++ general maximal depth = 2
++++ sort dependence: nat < lst
++++ test sets for defined functions and sorts:
+... for pref
+... ... lst
+		nil
+		cons(x, y)
+... for ==
+... ... nat
+		0
+		s(x)
+... for app
+... ... lst
+		nil
+		cons(x, y)
+... for &&
+... ... bool
+		x
+
++++ conjecture(s)
+	pref(app(v, v), app(v, app(v, v))) = true
+
++++ inference system initiated
++++ treating clause
+	pref(app(v, v), app(v, app(v, v))) = true
++++ inductive narrowing on conjecture
+	pref(app(v, v), app(v, app(v, v))) = true
+... induction variables of
+	pref(app(v, v), app(v, app(v, v))) = true
+... are:
+	v:lst
++++ perform INDUCTIVE NARROWING on conjecture 
+	pref(app(v, v), app(v, app(v, v))) = true
+... with variable v
++++ creating new conjecture
+	pref(app(nil, nil), app(nil, app(nil, nil))) = true
++++ creating new conjecture
+	pref(app(cons(xts, yts), cons(xts, yts)), app(cons(xts, yts), app(cons(xts, yts), cons(xts, yts)))) = true
+--- clause
+	pref(app(nil, nil), app(nil, app(nil, nil))) = true
+... reduced to tautology
+	true = true
+--- clause
+	pref(app(cons(xts, yts), cons(xts, yts)), app(cons(xts, yts), app(cons(xts, yts), cons(xts, yts)))) = true
+... reduced to tautology
+	true = true
++++ inductive narrowing succeeded
+--- clause
+	pref(app(v, v), app(v, app(v, v))) = true
+... oriented to rule
+	pref(app(v, v), app(v, app(v, v))) -> true
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	pref(app(v, v), app(v, app(v, v))) -> true
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 1
+... Number of induction steps      = 1
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0

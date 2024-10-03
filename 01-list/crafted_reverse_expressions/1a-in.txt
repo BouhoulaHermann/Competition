@@ -1,0 +1,18 @@
+specification listFunctions
+
+include <reverse>
+	<bool>
+
+precedence
+	rev >
+	app >
+	cons >
+	nil >
+	true = false >
+	s >
+	0
+
+conjectures
+	rev(rev(x)) = x;
+
+end

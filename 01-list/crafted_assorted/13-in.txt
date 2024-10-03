@@ -1,0 +1,14 @@
+specification LengthOfList
+
+include <add>
+	<append>
+	<length>
+	<leq>
+
+precedence
+	<= > + > len > app  > cons > nil> s > 0 > true = false
+
+conjectures
+	(len(x) + len(y)) <= s(0) = true => app(x, y) = app(y, x);
+
+end

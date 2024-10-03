@@ -1,0 +1,14 @@
+specification Append
+
+include
+	<append>
+
+precedence
+	
+	app > s > 0 > cons > nil
+
+conjectures
+
+	app(x, app(y, z)) = app(app(x,y), z);
+
+end

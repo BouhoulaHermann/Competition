@@ -1,0 +1,16 @@
+specification Append
+
+include
+	<add>
+	<append>
+
+precedence
+	
+	+ > app > s > 0 > cons > nil
+
+conjectures
+
+	app(cons(y + s(y), x), app(x, x)) = app(app(cons(s(y) + y, x), x), x);
+
+end
+

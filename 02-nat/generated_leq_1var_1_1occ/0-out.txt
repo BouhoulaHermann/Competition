@@ -1,0 +1,112 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 0-in.txt
++++ output      = 0-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification BOOL from bool successfully parsed
++++ specification NAT from nat successfully parsed
++++ specification LEQ from leq successfully parsed
++++ specification LeqFunc from 0-in.txt successfully parsed
++++ Listing
+         1: specification LeqFunc
+         2: sorts
+         3:      bool nat
+         4: constructors
+         5:      0: -> nat
+         6:      false: -> bool
+         7:      s: nat -> nat
+         8:      true: -> bool
+         9: defined functions
+        10:      <=: nat nat -> bool
+        11: precedence
+        12:      <= > s > 0 > false = true
+        13: axioms
+        14:      0 <= x = true;
+        15:      s(x) <= 0 = false;
+        16:      s(x) <= s(y) = x <= y;
+        17: conjectures
+        18:      x <= x = true;
+        19: end
++++ finitary sorts: bool
++++ Rewrite System 
+	0 <= x -> true
+	s(x) <= 0 -> false
+	s(x) <= s(y) -> x <= y
++++ inductive positions:
+... for <=: 0 1
++++ maximal depths of left-hand sides:
+... for <=: 2
++++ general maximal depth = 2
++++ sort dependence: <empty>
++++ test sets for defined functions and sorts:
+... for <=
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	x <= x = true
+
++++ inference system initiated
++++ treating clause
+	x <= x = true
++++ inductive narrowing on conjecture
+	x <= x = true
+... induction variables of
+	x <= x = true
+... are:
+	x:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	x <= x = true
+... with variable x
++++ creating new conjecture
+	0 <= 0 = true
++++ creating new conjecture
+	s(xts) <= s(xts) = true
+--- clause
+	0 <= 0 = true
+... reduced to tautology
+	true = true
+--- clause
+	s(xts) <= s(xts) = true
+... reduced in 1 step to
+	xts <= xts = true
++++ inductive narrowing succeeded
+--- clause
+	x <= x = true
+... oriented to rule
+	x <= x -> true
++++ added new clause(s)
+	xts <= xts = true
+... to conjectures
+--- clause
+	xts <= xts = true
+... reduced to tautology
+	true = true
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	x <= x -> true
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 1
+... Number of induction steps      = 1
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0

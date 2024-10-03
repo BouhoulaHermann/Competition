@@ -1,0 +1,18 @@
+specification Crafted
+
+include <add>
+
+defined functions
+	dup: nat -> nat
+
+precedence
+	dup > + > s > 0
+
+axioms
+	dup(0) = 0;
+	dup(s(x)) = s(s(dup(x)));
+
+conjectures
+	dup(x) = x + x;
+
+end

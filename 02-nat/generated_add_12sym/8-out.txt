@@ -1,0 +1,3394 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 8-in.txt
++++ output      = 8-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 46
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification ADD from add successfully parsed
++++ specification Generated from 8-in.txt successfully parsed
++++ Listing
+         1: specification Generated
+         2: sorts
+         3:      nat
+         4: constructors
+         5:      0: -> nat
+         6:      s: nat -> nat
+         7: defined functions
+         8:      +: nat nat -> nat
+         9: precedence
+        10:      + > s > 0
+        11: axioms
+        12:      x + 0 = x;
+        13:      x + s(y) = s(x + y);
+        14: conjectures
+        15:      s(((0 + s(V4)) + (V3 + s(V2))) + s(s(s(s(V1))))) = s(((s(V3) + s(V4)) + s(s(s(V2 + 0)))) + s(V1));
+        16: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	x + 0 -> x
+	x + s(y) -> s(x + y)
++++ inductive positions:
+... for +: 1
++++ maximal depths of left-hand sides:
+... for +: 2
++++ general maximal depth = 2
++++ sort dependence: <empty>
++++ test sets for defined functions and sorts:
+... for +
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	s(((0 + s(V4)) + (V3 + s(V2))) + s(s(s(s(V1))))) = s(((s(V3) + s(V4)) + s(s(s(V2 + 0)))) + s(V1))
+
++++ inference system initiated
+--- clause
+	s(((0 + s(V4)) + (V3 + s(V2))) + s(s(s(s(V1))))) = s(((s(V3) + s(V4)) + s(s(s(V2 + 0)))) + s(V1))
+... reduced in 13 steps to
+	s(s(s(s(s(s(s(0 + V4) + (V3 + V2)) + V1))))) = s(s(s(s(s(s(s(V3) + V4) + V2))) + V1))
+... decomposed into new clause(s)
+	s(s(s(s(s(0 + V4) + (V3 + V2)) + V1))) = s(s(s(s(s(V3) + V4) + V2))) + V1
++++ treating clause
+	s(s(s(s(s(0 + V4) + (V3 + V2)) + V1))) = s(s(s(s(s(V3) + V4) + V2))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(0 + V4) + (V3 + V2)) + V1))) = s(s(s(s(s(V3) + V4) + V2))) + V1
+... induction variables of
+	s(s(s(s(s(0 + V4) + (V3 + V2)) + V1))) = s(s(s(s(s(V3) + V4) + V2))) + V1
+... are:
+	V2:nat
+	V4:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(0 + V4) + (V3 + V2)) + V1))) = s(s(s(s(s(V3) + V4) + V2))) + V1
+... with variable V2
++++ creating new conjecture
+	s(s(s(s(s(0 + V3) + (V2 + 0)) + V1))) = s(s(s(s(s(V2) + V3) + 0))) + V1
++++ creating new conjecture
+	s(s(s(s(s(0 + V3) + (V2 + s(xts))) + V1))) = s(s(s(s(s(V2) + V3) + s(xts)))) + V1
+--- clause
+	s(s(s(s(s(0 + V3) + (V2 + 0)) + V1))) = s(s(s(s(s(V2) + V3) + 0))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+--- clause
+	s(s(s(s(s(0 + V3) + (V2 + s(xts))) + V1))) = s(s(s(s(s(V2) + V3) + s(xts)))) + V1
+... reduced in 3 steps to
+	s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2) + V3) + xts)))) + V1
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(0 + V4) + (V3 + V2)) + V1))) = s(s(s(s(s(V3) + V4) + V2))) + V1
+... oriented to rule
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
++++ added new clause(s)
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2) + V3) + xts)))) + V1
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2) + V3) + xts)))) + V1
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+... induction variables of
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+... are:
+	V3:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+... with variable V3
++++ creating new conjecture
+	s(s(s(s(s(0 + 0) + V2) + V1))) = s(s(s(s(s(V2) + 0)))) + V1
++++ creating new conjecture
+	s(s(s(s(s(0 + s(xts)) + V2) + V1))) = s(s(s(s(s(V2) + s(xts))))) + V1
+--- clause
+	s(s(s(s(s(0 + 0) + V2) + V1))) = s(s(s(s(s(V2) + 0)))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s(0) + V2) + V1))) = s(s(s(s(s(V2))))) + V1
+--- clause
+	s(s(s(s(s(0 + s(xts)) + V2) + V1))) = s(s(s(s(s(V2) + s(xts))))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
++++ inductive narrowing succeeded
+--- non-orientable clause
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
++++ moved
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+... to non-orientable hypotheses
++++ added new clause(s)
+	s(s(s(s(s(0) + V2) + V1))) = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2) + V3) + xts)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+--- Oriented hypotheses:
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2) + V3) + xts)))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2) + V3) + xts)))) + V1
+... induction variables of
+	s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2) + V3) + xts)))) + V1
+... are:
+	V3:nat
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2) + V3) + xts)))) + V1
+... with variable V3
++++ creating new conjecture
+	s(s(s(s(s(s(0 + 0) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2) + 0) + xts)))) + V1
++++ creating new conjecture
+	s(s(s(s(s(s(0 + s(xts2)) + (V2 + xts1))) + V1))) = s(s(s(s(s(s(V2) + s(xts2)) + xts1)))) + V1
+--- clause
+	s(s(s(s(s(s(0 + 0) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2) + 0) + xts)))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+--- clause
+	s(s(s(s(s(s(0 + s(xts2)) + (V2 + xts1))) + V1))) = s(s(s(s(s(s(V2) + s(xts2)) + xts1)))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1))) = s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2) + V3) + xts)))) + V1
+... oriented to rule
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
++++ added new clause(s)
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1))) = s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(0) + V2) + V1))) = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1))) = s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+--- Oriented hypotheses:
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(0) + V2) + V1))) = s(s(s(s(s(V2))))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(0) + V2) + V1))) = s(s(s(s(s(V2))))) + V1
+... induction variables of
+	s(s(s(s(s(0) + V2) + V1))) = s(s(s(s(s(V2))))) + V1
+... are:
+	V1:nat
+	V2:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(0) + V2) + V1))) = s(s(s(s(s(V2))))) + V1
+... with variable V1
++++ creating new conjecture
+	s(s(s(s(s(0) + V) + 0))) = s(s(s(s(s(V))))) + 0
++++ creating new conjecture
+	s(s(s(s(s(0) + V) + s(xts)))) = s(s(s(s(s(V))))) + s(xts)
+--- clause
+	s(s(s(s(s(0) + V) + 0))) = s(s(s(s(s(V))))) + 0
+... reduced in 2 steps to
+	s(s(s(s(s(0) + V)))) = s(s(s(s(s(V)))))
+--- clause
+	s(s(s(s(s(0) + V) + s(xts)))) = s(s(s(s(s(V))))) + s(xts)
+... reduced in 2 steps to
+	s(s(s(s(s(s(0) + V) + xts)))) = s(s(s(s(s(s(V))))) + xts)
+... decomposed into new clause(s)
+	s(0) + V = s(V)
+... decomposed into new clause(s)
+	s(s(s(s(s(0) + V) + xts))) = s(s(s(s(s(V))))) + xts
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(0) + V2) + V1))) = s(s(s(s(s(V2))))) + V1
+... oriented to rule
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
++++ added new clause(s)
+	s(0) + V = s(V)
+	s(s(s(s(s(0) + V) + xts))) = s(s(s(s(s(V))))) + xts
+... to conjectures
+--- clause
+	s(s(s(s(s(0) + V) + xts))) = s(s(s(s(s(V))))) + xts
+... reduced to tautology
+	s(s(s(s(s(V))))) + xts = s(s(s(s(s(V))))) + xts
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1))) = s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1
+	s(0) + V = s(V)
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+--- Oriented hypotheses:
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+... induction variables of
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(s(s(0 + 0)) + V2) + V1))) = s(s(s(s(s(s(V2) + 0))))) + V1
++++ creating new conjecture
+	s(s(s(s(s(s(0 + s(xts))) + V2) + V1))) = s(s(s(s(s(s(V2) + s(xts)))))) + V1
+--- clause
+	s(s(s(s(s(s(0 + 0)) + V2) + V1))) = s(s(s(s(s(s(V2) + 0))))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s(s(0)) + V2) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+--- clause
+	s(s(s(s(s(s(0 + s(xts))) + V2) + V1))) = s(s(s(s(s(s(V2) + s(xts)))))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
++++ inductive narrowing succeeded
+--- non-orientable clause
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
++++ moved
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+... to non-orientable hypotheses
++++ added new clause(s)
+	s(s(s(s(s(s(0)) + V2) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1))) = s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1
+	s(0) + V = s(V)
+	s(s(s(s(s(s(0)) + V2) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+--- Oriented hypotheses:
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+... induction variables of
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(s(s(0) + (V2 + 0))) + V1))) = s(s(s(s(s(s(V2)) + 0)))) + V1
++++ creating new conjecture
+	s(s(s(s(s(s(0) + (V2 + s(xts)))) + V1))) = s(s(s(s(s(s(V2)) + s(xts))))) + V1
+--- clause
+	s(s(s(s(s(s(0) + (V2 + 0))) + V1))) = s(s(s(s(s(s(V2)) + 0)))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s(s(0) + V2)) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+--- clause
+	s(s(s(s(s(s(0) + (V2 + s(xts)))) + V1))) = s(s(s(s(s(s(V2)) + s(xts))))) + V1
+... reduced in 3 steps to
+	s(s(s(s(s(s(s(0) + (V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2)) + xts))))) + V1
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+... oriented to rule
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
++++ added new clause(s)
+	s(s(s(s(s(s(0) + V2)) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(s(0) + (V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2)) + xts))))) + V1
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1))) = s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1
+	s(0) + V = s(V)
+	s(s(s(s(s(s(0)) + V2) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(s(s(0) + V2)) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(s(0) + (V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2)) + xts))))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+--- Oriented hypotheses:
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1))) = s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1))) = s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1
+... induction variables of
+	s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1))) = s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1
+... are:
+	xts1:nat
+	xts2:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1))) = s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1
+... with variable xts1
++++ creating new conjecture
+	s(s(s(s(s(s(s(0 + xts)) + (V2 + 0))) + V1))) = s(s(s(s(s(s(s(V2) + xts)) + 0)))) + V1
++++ creating new conjecture
+	s(s(s(s(s(s(s(0 + xts2)) + (V2 + s(xts1)))) + V1))) = s(s(s(s(s(s(s(V2) + xts2)) + s(xts1))))) + V1
+--- clause
+	s(s(s(s(s(s(s(0 + xts)) + (V2 + 0))) + V1))) = s(s(s(s(s(s(s(V2) + xts)) + 0)))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s(s(s(0 + xts)) + V2)) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+--- clause
+	s(s(s(s(s(s(s(0 + xts2)) + (V2 + s(xts1)))) + V1))) = s(s(s(s(s(s(s(V2) + xts2)) + s(xts1))))) + V1
+... reduced in 3 steps to
+	s(s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1))) = s(s(s(s(s(s(s(s(V2) + xts2)) + xts1))))) + V1
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1))) = s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1
+... oriented to rule
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
++++ added new clause(s)
+	s(s(s(s(s(s(s(0 + xts)) + V2)) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1))) = s(s(s(s(s(s(s(s(V2) + xts2)) + xts1))))) + V1
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(0) + V = s(V)
+	s(s(s(s(s(s(0)) + V2) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(s(s(0) + V2)) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(s(0) + (V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2)) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts)) + V2)) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1))) = s(s(s(s(s(s(s(s(V2) + xts2)) + xts1))))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+--- Oriented hypotheses:
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(0) + V = s(V)
++++ inductive narrowing on conjecture
+	s(0) + V = s(V)
+... induction variables of
+	s(0) + V = s(V)
+... are:
+	V:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(0) + V = s(V)
+... with variable V
++++ creating new conjecture
+	s(0) + 0 = s(0)
++++ creating new conjecture
+	s(0) + s(xts) = s(s(xts))
+--- clause
+	s(0) + 0 = s(0)
+... reduced to tautology
+	s(0) = s(0)
+--- clause
+	s(0) + s(xts) = s(s(xts))
+... reduced in 1 step to
+	s(s(0) + xts) = s(s(xts))
+... decomposed into new clause(s)
+	s(0) + xts = s(xts)
++++ inductive narrowing succeeded
+--- clause
+	s(0) + V = s(V)
+... oriented to rule
+	s(0) + V -> s(V)
++++ added new clause(s)
+	s(0) + xts = s(xts)
+... to conjectures
+--- clause
+	s(s(s(s(s(s(0) + V2)) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+... reduced in 1 step to
+	s(s(s(s(s(s(V2))) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+--- clause
+	s(s(s(s(s(s(s(0) + (V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2)) + xts))))) + V1
+... reduced in 1 step to
+	s(s(s(s(s(s(s(V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2)) + xts))))) + V1
+--- clause
+	s(0) + xts = s(xts)
+... reduced to tautology
+	s(xts) = s(xts)
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(0)) + V2) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(s(s(V2))) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(s(V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2)) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts)) + V2)) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1))) = s(s(s(s(s(s(s(s(V2) + xts2)) + xts1))))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(0)) + V2) + V1))) = s(s(s(s(s(s(V2)))))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(0)) + V2) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+... induction variables of
+	s(s(s(s(s(s(0)) + V2) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+... are:
+	V1:nat
+	V2:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(0)) + V2) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+... with variable V1
++++ creating new conjecture
+	s(s(s(s(s(s(0)) + V) + 0))) = s(s(s(s(s(s(V)))))) + 0
++++ creating new conjecture
+	s(s(s(s(s(s(0)) + V) + s(xts)))) = s(s(s(s(s(s(V)))))) + s(xts)
+--- clause
+	s(s(s(s(s(s(0)) + V) + 0))) = s(s(s(s(s(s(V)))))) + 0
+... reduced in 2 steps to
+	s(s(s(s(s(s(0)) + V)))) = s(s(s(s(s(s(V))))))
+--- clause
+	s(s(s(s(s(s(0)) + V) + s(xts)))) = s(s(s(s(s(s(V)))))) + s(xts)
+... reduced in 2 steps to
+	s(s(s(s(s(s(s(0)) + V) + xts)))) = s(s(s(s(s(s(s(V)))))) + xts)
+... decomposed into new clause(s)
+	s(s(0)) + V = s(s(V))
+... decomposed into new clause(s)
+	s(s(s(s(s(s(0)) + V) + xts))) = s(s(s(s(s(s(V)))))) + xts
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(s(0)) + V2) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+... oriented to rule
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
++++ added new clause(s)
+	s(s(0)) + V = s(s(V))
+	s(s(s(s(s(s(0)) + V) + xts))) = s(s(s(s(s(s(V)))))) + xts
+... to conjectures
+--- clause
+	s(s(s(s(s(s(0)) + V) + xts))) = s(s(s(s(s(s(V)))))) + xts
+... reduced to tautology
+	s(s(s(s(s(s(V)))))) + xts = s(s(s(s(s(s(V)))))) + xts
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(s(s(V2))) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(s(V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2)) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts)) + V2)) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1))) = s(s(s(s(s(s(s(s(V2) + xts2)) + xts1))))) + V1
+	s(s(0)) + V = s(s(V))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+... induction variables of
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(s(s(s(0 + 0))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + 0)))))) + V1
++++ creating new conjecture
+	s(s(s(s(s(s(s(0 + s(xts)))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + s(xts))))))) + V1
+--- clause
+	s(s(s(s(s(s(s(0 + 0))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + 0)))))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s(s(s(0))) + V2) + V1))) = s(s(s(s(s(s(s(V2))))))) + V1
+--- clause
+	s(s(s(s(s(s(s(0 + s(xts)))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + s(xts))))))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s(s(s(s(0 + xts)))) + V2) + V1))) = s(s(s(s(s(s(s(s(V2) + xts))))))) + V1
++++ inductive narrowing succeeded
+--- non-orientable clause
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
++++ moved
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+... to non-orientable hypotheses
++++ added new clause(s)
+	s(s(s(s(s(s(s(0))) + V2) + V1))) = s(s(s(s(s(s(s(V2))))))) + V1
+	s(s(s(s(s(s(s(s(0 + xts)))) + V2) + V1))) = s(s(s(s(s(s(s(s(V2) + xts))))))) + V1
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(V2))) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(s(V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2)) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts)) + V2)) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1))) = s(s(s(s(s(s(s(s(V2) + xts2)) + xts1))))) + V1
+	s(s(0)) + V = s(s(V))
+	s(s(s(s(s(s(s(0))) + V2) + V1))) = s(s(s(s(s(s(s(V2))))))) + V1
+	s(s(s(s(s(s(s(s(0 + xts)))) + V2) + V1))) = s(s(s(s(s(s(s(s(V2) + xts))))))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(V2))) + V1))) = s(s(s(s(s(s(V2)))))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(V2))) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+... induction variables of
+	s(s(s(s(s(s(V2))) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+... are:
+	V1:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(V2))) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+... with variable V1
++++ creating new conjecture
+	s(s(s(s(s(s(V))) + 0))) = s(s(s(s(s(s(V)))))) + 0
++++ creating new conjecture
+	s(s(s(s(s(s(V))) + s(xts)))) = s(s(s(s(s(s(V)))))) + s(xts)
+--- clause
+	s(s(s(s(s(s(V))) + 0))) = s(s(s(s(s(s(V)))))) + 0
+... reduced to tautology
+	s(s(s(s(s(s(V)))))) = s(s(s(s(s(s(V))))))
+--- clause
+	s(s(s(s(s(s(V))) + s(xts)))) = s(s(s(s(s(s(V)))))) + s(xts)
+... reduced in 2 steps to
+	s(s(s(s(s(s(s(V))) + xts)))) = s(s(s(s(s(s(s(V)))))) + xts)
+... decomposed into new clause(s)
+	s(s(s(s(s(s(V))) + xts))) = s(s(s(s(s(s(V)))))) + xts
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(s(V2))) + V1))) = s(s(s(s(s(s(V2)))))) + V1
+... oriented to rule
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
++++ added new clause(s)
+	s(s(s(s(s(s(V))) + xts))) = s(s(s(s(s(s(V)))))) + xts
+... to conjectures
+--- clause
+	s(s(s(s(s(s(s(0 + xts)) + V2)) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+... reduced in 1 step to
+	s(s(s(s(s(s(s(0 + xts)) + V2)) + V1))) = s(s(s(s(s(s(s(V2) + xts))) + V1)))
+--- clause
+	s(s(s(s(s(s(s(0))) + V2) + V1))) = s(s(s(s(s(s(s(V2))))))) + V1
+... reduced in 1 step to
+	s(s(s(s(s(s(s(0))) + V2) + V1))) = s(s(s(s(s(s(s(V2)))) + V1)))
+--- clause
+	s(s(s(s(s(s(s(s(0 + xts)))) + V2) + V1))) = s(s(s(s(s(s(s(s(V2) + xts))))))) + V1
+... reduced in 1 step to
+	s(s(s(s(s(s(s(s(0 + xts)))) + V2) + V1))) = s(s(s(s(s(s(s(s(V2) + xts)))) + V1)))
+--- clause
+	s(s(s(s(s(s(V))) + xts))) = s(s(s(s(s(s(V)))))) + xts
+... reduced to tautology
+	s(s(s(s(s(s(V))) + xts))) = s(s(s(s(s(s(V))) + xts)))
+... decomposed into new clause(s)
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+... decomposed into new clause(s)
+	s(s(s(s(0))) + V2) + V1 = s(s(s(s(V2)))) + V1
+... decomposed into new clause(s)
+	s(s(s(s(s(0 + xts)))) + V2) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(s(V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2)) + xts))))) + V1
+	s(s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1))) = s(s(s(s(s(s(s(s(V2) + xts2)) + xts1))))) + V1
+	s(s(0)) + V = s(s(V))
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(0))) + V2) + V1 = s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + xts)))) + V2) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(s(V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2)) + xts))))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(s(V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2)) + xts))))) + V1
+... induction variables of
+	s(s(s(s(s(s(s(V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2)) + xts))))) + V1
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(s(V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2)) + xts))))) + V1
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(s(s(s(V2 + 0)))) + V1))) = s(s(s(s(s(s(s(V2)) + 0))))) + V1
++++ creating new conjecture
+	s(s(s(s(s(s(s(V2 + s(xts))))) + V1))) = s(s(s(s(s(s(s(V2)) + s(xts)))))) + V1
+--- clause
+	s(s(s(s(s(s(s(V2 + 0)))) + V1))) = s(s(s(s(s(s(s(V2)) + 0))))) + V1
+... reduced to tautology
+	s(s(s(s(s(s(s(V2)))) + V1))) = s(s(s(s(s(s(s(V2)))) + V1)))
+--- clause
+	s(s(s(s(s(s(s(V2 + s(xts))))) + V1))) = s(s(s(s(s(s(s(V2)) + s(xts)))))) + V1
+... reduced in 3 steps to
+	s(s(s(s(s(s(s(s(V2 + xts))))) + V1))) = s(s(s(s(s(s(s(s(V2)) + xts))) + V1)))
+... decomposed into new clause(s)
+	s(s(s(s(s(V2 + xts))))) + V1 = s(s(s(s(s(V2)) + xts))) + V1
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(s(s(V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2)) + xts))))) + V1
+... oriented to rule
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
++++ added new clause(s)
+	s(s(s(s(s(V2 + xts))))) + V1 = s(s(s(s(s(V2)) + xts))) + V1
+... to conjectures
+--- clause
+	s(s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1))) = s(s(s(s(s(s(s(s(V2) + xts2)) + xts1))))) + V1
+... reduced in 1 step to
+	s(s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1))) = s(s(s(s(s(s(s((s(V2) + xts2) + xts1)))) + V1)))
+--- succeeded to apply non-orientable hypothese
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+... to clause
+	s(s(s(s(s(0 + xts)))) + V2) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+... modified clause
+	s(s(s(s(s(0 + xts)))) + V2) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+... decomposed into new clause(s)
+	s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1 = s(s(s(s((s(V2) + xts2) + xts1)))) + V1
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(0)) + V = s(s(V))
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(0))) + V2) + V1 = s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + xts)))) + V2) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(V2 + xts))))) + V1 = s(s(s(s(s(V2)) + xts))) + V1
+	s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1 = s(s(s(s((s(V2) + xts2) + xts1)))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(0)) + V = s(s(V))
++++ inductive narrowing on conjecture
+	s(s(0)) + V = s(s(V))
+... induction variables of
+	s(s(0)) + V = s(s(V))
+... are:
+	V:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(0)) + V = s(s(V))
+... with variable V
++++ creating new conjecture
+	s(s(0)) + 0 = s(s(0))
++++ creating new conjecture
+	s(s(0)) + s(xts) = s(s(s(xts)))
+--- clause
+	s(s(0)) + 0 = s(s(0))
+... reduced to tautology
+	s(s(0)) = s(s(0))
+--- clause
+	s(s(0)) + s(xts) = s(s(s(xts)))
+... reduced in 1 step to
+	s(s(s(0)) + xts) = s(s(s(xts)))
+... decomposed into new clause(s)
+	s(s(0)) + xts = s(s(xts))
++++ inductive narrowing succeeded
+--- clause
+	s(s(0)) + V = s(s(V))
+... oriented to rule
+	s(s(0)) + V -> s(s(V))
++++ added new clause(s)
+	s(s(0)) + xts = s(s(xts))
+... to conjectures
+--- clause
+	s(s(0)) + xts = s(s(xts))
+... reduced to tautology
+	s(s(xts)) = s(s(xts))
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(0))) + V2) + V1 = s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + xts)))) + V2) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(V2 + xts))))) + V1 = s(s(s(s(s(V2)) + xts))) + V1
+	s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1 = s(s(s(s((s(V2) + xts2) + xts1)))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+... induction variables of
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(0 + 0)) + V2)) + V1 = s(s(s(s(V2) + 0))) + V1
++++ creating new conjecture
+	s(s(s(s(0 + s(xts))) + V2)) + V1 = s(s(s(s(V2) + s(xts)))) + V1
+--- clause
+	s(s(s(s(0 + 0)) + V2)) + V1 = s(s(s(s(V2) + 0))) + V1
+... reduced to tautology
+	s(s(s(s(V2)))) + V1 = s(s(s(s(V2)))) + V1
+--- clause
+	s(s(s(s(0 + s(xts))) + V2)) + V1 = s(s(s(s(V2) + s(xts)))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s(0 + xts))) + V2)) + V1 = s(s(s(s(s(V2) + xts)))) + V1
++++ inductive narrowing succeeded
+--- non-orientable clause
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
++++ moved
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+... to non-orientable hypotheses
++++ added new clause(s)
+	s(s(s(s(s(0 + xts))) + V2)) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+... to conjectures
+--- succeeded to apply non-orientable hypothese
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+... to clause
+	s(s(s(s(s(0 + xts))) + V2)) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+... modified clause
+	s(s(s(s(s(0 + xts))) + V2)) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(0))) + V2) + V1 = s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + xts)))) + V2) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(V2 + xts))))) + V1 = s(s(s(s(s(V2)) + xts))) + V1
+	s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1 = s(s(s(s((s(V2) + xts2) + xts1)))) + V1
+	s(s(s(s(s(0 + xts))) + V2)) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(0))) + V2) + V1 = s(s(s(s(V2)))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(0))) + V2) + V1 = s(s(s(s(V2)))) + V1
+... induction variables of
+	s(s(s(s(0))) + V2) + V1 = s(s(s(s(V2)))) + V1
+... are:
+	V1:nat
+	V2:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(0))) + V2) + V1 = s(s(s(s(V2)))) + V1
+... with variable V1
++++ creating new conjecture
+	s(s(s(s(0))) + V) + 0 = s(s(s(s(V)))) + 0
++++ creating new conjecture
+	s(s(s(s(0))) + V) + s(xts) = s(s(s(s(V)))) + s(xts)
+--- clause
+	s(s(s(s(0))) + V) + 0 = s(s(s(s(V)))) + 0
+... reduced in 2 steps to
+	s(s(s(s(0))) + V) = s(s(s(s(V))))
+--- clause
+	s(s(s(s(0))) + V) + s(xts) = s(s(s(s(V)))) + s(xts)
+... reduced in 2 steps to
+	s(s(s(s(s(0))) + V) + xts) = s(s(s(s(s(V)))) + xts)
+... decomposed into new clause(s)
+	s(s(s(0))) + V = s(s(s(V)))
+... decomposed into new clause(s)
+	s(s(s(s(0))) + V) + xts = s(s(s(s(V)))) + xts
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(0))) + V2) + V1 = s(s(s(s(V2)))) + V1
+... oriented to rule
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
++++ added new clause(s)
+	s(s(s(0))) + V = s(s(s(V)))
+	s(s(s(s(0))) + V) + xts = s(s(s(s(V)))) + xts
+... to conjectures
+--- clause
+	s(s(s(s(0))) + V) + xts = s(s(s(s(V)))) + xts
+... reduced to tautology
+	s(s(s(s(V)))) + xts = s(s(s(s(V)))) + xts
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(0 + xts)))) + V2) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(V2 + xts))))) + V1 = s(s(s(s(s(V2)) + xts))) + V1
+	s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1 = s(s(s(s((s(V2) + xts2) + xts1)))) + V1
+	s(s(s(s(s(0 + xts))) + V2)) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(0))) + V = s(s(s(V)))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(0 + xts)))) + V2) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
++++ inductive narrowing on conjecture
+	s(s(s(s(s(0 + xts)))) + V2) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+... induction variables of
+	s(s(s(s(s(0 + xts)))) + V2) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(0 + xts)))) + V2) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(s(0 + 0)))) + V2) + V1 = s(s(s(s(s(0 + 0) + V2) + V1)))
++++ creating new conjecture
+	s(s(s(s(s(0 + s(xts))))) + V2) + V1 = s(s(s(s(s(0 + s(xts)) + V2) + V1)))
+--- clause
+	s(s(s(s(s(0 + 0)))) + V2) + V1 = s(s(s(s(s(0 + 0) + V2) + V1)))
+... reduced in 3 steps to
+	s(s(s(s(s(0)))) + V2) + V1 = s(s(s(s(s(V2))))) + V1
+--- clause
+	s(s(s(s(s(0 + s(xts))))) + V2) + V1 = s(s(s(s(s(0 + s(xts)) + V2) + V1)))
+... reduced in 2 steps to
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(0 + xts)))) + V2) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+... oriented to rule
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
++++ added new clause(s)
+	s(s(s(s(s(0)))) + V2) + V1 = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(V2 + xts))))) + V1 = s(s(s(s(s(V2)) + xts))) + V1
+	s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1 = s(s(s(s((s(V2) + xts2) + xts1)))) + V1
+	s(s(s(s(s(0 + xts))) + V2)) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(0))) + V = s(s(s(V)))
+	s(s(s(s(s(0)))) + V2) + V1 = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(V2 + xts))))) + V1 = s(s(s(s(s(V2)) + xts))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(V2 + xts))))) + V1 = s(s(s(s(s(V2)) + xts))) + V1
+... induction variables of
+	s(s(s(s(s(V2 + xts))))) + V1 = s(s(s(s(s(V2)) + xts))) + V1
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(V2 + xts))))) + V1 = s(s(s(s(s(V2)) + xts))) + V1
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(s(V2 + 0))))) + V1 = s(s(s(s(s(V2)) + 0))) + V1
++++ creating new conjecture
+	s(s(s(s(s(V2 + s(xts)))))) + V1 = s(s(s(s(s(V2)) + s(xts)))) + V1
+--- clause
+	s(s(s(s(s(V2 + 0))))) + V1 = s(s(s(s(s(V2)) + 0))) + V1
+... reduced to tautology
+	s(s(s(s(s(V2))))) + V1 = s(s(s(s(s(V2))))) + V1
+--- clause
+	s(s(s(s(s(V2 + s(xts)))))) + V1 = s(s(s(s(s(V2)) + s(xts)))) + V1
+... reduced in 3 steps to
+	s(s(s(s(s(s(V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(V2 + xts))))) + V1 = s(s(s(s(s(V2)) + xts))) + V1
+... oriented to rule
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
++++ added new clause(s)
+	s(s(s(s(s(s(V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+... to conjectures
+--- clause
+	s(s(s(s(s(0 + xts2)) + (V2 + xts1)))) + V1 = s(s(s(s((s(V2) + xts2) + xts1)))) + V1
+... reduced in 1 step to
+	s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1 = s(s(s(s((s(V2) + xts2) + xts1)))) + V1
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1 = s(s(s(s((s(V2) + xts2) + xts1)))) + V1
+	s(s(s(s(s(0 + xts))) + V2)) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(0))) + V = s(s(s(V)))
+	s(s(s(s(s(0)))) + V2) + V1 = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1 = s(s(s(s((s(V2) + xts2) + xts1)))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1 = s(s(s(s((s(V2) + xts2) + xts1)))) + V1
+... induction variables of
+	s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1 = s(s(s(s((s(V2) + xts2) + xts1)))) + V1
+... are:
+	xts1:nat
+	xts2:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1 = s(s(s(s((s(V2) + xts2) + xts1)))) + V1
+... with variable xts1
++++ creating new conjecture
+	s(s(s(s(s((0 + xts) + (V2 + 0)))))) + V1 = s(s(s(s((s(V2) + xts) + 0)))) + V1
++++ creating new conjecture
+	s(s(s(s(s((0 + xts2) + (V2 + s(xts1))))))) + V1 = s(s(s(s((s(V2) + xts2) + s(xts1))))) + V1
+--- clause
+	s(s(s(s(s((0 + xts) + (V2 + 0)))))) + V1 = s(s(s(s((s(V2) + xts) + 0)))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+--- clause
+	s(s(s(s(s((0 + xts2) + (V2 + s(xts1))))))) + V1 = s(s(s(s((s(V2) + xts2) + s(xts1))))) + V1
+... reduced in 4 steps to
+	s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1))) = s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1 = s(s(s(s((s(V2) + xts2) + xts1)))) + V1
+... oriented to rule
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
++++ added new clause(s)
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1))) = s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(0 + xts))) + V2)) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(0))) + V = s(s(s(V)))
+	s(s(s(s(s(0)))) + V2) + V1 = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1))) = s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(0 + xts))) + V2)) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
++++ inductive narrowing on conjecture
+	s(s(s(s(s(0 + xts))) + V2)) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+... induction variables of
+	s(s(s(s(s(0 + xts))) + V2)) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(0 + xts))) + V2)) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(s(0 + 0))) + V2)) + V1 = s(s(s(s(s(0 + 0) + V2) + V1)))
++++ creating new conjecture
+	s(s(s(s(s(0 + s(xts)))) + V2)) + V1 = s(s(s(s(s(0 + s(xts)) + V2) + V1)))
+--- clause
+	s(s(s(s(s(0 + 0))) + V2)) + V1 = s(s(s(s(s(0 + 0) + V2) + V1)))
+... reduced in 3 steps to
+	s(s(s(s(s(0))) + V2)) + V1 = s(s(s(s(s(V2))))) + V1
+--- clause
+	s(s(s(s(s(0 + s(xts)))) + V2)) + V1 = s(s(s(s(s(0 + s(xts)) + V2) + V1)))
+... reduced in 2 steps to
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(0 + xts))) + V2)) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+... oriented to rule
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
++++ added new clause(s)
+	s(s(s(s(s(0))) + V2)) + V1 = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(0))) + V = s(s(s(V)))
+	s(s(s(s(s(0)))) + V2) + V1 = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1))) = s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1
+	s(s(s(s(s(0))) + V2)) + V1 = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(0))) + V = s(s(s(V)))
++++ inductive narrowing on conjecture
+	s(s(s(0))) + V = s(s(s(V)))
+... induction variables of
+	s(s(s(0))) + V = s(s(s(V)))
+... are:
+	V:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(0))) + V = s(s(s(V)))
+... with variable V
++++ creating new conjecture
+	s(s(s(0))) + 0 = s(s(s(0)))
++++ creating new conjecture
+	s(s(s(0))) + s(xts) = s(s(s(s(xts))))
+--- clause
+	s(s(s(0))) + 0 = s(s(s(0)))
+... reduced to tautology
+	s(s(s(0))) = s(s(s(0)))
+--- clause
+	s(s(s(0))) + s(xts) = s(s(s(s(xts))))
+... reduced in 1 step to
+	s(s(s(s(0))) + xts) = s(s(s(s(xts))))
+... decomposed into new clause(s)
+	s(s(s(0))) + xts = s(s(s(xts)))
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(0))) + V = s(s(s(V)))
+... oriented to rule
+	s(s(s(0))) + V -> s(s(s(V)))
++++ added new clause(s)
+	s(s(s(0))) + xts = s(s(s(xts)))
+... to conjectures
+--- clause
+	s(s(s(s(s(0))) + V2)) + V1 = s(s(s(s(s(V2))))) + V1
+... reduced to tautology
+	s(s(s(s(s(V2))))) + V1 = s(s(s(s(s(V2))))) + V1
+--- clause
+	s(s(s(0))) + xts = s(s(s(xts)))
+... reduced to tautology
+	s(s(s(xts))) = s(s(s(xts)))
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(0)))) + V2) + V1 = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1))) = s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(0)))) + V2) + V1 = s(s(s(s(s(V2))))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(0)))) + V2) + V1 = s(s(s(s(s(V2))))) + V1
+... induction variables of
+	s(s(s(s(s(0)))) + V2) + V1 = s(s(s(s(s(V2))))) + V1
+... are:
+	V1:nat
+	V2:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(0)))) + V2) + V1 = s(s(s(s(s(V2))))) + V1
+... with variable V1
++++ creating new conjecture
+	s(s(s(s(s(0)))) + V) + 0 = s(s(s(s(s(V))))) + 0
++++ creating new conjecture
+	s(s(s(s(s(0)))) + V) + s(xts) = s(s(s(s(s(V))))) + s(xts)
+--- clause
+	s(s(s(s(s(0)))) + V) + 0 = s(s(s(s(s(V))))) + 0
+... reduced in 2 steps to
+	s(s(s(s(s(0)))) + V) = s(s(s(s(s(V)))))
+--- clause
+	s(s(s(s(s(0)))) + V) + s(xts) = s(s(s(s(s(V))))) + s(xts)
+... reduced in 2 steps to
+	s(s(s(s(s(s(0)))) + V) + xts) = s(s(s(s(s(s(V))))) + xts)
+... decomposed into new clause(s)
+	s(s(s(s(0)))) + V = s(s(s(s(V))))
+... decomposed into new clause(s)
+	s(s(s(s(s(0)))) + V) + xts = s(s(s(s(s(V))))) + xts
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(0)))) + V2) + V1 = s(s(s(s(s(V2))))) + V1
+... oriented to rule
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
++++ added new clause(s)
+	s(s(s(s(0)))) + V = s(s(s(s(V))))
+	s(s(s(s(s(0)))) + V) + xts = s(s(s(s(s(V))))) + xts
+... to conjectures
+--- clause
+	s(s(s(s(s(0)))) + V) + xts = s(s(s(s(s(V))))) + xts
+... reduced to tautology
+	s(s(s(s(s(V))))) + xts = s(s(s(s(s(V))))) + xts
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1))) = s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(0)))) + V = s(s(s(s(V))))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+... induction variables of
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(s(s(0 + 0))))) + V2) + V1 = s(s(s(s(s(s(0 + 0)) + V2) + V1)))
++++ creating new conjecture
+	s(s(s(s(s(s(0 + s(xts)))))) + V2) + V1 = s(s(s(s(s(s(0 + s(xts))) + V2) + V1)))
+--- clause
+	s(s(s(s(s(s(0 + 0))))) + V2) + V1 = s(s(s(s(s(s(0 + 0)) + V2) + V1)))
+... reduced in 4 steps to
+	s(s(s(s(s(s(0))))) + V2) + V1 = s(s(s(s(s(s(V2))) + V1)))
+--- clause
+	s(s(s(s(s(s(0 + s(xts)))))) + V2) + V1 = s(s(s(s(s(s(0 + s(xts))) + V2) + V1)))
+... reduced in 3 steps to
+	s(s(s(s(s(s(s(0 + xts))) + V2)))) + V1 = s(s(s(s(s(s(s(0 + xts))) + V2) + V1)))
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+... oriented to rule
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
++++ added new clause(s)
+	s(s(s(s(s(s(0))))) + V2) + V1 = s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(s(0 + xts))) + V2)))) + V1 = s(s(s(s(s(s(s(0 + xts))) + V2) + V1)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1))) = s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(0)))) + V = s(s(s(s(V))))
+	s(s(s(s(s(s(0))))) + V2) + V1 = s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(s(0 + xts))) + V2)))) + V1 = s(s(s(s(s(s(s(0 + xts))) + V2) + V1)))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+... induction variables of
+	s(s(s(s(s(s(V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(s(s(V2 + 0))) + V1))) = s(s(s(s(s(s(V2)) + 0)))) + V1
++++ creating new conjecture
+	s(s(s(s(s(s(V2 + s(xts)))) + V1))) = s(s(s(s(s(s(V2)) + s(xts))))) + V1
+--- clause
+	s(s(s(s(s(s(V2 + 0))) + V1))) = s(s(s(s(s(s(V2)) + 0)))) + V1
+... reduced to tautology
+	s(s(s(s(s(s(V2))) + V1))) = s(s(s(s(s(s(V2))) + V1)))
+--- clause
+	s(s(s(s(s(s(V2 + s(xts)))) + V1))) = s(s(s(s(s(s(V2)) + s(xts))))) + V1
+... reduced to tautology
+	s(s(s(s(s(s(s(V2 + xts)))) + V1))) = s(s(s(s(s(s(s(V2 + xts)))) + V1)))
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(s(V2 + xts))) + V1))) = s(s(s(s(s(s(V2)) + xts)))) + V1
+... oriented to rule
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+--- clause
+	s(s(s(s(s(s(s(0 + xts))) + V2)))) + V1 = s(s(s(s(s(s(s(0 + xts))) + V2) + V1)))
+... reduced in 1 step to
+	s(s(s(s(s(s(s(0 + xts) + V2))) + V1))) = s(s(s(s(s(s(s(0 + xts))) + V2) + V1)))
+... decomposed into new clause(s)
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(0 + xts))) + V2) + V1
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1))) = s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(0)))) + V = s(s(s(s(V))))
+	s(s(s(s(s(s(0))))) + V2) + V1 = s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(0 + xts))) + V2) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+... induction variables of
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(s((0 + 0) + V2))))) + V1 = s(s(s(s(s(V2) + 0)))) + V1
++++ creating new conjecture
+	s(s(s(s(s((0 + s(xts)) + V2))))) + V1 = s(s(s(s(s(V2) + s(xts))))) + V1
+--- clause
+	s(s(s(s(s((0 + 0) + V2))))) + V1 = s(s(s(s(s(V2) + 0)))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s(0 + V2))))) + V1 = s(s(s(s(s(V2))))) + V1
+--- clause
+	s(s(s(s(s((0 + s(xts)) + V2))))) + V1 = s(s(s(s(s(V2) + s(xts))))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
++++ inductive narrowing succeeded
+--- non-orientable clause
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
++++ moved
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+... to non-orientable hypotheses
++++ added new clause(s)
+	s(s(s(s(s(0 + V2))))) + V1 = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1))) = s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(0)))) + V = s(s(s(s(V))))
+	s(s(s(s(s(s(0))))) + V2) + V1 = s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(0 + xts))) + V2) + V1
+	s(s(s(s(s(0 + V2))))) + V1 = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1))) = s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1))) = s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1
+... induction variables of
+	s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1))) = s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1
+... are:
+	xts1:nat
+	xts2:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1))) = s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1
+... with variable xts1
++++ creating new conjecture
+	s(s(s(s(s(s((0 + xts) + (V2 + 0)))) + V1))) = s(s(s(s(s((s(V2) + xts) + 0))))) + V1
++++ creating new conjecture
+	s(s(s(s(s(s((0 + xts2) + (V2 + s(xts1))))) + V1))) = s(s(s(s(s((s(V2) + xts2) + s(xts1)))))) + V1
+--- clause
+	s(s(s(s(s(s((0 + xts) + (V2 + 0)))) + V1))) = s(s(s(s(s((s(V2) + xts) + 0))))) + V1
+... reduced in 2 steps to
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+--- clause
+	s(s(s(s(s(s((0 + xts2) + (V2 + s(xts1))))) + V1))) = s(s(s(s(s((s(V2) + xts2) + s(xts1)))))) + V1
+... reduced in 4 steps to
+	s(s(s(s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1))) = s(s(s(s(s(s((s(V2) + xts2) + xts1))) + V1)))
+... decomposed into new clause(s)
+	s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1 = s(s(s((s(V2) + xts2) + xts1))) + V1
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1))) = s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1
+... oriented to rule
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
++++ added new clause(s)
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1 = s(s(s((s(V2) + xts2) + xts1))) + V1
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(0)))) + V = s(s(s(s(V))))
+	s(s(s(s(s(s(0))))) + V2) + V1 = s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(0 + xts))) + V2) + V1
+	s(s(s(s(s(0 + V2))))) + V1 = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1 = s(s(s((s(V2) + xts2) + xts1))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+... induction variables of
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(s(s(0 + 0)))) + V2)) + V1 = s(s(s(s(s(s(0 + 0)) + V2) + V1)))
++++ creating new conjecture
+	s(s(s(s(s(s(0 + s(xts))))) + V2)) + V1 = s(s(s(s(s(s(0 + s(xts))) + V2) + V1)))
+--- clause
+	s(s(s(s(s(s(0 + 0)))) + V2)) + V1 = s(s(s(s(s(s(0 + 0)) + V2) + V1)))
+... reduced in 4 steps to
+	s(s(s(s(s(s(0)))) + V2)) + V1 = s(s(s(s(s(s(V2))) + V1)))
+--- clause
+	s(s(s(s(s(s(0 + s(xts))))) + V2)) + V1 = s(s(s(s(s(s(0 + s(xts))) + V2) + V1)))
+... reduced in 2 steps to
+	s(s(s(s(s(s(s(0 + xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts))) + V2) + V1)))
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+... oriented to rule
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
++++ added new clause(s)
+	s(s(s(s(s(s(0)))) + V2)) + V1 = s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(s(0 + xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts))) + V2) + V1)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(0)))) + V = s(s(s(s(V))))
+	s(s(s(s(s(s(0))))) + V2) + V1 = s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(0 + xts))) + V2) + V1
+	s(s(s(s(s(0 + V2))))) + V1 = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1 = s(s(s((s(V2) + xts2) + xts1))) + V1
+	s(s(s(s(s(s(0)))) + V2)) + V1 = s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(s(0 + xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts))) + V2) + V1)))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(0)))) + V = s(s(s(s(V))))
++++ inductive narrowing on conjecture
+	s(s(s(s(0)))) + V = s(s(s(s(V))))
+... induction variables of
+	s(s(s(s(0)))) + V = s(s(s(s(V))))
+... are:
+	V:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(0)))) + V = s(s(s(s(V))))
+... with variable V
++++ creating new conjecture
+	s(s(s(s(0)))) + 0 = s(s(s(s(0))))
++++ creating new conjecture
+	s(s(s(s(0)))) + s(xts) = s(s(s(s(s(xts)))))
+--- clause
+	s(s(s(s(0)))) + 0 = s(s(s(s(0))))
+... reduced to tautology
+	s(s(s(s(0)))) = s(s(s(s(0))))
+--- clause
+	s(s(s(s(0)))) + s(xts) = s(s(s(s(s(xts)))))
+... reduced in 1 step to
+	s(s(s(s(s(0)))) + xts) = s(s(s(s(s(xts)))))
+... decomposed into new clause(s)
+	s(s(s(s(0)))) + xts = s(s(s(s(xts))))
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(0)))) + V = s(s(s(s(V))))
+... oriented to rule
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
++++ added new clause(s)
+	s(s(s(s(0)))) + xts = s(s(s(s(xts))))
+... to conjectures
+--- clause
+	s(s(s(s(s(s(0)))) + V2)) + V1 = s(s(s(s(s(s(V2))) + V1)))
+... reduced to tautology
+	s(s(s(s(s(s(V2))) + V1))) = s(s(s(s(s(s(V2))) + V1)))
+--- clause
+	s(s(s(s(0)))) + xts = s(s(s(s(xts))))
+... reduced to tautology
+	s(s(s(s(xts)))) = s(s(s(s(xts))))
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(0))))) + V2) + V1 = s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(0 + xts))) + V2) + V1
+	s(s(s(s(s(0 + V2))))) + V1 = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1 = s(s(s((s(V2) + xts2) + xts1))) + V1
+	s(s(s(s(s(s(s(0 + xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts))) + V2) + V1)))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(0))))) + V2) + V1 = s(s(s(s(s(s(V2))) + V1)))
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(0))))) + V2) + V1 = s(s(s(s(s(s(V2))) + V1)))
+... induction variables of
+	s(s(s(s(s(s(0))))) + V2) + V1 = s(s(s(s(s(s(V2))) + V1)))
+... are:
+	V1:nat
+	V2:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(0))))) + V2) + V1 = s(s(s(s(s(s(V2))) + V1)))
+... with variable V1
++++ creating new conjecture
+	s(s(s(s(s(s(0))))) + V) + 0 = s(s(s(s(s(s(V))) + 0)))
++++ creating new conjecture
+	s(s(s(s(s(s(0))))) + V) + s(xts) = s(s(s(s(s(s(V))) + s(xts))))
+--- clause
+	s(s(s(s(s(s(0))))) + V) + 0 = s(s(s(s(s(s(V))) + 0)))
+... reduced in 2 steps to
+	s(s(s(s(s(s(0))))) + V) = s(s(s(s(s(s(V))))))
+--- clause
+	s(s(s(s(s(s(0))))) + V) + s(xts) = s(s(s(s(s(s(V))) + s(xts))))
+... reduced in 2 steps to
+	s(s(s(s(s(s(s(0))))) + V) + xts) = s(s(s(s(s(s(s(V))) + xts))))
+... decomposed into new clause(s)
+	s(s(s(s(s(0))))) + V = s(s(s(s(s(V)))))
+... decomposed into new clause(s)
+	s(s(s(s(s(s(0))))) + V) + xts = s(s(s(s(s(s(V))) + xts)))
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(s(0))))) + V2) + V1 = s(s(s(s(s(s(V2))) + V1)))
+... oriented to rule
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
++++ added new clause(s)
+	s(s(s(s(s(0))))) + V = s(s(s(s(s(V)))))
+	s(s(s(s(s(s(0))))) + V) + xts = s(s(s(s(s(s(V))) + xts)))
+... to conjectures
+--- clause
+	s(s(s(s(s(s(0))))) + V) + xts = s(s(s(s(s(s(V))) + xts)))
+... reduced to tautology
+	s(s(s(s(s(s(V))) + xts))) = s(s(s(s(s(s(V))) + xts)))
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(0 + xts))) + V2) + V1
+	s(s(s(s(s(0 + V2))))) + V1 = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1 = s(s(s((s(V2) + xts2) + xts1))) + V1
+	s(s(s(s(s(s(s(0 + xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts))) + V2) + V1)))
+	s(s(s(s(s(0))))) + V = s(s(s(s(s(V)))))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(0 + xts))) + V2) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(0 + xts))) + V2) + V1
+... induction variables of
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(0 + xts))) + V2) + V1
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(0 + xts))) + V2) + V1
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(0 + 0) + V2))) + V1 = s(s(s(s(0 + 0))) + V2) + V1
++++ creating new conjecture
+	s(s(s(s(0 + s(xts)) + V2))) + V1 = s(s(s(s(0 + s(xts)))) + V2) + V1
+--- clause
+	s(s(s(s(0 + 0) + V2))) + V1 = s(s(s(s(0 + 0))) + V2) + V1
+... reduced to tautology
+	s(s(s(s(V2)))) + V1 = s(s(s(s(V2)))) + V1
+--- clause
+	s(s(s(s(0 + s(xts)) + V2))) + V1 = s(s(s(s(0 + s(xts)))) + V2) + V1
+... reduced in 4 steps to
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(0 + xts))) + V2) + V1
+... oriented to rule
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
++++ added new clause(s)
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+... to conjectures
+--- clause
+	s(s(s(s(s(s(s(0 + xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts))) + V2) + V1)))
+... reduced in 1 step to
+	s(s(s(s(s(s(s(0 + xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts) + V2))) + V1)))
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(0 + V2))))) + V1 = s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1 = s(s(s((s(V2) + xts2) + xts1))) + V1
+	s(s(s(s(s(s(s(0 + xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts) + V2))) + V1)))
+	s(s(s(s(s(0))))) + V = s(s(s(s(s(V)))))
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(0 + V2))))) + V1 = s(s(s(s(s(V2))))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(0 + V2))))) + V1 = s(s(s(s(s(V2))))) + V1
+... induction variables of
+	s(s(s(s(s(0 + V2))))) + V1 = s(s(s(s(s(V2))))) + V1
+... are:
+	V1:nat
+	V2:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(0 + V2))))) + V1 = s(s(s(s(s(V2))))) + V1
+... with variable V1
++++ creating new conjecture
+	s(s(s(s(s(0 + V))))) + 0 = s(s(s(s(s(V))))) + 0
++++ creating new conjecture
+	s(s(s(s(s(0 + V))))) + s(xts) = s(s(s(s(s(V))))) + s(xts)
+--- clause
+	s(s(s(s(s(0 + V))))) + 0 = s(s(s(s(s(V))))) + 0
+... reduced in 2 steps to
+	s(s(s(s(s(0 + V))))) = s(s(s(s(s(V)))))
+--- clause
+	s(s(s(s(s(0 + V))))) + s(xts) = s(s(s(s(s(V))))) + s(xts)
+... reduced in 2 steps to
+	s(s(s(s(s(s(0 + V))))) + xts) = s(s(s(s(s(s(V))))) + xts)
+... decomposed into new clause(s)
+	0 + V = V
+... decomposed into new clause(s)
+	s(s(s(s(s(0 + V))))) + xts = s(s(s(s(s(V))))) + xts
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(0 + V2))))) + V1 = s(s(s(s(s(V2))))) + V1
+... oriented to rule
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
++++ added new clause(s)
+	0 + V = V
+	s(s(s(s(s(0 + V))))) + xts = s(s(s(s(s(V))))) + xts
+... to conjectures
+--- clause
+	s(s(s(s(s(s(s(0 + xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts) + V2))) + V1)))
+... reduced in 1 step to
+	s(s(s(s(s(s(s(xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts) + V2))) + V1)))
+--- clause
+	s(s(s(s(s(0 + V))))) + xts = s(s(s(s(s(V))))) + xts
+... reduced to tautology
+	s(s(s(s(s(V))))) + xts = s(s(s(s(s(V))))) + xts
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1 = s(s(s((s(V2) + xts2) + xts1))) + V1
+	s(s(s(s(s(s(s(xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts) + V2))) + V1)))
+	s(s(s(s(s(0))))) + V = s(s(s(s(s(V)))))
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+	0 + V = V
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+... induction variables of
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(s(s(0 + 0) + V2))))) + V1 = s(s(s(s(s(s(V2) + 0))))) + V1
++++ creating new conjecture
+	s(s(s(s(s(s(0 + s(xts)) + V2))))) + V1 = s(s(s(s(s(s(V2) + s(xts)))))) + V1
+--- clause
+	s(s(s(s(s(s(0 + 0) + V2))))) + V1 = s(s(s(s(s(s(V2) + 0))))) + V1
+... reduced to tautology
+	s(s(s(s(s(s(V2))) + V1))) = s(s(s(s(s(s(V2))) + V1)))
+--- clause
+	s(s(s(s(s(s(0 + s(xts)) + V2))))) + V1 = s(s(s(s(s(s(V2) + s(xts)))))) + V1
+... reduced in 4 steps to
+	s(s(s(s(s(s(s((0 + xts) + V2)))) + V1))) = s(s(s(s(s(s(s(V2) + xts))) + V1)))
+... decomposed into new clause(s)
+	s(s(s(s((0 + xts) + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
++++ inductive narrowing succeeded
+--- non-orientable clause
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
++++ moved
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+... to non-orientable hypotheses
++++ added new clause(s)
+	s(s(s(s((0 + xts) + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1 = s(s(s((s(V2) + xts2) + xts1))) + V1
+	s(s(s(s(s(s(s(xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts) + V2))) + V1)))
+	s(s(s(s(s(0))))) + V = s(s(s(s(s(V)))))
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+	0 + V = V
+	s(s(s(s((0 + xts) + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+... induction variables of
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(s(s((0 + 0) + V2))) + V1))) = s(s(s(s(s(s(V2) + 0))))) + V1
++++ creating new conjecture
+	s(s(s(s(s(s((0 + s(xts)) + V2))) + V1))) = s(s(s(s(s(s(V2) + s(xts)))))) + V1
+--- clause
+	s(s(s(s(s(s((0 + 0) + V2))) + V1))) = s(s(s(s(s(s(V2) + 0))))) + V1
+... reduced in 3 steps to
+	s(s(s(s(s(s(0 + V2))) + V1))) = s(s(s(s(s(s(V2))) + V1)))
+--- clause
+	s(s(s(s(s(s((0 + s(xts)) + V2))) + V1))) = s(s(s(s(s(s(V2) + s(xts)))))) + V1
+... reduced in 3 steps to
+	s(s(s(s(s(s(s(0 + xts) + V2))) + V1))) = s(s(s(s(s(s(s(V2) + xts))) + V1)))
+... decomposed into new clause(s)
+	s(s(s(0 + V2))) + V1 = s(s(s(V2))) + V1
+... decomposed into new clause(s)
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(V2) + xts))) + V1
++++ inductive narrowing succeeded
+--- non-orientable clause
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
++++ moved
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+... to non-orientable hypotheses
++++ added new clause(s)
+	s(s(s(0 + V2))) + V1 = s(s(s(V2))) + V1
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(V2) + xts))) + V1
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1 = s(s(s((s(V2) + xts2) + xts1))) + V1
+	s(s(s(s(s(s(s(xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts) + V2))) + V1)))
+	s(s(s(s(s(0))))) + V = s(s(s(s(s(V)))))
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+	0 + V = V
+	s(s(s(s((0 + xts) + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(0 + V2))) + V1 = s(s(s(V2))) + V1
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(V2) + xts))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1 = s(s(s((s(V2) + xts2) + xts1))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1 = s(s(s((s(V2) + xts2) + xts1))) + V1
+... induction variables of
+	s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1 = s(s(s((s(V2) + xts2) + xts1))) + V1
+... are:
+	xts1:nat
+	xts2:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1 = s(s(s((s(V2) + xts2) + xts1))) + V1
+... with variable xts1
++++ creating new conjecture
+	s(s(s(s((0 + xts) + (V2 + 0))))) + V1 = s(s(s((s(V2) + xts) + 0))) + V1
++++ creating new conjecture
+	s(s(s(s((0 + xts2) + (V2 + s(xts1)))))) + V1 = s(s(s((s(V2) + xts2) + s(xts1)))) + V1
+--- clause
+	s(s(s(s((0 + xts) + (V2 + 0))))) + V1 = s(s(s((s(V2) + xts) + 0))) + V1
+... reduced in 2 steps to
+	s(s(s(s((0 + xts) + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+--- clause
+	s(s(s(s((0 + xts2) + (V2 + s(xts1)))))) + V1 = s(s(s((s(V2) + xts2) + s(xts1)))) + V1
+... reduced to tautology
+	s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1 = s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+--- clause
+	s(s(s(s((0 + xts) + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+... subsumed by an existing conjecture
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1 = s(s(s((s(V2) + xts2) + xts1))) + V1
+... oriented to rule
+	s(s(s((s(V2) + xts2) + xts1))) + V1 -> s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(s(xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts) + V2))) + V1)))
+	s(s(s(s(s(0))))) + V = s(s(s(s(s(V)))))
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+	0 + V = V
+	s(s(s(s((0 + xts) + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(0 + V2))) + V1 = s(s(s(V2))) + V1
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(V2) + xts))) + V1
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s((s(V2) + xts2) + xts1))) + V1 -> s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(s(xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts) + V2))) + V1)))
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(s(xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts) + V2))) + V1)))
+... induction variables of
+	s(s(s(s(s(s(s(xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts) + V2))) + V1)))
+... are:
+	V2:nat
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(s(xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts) + V2))) + V1)))
+... with variable V2
++++ creating new conjecture
+	s(s(s(s(s(s(s(xts))))) + 0)) + V = s(s(s(s(s(s(s(0 + xts) + 0))) + V)))
++++ creating new conjecture
+	s(s(s(s(s(s(s(xts2))))) + s(xts1))) + V = s(s(s(s(s(s(s(0 + xts2) + s(xts1)))) + V)))
+--- clause
+	s(s(s(s(s(s(s(xts))))) + 0)) + V = s(s(s(s(s(s(s(0 + xts) + 0))) + V)))
+... reduced in 3 steps to
+	s(s(s(s(s(s(s(xts)))) + V))) = s(s(s(s(s(s(s(0 + xts)))) + V)))
+--- clause
+	s(s(s(s(s(s(s(xts2))))) + s(xts1))) + V = s(s(s(s(s(s(s(0 + xts2) + s(xts1)))) + V)))
+... reduced in 4 steps to
+	s(s(s(s(s(s(s(s(xts2) + xts1)))) + V))) = s(s(s(s(s(s(s(s(0 + xts2) + xts1)))) + V)))
+... decomposed into new clause(s)
+	s(s(s(s(xts)))) + V = s(s(s(s(0 + xts)))) + V
+... decomposed into new clause(s)
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(0 + xts2) + xts1)))) + V
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(s(s(xts))))) + V2)) + V1 = s(s(s(s(s(s(s(0 + xts) + V2))) + V1)))
+... oriented to rule
+	s(s(s(s(s(s(s(0 + xts) + V2))) + V1))) -> s(s(s(s(s(s(s(xts))))) + V2)) + V1
++++ added new clause(s)
+	s(s(s(s(xts)))) + V = s(s(s(s(0 + xts)))) + V
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(0 + xts2) + xts1)))) + V
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(0))))) + V = s(s(s(s(s(V)))))
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+	0 + V = V
+	s(s(s(s((0 + xts) + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(0 + V2))) + V1 = s(s(s(V2))) + V1
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(xts)))) + V = s(s(s(s(0 + xts)))) + V
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(0 + xts2) + xts1)))) + V
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(s(0 + xts) + V2))) + V1))) -> s(s(s(s(s(s(s(xts))))) + V2)) + V1
+	s(s(s((s(V2) + xts2) + xts1))) + V1 -> s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(0))))) + V = s(s(s(s(s(V)))))
++++ inductive narrowing on conjecture
+	s(s(s(s(s(0))))) + V = s(s(s(s(s(V)))))
+... induction variables of
+	s(s(s(s(s(0))))) + V = s(s(s(s(s(V)))))
+... are:
+	V:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(0))))) + V = s(s(s(s(s(V)))))
+... with variable V
++++ creating new conjecture
+	s(s(s(s(s(0))))) + 0 = s(s(s(s(s(0)))))
++++ creating new conjecture
+	s(s(s(s(s(0))))) + s(xts) = s(s(s(s(s(s(xts))))))
+--- clause
+	s(s(s(s(s(0))))) + 0 = s(s(s(s(s(0)))))
+... reduced to tautology
+	s(s(s(s(s(0))))) = s(s(s(s(s(0)))))
+--- clause
+	s(s(s(s(s(0))))) + s(xts) = s(s(s(s(s(s(xts))))))
+... reduced in 1 step to
+	s(s(s(s(s(s(0))))) + xts) = s(s(s(s(s(s(xts))))))
+... decomposed into new clause(s)
+	s(s(s(s(s(0))))) + xts = s(s(s(s(s(xts)))))
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(0))))) + V = s(s(s(s(s(V)))))
+... oriented to rule
+	s(s(s(s(s(0))))) + V -> s(s(s(s(s(V)))))
++++ added new clause(s)
+	s(s(s(s(s(0))))) + xts = s(s(s(s(s(xts)))))
+... to conjectures
+--- clause
+	s(s(s(s(s(0))))) + xts = s(s(s(s(s(xts)))))
+... reduced to tautology
+	s(s(s(s(s(xts))))) = s(s(s(s(s(xts)))))
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+	0 + V = V
+	s(s(s(s((0 + xts) + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(0 + V2))) + V1 = s(s(s(V2))) + V1
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(xts)))) + V = s(s(s(s(0 + xts)))) + V
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(0 + xts2) + xts1)))) + V
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(s(0))))) + V -> s(s(s(s(s(V)))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(s(0 + xts) + V2))) + V1))) -> s(s(s(s(s(s(s(xts))))) + V2)) + V1
+	s(s(s((s(V2) + xts2) + xts1))) + V1 -> s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
++++ inductive narrowing on conjecture
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+... induction variables of
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(s((0 + 0) + V2))))) + V1 = s(s(s(s(s(0 + 0) + V2) + V1)))
++++ creating new conjecture
+	s(s(s(s(s((0 + s(xts)) + V2))))) + V1 = s(s(s(s(s(0 + s(xts)) + V2) + V1)))
+--- clause
+	s(s(s(s(s((0 + 0) + V2))))) + V1 = s(s(s(s(s(0 + 0) + V2) + V1)))
+... reduced to tautology
+	s(s(s(s(s(V2))))) + V1 = s(s(s(s(s(V2))))) + V1
+--- clause
+	s(s(s(s(s((0 + s(xts)) + V2))))) + V1 = s(s(s(s(s(0 + s(xts)) + V2) + V1)))
+... reduced in 2 steps to
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(0 + xts) + V2) + V1)))
+... oriented to rule
+	s(s(s(s(s(0 + xts) + V2) + V1))) -> s(s(s(s(s((0 + xts) + V2))))) + V1
++++ added new clause(s)
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	0 + V = V
+	s(s(s(s((0 + xts) + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(0 + V2))) + V1 = s(s(s(V2))) + V1
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(xts)))) + V = s(s(s(s(0 + xts)))) + V
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(0 + xts2) + xts1)))) + V
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+--- Oriented hypotheses:
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(s(0))))) + V -> s(s(s(s(s(V)))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts) + V2) + V1))) -> s(s(s(s(s((0 + xts) + V2))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(s(0 + xts) + V2))) + V1))) -> s(s(s(s(s(s(s(xts))))) + V2)) + V1
+	s(s(s((s(V2) + xts2) + xts1))) + V1 -> s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	0 + V = V
++++ inductive narrowing on conjecture
+	0 + V = V
+... induction variables of
+	0 + V = V
+... are:
+	V:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	0 + V = V
+... with variable V
++++ creating new conjecture
+	0 + 0 = 0
++++ creating new conjecture
+	0 + s(xts) = s(xts)
+--- clause
+	0 + 0 = 0
+... reduced to tautology
+	0 = 0
+--- clause
+	0 + s(xts) = s(xts)
+... reduced in 1 step to
+	s(0 + xts) = s(xts)
+... decomposed into new clause(s)
+	0 + xts = xts
++++ inductive narrowing succeeded
+--- clause
+	0 + V = V
+... oriented to rule
+	0 + V -> V
++++ added new clause(s)
+	0 + xts = xts
+... to conjectures
+--- clause
+	s(s(s(s((0 + xts) + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+... reduced in 1 step to
+	s(s(s(s(xts + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+--- clause
+	s(s(s(0 + V2))) + V1 = s(s(s(V2))) + V1
+... reduced to tautology
+	s(s(s(V2))) + V1 = s(s(s(V2))) + V1
+--- clause
+	s(s(s(s(0 + xts) + V2))) + V1 = s(s(s(s(V2) + xts))) + V1
+... reduced in 1 step to
+	s(s(s(s(xts) + V2))) + V1 = s(s(s(s(V2) + xts))) + V1
+--- clause
+	s(s(s(s(xts)))) + V = s(s(s(s(0 + xts)))) + V
+... reduced to tautology
+	s(s(s(s(xts)))) + V = s(s(s(s(xts)))) + V
+--- clause
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(0 + xts2) + xts1)))) + V
+... reduced to tautology
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(xts2) + xts1)))) + V
+--- clause
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+... reduced in 2 steps to
+	s(s(s(s(s(s(xts) + V2))))) + V1 = s(s(s(s(s(s(xts)) + V2) + V1)))
+--- clause
+	0 + xts = xts
+... reduced to tautology
+	xts = xts
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(xts + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(xts) + V2))) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s(s(xts) + V2))))) + V1 = s(s(s(s(s(s(xts)) + V2) + V1)))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+--- Oriented hypotheses:
+	0 + V -> V
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(s(0))))) + V -> s(s(s(s(s(V)))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts) + V2) + V1))) -> s(s(s(s(s((0 + xts) + V2))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(s(0 + xts) + V2))) + V1))) -> s(s(s(s(s(s(s(xts))))) + V2)) + V1
+	s(s(s((s(V2) + xts2) + xts1))) + V1 -> s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(xts + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(xts + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+... induction variables of
+	s(s(s(s(xts + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+... are:
+	V2:nat
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(xts + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+... with variable V2
++++ creating new conjecture
+	s(s(s(s(xts + 0)))) + V = s(s(s(s(0) + xts))) + V
++++ creating new conjecture
+	s(s(s(s(xts2 + s(xts1))))) + V = s(s(s(s(s(xts1)) + xts2))) + V
+--- clause
+	s(s(s(s(xts + 0)))) + V = s(s(s(s(0) + xts))) + V
+... reduced to tautology
+	s(s(s(s(xts)))) + V = s(s(s(s(xts)))) + V
+--- clause
+	s(s(s(s(xts2 + s(xts1))))) + V = s(s(s(s(s(xts1)) + xts2))) + V
+... reduced in 2 steps to
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(xts + V2)))) + V1 = s(s(s(s(V2) + xts))) + V1
+... oriented to rule
+	s(s(s(s(V2) + xts))) + V1 -> s(s(s(s(xts + V2)))) + V1
++++ added new clause(s)
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+... to conjectures
+--- clause
+	s(s(s(s(xts) + V2))) + V1 = s(s(s(s(V2) + xts))) + V1
+... reduced in 2 steps to
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+	s(s(s(s(s(s(xts) + V2))))) + V1 = s(s(s(s(s(s(xts)) + V2) + V1)))
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+--- Oriented hypotheses:
+	0 + V -> V
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(s(0))))) + V -> s(s(s(s(s(V)))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(V2) + xts))) + V1 -> s(s(s(s(xts + V2)))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts) + V2) + V1))) -> s(s(s(s(s((0 + xts) + V2))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(s(0 + xts) + V2))) + V1))) -> s(s(s(s(s(s(s(xts))))) + V2)) + V1
+	s(s(s((s(V2) + xts2) + xts1))) + V1 -> s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
++++ inductive narrowing on conjecture
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+... induction variables of
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+... are:
+	V2:nat
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+... with variable V2
++++ creating new conjecture
+	s(s(s(s(0 + xts)))) + V = s(s(s(s(xts + 0)))) + V
++++ creating new conjecture
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(xts1 + s(xts2))))) + V
+--- clause
+	s(s(s(s(0 + xts)))) + V = s(s(s(s(xts + 0)))) + V
+... reduced to tautology
+	s(s(s(s(xts)))) + V = s(s(s(s(xts)))) + V
+--- clause
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(xts1 + s(xts2))))) + V
+... reduced in 1 step to
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(xts1 + xts2))))) + V
++++ inductive narrowing succeeded
+--- non-orientable clause
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
++++ moved
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+... to non-orientable hypotheses
++++ added new clause(s)
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(xts) + V2))))) + V1 = s(s(s(s(s(s(xts)) + V2) + V1)))
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+--- Oriented hypotheses:
+	0 + V -> V
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(s(0))))) + V -> s(s(s(s(s(V)))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(V2) + xts))) + V1 -> s(s(s(s(xts + V2)))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts) + V2) + V1))) -> s(s(s(s(s((0 + xts) + V2))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(s(0 + xts) + V2))) + V1))) -> s(s(s(s(s(s(s(xts))))) + V2)) + V1
+	s(s(s((s(V2) + xts2) + xts1))) + V1 -> s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(xts) + V2))))) + V1 = s(s(s(s(s(s(xts)) + V2) + V1)))
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(xts) + V2))))) + V1 = s(s(s(s(s(s(xts)) + V2) + V1)))
+... induction variables of
+	s(s(s(s(s(s(xts) + V2))))) + V1 = s(s(s(s(s(s(xts)) + V2) + V1)))
+... are:
+	V2:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(xts) + V2))))) + V1 = s(s(s(s(s(s(xts)) + V2) + V1)))
+... with variable V2
++++ creating new conjecture
+	s(s(s(s(s(s(xts) + 0))))) + V = s(s(s(s(s(s(xts)) + 0) + V)))
++++ creating new conjecture
+	s(s(s(s(s(s(xts2) + s(xts1)))))) + V = s(s(s(s(s(s(xts2)) + s(xts1)) + V)))
+--- clause
+	s(s(s(s(s(s(xts) + 0))))) + V = s(s(s(s(s(s(xts)) + 0) + V)))
+... reduced to tautology
+	s(s(s(s(s(s(xts))) + V))) = s(s(s(s(s(s(xts))) + V)))
+--- clause
+	s(s(s(s(s(s(xts2) + s(xts1)))))) + V = s(s(s(s(s(s(xts2)) + s(xts1)) + V)))
+... reduced in 4 steps to
+	s(s(s(s(s(s(s(xts2 + xts1)))) + V))) = s(s(s(s(s(s(s(xts1)) + xts2)) + V)))
+... decomposed into new clause(s)
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts1)) + xts2)) + V
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(s(xts) + V2))))) + V1 = s(s(s(s(s(s(xts)) + V2) + V1)))
+... oriented to rule
+	s(s(s(s(s(s(xts)) + V2) + V1))) -> s(s(s(s(s(s(xts) + V2))))) + V1
++++ added new clause(s)
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts1)) + xts2)) + V
+... to conjectures
+--- succeeded to apply non-orientable hypothese
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+... to clause
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts1)) + xts2)) + V
+... modified clause
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts2)) + xts1)) + V
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts2)) + xts1)) + V
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+--- Oriented hypotheses:
+	0 + V -> V
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(s(0))))) + V -> s(s(s(s(s(V)))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(V2) + xts))) + V1 -> s(s(s(s(xts + V2)))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(s(xts)) + V2) + V1))) -> s(s(s(s(s(s(xts) + V2))))) + V1
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts) + V2) + V1))) -> s(s(s(s(s((0 + xts) + V2))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(s(0 + xts) + V2))) + V1))) -> s(s(s(s(s(s(s(xts))))) + V2)) + V1
+	s(s(s((s(V2) + xts2) + xts1))) + V1 -> s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
++++ inductive narrowing on conjecture
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+... induction variables of
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+... are:
+	xts1:nat
+	xts2:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+... with variable xts1
++++ creating new conjecture
+	s(s(s(s(s(xts + 0))))) + V = s(s(s(s(s(0 + xts))))) + V
++++ creating new conjecture
+	s(s(s(s(s(xts2 + s(xts1)))))) + V = s(s(s(s(s(s(xts1) + xts2))))) + V
+--- clause
+	s(s(s(s(s(xts + 0))))) + V = s(s(s(s(s(0 + xts))))) + V
+... reduced to tautology
+	s(s(s(s(s(xts))))) + V = s(s(s(s(s(xts))))) + V
+--- clause
+	s(s(s(s(s(xts2 + s(xts1)))))) + V = s(s(s(s(s(s(xts1) + xts2))))) + V
+... reduced in 2 steps to
+	s(s(s(s(s(s(xts2 + xts1))) + V))) = s(s(s(s(s(s(xts1) + xts2))))) + V
++++ inductive narrowing succeeded
+--- non-orientable clause
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
++++ moved
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+... to non-orientable hypotheses
++++ added new clause(s)
+	s(s(s(s(s(s(xts2 + xts1))) + V))) = s(s(s(s(s(s(xts1) + xts2))))) + V
+... to conjectures
+--- succeeded to apply non-orientable hypothese
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+... to clause
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+... modified clause
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(xts2 + xts1))))) + V
+--- succeeded to apply non-orientable hypothese
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+... to clause
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts2)) + xts1)) + V
+... modified clause
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts1)) + xts2)) + V
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(xts2 + xts1))))) + V
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts1)) + xts2)) + V
+	s(s(s(s(s(s(xts2 + xts1))) + V))) = s(s(s(s(s(s(xts1) + xts2))))) + V
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+--- Oriented hypotheses:
+	0 + V -> V
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(s(0))))) + V -> s(s(s(s(s(V)))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(V2) + xts))) + V1 -> s(s(s(s(xts + V2)))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(s(xts)) + V2) + V1))) -> s(s(s(s(s(s(xts) + V2))))) + V1
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts) + V2) + V1))) -> s(s(s(s(s((0 + xts) + V2))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(s(0 + xts) + V2))) + V1))) -> s(s(s(s(s(s(s(xts))))) + V2)) + V1
+	s(s(s((s(V2) + xts2) + xts1))) + V1 -> s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(xts2 + xts1))))) + V
++++ inductive narrowing on conjecture
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(xts2 + xts1))))) + V
+... induction variables of
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(xts2 + xts1))))) + V
+... are:
+	xts1:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(xts2 + xts1))))) + V
+... with variable xts1
++++ creating new conjecture
+	s(s(s(s(s(xts) + 0)))) + V = s(s(s(s(s(xts + 0))))) + V
++++ creating new conjecture
+	s(s(s(s(s(xts2) + s(xts1))))) + V = s(s(s(s(s(xts2 + s(xts1)))))) + V
+--- clause
+	s(s(s(s(s(xts) + 0)))) + V = s(s(s(s(s(xts + 0))))) + V
+... reduced to tautology
+	s(s(s(s(s(xts))))) + V = s(s(s(s(s(xts))))) + V
+--- clause
+	s(s(s(s(s(xts2) + s(xts1))))) + V = s(s(s(s(s(xts2 + s(xts1)))))) + V
+... reduced in 3 steps to
+	s(s(s(s(s(s(xts2) + xts1))))) + V = s(s(s(s(s(s(xts2 + xts1))) + V)))
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(xts2) + xts1)))) + V = s(s(s(s(s(xts2 + xts1))))) + V
+... oriented to rule
+	s(s(s(s(s(xts2) + xts1)))) + V -> s(s(s(s(s(xts2 + xts1))))) + V
++++ added new clause(s)
+	s(s(s(s(s(s(xts2) + xts1))))) + V = s(s(s(s(s(s(xts2 + xts1))) + V)))
+... to conjectures
+--- succeeded to apply non-orientable hypothese
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+... to clause
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts1)) + xts2)) + V
+... modified clause
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts2)) + xts1)) + V
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts2)) + xts1)) + V
+	s(s(s(s(s(s(xts2 + xts1))) + V))) = s(s(s(s(s(s(xts1) + xts2))))) + V
+	s(s(s(s(s(s(xts2) + xts1))))) + V = s(s(s(s(s(s(xts2 + xts1))) + V)))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+--- Oriented hypotheses:
+	0 + V -> V
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(s(0))))) + V -> s(s(s(s(s(V)))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(V2) + xts))) + V1 -> s(s(s(s(xts + V2)))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(xts2) + xts1)))) + V -> s(s(s(s(s(xts2 + xts1))))) + V
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(s(xts)) + V2) + V1))) -> s(s(s(s(s(s(xts) + V2))))) + V1
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts) + V2) + V1))) -> s(s(s(s(s((0 + xts) + V2))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(s(0 + xts) + V2))) + V1))) -> s(s(s(s(s(s(s(xts))))) + V2)) + V1
+	s(s(s((s(V2) + xts2) + xts1))) + V1 -> s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts2)) + xts1)) + V
++++ inductive narrowing on conjecture
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts2)) + xts1)) + V
+... induction variables of
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts2)) + xts1)) + V
+... are:
+	xts1:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts2)) + xts1)) + V
+... with variable xts1
++++ creating new conjecture
+	s(s(s(s(xts + 0)))) + V = s(s(s(s(xts)) + 0)) + V
++++ creating new conjecture
+	s(s(s(s(xts2 + s(xts1))))) + V = s(s(s(s(xts2)) + s(xts1))) + V
+--- clause
+	s(s(s(s(xts + 0)))) + V = s(s(s(s(xts)) + 0)) + V
+... reduced to tautology
+	s(s(s(s(xts)))) + V = s(s(s(s(xts)))) + V
+--- clause
+	s(s(s(s(xts2 + s(xts1))))) + V = s(s(s(s(xts2)) + s(xts1))) + V
+... reduced in 3 steps to
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(xts1 + s(xts2))))) + V
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts2)) + xts1)) + V
+... oriented to rule
+	s(s(s(s(xts2)) + xts1)) + V -> s(s(s(s(xts2 + xts1)))) + V
++++ added new clause(s)
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(xts1 + s(xts2))))) + V
+... to conjectures
+--- clause
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(xts1 + s(xts2))))) + V
+... reduced in 1 step to
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+--- clause
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+... subsumed by hypothese
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(s(s(xts2 + xts1))) + V))) = s(s(s(s(s(s(xts1) + xts2))))) + V
+	s(s(s(s(s(s(xts2) + xts1))))) + V = s(s(s(s(s(s(xts2 + xts1))) + V)))
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+--- Oriented hypotheses:
+	0 + V -> V
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(s(0))))) + V -> s(s(s(s(s(V)))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(V2) + xts))) + V1 -> s(s(s(s(xts + V2)))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(xts2)) + xts1)) + V -> s(s(s(s(xts2 + xts1)))) + V
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(xts2) + xts1)))) + V -> s(s(s(s(s(xts2 + xts1))))) + V
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(s(xts)) + V2) + V1))) -> s(s(s(s(s(s(xts) + V2))))) + V1
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts) + V2) + V1))) -> s(s(s(s(s((0 + xts) + V2))))) + V1
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(s(0 + xts) + V2))) + V1))) -> s(s(s(s(s(s(s(xts))))) + V2)) + V1
+	s(s(s((s(V2) + xts2) + xts1))) + V1 -> s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(s(s(xts2 + xts1))) + V))) = s(s(s(s(s(s(xts1) + xts2))))) + V
++++ inductive narrowing on conjecture
+	s(s(s(s(s(s(xts2 + xts1))) + V))) = s(s(s(s(s(s(xts1) + xts2))))) + V
+... induction variables of
+	s(s(s(s(s(s(xts2 + xts1))) + V))) = s(s(s(s(s(s(xts1) + xts2))))) + V
+... are:
+	xts1:nat
+	xts2:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(s(s(xts2 + xts1))) + V))) = s(s(s(s(s(s(xts1) + xts2))))) + V
+... with variable xts1
++++ creating new conjecture
+	s(s(s(s(s(s(xts + 0))) + V))) = s(s(s(s(s(s(0) + xts))))) + V
++++ creating new conjecture
+	s(s(s(s(s(s(xts2 + s(xts1)))) + V))) = s(s(s(s(s(s(s(xts1)) + xts2))))) + V
+--- clause
+	s(s(s(s(s(s(xts + 0))) + V))) = s(s(s(s(s(s(0) + xts))))) + V
+... reduced to tautology
+	s(s(s(s(s(s(xts))) + V))) = s(s(s(s(s(s(xts))) + V)))
+--- clause
+	s(s(s(s(s(s(xts2 + s(xts1)))) + V))) = s(s(s(s(s(s(s(xts1)) + xts2))))) + V
+... reduced in 2 steps to
+	s(s(s(s(s(s(s(xts2 + xts1)))) + V))) = s(s(s(s(s(s(s(xts1 + xts2)))) + V)))
+... decomposed into new clause(s)
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts1 + xts2)))) + V
+--- clause
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts1 + xts2)))) + V
+... subsumed by hypothese
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(s(s(xts2 + xts1))) + V))) = s(s(s(s(s(s(xts1) + xts2))))) + V
+... oriented to rule
+	s(s(s(s(s(s(xts2) + xts1))))) + V -> s(s(s(s(s(s(xts2 + xts1))) + V)))
+--- clause
+	s(s(s(s(s(s(xts2) + xts1))))) + V = s(s(s(s(s(s(xts2 + xts1))) + V)))
+... reduced in 1 step to
+	s(s(s(s(s(s(xts2 + xts1))) + V))) = s(s(s(s(s(s(xts1 + xts2))) + V)))
+... decomposed into new clause(s)
+	s(s(s(xts2 + xts1))) + V = s(s(s(xts1 + xts2))) + V
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(xts2 + xts1))) + V = s(s(s(xts1 + xts2))) + V
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+--- Oriented hypotheses:
+	0 + V -> V
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(s(0))))) + V -> s(s(s(s(s(V)))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(V2) + xts))) + V1 -> s(s(s(s(xts + V2)))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(xts2)) + xts1)) + V -> s(s(s(s(xts2 + xts1)))) + V
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(xts2) + xts1)))) + V -> s(s(s(s(s(xts2 + xts1))))) + V
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(s(xts)) + V2) + V1))) -> s(s(s(s(s(s(xts) + V2))))) + V1
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts) + V2) + V1))) -> s(s(s(s(s((0 + xts) + V2))))) + V1
+	s(s(s(s(s(s(xts2) + xts1))))) + V -> s(s(s(s(s(s(xts2 + xts1))) + V)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(s(0 + xts) + V2))) + V1))) -> s(s(s(s(s(s(s(xts))))) + V2)) + V1
+	s(s(s((s(V2) + xts2) + xts1))) + V1 -> s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(xts2 + xts1))) + V = s(s(s(xts1 + xts2))) + V
++++ inductive narrowing on conjecture
+	s(s(s(xts2 + xts1))) + V = s(s(s(xts1 + xts2))) + V
+... induction variables of
+	s(s(s(xts2 + xts1))) + V = s(s(s(xts1 + xts2))) + V
+... are:
+	xts1:nat
+	xts2:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(xts2 + xts1))) + V = s(s(s(xts1 + xts2))) + V
+... with variable xts1
++++ creating new conjecture
+	s(s(s(xts + 0))) + V = s(s(s(0 + xts))) + V
++++ creating new conjecture
+	s(s(s(xts2 + s(xts1)))) + V = s(s(s(s(xts1) + xts2))) + V
+--- clause
+	s(s(s(xts + 0))) + V = s(s(s(0 + xts))) + V
+... reduced to tautology
+	s(s(s(xts))) + V = s(s(s(xts))) + V
+--- clause
+	s(s(s(xts2 + s(xts1)))) + V = s(s(s(s(xts1) + xts2))) + V
+... reduced to tautology
+	s(s(s(s(xts2 + xts1)))) + V = s(s(s(s(xts2 + xts1)))) + V
++++ inductive narrowing succeeded
+--- non-orientable clause
+	s(s(s(xts2 + xts1))) + V = s(s(s(xts1 + xts2))) + V
++++ moved
+	s(s(s(xts2 + xts1))) + V = s(s(s(xts1 + xts2))) + V
+... to non-orientable hypotheses
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	s(s(s(s(s(0 + V3) + V2) + V1))) = s(s(s(s(s(V2) + V3)))) + V1
+	s(s(s(s(s(s(0 + xts)) + V2) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s(s(0 + xts))) + V2) + V1))) = s(s(s(s(s(s(s(V2) + xts)))))) + V1
+	s(s(s(s(0 + xts)) + V2)) + V1 = s(s(s(s(V2) + xts))) + V1
+	s(s(s(s(s((0 + xts) + V2))))) + V1 = s(s(s(s(s(V2) + xts)))) + V1
+	s(s(s(s(s(s(0 + xts) + V2))))) + V1 = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(s(s((0 + xts) + V2))) + V1))) = s(s(s(s(s(s(V2) + xts))))) + V1
+	s(s(s(s(V2 + xts)))) + V1 = s(s(s(s(xts + V2)))) + V1
+	s(s(s(s(s(xts2 + xts1))))) + V = s(s(s(s(s(xts1 + xts2))))) + V
+	s(s(s(xts2 + xts1))) + V = s(s(s(xts1 + xts2))) + V
+--- Oriented hypotheses:
+	0 + V -> V
+	s(0) + V -> s(V)
+	s(s(0)) + V -> s(s(V))
+	s(s(s(0))) + V -> s(s(s(V)))
+	s(s(s(s(0)))) + V -> s(s(s(s(V))))
+	s(s(s(s(s(0))))) + V -> s(s(s(s(s(V)))))
+	s(s(s(s(0))) + V2) + V1 -> s(s(s(s(V2)))) + V1
+	s(s(s(s(s(0 + V2))))) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0) + V2) + V1))) -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(s(0)))) + V2) + V1 -> s(s(s(s(s(V2))))) + V1
+	s(s(s(s(V2) + xts))) + V1 -> s(s(s(s(xts + V2)))) + V1
+	s(s(s(s(s(s(V2)))))) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(s(s(0)) + V2) + V1))) -> s(s(s(s(s(s(V2)))))) + V1
+	s(s(s(s(s(s(0))))) + V2) + V1 -> s(s(s(s(s(s(V2))) + V1)))
+	s(s(s(s(xts2)) + xts1)) + V -> s(s(s(s(xts2 + xts1)))) + V
+	s(s(s(s(s(V2)) + xts))) + V1 -> s(s(s(s(s(V2 + xts))))) + V1
+	s(s(s(s(0 + xts))) + V2) + V1 -> s(s(s(s(0 + xts) + V2))) + V1
+	s(s(s(s(s(xts2) + xts1)))) + V -> s(s(s(s(s(xts2 + xts1))))) + V
+	s(s(s(s(s(s(V2)) + xts)))) + V1 -> s(s(s(s(s(s(V2 + xts))) + V1)))
+	s(s(s(s(s(s(xts)) + V2) + V1))) -> s(s(s(s(s(s(xts) + V2))))) + V1
+	s(s(s(s(s(0 + xts))) + V2)) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts)))) + V2) + V1 -> s(s(s(s(s(0 + xts) + V2) + V1)))
+	s(s(s(s(s(0 + xts) + V2) + V1))) -> s(s(s(s(s((0 + xts) + V2))))) + V1
+	s(s(s(s(s(s(xts2) + xts1))))) + V -> s(s(s(s(s(s(xts2 + xts1))) + V)))
+	s(s(s(s(s(s(0) + (V2 + xts))) + V1))) -> s(s(s(s(s(s(V2)) + xts)))) + V1
+	s(s(s(s(s(s(s(V2)) + xts))))) + V1 -> s(s(s(s(s(s(s(V2 + xts)))) + V1)))
+	s(s(s(s(s(V4) + V3) + V2))) + V1 -> s(s(s(s(s(0 + V4) + (V3 + V2)) + V1)))
+	s(s(s(s(s(s(0 + xts)))) + V2)) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(0 + xts))))) + V2) + V1 -> s(s(s(s(s(s(0 + xts)) + V2) + V1)))
+	s(s(s(s(s(s(s(0 + xts) + V2))) + V1))) -> s(s(s(s(s(s(s(xts))))) + V2)) + V1
+	s(s(s((s(V2) + xts2) + xts1))) + V1 -> s(s(s(s((0 + xts2) + (V2 + xts1))))) + V1
+	s(s(s(s(s(s(V3) + V2) + xts)))) + V1 -> s(s(s(s(s(s(0 + V3) + (V2 + xts))) + V1)))
+	s(s(s(s((s(V2) + xts2) + xts1)))) + V1 -> s(s(s(s(s((0 + xts2) + (V2 + xts1)))))) + V1
+	s(s(s(s(s((s(V2) + xts2) + xts1))))) + V1 -> s(s(s(s(s(s((0 + xts2) + (V2 + xts1)))) + V1)))
+	s(s(s(s(s(s(s(V2) + xts2)) + xts1)))) + V1 -> s(s(s(s(s(s(s(0 + xts2)) + (V2 + xts1))) + V1)))
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 45
+... Number of induction steps      = 45
+... Number of equational steps     = 6
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.894

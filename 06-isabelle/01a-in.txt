@@ -1,0 +1,17 @@
+# Programming and Proving In Isabelle/HOL
+# page 10
+#
+# Proof of this conjecture in that tutorial requires two lemmas which
+# must be manually introduced by the user
+
+specification rev
+
+include <reversesymb> <add>
+
+precedence
+	rev > @@ > + > .. > nil > s > 0
+
+conjectures
+	rev(rev(x)) = x;
+
+end

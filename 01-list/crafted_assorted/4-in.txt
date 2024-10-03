@@ -1,0 +1,13 @@
+specification ListCount
+
+include <add>
+	<count>
+
+precedence
+	count > == > + > cons > nil > s > 0 > true = false
+
+conjectures
+
+	count(y + (y + y), x) = count((y + y) + y, x);
+
+end

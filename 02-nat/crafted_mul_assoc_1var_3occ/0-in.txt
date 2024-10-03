@@ -1,0 +1,11 @@
+specification Crafted
+
+include <multalt>
+
+precedence
+	* > + > s > 0
+
+conjectures
+	x * (x * x) = (x * x) * x;
+
+end

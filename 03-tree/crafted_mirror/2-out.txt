@@ -1,0 +1,1277 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 2-in.txt
++++ output      = 2-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 18
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LIST from list successfully parsed
++++ specification APPEND from append successfully parsed
++++ specification TREE from tree successfully parsed
++++ specification FLATTEN from flatten successfully parsed
++++ specification BOOL from bool successfully parsed
++++ specification AND from and successfully parsed
++++ specification EQ from eq successfully parsed
++++ specification MIRROR from mirror successfully parsed
++++ specification REVERSE from reverse successfully parsed
++++ specification CraftedTrees from 2-in.txt successfully parsed
++++ Listing
+         1: specification CraftedTrees
+         2: sorts
+         3:      bool list nat tree
+         4: constructors
+         5:      0: -> nat
+         6:      cons: nat list -> list
+         7:      false: -> bool
+         8:      leaf: -> tree
+         9:      nil: -> list
+        10:      node: tree nat tree -> tree
+        11:      s: nat -> nat
+        12:      true: -> bool
+        13: defined functions
+        14:      &&: bool bool -> bool
+        15:      ==: nat nat -> bool
+        16:      app: list list -> list
+        17:      flatten: tree -> list
+        18:      flatten2: tree list -> list
+        19:      mirror: tree tree -> bool
+        20:      rev: list -> list
+        21: precedence
+        22:      rev > mirror > flatten = flatten2 > == > && > app > cons > node > leaf > nil > s > 0 > false = true
+        23: axioms
+        24:      0 == 0 = true;
+        25:      rev(nil) = nil;
+        26:      app(nil, y) = y;
+        27:      0 == s(x) = false;
+        28:      s(x) == 0 = false;
+        29:      flatten(leaf) = nil;
+        30:      true && true = true;
+        31:      false && true = false;
+        32:      flatten2(leaf, x) = x;
+        33:      s(x) == s(y) = x == y;
+        34:      true && false = false;
+        35:      false && false = false;
+        36:      mirror(leaf, leaf) = true;
+        37:      mirror(leaf, node(x, y, z)) = false;
+        38:      mirror(node(x, y, z), leaf) = false;
+        39:      app(cons(x, y), z) = cons(x, app(y, z));
+        40:      rev(cons(x, y)) = app(rev(y), cons(x, nil));
+        41:      flatten(node(xl, y, xr)) = app(flatten(xl), cons(y, flatten(xr)));
+        42:      flatten2(node(x, y, z), v) = flatten2(x, cons(y, flatten2(z, v)));
+        43:      mirror(node(u, v, w), node(x, y, z)) = (v == y) && (mirror(u, z) && mirror(w, x));
+        44: conjectures
+        45:      mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil);
+        46: end
++++ finitary sorts: bool
++++ Rewrite System 
+	0 == 0 -> true
+	rev(nil) -> nil
+	app(nil, y) -> y
+	0 == s(x) -> false
+	s(x) == 0 -> false
+	flatten(leaf) -> nil
+	true && true -> true
+	false && true -> false
+	flatten2(leaf, x) -> x
+	s(x) == s(y) -> x == y
+	true && false -> false
+	false && false -> false
+	mirror(leaf, leaf) -> true
+	mirror(leaf, node(x, y, z)) -> false
+	mirror(node(x, y, z), leaf) -> false
+	app(cons(x, y), z) -> cons(x, app(y, z))
+	rev(cons(x, y)) -> app(rev(y), cons(x, nil))
+	flatten(node(xl, y, xr)) -> app(flatten(xl), cons(y, flatten(xr)))
+	flatten2(node(x, y, z), v) -> flatten2(x, cons(y, flatten2(z, v)))
+	mirror(node(u, v, w), node(x, y, z)) -> (v == y) && (mirror(u, z) && mirror(w, x))
++++ inductive positions:
+... for &&: 0 1
+... for ==: 0 1
+... for app: 0
+... for flatten: 0
+... for flatten2: 0
+... for mirror: 0 1
+... for rev: 0
++++ maximal depths of left-hand sides:
+... for flatten2: 2
+... for flatten: 2
+... for &&: 1
+... for app: 2
+... for mirror: 2
+... for rev: 2
+... for ==: 2
++++ general maximal depth = 2
++++ sort dependence: nat < tree < list
++++ test sets for defined functions and sorts:
+... for rev
+... ... list
+		nil
+		cons(x, y)
+... for mirror
+... ... tree
+		leaf
+		node(x, y, z)
+... for flatten2
+... ... tree
+		leaf
+		node(x, y, z)
+... for flatten
+... ... tree
+		leaf
+		node(x, y, z)
+... for ==
+... ... nat
+		0
+		s(x)
+... for app
+... ... list
+		nil
+		cons(x, y)
+... for &&
+... ... bool
+		x
+
++++ conjecture(s)
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+
++++ inference system initiated
++++ treating clause
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
++++ inductive narrowing on conjecture
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+... induction variables of
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+... are:
+	x:tree
+	y:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+... with variable x
++++ creating new conjecture
+	mirror(leaf, y) = true => rev(flatten(leaf)) = flatten2(y, nil)
++++ creating new conjecture
+	mirror(node(xts, yts, zts), y) = true => rev(flatten(node(xts, yts, zts))) = flatten2(y, nil)
+--- clause
+	mirror(leaf, y) = true => rev(flatten(leaf)) = flatten2(y, nil)
+... reduced in 2 steps to
+	mirror(leaf, y) = true => nil = flatten2(y, nil)
+--- clause
+	mirror(node(xts, yts, zts), y) = true => rev(flatten(node(xts, yts, zts))) = flatten2(y, nil)
+... reduced in 1 step to
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
++++ inductive narrowing succeeded
+--- non-orientable clause
+	rev(flatten(x)) = flatten2(y, nil)
++++ moved
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+... to non-orientable hypotheses
++++ added new clause(s)
+	mirror(leaf, y) = true => nil = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	mirror(leaf, y) = true => nil = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+--- Oriented hypotheses:
+	<empty>
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	mirror(leaf, y) = true => nil = flatten2(y, nil)
++++ inductive narrowing on conjecture
+	mirror(leaf, y) = true => nil = flatten2(y, nil)
+... induction variables of
+	mirror(leaf, y) = true => nil = flatten2(y, nil)
+... are:
+	y:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	mirror(leaf, y) = true => nil = flatten2(y, nil)
+... with variable y
++++ creating new conjecture
+	mirror(leaf, leaf) = true => nil = flatten2(leaf, nil)
++++ creating new conjecture
+	mirror(leaf, node(xts, yts, zts)) = true => nil = flatten2(node(xts, yts, zts), nil)
+--- clause
+	mirror(leaf, leaf) = true => nil = flatten2(leaf, nil)
+... reduced to tautology
+	nil = nil
+--- clause
+	mirror(leaf, node(xts, yts, zts)) = true => nil = flatten2(node(xts, yts, zts), nil)
+... reduced in 2 steps to
+	false = true => nil = flatten2(xts, cons(yts, flatten2(zts, nil)))
+--- clause
+	false = true => nil = flatten2(xts, cons(yts, flatten2(zts, nil)))
+... contains a ground negative condition
+	false = true
+... and is therefore discarded (false => t is always true)
++++ inductive narrowing succeeded
+--- clause
+	mirror(leaf, y) = true => nil = flatten2(y, nil)
+... oriented to rule
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+
++++ Status of the Inference System
+--- Conjectures:
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
++++ inductive narrowing on conjecture
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+... induction variables of
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+... are:
+	xts:tree
+	y:tree
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+... with variable xts
++++ creating new conjecture
+	mirror(node(leaf, yts, zts), y) = true => rev(app(flatten(leaf), cons(yts, flatten(zts)))) = flatten2(y, nil)
++++ creating new conjecture
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(flatten(node(xts, yts2, zts2)), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+--- clause
+	mirror(node(leaf, yts, zts), y) = true => rev(app(flatten(leaf), cons(yts, flatten(zts)))) = flatten2(y, nil)
+... reduced in 3 steps to
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+--- clause
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(flatten(node(xts, yts2, zts2)), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... reduced in 1 step to
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
++++ inductive narrowing succeeded
+--- non-orientable clause
+	rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
++++ moved
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+... to non-orientable hypotheses
++++ added new clause(s)
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
++++ inductive narrowing on conjecture
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+... induction variables of
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+... are:
+	y:tree
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+... with variable y
++++ creating new conjecture
+	mirror(node(leaf, yts, zts), leaf) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(leaf, nil)
++++ creating new conjecture
+	mirror(node(leaf, yts2, zts2), node(xts, yts1, zts1)) = true => app(rev(flatten(zts2)), cons(yts2, nil)) = flatten2(node(xts, yts1, zts1), nil)
+--- clause
+	mirror(node(leaf, yts, zts), leaf) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(leaf, nil)
+... reduced in 2 steps to
+	false = true => app(rev(flatten(zts)), cons(yts, nil)) = nil
+--- clause
+	false = true => app(rev(flatten(zts)), cons(yts, nil)) = nil
+... contains a ground negative condition
+	false = true
+... and is therefore discarded (false => t is always true)
+--- clause
+	mirror(node(leaf, yts2, zts2), node(xts, yts1, zts1)) = true => app(rev(flatten(zts2)), cons(yts2, nil)) = flatten2(node(xts, yts1, zts1), nil)
+... reduced in 2 steps to
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
++++ moved
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+... to non-orientable hypotheses
++++ added new clause(s)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
++++ inductive narrowing on conjecture
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... induction variables of
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... are:
+	xts:tree
+	y:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... with variable xts
++++ creating new conjecture
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(leaf), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
++++ creating new conjecture
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(node(xts, yts3, zts3)), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+--- clause
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(leaf), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... reduced in 4 steps to
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+--- clause
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(node(xts, yts3, zts3)), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... reduced in 1 step to
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
++++ inductive narrowing succeeded
+--- non-orientable clause
+	rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
++++ moved
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... to non-orientable hypotheses
++++ added new clause(s)
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
++++ inductive narrowing on conjecture
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+... induction variables of
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+... are:
+	xts:tree
+	yts1:nat
+	yts2:nat
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+... with variable xts
++++ creating new conjecture
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(leaf, cons(yts1, flatten2(zts2, nil)))
++++ creating new conjecture
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(node(xts, yts1, zts1), cons(yts2, flatten2(zts3, nil)))
+--- clause
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(leaf, cons(yts1, flatten2(zts2, nil)))
+... reduced in 1 step to
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+--- clause
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(node(xts, yts1, zts1), cons(yts2, flatten2(zts3, nil)))
+... reduced in 1 step to
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(rev(flatten(zts2)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, nil)))
++++ moved
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+... to non-orientable hypotheses
++++ added new clause(s)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
++++ inductive narrowing on conjecture
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+... induction variables of
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+... are:
+	y:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+... with variable y
++++ creating new conjecture
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), leaf) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(leaf, nil)
++++ creating new conjecture
+	mirror(node(node(leaf, yts3, zts3), yts2, zts2), node(xts, yts1, zts1)) = true => app(rev(app(flatten(zts3), cons(yts2, flatten(zts2)))), cons(yts3, nil)) = flatten2(node(xts, yts1, zts1), nil)
+--- clause
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), leaf) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(leaf, nil)
+... reduced in 2 steps to
+	false = true => app(rev(app(flatten(zts2), cons(yts2, flatten(zts1)))), cons(yts1, nil)) = nil
+--- clause
+	false = true => app(rev(app(flatten(zts2), cons(yts2, flatten(zts1)))), cons(yts1, nil)) = nil
+... contains a ground negative condition
+	false = true
+... and is therefore discarded (false => t is always true)
+--- clause
+	mirror(node(node(leaf, yts3, zts3), yts2, zts2), node(xts, yts1, zts1)) = true => app(rev(app(flatten(zts3), cons(yts2, flatten(zts2)))), cons(yts3, nil)) = flatten2(node(xts, yts1, zts1), nil)
+... reduced in 2 steps to
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(rev(app(flatten(zts2), cons(yts2, flatten(zts1)))), cons(yts1, nil)) = flatten2(y, nil)
++++ moved
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+... to non-orientable hypotheses
++++ added new clause(s)
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
++++ inductive narrowing on conjecture
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... induction variables of
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... are:
+	xts:tree
+	y:tree
+	zts1:tree
+	zts2:tree
+	zts3:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... with variable xts
++++ creating new conjecture
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(leaf), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
++++ creating new conjecture
+	mirror(node(node(node(node(xts, yts4, zts4), yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(node(xts, yts4, zts4)), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+--- clause
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(leaf), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... reduced in 5 steps to
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+--- clause
+	mirror(node(node(node(node(xts, yts4, zts4), yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(node(xts, yts4, zts4)), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... reduced in 1 step to
+	mirror(node(node(node(node(xts, yts4, zts4), yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(app(flatten(xts), cons(yts4, flatten(zts4))), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
++++ inductive narrowing succeeded
+--- non-orientable clause
+	rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
++++ moved
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... to non-orientable hypotheses
++++ added new clause(s)
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+	mirror(node(node(node(node(xts, yts4, zts4), yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(app(flatten(xts), cons(yts4, flatten(zts4))), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... to conjectures
++++ active wrap
+	mirror(node(., yts, zts), y) = true => rev(app(., cons(yts, flatten(zts)))) = flatten2(y, nil)
+... with sequence
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
++++ primal grammar found for head
+	{app, cons, flatten, flatten2, mirror, nil, node, rev, true}
+... and wrap
+	mirror(node(., yts, zts), y) = true => rev(app(., cons(yts, flatten(zts)))) = flatten2(y, nil)
++++ Presburger system  = {
+	^f0(0; xts, yts@, zts@) -> xts
+	^f0($n0 + 1; xts, yts@, zts@) -> node(^f0($n0; xts, yts@, zts@), yts$n0, zts$n0)
+	^f1(0; xts, yts@, zts@) -> flatten(xts)
+	^f1($n1 + 1; xts, yts@, zts@) -> app(^f1($n1; xts, yts@, zts@), cons(yts$n1, flatten(zts$n1)))
++++ }
++++ Lemma(s)           = 
+	mirror(node(^f0($n; xts, yts@, zts@), yts$n, zts$n), y) = true => rev(app(^f1($n; xts, yts@, zts@), cons(yts$n, flatten(zts$n)))) = flatten2(y, nil)
+--- clause
+	mirror(node(node(node(node(xts, yts4, zts4), yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(app(flatten(xts), cons(yts4, flatten(zts4))), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+... subsumed by lemma
+	mirror(node(^f0($n; xts, yts@, zts@), yts$n, zts$n), y) = true => rev(app(^f1($n; xts, yts@, zts@), cons(yts$n, flatten(zts$n)))) = flatten2(y, nil)
+... with substitution
+	$n <- 3
+
++++ Status of the Inference System
+--- Conjectures:
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; xts, yts@, zts@) -> xts
+	^f0($n0 + 1; xts, yts@, zts@) -> node(^f0($n0; xts, yts@, zts@), yts$n0, zts$n0)
+	^f1(0; xts, yts@, zts@) -> flatten(xts)
+	^f1($n1 + 1; xts, yts@, zts@) -> app(^f1($n1; xts, yts@, zts@), cons(yts$n1, flatten(zts$n1)))
++++ }
++++ Lemma(s)           = 
+	mirror(node(^f0($n; xts, yts@, zts@), yts$n, zts$n), y) = true => rev(app(^f1($n; xts, yts@, zts@), cons(yts$n, flatten(zts$n)))) = flatten2(y, nil)
+
++++ treating clause
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
++++ inductive narrowing on conjecture
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+... induction variables of
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+... are:
+	yts1:nat
+	yts2:nat
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+... with variable yts1
++++ creating new conjecture
+	(yts == 0) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts, nil)) = cons(0, flatten2(zts2, nil))
++++ creating new conjecture
+	(yts == s(xts)) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts, nil)) = cons(s(xts), flatten2(zts2, nil))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(rev(flatten(zts2)), cons(yts2, nil)) = cons(yts1, flatten2(zts1, nil))
++++ moved
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+... to non-orientable hypotheses
++++ added new clause(s)
+	(yts == 0) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts, nil)) = cons(0, flatten2(zts2, nil))
+	(yts == s(xts)) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts, nil)) = cons(s(xts), flatten2(zts2, nil))
+... to conjectures
+--- clause
+	(yts == 0) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts, nil)) = cons(0, flatten2(zts2, nil))
+... subsumed by hypothese
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+--- clause
+	(yts == s(xts)) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts, nil)) = cons(s(xts), flatten2(zts2, nil))
+... subsumed by hypothese
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+
++++ Status of the Inference System
+--- Conjectures:
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; xts, yts@, zts@) -> xts
+	^f0($n0 + 1; xts, yts@, zts@) -> node(^f0($n0; xts, yts@, zts@), yts$n0, zts$n0)
+	^f1(0; xts, yts@, zts@) -> flatten(xts)
+	^f1($n1 + 1; xts, yts@, zts@) -> app(^f1($n1; xts, yts@, zts@), cons(yts$n1, flatten(zts$n1)))
++++ }
++++ Lemma(s)           = 
+	mirror(node(^f0($n; xts, yts@, zts@), yts$n, zts$n), y) = true => rev(app(^f1($n; xts, yts@, zts@), cons(yts$n, flatten(zts$n)))) = flatten2(y, nil)
+
++++ treating clause
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
++++ inductive narrowing on conjecture
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+... induction variables of
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+... are:
+	yts2:nat
+	yts3:nat
+	zts2:tree
+	zts3:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+... with variable yts2
++++ creating new conjecture
+	(yts2 == 0) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(0, flatten2(zts3, nil)))))
++++ creating new conjecture
+	(yts2 == s(xts2)) && (mirror(leaf, zts3) && mirror(zts2, node(xts1, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts2, nil)) = flatten2(xts1, cons(yts1, flatten2(zts1, cons(s(xts2), flatten2(zts3, nil)))))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(rev(flatten(zts3)), cons(yts3, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, nil)))))
++++ moved
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+... to non-orientable hypotheses
++++ added new clause(s)
+	(yts2 == 0) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(0, flatten2(zts3, nil)))))
+	(yts2 == s(xts2)) && (mirror(leaf, zts3) && mirror(zts2, node(xts1, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts2, nil)) = flatten2(xts1, cons(yts1, flatten2(zts1, cons(s(xts2), flatten2(zts3, nil)))))
+... to conjectures
+--- clause
+	(yts2 == 0) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(0, flatten2(zts3, nil)))))
+... subsumed by hypothese
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+--- clause
+	(yts2 == s(xts2)) && (mirror(leaf, zts3) && mirror(zts2, node(xts1, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts2, nil)) = flatten2(xts1, cons(yts1, flatten2(zts1, cons(s(xts2), flatten2(zts3, nil)))))
+... subsumed by hypothese
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+
++++ Status of the Inference System
+--- Conjectures:
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; xts, yts@, zts@) -> xts
+	^f0($n0 + 1; xts, yts@, zts@) -> node(^f0($n0; xts, yts@, zts@), yts$n0, zts$n0)
+	^f1(0; xts, yts@, zts@) -> flatten(xts)
+	^f1($n1 + 1; xts, yts@, zts@) -> app(^f1($n1; xts, yts@, zts@), cons(yts$n1, flatten(zts$n1)))
++++ }
++++ Lemma(s)           = 
+	mirror(node(^f0($n; xts, yts@, zts@), yts$n, zts$n), y) = true => rev(app(^f1($n; xts, yts@, zts@), cons(yts$n, flatten(zts$n)))) = flatten2(y, nil)
+
++++ treating clause
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
++++ inductive narrowing on conjecture
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+... induction variables of
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+... are:
+	xts:tree
+	yts2:nat
+	yts3:nat
+	zts1:tree
+	zts2:tree
+	zts3:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+... with variable xts
++++ creating new conjecture
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(leaf, cons(yts2, flatten2(zts2, nil)))
++++ creating new conjecture
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(node(xts, yts1, zts1), cons(yts3, flatten2(zts3, nil)))
+--- clause
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(leaf, cons(yts2, flatten2(zts2, nil)))
+... reduced in 1 step to
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
+--- clause
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(node(xts, yts1, zts1), cons(yts3, flatten2(zts3, nil)))
+... reduced in 1 step to
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(rev(app(flatten(zts3), cons(yts3, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, nil)))
++++ moved
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+... to non-orientable hypotheses
++++ added new clause(s)
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; xts, yts@, zts@) -> xts
+	^f0($n0 + 1; xts, yts@, zts@) -> node(^f0($n0; xts, yts@, zts@), yts$n0, zts$n0)
+	^f1(0; xts, yts@, zts@) -> flatten(xts)
+	^f1($n1 + 1; xts, yts@, zts@) -> app(^f1($n1; xts, yts@, zts@), cons(yts$n1, flatten(zts$n1)))
++++ }
++++ Lemma(s)           = 
+	mirror(node(^f0($n; xts, yts@, zts@), yts$n, zts$n), y) = true => rev(app(^f1($n; xts, yts@, zts@), cons(yts$n, flatten(zts$n)))) = flatten2(y, nil)
+
++++ treating clause
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
++++ inductive narrowing on conjecture
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+... induction variables of
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+... are:
+	y:tree
+	zts1:tree
+	zts2:tree
+	zts3:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+... with variable y
++++ creating new conjecture
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), leaf) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(leaf, nil)
++++ creating new conjecture
+	mirror(node(node(node(leaf, yts4, zts4), yts3, zts3), yts2, zts2), node(xts, yts1, zts1)) = true => app(rev(app(app(flatten(zts4), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2)))), cons(yts4, nil)) = flatten2(node(xts, yts1, zts1), nil)
+--- clause
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), leaf) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(leaf, nil)
+... reduced in 2 steps to
+	false = true => app(rev(app(app(flatten(zts3), cons(yts3, flatten(zts2))), cons(yts2, flatten(zts1)))), cons(yts1, nil)) = nil
+--- clause
+	false = true => app(rev(app(app(flatten(zts3), cons(yts3, flatten(zts2))), cons(yts2, flatten(zts1)))), cons(yts1, nil)) = nil
+... contains a ground negative condition
+	false = true
+... and is therefore discarded (false => t is always true)
+--- clause
+	mirror(node(node(node(leaf, yts4, zts4), yts3, zts3), yts2, zts2), node(xts, yts1, zts1)) = true => app(rev(app(app(flatten(zts4), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2)))), cons(yts4, nil)) = flatten2(node(xts, yts1, zts1), nil)
+... reduced in 2 steps to
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = flatten2(xts, cons(yts3, flatten2(zts2, nil)))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(rev(app(app(flatten(zts3), cons(yts3, flatten(zts2))), cons(yts2, flatten(zts1)))), cons(yts1, nil)) = flatten2(y, nil)
++++ moved
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+... to non-orientable hypotheses
++++ added new clause(s)
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = flatten2(xts, cons(yts3, flatten2(zts2, nil)))
+... to conjectures
++++ active wrap
+	mirror(node(., yts, zts), y) = true => app(rev(.), cons(., nil)) = flatten2(y, nil)
+... with sequence
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
++++ primal grammar found for head
+	{app, cons, flatten, flatten2, leaf, mirror, nil, node, rev, true}
+... and wrap
+	mirror(node(., yts, zts), y) = true => app(rev(.), cons(., nil)) = flatten2(y, nil)
++++ Presburger system  = {
+	^f2(0; yts@, zts@) -> leaf
+	^f2($n2 + 1; yts@, zts@) -> node(^f2($n2; yts@, zts@), yts$n2, zts$n2)
+	^f3(0; yts@, zts@) -> flatten(zts0)
+	^f3($n3 + 1; yts@, zts@) -> app(^f3($n3; yts@, zts@), cons(yts$n3, flatten(zts$n3)))
++++ }
++++ Lemma(s)           = 
+	mirror(node(^f2($n; yts@, zts@), yts$n, zts$n), y) = true => app(rev(^f3($n; yts@, zts@)), cons(yts$n, nil)) = flatten2(y, nil)
+
++++ Status of the Inference System
+--- Conjectures:
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = flatten2(xts, cons(yts3, flatten2(zts2, nil)))
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; xts, yts@, zts@) -> xts
+	^f0($n0 + 1; xts, yts@, zts@) -> node(^f0($n0; xts, yts@, zts@), yts$n0, zts$n0)
+	^f1(0; xts, yts@, zts@) -> flatten(xts)
+	^f1($n1 + 1; xts, yts@, zts@) -> app(^f1($n1; xts, yts@, zts@), cons(yts$n1, flatten(zts$n1)))
+	^f2(0; yts@, zts@) -> leaf
+	^f2($n2 + 1; yts@, zts@) -> node(^f2($n2; yts@, zts@), yts$n2, zts$n2)
+	^f3(0; yts@, zts@) -> flatten(zts0)
+	^f3($n3 + 1; yts@, zts@) -> app(^f3($n3; yts@, zts@), cons(yts$n3, flatten(zts$n3)))
++++ }
++++ Lemma(s)           = 
+	mirror(node(^f0($n; xts, yts@, zts@), yts$n, zts$n), y) = true => rev(app(^f1($n; xts, yts@, zts@), cons(yts$n, flatten(zts$n)))) = flatten2(y, nil)
+	mirror(node(^f2($n; yts@, zts@), yts$n, zts$n), y) = true => app(rev(^f3($n; yts@, zts@)), cons(yts$n, nil)) = flatten2(y, nil)
+
++++ treating clause
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
++++ inductive narrowing on conjecture
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
+... induction variables of
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
+... are:
+	yts2:nat
+	yts3:nat
+	zts1:tree
+	zts2:tree
+	zts3:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
+... with variable yts2
++++ creating new conjecture
+	(yts2 == 0) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts2, flatten(zts1)))), cons(yts1, nil)) = cons(0, flatten2(zts2, nil))
++++ creating new conjecture
+	(yts2 == s(xts)) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts2, flatten(zts1)))), cons(yts1, nil)) = cons(s(xts), flatten2(zts2, nil))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(rev(app(flatten(zts3), cons(yts3, flatten(zts2)))), cons(yts2, nil)) = cons(yts1, flatten2(zts1, nil))
++++ moved
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
+... to non-orientable hypotheses
++++ added new clause(s)
+	(yts2 == 0) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts2, flatten(zts1)))), cons(yts1, nil)) = cons(0, flatten2(zts2, nil))
+	(yts2 == s(xts)) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts2, flatten(zts1)))), cons(yts1, nil)) = cons(s(xts), flatten2(zts2, nil))
+... to conjectures
+--- clause
+	(yts2 == 0) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts2, flatten(zts1)))), cons(yts1, nil)) = cons(0, flatten2(zts2, nil))
+... subsumed by hypothese
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
+--- clause
+	(yts2 == s(xts)) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts2, flatten(zts1)))), cons(yts1, nil)) = cons(s(xts), flatten2(zts2, nil))
+... subsumed by hypothese
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
+
++++ Status of the Inference System
+--- Conjectures:
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = flatten2(xts, cons(yts3, flatten2(zts2, nil)))
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; xts, yts@, zts@) -> xts
+	^f0($n0 + 1; xts, yts@, zts@) -> node(^f0($n0; xts, yts@, zts@), yts$n0, zts$n0)
+	^f1(0; xts, yts@, zts@) -> flatten(xts)
+	^f1($n1 + 1; xts, yts@, zts@) -> app(^f1($n1; xts, yts@, zts@), cons(yts$n1, flatten(zts$n1)))
+	^f2(0; yts@, zts@) -> leaf
+	^f2($n2 + 1; yts@, zts@) -> node(^f2($n2; yts@, zts@), yts$n2, zts$n2)
+	^f3(0; yts@, zts@) -> flatten(zts0)
+	^f3($n3 + 1; yts@, zts@) -> app(^f3($n3; yts@, zts@), cons(yts$n3, flatten(zts$n3)))
++++ }
++++ Lemma(s)           = 
+	mirror(node(^f0($n; xts, yts@, zts@), yts$n, zts$n), y) = true => rev(app(^f1($n; xts, yts@, zts@), cons(yts$n, flatten(zts$n)))) = flatten2(y, nil)
+	mirror(node(^f2($n; yts@, zts@), yts$n, zts$n), y) = true => app(rev(^f3($n; yts@, zts@)), cons(yts$n, nil)) = flatten2(y, nil)
+
++++ treating clause
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
++++ inductive narrowing on conjecture
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
+... induction variables of
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
+... are:
+	yts3:nat
+	yts4:nat
+	zts2:tree
+	zts3:tree
+	zts4:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
+... with variable yts3
++++ creating new conjecture
+	(yts3 == 0) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts3, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(0, flatten2(zts3, nil)))))
++++ creating new conjecture
+	(yts3 == s(xts2)) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts1, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts3, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts1, cons(yts1, flatten2(zts1, cons(s(xts2), flatten2(zts3, nil)))))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(rev(app(flatten(zts4), cons(yts4, flatten(zts3)))), cons(yts3, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, nil)))))
++++ moved
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
+... to non-orientable hypotheses
++++ added new clause(s)
+	(yts3 == 0) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts3, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(0, flatten2(zts3, nil)))))
+	(yts3 == s(xts2)) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts1, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts3, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts1, cons(yts1, flatten2(zts1, cons(s(xts2), flatten2(zts3, nil)))))
+... to conjectures
+--- clause
+	(yts3 == 0) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts3, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(0, flatten2(zts3, nil)))))
+... subsumed by hypothese
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
+--- clause
+	(yts3 == s(xts2)) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts1, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts3, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts1, cons(yts1, flatten2(zts1, cons(s(xts2), flatten2(zts3, nil)))))
+... subsumed by hypothese
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
+
++++ Status of the Inference System
+--- Conjectures:
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = flatten2(xts, cons(yts3, flatten2(zts2, nil)))
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; xts, yts@, zts@) -> xts
+	^f0($n0 + 1; xts, yts@, zts@) -> node(^f0($n0; xts, yts@, zts@), yts$n0, zts$n0)
+	^f1(0; xts, yts@, zts@) -> flatten(xts)
+	^f1($n1 + 1; xts, yts@, zts@) -> app(^f1($n1; xts, yts@, zts@), cons(yts$n1, flatten(zts$n1)))
+	^f2(0; yts@, zts@) -> leaf
+	^f2($n2 + 1; yts@, zts@) -> node(^f2($n2; yts@, zts@), yts$n2, zts$n2)
+	^f3(0; yts@, zts@) -> flatten(zts0)
+	^f3($n3 + 1; yts@, zts@) -> app(^f3($n3; yts@, zts@), cons(yts$n3, flatten(zts$n3)))
++++ }
++++ Lemma(s)           = 
+	mirror(node(^f0($n; xts, yts@, zts@), yts$n, zts$n), y) = true => rev(app(^f1($n; xts, yts@, zts@), cons(yts$n, flatten(zts$n)))) = flatten2(y, nil)
+	mirror(node(^f2($n; yts@, zts@), yts$n, zts$n), y) = true => app(rev(^f3($n; yts@, zts@)), cons(yts$n, nil)) = flatten2(y, nil)
+
++++ treating clause
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = flatten2(xts, cons(yts3, flatten2(zts2, nil)))
++++ inductive narrowing on conjecture
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = flatten2(xts, cons(yts3, flatten2(zts2, nil)))
+... induction variables of
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = flatten2(xts, cons(yts3, flatten2(zts2, nil)))
+... are:
+	xts:tree
+	yts3:nat
+	yts4:nat
+	zts1:tree
+	zts2:tree
+	zts3:tree
+	zts4:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = flatten2(xts, cons(yts3, flatten2(zts2, nil)))
+... with variable xts
++++ creating new conjecture
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = flatten2(leaf, cons(yts3, flatten2(zts2, nil)))
++++ creating new conjecture
+	(yts5 == yts4) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts5, flatten(zts2)))), cons(yts3, nil)) = flatten2(node(xts, yts1, zts1), cons(yts4, flatten2(zts3, nil)))
+--- clause
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = flatten2(leaf, cons(yts3, flatten2(zts2, nil)))
+... reduced in 1 step to
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = cons(yts3, flatten2(zts2, nil))
+--- clause
+	(yts5 == yts4) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts5, flatten(zts2)))), cons(yts3, nil)) = flatten2(node(xts, yts1, zts1), cons(yts4, flatten2(zts3, nil)))
+... reduced in 1 step to
+	(yts5 == yts4) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts5, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts4, flatten2(zts3, nil)))))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(rev(app(app(flatten(zts4), cons(yts4, flatten(zts3))), cons(yts3, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, nil)))
++++ moved
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = flatten2(xts, cons(yts3, flatten2(zts2, nil)))
+... to non-orientable hypotheses
++++ added new clause(s)
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = cons(yts3, flatten2(zts2, nil))
+	(yts5 == yts4) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts5, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts4, flatten2(zts3, nil)))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = cons(yts3, flatten2(zts2, nil))
+	(yts5 == yts4) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts5, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts4, flatten2(zts3, nil)))))
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = flatten2(xts, cons(yts3, flatten2(zts2, nil)))
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; xts, yts@, zts@) -> xts
+	^f0($n0 + 1; xts, yts@, zts@) -> node(^f0($n0; xts, yts@, zts@), yts$n0, zts$n0)
+	^f1(0; xts, yts@, zts@) -> flatten(xts)
+	^f1($n1 + 1; xts, yts@, zts@) -> app(^f1($n1; xts, yts@, zts@), cons(yts$n1, flatten(zts$n1)))
+	^f2(0; yts@, zts@) -> leaf
+	^f2($n2 + 1; yts@, zts@) -> node(^f2($n2; yts@, zts@), yts$n2, zts$n2)
+	^f3(0; yts@, zts@) -> flatten(zts0)
+	^f3($n3 + 1; yts@, zts@) -> app(^f3($n3; yts@, zts@), cons(yts$n3, flatten(zts$n3)))
++++ }
++++ Lemma(s)           = 
+	mirror(node(^f0($n; xts, yts@, zts@), yts$n, zts$n), y) = true => rev(app(^f1($n; xts, yts@, zts@), cons(yts$n, flatten(zts$n)))) = flatten2(y, nil)
+	mirror(node(^f2($n; yts@, zts@), yts$n, zts$n), y) = true => app(rev(^f3($n; yts@, zts@)), cons(yts$n, nil)) = flatten2(y, nil)
+
++++ treating clause
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = cons(yts3, flatten2(zts2, nil))
++++ inductive narrowing on conjecture
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = cons(yts3, flatten2(zts2, nil))
+... induction variables of
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = cons(yts3, flatten2(zts2, nil))
+... are:
+	yts3:nat
+	yts4:nat
+	zts1:tree
+	zts2:tree
+	zts3:tree
+	zts4:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = cons(yts3, flatten2(zts2, nil))
+... with variable yts3
++++ creating new conjecture
+	(yts3 == 0) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts3, flatten(zts1)))), cons(yts2, nil)) = cons(0, flatten2(zts2, nil))
++++ creating new conjecture
+	(yts3 == s(xts)) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts3, flatten(zts1)))), cons(yts2, nil)) = cons(s(xts), flatten2(zts2, nil))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(rev(app(app(flatten(zts4), cons(yts4, flatten(zts3))), cons(yts3, flatten(zts2)))), cons(yts2, nil)) = cons(yts1, flatten2(zts1, nil))
++++ moved
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = cons(yts3, flatten2(zts2, nil))
+... to non-orientable hypotheses
++++ added new clause(s)
+	(yts3 == 0) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts3, flatten(zts1)))), cons(yts2, nil)) = cons(0, flatten2(zts2, nil))
+	(yts3 == s(xts)) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts3, flatten(zts1)))), cons(yts2, nil)) = cons(s(xts), flatten2(zts2, nil))
+... to conjectures
+--- clause
+	(yts3 == 0) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts3, flatten(zts1)))), cons(yts2, nil)) = cons(0, flatten2(zts2, nil))
+... subsumed by hypothese
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = cons(yts3, flatten2(zts2, nil))
+--- clause
+	(yts3 == s(xts)) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts3, flatten(zts1)))), cons(yts2, nil)) = cons(s(xts), flatten2(zts2, nil))
+... subsumed by hypothese
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = cons(yts3, flatten2(zts2, nil))
+
++++ Status of the Inference System
+--- Conjectures:
+	(yts5 == yts4) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts5, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts4, flatten2(zts3, nil)))))
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = flatten2(xts, cons(yts3, flatten2(zts2, nil)))
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = cons(yts3, flatten2(zts2, nil))
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; xts, yts@, zts@) -> xts
+	^f0($n0 + 1; xts, yts@, zts@) -> node(^f0($n0; xts, yts@, zts@), yts$n0, zts$n0)
+	^f1(0; xts, yts@, zts@) -> flatten(xts)
+	^f1($n1 + 1; xts, yts@, zts@) -> app(^f1($n1; xts, yts@, zts@), cons(yts$n1, flatten(zts$n1)))
+	^f2(0; yts@, zts@) -> leaf
+	^f2($n2 + 1; yts@, zts@) -> node(^f2($n2; yts@, zts@), yts$n2, zts$n2)
+	^f3(0; yts@, zts@) -> flatten(zts0)
+	^f3($n3 + 1; yts@, zts@) -> app(^f3($n3; yts@, zts@), cons(yts$n3, flatten(zts$n3)))
++++ }
++++ Lemma(s)           = 
+	mirror(node(^f0($n; xts, yts@, zts@), yts$n, zts$n), y) = true => rev(app(^f1($n; xts, yts@, zts@), cons(yts$n, flatten(zts$n)))) = flatten2(y, nil)
+	mirror(node(^f2($n; yts@, zts@), yts$n, zts$n), y) = true => app(rev(^f3($n; yts@, zts@)), cons(yts$n, nil)) = flatten2(y, nil)
+
++++ treating clause
+	(yts5 == yts4) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts5, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts4, flatten2(zts3, nil)))))
++++ inductive narrowing on conjecture
+	(yts5 == yts4) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts5, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts4, flatten2(zts3, nil)))))
+... induction variables of
+	(yts5 == yts4) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts5, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts4, flatten2(zts3, nil)))))
+... are:
+	yts4:nat
+	yts5:nat
+	zts2:tree
+	zts3:tree
+	zts4:tree
+	zts5:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	(yts5 == yts4) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts5, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts4, flatten2(zts3, nil)))))
+... with variable yts4
++++ creating new conjecture
+	(yts4 == 0) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts4, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(0, flatten2(zts3, nil)))))
++++ creating new conjecture
+	(yts4 == s(xts2)) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts1, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts4, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts1, cons(yts1, flatten2(zts1, cons(s(xts2), flatten2(zts3, nil)))))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(rev(app(app(flatten(zts5), cons(yts5, flatten(zts4))), cons(yts4, flatten(zts3)))), cons(yts3, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, nil)))))
++++ moved
+	(yts5 == yts4) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts5, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts4, flatten2(zts3, nil)))))
+... to non-orientable hypotheses
++++ added new clause(s)
+	(yts4 == 0) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts4, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(0, flatten2(zts3, nil)))))
+	(yts4 == s(xts2)) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts1, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts4, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts1, cons(yts1, flatten2(zts1, cons(s(xts2), flatten2(zts3, nil)))))
+... to conjectures
+--- clause
+	(yts4 == 0) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts4, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(0, flatten2(zts3, nil)))))
+... subsumed by hypothese
+	(yts5 == yts4) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts5, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts4, flatten2(zts3, nil)))))
+--- clause
+	(yts4 == s(xts2)) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts1, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts4, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts1, cons(yts1, flatten2(zts1, cons(s(xts2), flatten2(zts3, nil)))))
+... subsumed by hypothese
+	(yts5 == yts4) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts5, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts4, flatten2(zts3, nil)))))
++++ active wrap
+	(. == .) && (mirror(., zts3) && mirror(zts2, node(xts, yts, zts1))) = true => app(rev(.), cons(., nil)) = flatten2(xts, cons(yts, flatten2(zts1, cons(., flatten2(zts3, nil)))))
+... with sequence
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
+	(yts5 == yts4) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts5, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts4, flatten2(zts3, nil)))))
++++ primal grammar found for head
+	{&&, ==, app, cons, flatten, flatten2, leaf, mirror, nil, node, rev, true}
+... and wrap
+	(. == .) && (mirror(., zts3) && mirror(zts2, node(xts, yts, zts1))) = true => app(rev(.), cons(., nil)) = flatten2(xts, cons(yts, flatten2(zts1, cons(., flatten2(zts3, nil)))))
++++ Presburger system  = {
+	^f6(0; yts@, zts@) -> leaf
+	^f6($n6 + 1; yts@, zts@) -> node(^f6($n6; yts@, zts@), ^f3($n6; yts@, zts@), ^f3($n6; yts@, zts@))
+	^f7(0; yts@, zts@) -> flatten(zts0)
+	^f7($n7 + 1; yts@, zts@) -> app(^f7($n7; yts@, zts@), cons(yts$n7, flatten(zts$n7)))
++++ }
++++ Lemma(s)           = 
+	(yts$n == yts$n) && (mirror(^f6($n; yts@, zts@), zts$n) && mirror(zts$n, node(xts, yts$n, zts$n))) = true => app(rev(^f7($n; yts@, zts@)), cons(yts$n, nil)) = flatten2(xts, cons(yts$n, flatten2(zts$n, cons(yts$n, flatten2(zts$n, nil)))))
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
+	mirror(node(xts, yts, zts), y) = true => rev(app(flatten(xts), cons(yts, flatten(zts)))) = flatten2(y, nil)
+	mirror(node(leaf, yts, zts), y) = true => app(rev(flatten(zts)), cons(yts, nil)) = flatten2(y, nil)
+	mirror(node(node(xts, yts2, zts2), yts1, zts1), y) = true => rev(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, xts)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts2, nil)))
+	mirror(node(node(leaf, yts2, zts2), yts1, zts1), y) = true => app(rev(app(flatten(zts2), cons(yts1, flatten(zts1)))), cons(yts2, nil)) = flatten2(y, nil)
+	mirror(node(node(node(xts, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => rev(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))) = flatten2(y, nil)
+	(yts2 == yts1) && (mirror(leaf, zts2) && mirror(zts1, leaf)) = true => app(rev(flatten(zts1)), cons(yts2, nil)) = cons(yts1, flatten2(zts2, nil))
+	(yts3 == yts2) && (mirror(leaf, zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(flatten(zts2)), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts2, flatten2(zts3, nil)))))
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = flatten2(xts, cons(yts2, flatten2(zts2, nil)))
+	mirror(node(node(node(leaf, yts3, zts3), yts2, zts2), yts1, zts1), y) = true => app(rev(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1)))), cons(yts3, nil)) = flatten2(y, nil)
+	(yts3 == yts2) && (mirror(node(leaf, yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(flatten(zts3), cons(yts3, flatten(zts1)))), cons(yts1, nil)) = cons(yts2, flatten2(zts2, nil))
+	(yts4 == yts3) && (mirror(node(leaf, yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(flatten(zts4), cons(yts4, flatten(zts2)))), cons(yts2, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts3, flatten2(zts3, nil)))))
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, xts)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = flatten2(xts, cons(yts3, flatten2(zts2, nil)))
+	(yts4 == yts3) && (mirror(node(node(leaf, yts2, zts4), yts1, zts3), zts2) && mirror(zts1, leaf)) = true => app(rev(app(app(flatten(zts4), cons(yts1, flatten(zts3))), cons(yts4, flatten(zts1)))), cons(yts2, nil)) = cons(yts3, flatten2(zts2, nil))
+	(yts5 == yts4) && (mirror(node(node(leaf, yts3, zts5), yts2, zts4), zts3) && mirror(zts2, node(xts, yts1, zts1))) = true => app(rev(app(app(flatten(zts5), cons(yts2, flatten(zts4))), cons(yts5, flatten(zts2)))), cons(yts3, nil)) = flatten2(xts, cons(yts1, flatten2(zts1, cons(yts4, flatten2(zts3, nil)))))
+--- Oriented hypotheses:
+	mirror(leaf, y) = true => flatten2(y, nil) -> nil
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; xts, yts@, zts@) -> xts
+	^f0($n0 + 1; xts, yts@, zts@) -> node(^f0($n0; xts, yts@, zts@), yts$n0, zts$n0)
+	^f1(0; xts, yts@, zts@) -> flatten(xts)
+	^f1($n1 + 1; xts, yts@, zts@) -> app(^f1($n1; xts, yts@, zts@), cons(yts$n1, flatten(zts$n1)))
+	^f2(0; yts@, zts@) -> leaf
+	^f2($n2 + 1; yts@, zts@) -> node(^f2($n2; yts@, zts@), yts$n2, zts$n2)
+	^f3(0; yts@, zts@) -> flatten(zts0)
+	^f3($n3 + 1; yts@, zts@) -> app(^f3($n3; yts@, zts@), cons(yts$n3, flatten(zts$n3)))
+	^f6(0; yts@, zts@) -> leaf
+	^f6($n6 + 1; yts@, zts@) -> node(^f6($n6; yts@, zts@), ^f3($n6; yts@, zts@), ^f3($n6; yts@, zts@))
+	^f7(0; yts@, zts@) -> flatten(zts0)
+	^f7($n7 + 1; yts@, zts@) -> app(^f7($n7; yts@, zts@), cons(yts$n7, flatten(zts$n7)))
++++ }
++++ Lemma(s)           = 
+	mirror(node(^f0($n; xts, yts@, zts@), yts$n, zts$n), y) = true => rev(app(^f1($n; xts, yts@, zts@), cons(yts$n, flatten(zts$n)))) = flatten2(y, nil)
+	mirror(node(^f2($n; yts@, zts@), yts$n, zts$n), y) = true => app(rev(^f3($n; yts@, zts@)), cons(yts$n, nil)) = flatten2(y, nil)
+	(yts$n == yts$n) && (mirror(^f6($n; yts@, zts@), zts$n) && mirror(zts$n, node(xts, yts$n, zts$n))) = true => app(rev(^f7($n; yts@, zts@)), cons(yts$n, nil)) = flatten2(xts, cons(yts$n, flatten2(zts$n, cons(yts$n, flatten2(zts$n, nil)))))
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 17
+... Number of induction steps      = 17
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Number of PG defined symbols   = 6
+... Number of PG lemmas            = 3
+... Elapsed time (seconds)         = 0.434

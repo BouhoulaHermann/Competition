@@ -1,0 +1,312 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = seq-in.txt
++++ output      = seq-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LISTsymb from listsymb successfully parsed
++++ specification APPENDsymb from appendsymb successfully parsed
++++ specification REVERSEsymb from reversesymb successfully parsed
++++ specification SEQ from seq-in.txt successfully parsed
++++ Listing
+         1: specification SEQ
+         2: sorts
+         3:      list nat
+         4: constructors
+         5:      ..: nat list -> list
+         6:      0: -> nat
+         7:      :: nat list -> list
+         8:      nil: -> list
+         9:      s: nat -> nat
+        10: defined functions
+        11:      @@: list list -> list
+        12:      rev: list -> list
+        13: precedence
+        14:      rev > @@ > .. > nil > s > 0
+        15: axioms
+        16:      nil @@ y = y;
+        17:      rev(nil) = nil;
+        18:      (x .. y) @@ z = x .. (y @@ z);
+        19:      rev(x .. y) = rev(y) @@ (x .. nil);
+        20: conjectures
+        21:      xs @@ nil = xs;
+        22:      (xs @@ ys) @@ zs = xs @@ (ys @@ zs);
+        23:      rev(xs @@ ys) = rev(ys) @@ rev(xs);
+        24:      rev(rev(xs)) = xs;
+        25: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	nil @@ y -> y
+	rev(nil) -> nil
+	(x .. y) @@ z -> x .. (y @@ z)
+	rev(x .. y) -> rev(y) @@ (x .. nil)
++++ inductive positions:
+... for @@: 0
+... for rev: 0
++++ maximal depths of left-hand sides:
+... for rev: 2
+... for @@: 2
++++ general maximal depth = 2
++++ sort dependence: nat < list
++++ test sets for defined functions and sorts:
+... for rev
+... ... list
+		nil
+		x : y
+		x .. y
+... for @@
+... ... list
+		nil
+		x : y
+		x .. y
+
++++ conjecture(s)
+	xs @@ nil = xs
+	(xs @@ ys) @@ zs = xs @@ (ys @@ zs)
+	rev(xs @@ ys) = rev(ys) @@ rev(xs)
+	rev(rev(xs)) = xs
+
++++ inference system initiated
++++ treating clause
+	xs @@ nil = xs
++++ inductive narrowing on conjecture
+	xs @@ nil = xs
+... induction variables of
+	xs @@ nil = xs
+... are:
+	xs:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	xs @@ nil = xs
+... with variable xs
++++ creating new conjecture
+	nil @@ nil = nil
++++ creating new conjecture
+	(xts : yts) @@ nil = xts : yts
++++ creating new conjecture
+	(xts .. yts) @@ nil = xts .. yts
+--- clause
+	nil @@ nil = nil
+... reduced to tautology
+	nil = nil
+--- clause
+	(xts .. yts) @@ nil = xts .. yts
+... reduced in 1 step to
+	xts .. (yts @@ nil) = xts .. yts
+... decomposed into new clause(s)
+	yts @@ nil = yts
++++ inductive narrowing succeeded
+--- clause
+	xs @@ nil = xs
+... oriented to rule
+	xs @@ nil -> xs
++++ added new clause(s)
+	(xts : yts) @@ nil = xts : yts
+	yts @@ nil = yts
+... to conjectures
+--- clause
+	(xts : yts) @@ nil = xts : yts
+... reduced to tautology
+	xts : yts = xts : yts
+--- clause
+	yts @@ nil = yts
+... reduced to tautology
+	yts = yts
+
++++ Status of the Inference System
+--- Conjectures:
+	(xs @@ ys) @@ zs = xs @@ (ys @@ zs)
+	rev(xs @@ ys) = rev(ys) @@ rev(xs)
+	rev(rev(xs)) = xs
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	xs @@ nil -> xs
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(xs @@ ys) @@ zs = xs @@ (ys @@ zs)
++++ inductive narrowing on conjecture
+	(xs @@ ys) @@ zs = xs @@ (ys @@ zs)
+... induction variables of
+	(xs @@ ys) @@ zs = xs @@ (ys @@ zs)
+... are:
+	xs:list
+	ys:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(xs @@ ys) @@ zs = xs @@ (ys @@ zs)
+... with variable xs
++++ creating new conjecture
+	(nil @@ ys) @@ zs = nil @@ (ys @@ zs)
++++ creating new conjecture
+	((xts : yts) @@ ys) @@ zs = (xts : yts) @@ (ys @@ zs)
++++ creating new conjecture
+	((xts .. yts) @@ ys) @@ zs = (xts .. yts) @@ (ys @@ zs)
+--- clause
+	(nil @@ ys) @@ zs = nil @@ (ys @@ zs)
+... reduced to tautology
+	ys @@ zs = ys @@ zs
+--- clause
+	((xts .. yts) @@ ys) @@ zs = (xts .. yts) @@ (ys @@ zs)
+... reduced in 3 steps to
+	xts .. ((yts @@ ys) @@ zs) = xts .. (yts @@ (ys @@ zs))
+... decomposed into new clause(s)
+	(yts @@ ys) @@ zs = yts @@ (ys @@ zs)
++++ inductive narrowing succeeded
+--- clause
+	(xs @@ ys) @@ zs = xs @@ (ys @@ zs)
+... oriented to rule
+	(xs @@ ys) @@ zs -> xs @@ (ys @@ zs)
++++ added new clause(s)
+	((xts : yts) @@ ys) @@ zs = (xts : yts) @@ (ys @@ zs)
+	(yts @@ ys) @@ zs = yts @@ (ys @@ zs)
+... to conjectures
+--- clause
+	((xts : yts) @@ ys) @@ zs = (xts : yts) @@ (ys @@ zs)
+... reduced to tautology
+	(xts : yts) @@ (ys @@ zs) = (xts : yts) @@ (ys @@ zs)
+--- clause
+	(yts @@ ys) @@ zs = yts @@ (ys @@ zs)
+... reduced to tautology
+	yts @@ (ys @@ zs) = yts @@ (ys @@ zs)
+
++++ Status of the Inference System
+--- Conjectures:
+	rev(xs @@ ys) = rev(ys) @@ rev(xs)
+	rev(rev(xs)) = xs
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	xs @@ nil -> xs
+	(xs @@ ys) @@ zs -> xs @@ (ys @@ zs)
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	rev(xs @@ ys) = rev(ys) @@ rev(xs)
++++ inductive narrowing on conjecture
+	rev(xs @@ ys) = rev(ys) @@ rev(xs)
+... induction variables of
+	rev(xs @@ ys) = rev(ys) @@ rev(xs)
+... are:
+	xs:list
+	ys:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	rev(xs @@ ys) = rev(ys) @@ rev(xs)
+... with variable xs
++++ creating new conjecture
+	rev(nil @@ ys) = rev(ys) @@ rev(nil)
++++ creating new conjecture
+	rev((xts : yts) @@ ys) = rev(ys) @@ rev(xts : yts)
++++ creating new conjecture
+	rev((xts .. yts) @@ ys) = rev(ys) @@ rev(xts .. yts)
+--- clause
+	rev(nil @@ ys) = rev(ys) @@ rev(nil)
+... reduced to tautology
+	rev(ys) = rev(ys)
+--- clause
+	rev((xts .. yts) @@ ys) = rev(ys) @@ rev(xts .. yts)
+... reduced in 3 steps to
+	rev(yts @@ ys) @@ (xts .. nil) = rev(ys) @@ (rev(yts) @@ (xts .. nil))
++++ inductive narrowing succeeded
+--- clause
+	rev(xs @@ ys) = rev(ys) @@ rev(xs)
+... oriented to rule
+	rev(xs @@ ys) -> rev(ys) @@ rev(xs)
++++ added new clause(s)
+	rev((xts : yts) @@ ys) = rev(ys) @@ rev(xts : yts)
+	rev(yts @@ ys) @@ (xts .. nil) = rev(ys) @@ (rev(yts) @@ (xts .. nil))
+... to conjectures
+--- clause
+	rev((xts : yts) @@ ys) = rev(ys) @@ rev(xts : yts)
+... reduced to tautology
+	rev(ys) @@ rev(xts : yts) = rev(ys) @@ rev(xts : yts)
+--- clause
+	rev(yts @@ ys) @@ (xts .. nil) = rev(ys) @@ (rev(yts) @@ (xts .. nil))
+... reduced to tautology
+	rev(ys) @@ (rev(yts) @@ (xts .. nil)) = rev(ys) @@ (rev(yts) @@ (xts .. nil))
+
++++ Status of the Inference System
+--- Conjectures:
+	rev(rev(xs)) = xs
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	xs @@ nil -> xs
+	rev(xs @@ ys) -> rev(ys) @@ rev(xs)
+	(xs @@ ys) @@ zs -> xs @@ (ys @@ zs)
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	rev(rev(xs)) = xs
++++ inductive narrowing on conjecture
+	rev(rev(xs)) = xs
+... induction variables of
+	rev(rev(xs)) = xs
+... are:
+	xs:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	rev(rev(xs)) = xs
+... with variable xs
++++ creating new conjecture
+	rev(rev(nil)) = nil
++++ creating new conjecture
+	rev(rev(xts : yts)) = xts : yts
++++ creating new conjecture
+	rev(rev(xts .. yts)) = xts .. yts
+--- clause
+	rev(rev(nil)) = nil
+... reduced to tautology
+	nil = nil
+--- clause
+	rev(rev(xts .. yts)) = xts .. yts
+... reduced in 2 steps to
+	rev(xts .. nil) @@ rev(rev(yts)) = xts .. yts
++++ inductive narrowing succeeded
+--- clause
+	rev(rev(xs)) = xs
+... oriented to rule
+	rev(rev(xs)) -> xs
++++ added new clause(s)
+	rev(rev(xts : yts)) = xts : yts
+	rev(xts .. nil) @@ rev(rev(yts)) = xts .. yts
+... to conjectures
+--- clause
+	rev(rev(xts : yts)) = xts : yts
+... reduced to tautology
+	xts : yts = xts : yts
+--- clause
+	rev(xts .. nil) @@ rev(rev(yts)) = xts .. yts
+... reduced to tautology
+	xts .. yts = xts .. yts
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	xs @@ nil -> xs
+	rev(rev(xs)) -> xs
+	rev(xs @@ ys) -> rev(ys) @@ rev(xs)
+	(xs @@ ys) @@ zs -> xs @@ (ys @@ zs)
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 4
+... Number of induction steps      = 4
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.003

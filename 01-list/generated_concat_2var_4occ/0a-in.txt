@@ -1,0 +1,11 @@
+specification ListFunctions
+
+include <append>
+
+precedence
+	app > cons > nil > s > 0
+
+conjectures
+	app(x,app(y,app(x,x))) = app(app(x,y),app(x,x));
+
+end

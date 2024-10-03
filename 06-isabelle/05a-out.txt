@@ -1,0 +1,312 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 05a-in.txt
++++ output      = 05a-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LISTsymb from listsymb successfully parsed
++++ specification LenghtCount from 05a-in.txt successfully parsed
++++ Listing
+         1: specification LenghtCount
+         2: sorts
+         3:      list nat
+         4: constructors
+         5:      ..: nat list -> list
+         6:      0: -> nat
+         7:      :: nat list -> list
+         8:      nil: -> list
+         9:      s: nat -> nat
+        10: defined functions
+        11:      reverse: list -> list
+        12:      snoc: nat list -> list
+        13: precedence
+        14:      reverse > snoc > .. > nil > s > 0
+        15: axioms
+        16:      reverse(nil) = nil;
+        17:      snoc(x, nil) = x .. nil;
+        18:      snoc(x, y .. ys) = y .. snoc(x, ys);
+        19:      reverse(x .. xs) = snoc(x, reverse(xs));
+        20: conjectures
+        21:      reverse(reverse(xs)) = xs;
+        22: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	reverse(nil) -> nil
+	snoc(x, nil) -> x .. nil
+	snoc(x, y .. ys) -> y .. snoc(x, ys)
+	reverse(x .. xs) -> snoc(x, reverse(xs))
++++ inductive positions:
+... for reverse: 0
+... for snoc: 1
++++ maximal depths of left-hand sides:
+... for snoc: 2
+... for reverse: 2
++++ general maximal depth = 2
++++ sort dependence: nat < list
++++ test sets for defined functions and sorts:
+... for snoc
+... ... list
+		nil
+		x : y
+		x .. y
+... for reverse
+... ... list
+		nil
+		x : y
+		x .. y
+
++++ conjecture(s)
+	reverse(reverse(xs)) = xs
+
++++ inference system initiated
++++ treating clause
+	reverse(reverse(xs)) = xs
++++ inductive narrowing on conjecture
+	reverse(reverse(xs)) = xs
+... induction variables of
+	reverse(reverse(xs)) = xs
+... are:
+	xs:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	reverse(reverse(xs)) = xs
+... with variable xs
++++ creating new conjecture
+	reverse(reverse(nil)) = nil
++++ creating new conjecture
+	reverse(reverse(xts : yts)) = xts : yts
++++ creating new conjecture
+	reverse(reverse(xts .. yts)) = xts .. yts
+--- clause
+	reverse(reverse(nil)) = nil
+... reduced to tautology
+	nil = nil
+--- clause
+	reverse(reverse(xts .. yts)) = xts .. yts
+... reduced in 1 step to
+	reverse(snoc(xts, reverse(yts))) = xts .. yts
++++ inductive narrowing succeeded
+--- clause
+	reverse(reverse(xs)) = xs
+... oriented to rule
+	reverse(reverse(xs)) -> xs
++++ added new clause(s)
+	reverse(reverse(xts : yts)) = xts : yts
+	reverse(snoc(xts, reverse(yts))) = xts .. yts
+... to conjectures
+--- clause
+	reverse(reverse(xts : yts)) = xts : yts
+... reduced to tautology
+	xts : yts = xts : yts
+
++++ Status of the Inference System
+--- Conjectures:
+	reverse(snoc(xts, reverse(yts))) = xts .. yts
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	reverse(reverse(xs)) -> xs
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	reverse(snoc(xts, reverse(yts))) = xts .. yts
++++ inductive narrowing on conjecture
+	reverse(snoc(xts, reverse(yts))) = xts .. yts
+... induction variables of
+	reverse(snoc(xts, reverse(yts))) = xts .. yts
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	reverse(snoc(xts, reverse(yts))) = xts .. yts
+... with variable yts
++++ creating new conjecture
+	reverse(snoc(xts, reverse(nil))) = xts .. nil
++++ creating new conjecture
+	reverse(snoc(xts2, reverse(xts1 : yts))) = xts2 .. xts1 : yts
++++ creating new conjecture
+	reverse(snoc(xts2, reverse(xts1 .. yts))) = xts2 .. xts1 .. yts
+--- clause
+	reverse(snoc(xts, reverse(nil))) = xts .. nil
+... reduced to tautology
+	xts .. nil = xts .. nil
+--- clause
+	reverse(snoc(xts2, reverse(xts1 .. yts))) = xts2 .. xts1 .. yts
+... reduced in 1 step to
+	reverse(snoc(xts2, snoc(xts1, reverse(yts)))) = xts2 .. xts1 .. yts
++++ inductive narrowing succeeded
+--- clause
+	reverse(snoc(xts, reverse(yts))) = xts .. yts
+... oriented to rule
+	reverse(snoc(xts, reverse(yts))) -> xts .. yts
++++ added new clause(s)
+	reverse(snoc(xts2, reverse(xts1 : yts))) = xts2 .. xts1 : yts
+	reverse(snoc(xts2, snoc(xts1, reverse(yts)))) = xts2 .. xts1 .. yts
+... to conjectures
+--- clause
+	reverse(snoc(xts2, reverse(xts1 : yts))) = xts2 .. xts1 : yts
+... reduced to tautology
+	xts2 .. xts1 : yts = xts2 .. xts1 : yts
+
++++ Status of the Inference System
+--- Conjectures:
+	reverse(snoc(xts2, snoc(xts1, reverse(yts)))) = xts2 .. xts1 .. yts
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	reverse(reverse(xs)) -> xs
+	reverse(snoc(xts, reverse(yts))) -> xts .. yts
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	reverse(snoc(xts2, snoc(xts1, reverse(yts)))) = xts2 .. xts1 .. yts
++++ inductive narrowing on conjecture
+	reverse(snoc(xts2, snoc(xts1, reverse(yts)))) = xts2 .. xts1 .. yts
+... induction variables of
+	reverse(snoc(xts2, snoc(xts1, reverse(yts)))) = xts2 .. xts1 .. yts
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	reverse(snoc(xts2, snoc(xts1, reverse(yts)))) = xts2 .. xts1 .. yts
+... with variable yts
++++ creating new conjecture
+	reverse(snoc(xts2, snoc(xts1, reverse(nil)))) = xts2 .. xts1 .. nil
++++ creating new conjecture
+	reverse(snoc(xts3, snoc(xts2, reverse(xts1 : yts)))) = xts3 .. xts2 .. xts1 : yts
++++ creating new conjecture
+	reverse(snoc(xts3, snoc(xts2, reverse(xts1 .. yts)))) = xts3 .. xts2 .. xts1 .. yts
+--- clause
+	reverse(snoc(xts2, snoc(xts1, reverse(nil)))) = xts2 .. xts1 .. nil
+... reduced to tautology
+	xts2 .. (xts1 .. nil) = xts2 .. xts1 .. nil
+--- clause
+	reverse(snoc(xts3, snoc(xts2, reverse(xts1 .. yts)))) = xts3 .. xts2 .. xts1 .. yts
+... reduced in 1 step to
+	reverse(snoc(xts3, snoc(xts2, snoc(xts1, reverse(yts))))) = xts3 .. xts2 .. xts1 .. yts
++++ inductive narrowing succeeded
+--- clause
+	reverse(snoc(xts2, snoc(xts1, reverse(yts)))) = xts2 .. xts1 .. yts
+... oriented to rule
+	reverse(snoc(xts2, snoc(xts1, reverse(yts)))) -> xts2 .. xts1 .. yts
++++ added new clause(s)
+	reverse(snoc(xts3, snoc(xts2, reverse(xts1 : yts)))) = xts3 .. xts2 .. xts1 : yts
+	reverse(snoc(xts3, snoc(xts2, snoc(xts1, reverse(yts))))) = xts3 .. xts2 .. xts1 .. yts
+... to conjectures
+--- clause
+	reverse(snoc(xts3, snoc(xts2, reverse(xts1 : yts)))) = xts3 .. xts2 .. xts1 : yts
+... reduced to tautology
+	xts3 .. xts2 .. xts1 : yts = xts3 .. xts2 .. xts1 : yts
+
++++ Status of the Inference System
+--- Conjectures:
+	reverse(snoc(xts3, snoc(xts2, snoc(xts1, reverse(yts))))) = xts3 .. xts2 .. xts1 .. yts
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	reverse(reverse(xs)) -> xs
+	reverse(snoc(xts, reverse(yts))) -> xts .. yts
+	reverse(snoc(xts2, snoc(xts1, reverse(yts)))) -> xts2 .. xts1 .. yts
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	reverse(snoc(xts3, snoc(xts2, snoc(xts1, reverse(yts))))) = xts3 .. xts2 .. xts1 .. yts
++++ inductive narrowing on conjecture
+	reverse(snoc(xts3, snoc(xts2, snoc(xts1, reverse(yts))))) = xts3 .. xts2 .. xts1 .. yts
+... induction variables of
+	reverse(snoc(xts3, snoc(xts2, snoc(xts1, reverse(yts))))) = xts3 .. xts2 .. xts1 .. yts
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	reverse(snoc(xts3, snoc(xts2, snoc(xts1, reverse(yts))))) = xts3 .. xts2 .. xts1 .. yts
+... with variable yts
++++ creating new conjecture
+	reverse(snoc(xts3, snoc(xts2, snoc(xts1, reverse(nil))))) = xts3 .. xts2 .. xts1 .. nil
++++ creating new conjecture
+	reverse(snoc(xts4, snoc(xts3, snoc(xts2, reverse(xts1 : yts))))) = xts4 .. xts3 .. xts2 .. xts1 : yts
++++ creating new conjecture
+	reverse(snoc(xts4, snoc(xts3, snoc(xts2, reverse(xts1 .. yts))))) = xts4 .. xts3 .. xts2 .. xts1 .. yts
+--- clause
+	reverse(snoc(xts3, snoc(xts2, snoc(xts1, reverse(nil))))) = xts3 .. xts2 .. xts1 .. nil
+... reduced to tautology
+	xts3 .. (xts2 .. (xts1 .. nil)) = xts3 .. xts2 .. xts1 .. nil
+--- clause
+	reverse(snoc(xts4, snoc(xts3, snoc(xts2, reverse(xts1 .. yts))))) = xts4 .. xts3 .. xts2 .. xts1 .. yts
+... reduced in 1 step to
+	reverse(snoc(xts4, snoc(xts3, snoc(xts2, snoc(xts1, reverse(yts)))))) = xts4 .. xts3 .. xts2 .. xts1 .. yts
++++ inductive narrowing succeeded
+--- clause
+	reverse(snoc(xts3, snoc(xts2, snoc(xts1, reverse(yts))))) = xts3 .. xts2 .. xts1 .. yts
+... oriented to rule
+	reverse(snoc(xts3, snoc(xts2, snoc(xts1, reverse(yts))))) -> xts3 .. xts2 .. xts1 .. yts
++++ added new clause(s)
+	reverse(snoc(xts4, snoc(xts3, snoc(xts2, reverse(xts1 : yts))))) = xts4 .. xts3 .. xts2 .. xts1 : yts
+	reverse(snoc(xts4, snoc(xts3, snoc(xts2, snoc(xts1, reverse(yts)))))) = xts4 .. xts3 .. xts2 .. xts1 .. yts
+... to conjectures
+--- clause
+	reverse(snoc(xts4, snoc(xts3, snoc(xts2, reverse(xts1 : yts))))) = xts4 .. xts3 .. xts2 .. xts1 : yts
+... reduced to tautology
+	xts4 .. xts3 .. xts2 .. xts1 : yts = xts4 .. xts3 .. xts2 .. xts1 : yts
++++ active wrap
+	reverse(snoc(., .)) = . .. .
+... with sequence
+	reverse(snoc(xts, reverse(yts))) = xts .. yts
+	reverse(snoc(xts2, snoc(xts1, reverse(yts)))) = xts2 .. xts1 .. yts
+	reverse(snoc(xts3, snoc(xts2, snoc(xts1, reverse(yts))))) = xts3 .. xts2 .. xts1 .. yts
++++ primal grammar found for head
+	{.., reverse, snoc}
+... and wrap
+	reverse(snoc(., .)) = . .. .
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> reverse(yts)
+	^f0($n0 + 1; yts, xts@) -> snoc(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts, xts@) -> yts
+	^f1($n1 + 1; yts, xts@) -> xts$n1 .. ^f1($n1; yts, xts@)
++++ }
++++ Lemma(s)           = 
+	reverse(snoc(xts$n, ^f0($n; yts, xts@))) = xts$n .. ^f1($n; yts, xts@)
+--- clause
+	reverse(snoc(xts4, snoc(xts3, snoc(xts2, snoc(xts1, reverse(yts)))))) = xts4 .. xts3 .. xts2 .. xts1 .. yts
+... subsumed by lemma
+	reverse(snoc(xts$n, ^f0($n; yts, xts@))) = xts$n .. ^f1($n; yts, xts@)
+... with substitution
+	$n <- 3
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	reverse(reverse(xs)) -> xs
+	reverse(snoc(xts, reverse(yts))) -> xts .. yts
+	reverse(snoc(xts2, snoc(xts1, reverse(yts)))) -> xts2 .. xts1 .. yts
+	reverse(snoc(xts3, snoc(xts2, snoc(xts1, reverse(yts))))) -> xts3 .. xts2 .. xts1 .. yts
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> reverse(yts)
+	^f0($n0 + 1; yts, xts@) -> snoc(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts, xts@) -> yts
+	^f1($n1 + 1; yts, xts@) -> xts$n1 .. ^f1($n1; yts, xts@)
++++ }
++++ Lemma(s)           = 
+	reverse(snoc(xts$n, ^f0($n; yts, xts@))) = xts$n .. ^f1($n; yts, xts@)
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 4
+... Number of induction steps      = 4
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Number of PG defined symbols   = 2
+... Number of PG lemmas            = 1
+... Elapsed time (seconds)         = 0.003

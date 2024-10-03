@@ -1,0 +1,12 @@
+specification Generated
+
+include <add>
+
+precedence
+	+ > s > 0 
+
+conjectures
+	s(s(s(z)) + s(y) + s(x + w + v)) = s(s(s(w)) + s(s(y)) + s(z + x + v));
+
+end
+

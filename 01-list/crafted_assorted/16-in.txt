@@ -1,0 +1,13 @@
+specification ListReverseLength
+
+include <length>
+	<reverse>
+	<leq>
+
+precedence
+	rev > len > <= > app > cons > nil > s > 0 > true = false
+
+conjectures
+	len(x) <= s(0) = true => rev(x) = x;
+
+end

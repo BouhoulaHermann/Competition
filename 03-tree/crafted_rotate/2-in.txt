@@ -1,0 +1,11 @@
+specification CraftedTrees
+
+include <flatten> <rotateright>
+
+precedence
+	rotR > flatten > app > cons > node > leaf > nil > s > 0
+
+conjectures
+	flatten(rotR(x)) = flatten(x);
+
+end

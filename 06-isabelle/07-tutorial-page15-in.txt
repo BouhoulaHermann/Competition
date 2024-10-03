@@ -1,0 +1,36 @@
+# Programming and Proving In Isabelle/HOL
+# page 15
+#
+# Example for mirroring a tree
+
+specification TREE
+
+sorts
+
+	nat tree
+
+constructors
+
+	0: -> nat
+	s: nat -> nat
+	leaf: -> tree
+	node: tree nat tree -> tree
+
+defined functions
+
+	mirror: tree -> tree
+
+precedence
+
+	mirror > node > leaf > s > 0
+
+axioms
+
+	mirror(leaf) = leaf;
+	mirror(node(xl, ya, xr)) = node(mirror(xr), ya, mirror(xl));
+
+conjectures
+
+	mirror(mirror(x)) = x;
+
+end

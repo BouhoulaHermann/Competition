@@ -1,0 +1,11 @@
+specification Generated
+
+include <addalt>
+
+precedence
+	+ > s > 0 
+
+conjectures
+	((V1 + V3) + V4) + ((V2 + V3) + (V0 + V3)) = ((V3 + V0) + V1) + (((V4 + V3) + V3) + V2);
+
+end

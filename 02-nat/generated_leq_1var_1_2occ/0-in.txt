@@ -1,0 +1,13 @@
+specification LeqFunc
+
+include
+	<add>
+	<leq>
+
+precedence
+	<= > + > s > 0 > true = false
+
+conjectures
+	x <= x+x = true;
+
+end

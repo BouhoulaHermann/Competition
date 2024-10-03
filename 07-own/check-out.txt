@@ -1,0 +1,28 @@
+Number of output files       = 23
+Number of successful proofs  = 22
+... without primal grammars  = 10
+	comm-add+mult-out.txt
+	comm-add-out.txt
+	comm-add2-out.txt
+	comm-mult-out.txt
+	example22-out.txt
+	example22bis-out.txt
+	fact-out.txt
+	invariant-out.txt
+	test1-out.txt
+	zeroadd-out.txt
+Number of disproofs          = 0
+Number of loop limits        = 1
+	qrev2-out.txt
+No primal grammars possible  = 0
+Total number of correct runs = 23
+Number of crashes            = 0
+Elapsed time:
+	min     = 0
+	max     = 5.988 (list-out.txt)
+	mean    = 0.35
+	std.dev = 1.26
+	median  = 0
+Examples which run longer than 1 second:
+	   5.988s: list-out.txt
+	   1.906s: qrev2-out.txt

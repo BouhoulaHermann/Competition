@@ -1,0 +1,117 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 0-in.txt
++++ output      = 0-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification BOOL from bool successfully parsed
++++ specification Crafted from 0-in.txt successfully parsed
++++ Listing
+         1: specification Crafted
+         2: sorts
+         3:      bool nat
+         4: constructors
+         5:      0: -> nat
+         6:      false: -> bool
+         7:      s: nat -> nat
+         8:      true: -> bool
+         9: defined functions
+        10:      eq: nat nat nat -> bool
+        11: precedence
+        12:      eq > s > 0 > false = true
+        13: axioms
+        14:      eq(0, 0, 0) = true;
+        15:      eq(0, s(y), z) = false;
+        16:      eq(0, y, s(z)) = false;
+        17:      eq(s(x), 0, z) = false;
+        18:      eq(s(x), y, 0) = false;
+        19:      eq(s(x), s(y), s(z)) = eq(x, y, z);
+        20: conjectures
+        21:      eq(x, x, x) = true;
+        22: end
++++ finitary sorts: bool
++++ Rewrite System 
+	eq(0, 0, 0) -> true
+	eq(0, s(y), z) -> false
+	eq(0, y, s(z)) -> false
+	eq(s(x), 0, z) -> false
+	eq(s(x), y, 0) -> false
+	eq(s(x), s(y), s(z)) -> eq(x, y, z)
++++ inductive positions:
+... for eq: 0 1 2
++++ maximal depths of left-hand sides:
+... for eq: 2
++++ general maximal depth = 2
++++ sort dependence: <empty>
++++ test sets for defined functions and sorts:
+... for eq
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	eq(x, x, x) = true
+
++++ inference system initiated
++++ treating clause
+	eq(x, x, x) = true
++++ inductive narrowing on conjecture
+	eq(x, x, x) = true
+... induction variables of
+	eq(x, x, x) = true
+... are:
+	x:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	eq(x, x, x) = true
+... with variable x
++++ creating new conjecture
+	eq(0, 0, 0) = true
++++ creating new conjecture
+	eq(s(xts), s(xts), s(xts)) = true
+--- clause
+	eq(0, 0, 0) = true
+... reduced to tautology
+	true = true
+--- clause
+	eq(s(xts), s(xts), s(xts)) = true
+... reduced in 1 step to
+	eq(xts, xts, xts) = true
++++ inductive narrowing succeeded
+--- clause
+	eq(x, x, x) = true
+... oriented to rule
+	eq(x, x, x) -> true
++++ added new clause(s)
+	eq(xts, xts, xts) = true
+... to conjectures
+--- clause
+	eq(xts, xts, xts) = true
+... reduced to tautology
+	true = true
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	eq(x, x, x) -> true
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 1
+... Number of induction steps      = 1
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0

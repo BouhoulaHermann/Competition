@@ -1,0 +1,17 @@
+specification Crafted
+
+include <add>
+
+defined functions
+	id: nat -> nat
+
+precedence
+	+ > id > s > 0
+
+axioms
+	id(x) = x; 
+
+conjectures
+	id(x) + y = y + x;
+
+end

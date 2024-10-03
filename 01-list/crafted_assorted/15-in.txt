@@ -1,0 +1,14 @@
+specification ListCount
+
+include <length>
+	<count>
+	<eqlist>
+
+precedence
+	count > len > =: >  == > cons > nil > s > 0 > true = false
+
+conjectures
+	# must en up with a DISPROOF
+	x =: y = false => count(z, x) == count(z, y) = false;
+
+end

@@ -1,0 +1,15 @@
+specification LengthOfList
+
+include <append>
+	<length>
+	<add>
+
+precedence
+	+ > len > app > s > 0 > cons > nil
+
+conjectures
+
+	len(x) + len(y) = len(app(x,y));
+
+end
+

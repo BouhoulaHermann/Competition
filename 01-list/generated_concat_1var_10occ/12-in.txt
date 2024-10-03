@@ -1,0 +1,27 @@
+specification ListFunctions
+sorts
+	nat lst
+
+constructors
+	0: -> nat
+	s: nat -> nat
+	nil: -> lst
+	cons: nat lst -> lst
+
+defined functions
+	app: lst lst -> lst
+
+precedence
+	app > cons > nil > s > 0 
+
+axioms
+	app(nil, x) = x;
+	app(cons(u, v), w) = cons(u, app(v, w));
+
+conjectures
+	app(v,app(app(app(app(v,app(v,v)),v),app(v,app(app(v,v),v))),v))
+	=
+	app(app(v,v),app(app(app(v,app(v,v)),app(v,v)),app(app(v,v),v)));
+
+end
+

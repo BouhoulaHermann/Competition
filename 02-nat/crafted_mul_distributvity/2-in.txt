@@ -1,0 +1,11 @@
+specification Crafted
+
+include <mult>
+
+precedence
+	* > + > s > 0
+
+conjectures
+	(x + y) * z = (z * x) + (y * z);
+
+end

@@ -1,0 +1,113 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 0a-in.txt
++++ output      = 0a-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LIST from list successfully parsed
++++ specification APPEND from append successfully parsed
++++ specification ListFunctions from 0a-in.txt successfully parsed
++++ Listing
+         1: specification ListFunctions
+         2: sorts
+         3:      list nat
+         4: constructors
+         5:      0: -> nat
+         6:      cons: nat list -> list
+         7:      nil: -> list
+         8:      s: nat -> nat
+         9: defined functions
+        10:      app: list list -> list
+        11: precedence
+        12:      app > cons > nil > s > 0
+        13: axioms
+        14:      app(nil, y) = y;
+        15:      app(cons(x, y), z) = cons(x, app(y, z));
+        16: conjectures
+        17:      app(x, app(y, z)) = app(app(x, y), z);
+        18: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	app(nil, y) -> y
+	app(cons(x, y), z) -> cons(x, app(y, z))
++++ inductive positions:
+... for app: 0
++++ maximal depths of left-hand sides:
+... for app: 2
++++ general maximal depth = 2
++++ sort dependence: nat < list
++++ test sets for defined functions and sorts:
+... for app
+... ... list
+		nil
+		cons(x, y)
+
++++ conjecture(s)
+	app(x, app(y, z)) = app(app(x, y), z)
+
++++ inference system initiated
++++ treating clause
+	app(x, app(y, z)) = app(app(x, y), z)
++++ inductive narrowing on conjecture
+	app(x, app(y, z)) = app(app(x, y), z)
+... induction variables of
+	app(x, app(y, z)) = app(app(x, y), z)
+... are:
+	x:list
+	y:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(x, app(y, z)) = app(app(x, y), z)
+... with variable x
++++ creating new conjecture
+	app(nil, app(y, z)) = app(app(nil, y), z)
++++ creating new conjecture
+	app(cons(xts, yts), app(y, z)) = app(app(cons(xts, yts), y), z)
+--- clause
+	app(nil, app(y, z)) = app(app(nil, y), z)
+... reduced to tautology
+	app(y, z) = app(y, z)
+--- clause
+	app(cons(xts, yts), app(y, z)) = app(app(cons(xts, yts), y), z)
+... reduced in 3 steps to
+	cons(xts, app(yts, app(y, z))) = cons(xts, app(app(yts, y), z))
+... decomposed into new clause(s)
+	app(yts, app(y, z)) = app(app(yts, y), z)
++++ inductive narrowing succeeded
+--- clause
+	app(x, app(y, z)) = app(app(x, y), z)
+... oriented to rule
+	app(app(x, y), z) -> app(x, app(y, z))
++++ added new clause(s)
+	app(yts, app(y, z)) = app(app(yts, y), z)
+... to conjectures
+--- clause
+	app(yts, app(y, z)) = app(app(yts, y), z)
+... reduced to tautology
+	app(yts, app(y, z)) = app(yts, app(y, z))
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	app(app(x, y), z) -> app(x, app(y, z))
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 1
+... Number of induction steps      = 1
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0

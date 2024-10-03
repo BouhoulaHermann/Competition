@@ -1,0 +1,34 @@
+specification Append
+
+sorts
+	 nat lst
+
+constructors
+
+	0: -> nat
+	s: nat -> nat
+	nil: -> lst
+	cons: nat lst -> lst
+
+defined functions
+
+	+: nat nat -> nat
+	app: lst lst -> lst
+
+precedence
+	
+	+ > app > s > 0 > cons > nil
+
+axioms
+
+	x + 0 = x;
+	x + s(y) = s(x + y);
+	app(nil, y) = y;
+	app(cons(x, y), z) = cons(x, app(y, z));
+
+conjectures
+
+	app(cons(y + s(y), x), app(x, x)) = app(app(cons(s(y) + y, x), x), x);
+
+end
+

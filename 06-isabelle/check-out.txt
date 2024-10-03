@@ -1,0 +1,25 @@
+Number of output files       = 21
+Number of successful proofs  = 19
+... without primal grammars  = 6
+	02-tutorial-page12-out.txt
+	02a-out.txt
+	07-tutorial-page15-out.txt
+	07a-out.txt
+	seq-out.txt
+	seqA-out.txt
+Number of disproofs          = 0
+Number of loop limits        = 2
+	09a-out.txt
+	09-exercise2.7-out.txt
+No primal grammars possible  = 0
+Total number of correct runs = 21
+Number of crashes            = 0
+Elapsed time:
+	min     = 0
+	max     = 7.774 (04a-out.txt)
+	mean    = 0.8
+	std.dev = 2.27
+	median  = 0
+Examples which run longer than 1 second:
+	   7.774s: 04a-out.txt
+	   7.767s: 04-exercise2.3-out.txt

@@ -1,0 +1,30 @@
+# Programming and Proving In Isabelle/HOL
+# page 14
+#
+# Sum of first n natural numbers = n * (n+1) / 2
+
+specification SumOfN
+
+include <addalt> <listsymb>
+
+defined functions
+	*: nat nat -> nat
+	sum:  nat -> nat
+
+precedence
+
+	sum > * > + > s > 0
+
+axioms
+
+	0 * x = 0;
+	s(x) * y = (x * y) + y;
+	
+	sum(0) = 0;
+	sum(s(x)) = s(x) + sum(x);
+
+conjectures
+
+	 s(s(0)) * sum(x) = x * s(x);
+
+end

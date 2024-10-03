@@ -1,0 +1,12 @@
+specification ListFunctions
+
+include <prefix>
+	<eqid>
+	
+precedence
+	pref > app > && > == > cons > nil > s > 0 > true = false
+
+conjectures
+	pref(app(v, v), app(app(v, v), v)) = true;
+
+end

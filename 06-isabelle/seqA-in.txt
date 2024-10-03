@@ -1,0 +1,40 @@
+# HOL/Examples/Seq.thy from Isabelle
+# finite sequences
+
+specification SEQ
+
+sorts
+
+	nat seq
+
+constructors
+
+	0: -> nat
+	s: nat -> nat
+	Empty: -> seq
+	Seq: nat seq -> seq
+	
+
+defined functions
+
+	conc: seq seq -> seq
+	reverse: seq -> seq
+
+precedence
+
+	reverse > conc > Seq > Empty > s > 0
+
+axioms
+
+	conc(Empty, ys) = ys;
+	conc(Seq(x, xs), ys) = Seq(x, conc(xs, ys));
+	reverse(Empty) = Empty;
+	reverse(Seq(x, xs)) = conc(reverse(xs), Seq(x, Empty));
+
+conjectures
+
+	conc(xs, Empty) = xs;
+	conc(conc(xs, ys), zs) = conc(xs, conc(ys, zs));
+	reverse(conc(xs, ys)) = conc(reverse(ys), reverse(xs));
+	reverse(reverse(xs)) = xs;
+end

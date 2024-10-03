@@ -1,0 +1,18 @@
+specification CraftedTrees
+
+include <flatten> <mirror> <reverse>
+
+defined functions
+	flatten2: tree list -> list 
+
+precedence
+	rev > mirror > app > flatten = flatten2 > == > && > cons > node > leaf > nil > s > 0 > true = false
+
+axioms
+	flatten2(leaf,x) = x;
+	flatten2(node(x,y,z),v) = flatten2(x,cons(y,flatten2(z,v)));
+
+conjectures
+	mirror(x,y) = true => rev(flatten2(x,nil)) = flatten(y);
+
+end

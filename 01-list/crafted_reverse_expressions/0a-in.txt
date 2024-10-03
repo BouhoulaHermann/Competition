@@ -1,0 +1,28 @@
+specification ListFunctions
+
+include <reverse>
+
+defined functions
+	revAcc: list -> list
+	revAccInner: list list -> list
+
+precedence
+	revAcc >
+	revAccInner >
+	rev >
+	app >
+	cons >
+	nil >
+	s >
+	0
+
+axioms
+	revAccInner(nil, x) = x;
+	revAccInner(cons(x, y), z) = revAccInner(y, cons(x, z));
+
+	revAcc(x) = revAccInner(x, nil);
+
+conjectures
+	revAcc(x) = rev(x);
+
+end

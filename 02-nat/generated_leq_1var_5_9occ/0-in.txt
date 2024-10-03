@@ -1,0 +1,11 @@
+specification NatFunc
+
+include <leq> <add>
+
+precedence
++ > <= > s > 0 > true = false
+
+conjectures
+	x + (x + x) + (x + x) <=  x + (x + x) + ((x + x) + ((x + x) + x) + x)
+	= true;
+end

@@ -1,0 +1,27 @@
+# Programming and Proving In Isabelle/HOL
+# page 18
+#
+# Traverse a tree in pre- and post-order.
+
+specification PREandPOSTorder
+
+include <preordersymb> <postordersymb> <reversesymb> <rotate>
+
+precedence
+
+	preorder = postorder >
+	rotate >
+	rev >
+	@@ >
+	node >
+	.. >
+	leaf >
+	nil >
+	s >
+	0
+
+conjectures
+
+	preorder(rotate(xt)) = rev(postorder(xt));
+	
+end

@@ -1,0 +1,651 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 09-exercise2.7-in.txt
++++ output      = 09-exercise2.7-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification PREandPOSTorder from 09-exercise2.7-in.txt successfully parsed
++++ Listing
+         1: specification PREandPOSTorder
+         2: sorts
+         3:      list nat tree
+         4: constructors
+         5:      0: -> nat
+         6:      :: nat list -> list
+         7:      leaf: -> tree
+         8:      nil: -> list
+         9:      node: tree nat tree -> tree
+        10:      s: nat -> nat
+        11: defined functions
+        12:      app: list list -> list
+        13:      mirror: tree -> tree
+        14:      postorder: tree -> list
+        15:      preorder: tree -> list
+        16:      rev: list -> list
+        17: precedence
+        18:      postorder = preorder > mirror > rev > app > node > : > leaf > nil > s > 0
+        19: axioms
+        20:      rev(nil) = nil;
+        21:      app(nil, y) = y;
+        22:      mirror(leaf) = leaf;
+        23:      preorder(leaf) = nil;
+        24:      postorder(leaf) = nil;
+        25:      app(x : y, z) = x : app(y, z);
+        26:      rev(x : y) = app(rev(y), x : nil);
+        27:      mirror(node(xl, y, xr)) = node(mirror(xr), y, mirror(xl));
+        28:      preorder(node(xl, y, xr)) = y : app(preorder(xl), preorder(xr));
+        29:      postorder(node(xl, y, xr)) = app(app(postorder(xl), postorder(xr)), y : nil);
+        30: conjectures
+        31:      preorder(mirror(xt)) = rev(postorder(xt));
+        32: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	rev(nil) -> nil
+	app(nil, y) -> y
+	mirror(leaf) -> leaf
+	preorder(leaf) -> nil
+	postorder(leaf) -> nil
+	app(x : y, z) -> x : app(y, z)
+	rev(x : y) -> app(rev(y), x : nil)
+	mirror(node(xl, y, xr)) -> node(mirror(xr), y, mirror(xl))
+	preorder(node(xl, y, xr)) -> y : app(preorder(xl), preorder(xr))
+	postorder(node(xl, y, xr)) -> app(app(postorder(xl), postorder(xr)), y : nil)
++++ inductive positions:
+... for app: 0
+... for mirror: 0
+... for postorder: 0
+... for preorder: 0
+... for rev: 0
++++ maximal depths of left-hand sides:
+... for preorder: 2
+... for postorder: 2
+... for app: 2
+... for mirror: 2
+... for rev: 2
++++ general maximal depth = 2
++++ sort dependence: nat < tree < list
++++ test sets for defined functions and sorts:
+... for preorder
+... ... tree
+		leaf
+		node(x, y, z)
+... for rev
+... ... list
+		nil
+		x : y
+... for mirror
+... ... tree
+		leaf
+		node(x, y, z)
+... for postorder
+... ... tree
+		leaf
+		node(x, y, z)
+... for app
+... ... list
+		nil
+		x : y
+
++++ conjecture(s)
+	preorder(mirror(xt)) = rev(postorder(xt))
+
++++ inference system initiated
++++ treating clause
+	preorder(mirror(xt)) = rev(postorder(xt))
++++ inductive narrowing on conjecture
+	preorder(mirror(xt)) = rev(postorder(xt))
+... induction variables of
+	preorder(mirror(xt)) = rev(postorder(xt))
+... are:
+	xt:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	preorder(mirror(xt)) = rev(postorder(xt))
+... with variable xt
++++ creating new conjecture
+	preorder(mirror(leaf)) = rev(postorder(leaf))
++++ creating new conjecture
+	preorder(mirror(node(xts, yts, zts))) = rev(postorder(node(xts, yts, zts)))
+--- clause
+	preorder(mirror(leaf)) = rev(postorder(leaf))
+... reduced to tautology
+	nil = nil
+--- clause
+	preorder(mirror(node(xts, yts, zts))) = rev(postorder(node(xts, yts, zts)))
+... reduced in 3 steps to
+	yts : app(preorder(mirror(zts)), preorder(mirror(xts))) = rev(app(app(postorder(xts), postorder(zts)), yts : nil))
++++ inductive narrowing succeeded
+--- clause
+	preorder(mirror(xt)) = rev(postorder(xt))
+... oriented to rule
+	preorder(mirror(xt)) -> rev(postorder(xt))
++++ added new clause(s)
+	yts : app(preorder(mirror(zts)), preorder(mirror(xts))) = rev(app(app(postorder(xts), postorder(zts)), yts : nil))
+... to conjectures
+--- clause
+	yts : app(preorder(mirror(zts)), preorder(mirror(xts))) = rev(app(app(postorder(xts), postorder(zts)), yts : nil))
+... reduced in 2 steps to
+	yts : app(rev(postorder(zts)), rev(postorder(xts))) = rev(app(app(postorder(xts), postorder(zts)), yts : nil))
+
++++ Status of the Inference System
+--- Conjectures:
+	yts : app(rev(postorder(zts)), rev(postorder(xts))) = rev(app(app(postorder(xts), postorder(zts)), yts : nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(mirror(xt)) -> rev(postorder(xt))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	yts : app(rev(postorder(zts)), rev(postorder(xts))) = rev(app(app(postorder(xts), postorder(zts)), yts : nil))
++++ inductive narrowing on conjecture
+	yts : app(rev(postorder(zts)), rev(postorder(xts))) = rev(app(app(postorder(xts), postorder(zts)), yts : nil))
+... induction variables of
+	yts : app(rev(postorder(zts)), rev(postorder(xts))) = rev(app(app(postorder(xts), postorder(zts)), yts : nil))
+... are:
+	xts:tree
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	yts : app(rev(postorder(zts)), rev(postorder(xts))) = rev(app(app(postorder(xts), postorder(zts)), yts : nil))
+... with variable xts
++++ creating new conjecture
+	yts : app(rev(postorder(zts)), rev(postorder(leaf))) = rev(app(app(postorder(leaf), postorder(zts)), yts : nil))
++++ creating new conjecture
+	yts2 : app(rev(postorder(zts2)), rev(postorder(node(xts, yts1, zts1)))) = rev(app(app(postorder(node(xts, yts1, zts1)), postorder(zts2)), yts2 : nil))
+--- clause
+	yts : app(rev(postorder(zts)), rev(postorder(leaf))) = rev(app(app(postorder(leaf), postorder(zts)), yts : nil))
+... reduced in 4 steps to
+	yts : app(rev(postorder(zts)), nil) = rev(app(postorder(zts), yts : nil))
+--- clause
+	yts2 : app(rev(postorder(zts2)), rev(postorder(node(xts, yts1, zts1)))) = rev(app(app(postorder(node(xts, yts1, zts1)), postorder(zts2)), yts2 : nil))
+... reduced in 2 steps to
+	yts2 : app(rev(postorder(zts2)), rev(app(app(postorder(xts), postorder(zts1)), yts1 : nil))) = rev(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil))
++++ inductive narrowing succeeded
+--- clause
+	yts : app(rev(postorder(zts)), rev(postorder(xts))) = rev(app(app(postorder(xts), postorder(zts)), yts : nil))
+... oriented to rule
+	rev(app(app(postorder(xts), postorder(zts)), yts : nil)) -> yts : app(rev(postorder(zts)), rev(postorder(xts)))
++++ added new clause(s)
+	yts : app(rev(postorder(zts)), nil) = rev(app(postorder(zts), yts : nil))
+	yts2 : app(rev(postorder(zts2)), rev(app(app(postorder(xts), postorder(zts1)), yts1 : nil))) = rev(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil))
+... to conjectures
+--- clause
+	yts2 : app(rev(postorder(zts2)), rev(app(app(postorder(xts), postorder(zts1)), yts1 : nil))) = rev(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil))
+... reduced in 1 step to
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))) = rev(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil))
+
++++ Status of the Inference System
+--- Conjectures:
+	yts : app(rev(postorder(zts)), nil) = rev(app(postorder(zts), yts : nil))
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))) = rev(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(mirror(xt)) -> rev(postorder(xt))
+	rev(app(app(postorder(xts), postorder(zts)), yts : nil)) -> yts : app(rev(postorder(zts)), rev(postorder(xts)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	yts : app(rev(postorder(zts)), nil) = rev(app(postorder(zts), yts : nil))
++++ inductive narrowing on conjecture
+	yts : app(rev(postorder(zts)), nil) = rev(app(postorder(zts), yts : nil))
+... induction variables of
+	yts : app(rev(postorder(zts)), nil) = rev(app(postorder(zts), yts : nil))
+... are:
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	yts : app(rev(postorder(zts)), nil) = rev(app(postorder(zts), yts : nil))
+... with variable zts
++++ creating new conjecture
+	yts : app(rev(postorder(leaf)), nil) = rev(app(postorder(leaf), yts : nil))
++++ creating new conjecture
+	yts2 : app(rev(postorder(node(xts, yts1, zts))), nil) = rev(app(postorder(node(xts, yts1, zts)), yts2 : nil))
+--- clause
+	yts : app(rev(postorder(leaf)), nil) = rev(app(postorder(leaf), yts : nil))
+... reduced to tautology
+	yts : nil = yts : nil
+--- clause
+	yts2 : app(rev(postorder(node(xts, yts1, zts))), nil) = rev(app(postorder(node(xts, yts1, zts)), yts2 : nil))
+... reduced in 3 steps to
+	yts2 : app(yts1 : app(rev(postorder(zts)), rev(postorder(xts))), nil) = rev(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil))
++++ inductive narrowing succeeded
+--- clause
+	yts : app(rev(postorder(zts)), nil) = rev(app(postorder(zts), yts : nil))
+... oriented to rule
+	rev(app(postorder(zts), yts : nil)) -> yts : app(rev(postorder(zts)), nil)
++++ added new clause(s)
+	yts2 : app(yts1 : app(rev(postorder(zts)), rev(postorder(xts))), nil) = rev(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil))
+... to conjectures
+--- clause
+	yts2 : app(yts1 : app(rev(postorder(zts)), rev(postorder(xts))), nil) = rev(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil))
+... reduced in 1 step to
+	yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(xts))), nil)) = rev(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil))
+
++++ Status of the Inference System
+--- Conjectures:
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))) = rev(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil))
+	yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(xts))), nil)) = rev(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(mirror(xt)) -> rev(postorder(xt))
+	rev(app(postorder(zts), yts : nil)) -> yts : app(rev(postorder(zts)), nil)
+	rev(app(app(postorder(xts), postorder(zts)), yts : nil)) -> yts : app(rev(postorder(zts)), rev(postorder(xts)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))) = rev(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil))
++++ inductive narrowing on conjecture
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))) = rev(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil))
+... induction variables of
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))) = rev(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil))
+... are:
+	xts:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))) = rev(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil))
+... with variable xts
++++ creating new conjecture
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(leaf)))) = rev(app(app(app(app(postorder(leaf), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil))
++++ creating new conjecture
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), rev(postorder(node(xts, yts1, zts1))))) = rev(app(app(app(app(postorder(node(xts, yts1, zts1)), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+--- clause
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(leaf)))) = rev(app(app(app(app(postorder(leaf), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil))
+... reduced in 4 steps to
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil)) = rev(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil))
+--- clause
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), rev(postorder(node(xts, yts1, zts1))))) = rev(app(app(app(app(postorder(node(xts, yts1, zts1)), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+... reduced in 3 steps to
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))) = rev(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
++++ inductive narrowing succeeded
+--- clause
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))) = rev(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil))
+... oriented to rule
+	rev(app(app(app(app(postorder(xts), postorder(zts2)), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))
++++ added new clause(s)
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil)) = rev(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil))
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))) = rev(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(xts))), nil)) = rev(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil))
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil)) = rev(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil))
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))) = rev(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(mirror(xt)) -> rev(postorder(xt))
+	rev(app(postorder(zts), yts : nil)) -> yts : app(rev(postorder(zts)), nil)
+	rev(app(app(postorder(xts), postorder(zts)), yts : nil)) -> yts : app(rev(postorder(zts)), rev(postorder(xts)))
+	rev(app(app(app(app(postorder(xts), postorder(zts2)), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(xts))), nil)) = rev(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil))
++++ inductive narrowing on conjecture
+	yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(xts))), nil)) = rev(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil))
+... induction variables of
+	yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(xts))), nil)) = rev(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil))
+... are:
+	xts:tree
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(xts))), nil)) = rev(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil))
+... with variable xts
++++ creating new conjecture
+	yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(leaf))), nil)) = rev(app(app(app(postorder(leaf), postorder(zts)), yts1 : nil), yts2 : nil))
++++ creating new conjecture
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), rev(postorder(node(xts, yts1, zts1)))), nil)) = rev(app(app(app(postorder(node(xts, yts1, zts1)), postorder(zts2)), yts2 : nil), yts3 : nil))
+--- clause
+	yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(leaf))), nil)) = rev(app(app(app(postorder(leaf), postorder(zts)), yts1 : nil), yts2 : nil))
+... reduced in 4 steps to
+	yts2 : (yts1 : app(app(rev(postorder(zts)), nil), nil)) = rev(app(app(postorder(zts), yts1 : nil), yts2 : nil))
+--- clause
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), rev(postorder(node(xts, yts1, zts1)))), nil)) = rev(app(app(app(postorder(node(xts, yts1, zts1)), postorder(zts2)), yts2 : nil), yts3 : nil))
+... reduced in 3 steps to
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil)) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
++++ inductive narrowing succeeded
+--- clause
+	yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(xts))), nil)) = rev(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil))
+... oriented to rule
+	rev(app(app(app(postorder(xts), postorder(zts)), yts2 : nil), yts1 : nil)) -> yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(xts))), nil))
++++ added new clause(s)
+	yts2 : (yts1 : app(app(rev(postorder(zts)), nil), nil)) = rev(app(app(postorder(zts), yts1 : nil), yts2 : nil))
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil)) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil)) = rev(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil))
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))) = rev(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+	yts2 : (yts1 : app(app(rev(postorder(zts)), nil), nil)) = rev(app(app(postorder(zts), yts1 : nil), yts2 : nil))
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil)) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(mirror(xt)) -> rev(postorder(xt))
+	rev(app(postorder(zts), yts : nil)) -> yts : app(rev(postorder(zts)), nil)
+	rev(app(app(postorder(xts), postorder(zts)), yts : nil)) -> yts : app(rev(postorder(zts)), rev(postorder(xts)))
+	rev(app(app(app(postorder(xts), postorder(zts)), yts2 : nil), yts1 : nil)) -> yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(xts))), nil))
+	rev(app(app(app(app(postorder(xts), postorder(zts2)), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil)) = rev(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil))
++++ inductive narrowing on conjecture
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil)) = rev(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil))
+... induction variables of
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil)) = rev(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil))
+... are:
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil)) = rev(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil))
+... with variable zts1
++++ creating new conjecture
+	yts2 : app(rev(postorder(zts)), yts1 : app(rev(postorder(leaf)), nil)) = rev(app(app(app(postorder(leaf), yts1 : nil), postorder(zts)), yts2 : nil))
++++ creating new conjecture
+	yts3 : app(rev(postorder(zts2)), yts2 : app(rev(postorder(node(xts, yts1, zts1))), nil)) = rev(app(app(app(postorder(node(xts, yts1, zts1)), yts2 : nil), postorder(zts2)), yts3 : nil))
+--- clause
+	yts2 : app(rev(postorder(zts)), yts1 : app(rev(postorder(leaf)), nil)) = rev(app(app(app(postorder(leaf), yts1 : nil), postorder(zts)), yts2 : nil))
+... reduced in 10 steps to
+	yts2 : app(rev(postorder(zts)), yts1 : nil) = app(yts2 : app(rev(postorder(zts)), nil), yts1 : nil)
+--- clause
+	yts3 : app(rev(postorder(zts2)), yts2 : app(rev(postorder(node(xts, yts1, zts1))), nil)) = rev(app(app(app(postorder(node(xts, yts1, zts1)), yts2 : nil), postorder(zts2)), yts3 : nil))
+... reduced in 3 steps to
+	yts3 : app(rev(postorder(zts2)), yts2 : app(yts1 : app(rev(postorder(zts1)), rev(postorder(xts))), nil)) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
++++ inductive narrowing succeeded
+--- clause
+	yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil)) = rev(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil))
+... oriented to rule
+	rev(app(app(app(postorder(zts2), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil))
++++ added new clause(s)
+	yts2 : app(rev(postorder(zts)), yts1 : nil) = app(yts2 : app(rev(postorder(zts)), nil), yts1 : nil)
+	yts3 : app(rev(postorder(zts2)), yts2 : app(yts1 : app(rev(postorder(zts1)), rev(postorder(xts))), nil)) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
+... to conjectures
+--- clause
+	yts2 : app(rev(postorder(zts)), yts1 : nil) = app(yts2 : app(rev(postorder(zts)), nil), yts1 : nil)
+... reduced in 1 step to
+	yts2 : app(rev(postorder(zts)), yts1 : nil) = yts2 : app(app(rev(postorder(zts)), nil), yts1 : nil)
+--- clause
+	yts3 : app(rev(postorder(zts2)), yts2 : app(yts1 : app(rev(postorder(zts1)), rev(postorder(xts))), nil)) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
+... reduced in 1 step to
+	yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), rev(postorder(xts))), nil))) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
+... decomposed into new clause(s)
+	app(rev(postorder(zts)), yts : nil) = app(app(rev(postorder(zts)), nil), yts : nil)
+
++++ Status of the Inference System
+--- Conjectures:
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))) = rev(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+	yts2 : (yts1 : app(app(rev(postorder(zts)), nil), nil)) = rev(app(app(postorder(zts), yts1 : nil), yts2 : nil))
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil)) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
+	yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), rev(postorder(xts))), nil))) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
+	app(rev(postorder(zts)), yts : nil) = app(app(rev(postorder(zts)), nil), yts : nil)
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(mirror(xt)) -> rev(postorder(xt))
+	rev(app(postorder(zts), yts : nil)) -> yts : app(rev(postorder(zts)), nil)
+	rev(app(app(postorder(xts), postorder(zts)), yts : nil)) -> yts : app(rev(postorder(zts)), rev(postorder(xts)))
+	rev(app(app(app(postorder(xts), postorder(zts)), yts2 : nil), yts1 : nil)) -> yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(xts))), nil))
+	rev(app(app(app(postorder(zts2), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil))
+	rev(app(app(app(app(postorder(xts), postorder(zts2)), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))) = rev(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
++++ inductive narrowing on conjecture
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))) = rev(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+... induction variables of
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))) = rev(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+... are:
+	xts:tree
+	zts1:tree
+	zts2:tree
+	zts3:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))) = rev(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+... with variable xts
++++ creating new conjecture
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(leaf))))) = rev(app(app(app(app(app(app(postorder(leaf), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
++++ creating new conjecture
+	yts4 : app(rev(postorder(zts4)), yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), rev(postorder(node(xts, yts1, zts1)))))) = rev(app(app(app(app(app(app(postorder(node(xts, yts1, zts1)), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil), postorder(zts4)), yts4 : nil))
+--- clause
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(leaf))))) = rev(app(app(app(app(app(app(postorder(leaf), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+... reduced in 4 steps to
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil))) = rev(app(app(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+--- clause
+	yts4 : app(rev(postorder(zts4)), yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), rev(postorder(node(xts, yts1, zts1)))))) = rev(app(app(app(app(app(app(postorder(node(xts, yts1, zts1)), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil), postorder(zts4)), yts4 : nil))
+... reduced in 3 steps to
+	yts4 : app(rev(postorder(zts4)), yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))))) = rev(app(app(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil), postorder(zts4)), yts4 : nil))
++++ inductive narrowing succeeded
+--- clause
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))) = rev(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+... oriented to rule
+	rev(app(app(app(app(app(app(postorder(xts), postorder(zts3)), yts3 : nil), postorder(zts2)), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))))
++++ added new clause(s)
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil))) = rev(app(app(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+	yts4 : app(rev(postorder(zts4)), yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))))) = rev(app(app(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil), postorder(zts4)), yts4 : nil))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	yts2 : (yts1 : app(app(rev(postorder(zts)), nil), nil)) = rev(app(app(postorder(zts), yts1 : nil), yts2 : nil))
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil)) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
+	yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), rev(postorder(xts))), nil))) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
+	app(rev(postorder(zts)), yts : nil) = app(app(rev(postorder(zts)), nil), yts : nil)
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil))) = rev(app(app(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+	yts4 : app(rev(postorder(zts4)), yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))))) = rev(app(app(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil), postorder(zts4)), yts4 : nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(mirror(xt)) -> rev(postorder(xt))
+	rev(app(postorder(zts), yts : nil)) -> yts : app(rev(postorder(zts)), nil)
+	rev(app(app(postorder(xts), postorder(zts)), yts : nil)) -> yts : app(rev(postorder(zts)), rev(postorder(xts)))
+	rev(app(app(app(postorder(xts), postorder(zts)), yts2 : nil), yts1 : nil)) -> yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(xts))), nil))
+	rev(app(app(app(postorder(zts2), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil))
+	rev(app(app(app(app(postorder(xts), postorder(zts2)), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))
+	rev(app(app(app(app(app(app(postorder(xts), postorder(zts3)), yts3 : nil), postorder(zts2)), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	yts2 : (yts1 : app(app(rev(postorder(zts)), nil), nil)) = rev(app(app(postorder(zts), yts1 : nil), yts2 : nil))
++++ inductive narrowing on conjecture
+	yts2 : (yts1 : app(app(rev(postorder(zts)), nil), nil)) = rev(app(app(postorder(zts), yts1 : nil), yts2 : nil))
+... induction variables of
+	yts2 : (yts1 : app(app(rev(postorder(zts)), nil), nil)) = rev(app(app(postorder(zts), yts1 : nil), yts2 : nil))
+... are:
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	yts2 : (yts1 : app(app(rev(postorder(zts)), nil), nil)) = rev(app(app(postorder(zts), yts1 : nil), yts2 : nil))
+... with variable zts
++++ creating new conjecture
+	yts2 : (yts1 : app(app(rev(postorder(leaf)), nil), nil)) = rev(app(app(postorder(leaf), yts1 : nil), yts2 : nil))
++++ creating new conjecture
+	yts3 : (yts2 : app(app(rev(postorder(node(xts, yts1, zts))), nil), nil)) = rev(app(app(postorder(node(xts, yts1, zts)), yts2 : nil), yts3 : nil))
+--- clause
+	yts2 : (yts1 : app(app(rev(postorder(leaf)), nil), nil)) = rev(app(app(postorder(leaf), yts1 : nil), yts2 : nil))
+... reduced to tautology
+	yts2 : (yts1 : nil) = yts2 : (yts1 : nil)
+--- clause
+	yts3 : (yts2 : app(app(rev(postorder(node(xts, yts1, zts))), nil), nil)) = rev(app(app(postorder(node(xts, yts1, zts)), yts2 : nil), yts3 : nil))
+... reduced in 3 steps to
+	yts3 : (yts2 : app(app(yts1 : app(rev(postorder(zts)), rev(postorder(xts))), nil), nil)) = rev(app(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil), yts3 : nil))
++++ inductive narrowing succeeded
+--- clause
+	yts2 : (yts1 : app(app(rev(postorder(zts)), nil), nil)) = rev(app(app(postorder(zts), yts1 : nil), yts2 : nil))
+... oriented to rule
+	rev(app(app(postorder(zts), yts2 : nil), yts1 : nil)) -> yts2 : (yts1 : app(app(rev(postorder(zts)), nil), nil))
++++ added new clause(s)
+	yts3 : (yts2 : app(app(yts1 : app(rev(postorder(zts)), rev(postorder(xts))), nil), nil)) = rev(app(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil), yts3 : nil))
+... to conjectures
+--- clause
+	yts3 : (yts2 : app(app(yts1 : app(rev(postorder(zts)), rev(postorder(xts))), nil), nil)) = rev(app(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil), yts3 : nil))
+... reduced in 2 steps to
+	yts3 : (yts2 : (yts1 : app(app(app(rev(postorder(zts)), rev(postorder(xts))), nil), nil))) = rev(app(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil), yts3 : nil))
+
++++ Status of the Inference System
+--- Conjectures:
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil)) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
+	yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), rev(postorder(xts))), nil))) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
+	app(rev(postorder(zts)), yts : nil) = app(app(rev(postorder(zts)), nil), yts : nil)
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil))) = rev(app(app(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+	yts4 : app(rev(postorder(zts4)), yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))))) = rev(app(app(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil), postorder(zts4)), yts4 : nil))
+	yts3 : (yts2 : (yts1 : app(app(app(rev(postorder(zts)), rev(postorder(xts))), nil), nil))) = rev(app(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil), yts3 : nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(mirror(xt)) -> rev(postorder(xt))
+	rev(app(postorder(zts), yts : nil)) -> yts : app(rev(postorder(zts)), nil)
+	rev(app(app(postorder(xts), postorder(zts)), yts : nil)) -> yts : app(rev(postorder(zts)), rev(postorder(xts)))
+	rev(app(app(postorder(zts), yts2 : nil), yts1 : nil)) -> yts2 : (yts1 : app(app(rev(postorder(zts)), nil), nil))
+	rev(app(app(app(postorder(xts), postorder(zts)), yts2 : nil), yts1 : nil)) -> yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(xts))), nil))
+	rev(app(app(app(postorder(zts2), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil))
+	rev(app(app(app(app(postorder(xts), postorder(zts2)), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))
+	rev(app(app(app(app(app(app(postorder(xts), postorder(zts3)), yts3 : nil), postorder(zts2)), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil)) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
++++ inductive narrowing on conjecture
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil)) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
+... induction variables of
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil)) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
+... are:
+	xts:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil)) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
+... with variable xts
++++ creating new conjecture
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(leaf)))), nil)) = rev(app(app(app(app(app(postorder(leaf), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
++++ creating new conjecture
+	yts4 : (yts3 : app(app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), rev(postorder(node(xts, yts1, zts1))))), nil)) = rev(app(app(app(app(app(postorder(node(xts, yts1, zts1)), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil), yts4 : nil))
+--- clause
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(leaf)))), nil)) = rev(app(app(app(app(app(postorder(leaf), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
+... reduced in 4 steps to
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil)), nil)) = rev(app(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
+--- clause
+	yts4 : (yts3 : app(app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), rev(postorder(node(xts, yts1, zts1))))), nil)) = rev(app(app(app(app(app(postorder(node(xts, yts1, zts1)), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil), yts4 : nil))
+... reduced in 3 steps to
+	yts4 : (yts3 : app(app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))), nil)) = rev(app(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil), yts4 : nil))
++++ inductive narrowing succeeded
+--- clause
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil)) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
+... oriented to rule
+	rev(app(app(app(app(app(postorder(xts), postorder(zts2)), yts3 : nil), postorder(zts1)), yts2 : nil), yts1 : nil)) -> yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil))
++++ added new clause(s)
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil)), nil)) = rev(app(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
+	yts4 : (yts3 : app(app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))), nil)) = rev(app(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil), yts4 : nil))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), rev(postorder(xts))), nil))) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
+	app(rev(postorder(zts)), yts : nil) = app(app(rev(postorder(zts)), nil), yts : nil)
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil))) = rev(app(app(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+	yts4 : app(rev(postorder(zts4)), yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))))) = rev(app(app(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil), postorder(zts4)), yts4 : nil))
+	yts3 : (yts2 : (yts1 : app(app(app(rev(postorder(zts)), rev(postorder(xts))), nil), nil))) = rev(app(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil), yts3 : nil))
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil)), nil)) = rev(app(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
+	yts4 : (yts3 : app(app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))), nil)) = rev(app(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil), yts4 : nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(mirror(xt)) -> rev(postorder(xt))
+	rev(app(postorder(zts), yts : nil)) -> yts : app(rev(postorder(zts)), nil)
+	rev(app(app(postorder(xts), postorder(zts)), yts : nil)) -> yts : app(rev(postorder(zts)), rev(postorder(xts)))
+	rev(app(app(postorder(zts), yts2 : nil), yts1 : nil)) -> yts2 : (yts1 : app(app(rev(postorder(zts)), nil), nil))
+	rev(app(app(app(postorder(xts), postorder(zts)), yts2 : nil), yts1 : nil)) -> yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(xts))), nil))
+	rev(app(app(app(postorder(zts2), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil))
+	rev(app(app(app(app(postorder(xts), postorder(zts2)), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))
+	rev(app(app(app(app(app(postorder(xts), postorder(zts2)), yts3 : nil), postorder(zts1)), yts2 : nil), yts1 : nil)) -> yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil))
+	rev(app(app(app(app(app(app(postorder(xts), postorder(zts3)), yts3 : nil), postorder(zts2)), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), rev(postorder(xts))), nil))) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
++++ inductive narrowing on conjecture
+	yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), rev(postorder(xts))), nil))) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
+... induction variables of
+	yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), rev(postorder(xts))), nil))) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
+... are:
+	xts:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), rev(postorder(xts))), nil))) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
+... with variable xts
++++ creating new conjecture
+	yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), rev(postorder(leaf))), nil))) = rev(app(app(app(app(app(postorder(leaf), postorder(zts1)), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
++++ creating new conjecture
+	yts4 : app(rev(postorder(zts3)), yts3 : (yts2 : app(app(rev(postorder(zts2)), rev(postorder(node(xts, yts1, zts1)))), nil))) = rev(app(app(app(app(app(postorder(node(xts, yts1, zts1)), postorder(zts2)), yts2 : nil), yts3 : nil), postorder(zts3)), yts4 : nil))
+--- clause
+	yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), rev(postorder(leaf))), nil))) = rev(app(app(app(app(app(postorder(leaf), postorder(zts1)), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
+... reduced in 4 steps to
+	yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), nil), nil))) = rev(app(app(app(app(postorder(zts1), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
+--- clause
+	yts4 : app(rev(postorder(zts3)), yts3 : (yts2 : app(app(rev(postorder(zts2)), rev(postorder(node(xts, yts1, zts1)))), nil))) = rev(app(app(app(app(app(postorder(node(xts, yts1, zts1)), postorder(zts2)), yts2 : nil), yts3 : nil), postorder(zts3)), yts4 : nil))
+... reduced in 3 steps to
+	yts4 : app(rev(postorder(zts3)), yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil))) = rev(app(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil), postorder(zts3)), yts4 : nil))
++++ inductive narrowing succeeded
+--- clause
+	yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), rev(postorder(xts))), nil))) = rev(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
+... oriented to rule
+	rev(app(app(app(app(app(postorder(xts), postorder(zts2)), yts3 : nil), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), rev(postorder(xts))), nil)))
++++ added new clause(s)
+	yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), nil), nil))) = rev(app(app(app(app(postorder(zts1), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
+	yts4 : app(rev(postorder(zts3)), yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil))) = rev(app(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil), postorder(zts3)), yts4 : nil))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	app(rev(postorder(zts)), yts : nil) = app(app(rev(postorder(zts)), nil), yts : nil)
+	yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil))) = rev(app(app(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil))
+	yts4 : app(rev(postorder(zts4)), yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))))) = rev(app(app(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil), postorder(zts4)), yts4 : nil))
+	yts3 : (yts2 : (yts1 : app(app(app(rev(postorder(zts)), rev(postorder(xts))), nil), nil))) = rev(app(app(app(app(postorder(xts), postorder(zts)), yts1 : nil), yts2 : nil), yts3 : nil))
+	yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil)), nil)) = rev(app(app(app(app(postorder(zts1), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil))
+	yts4 : (yts3 : app(app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))), nil)) = rev(app(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), postorder(zts3)), yts3 : nil), yts4 : nil))
+	yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), nil), nil))) = rev(app(app(app(app(postorder(zts1), yts1 : nil), yts2 : nil), postorder(zts2)), yts3 : nil))
+	yts4 : app(rev(postorder(zts3)), yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil))) = rev(app(app(app(app(app(app(app(postorder(xts), postorder(zts1)), yts1 : nil), postorder(zts2)), yts2 : nil), yts3 : nil), postorder(zts3)), yts4 : nil))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	preorder(mirror(xt)) -> rev(postorder(xt))
+	rev(app(postorder(zts), yts : nil)) -> yts : app(rev(postorder(zts)), nil)
+	rev(app(app(postorder(xts), postorder(zts)), yts : nil)) -> yts : app(rev(postorder(zts)), rev(postorder(xts)))
+	rev(app(app(postorder(zts), yts2 : nil), yts1 : nil)) -> yts2 : (yts1 : app(app(rev(postorder(zts)), nil), nil))
+	rev(app(app(app(postorder(xts), postorder(zts)), yts2 : nil), yts1 : nil)) -> yts2 : (yts1 : app(app(rev(postorder(zts)), rev(postorder(xts))), nil))
+	rev(app(app(app(postorder(zts2), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), nil))
+	rev(app(app(app(app(postorder(xts), postorder(zts2)), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts))))
+	rev(app(app(app(app(app(postorder(xts), postorder(zts2)), yts3 : nil), postorder(zts1)), yts2 : nil), yts1 : nil)) -> yts3 : (yts2 : app(app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))), nil))
+	rev(app(app(app(app(app(postorder(xts), postorder(zts2)), yts3 : nil), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts3 : app(rev(postorder(zts2)), yts2 : (yts1 : app(app(rev(postorder(zts1)), rev(postorder(xts))), nil)))
+	rev(app(app(app(app(app(app(postorder(xts), postorder(zts3)), yts3 : nil), postorder(zts2)), yts2 : nil), postorder(zts1)), yts1 : nil)) -> yts3 : app(rev(postorder(zts3)), yts2 : app(rev(postorder(zts2)), yts1 : app(rev(postorder(zts1)), rev(postorder(xts)))))
+--- Primal Grammar:
+	<empty>
+
++++ loop limit reached
++++ Statistics:
+... Number of proof steps          = 10
+... Number of induction steps      = 10
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.115

@@ -1,0 +1,358 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 3-in.txt
++++ output      = 3-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification BOOL from bool successfully parsed
++++ specification AND from and successfully parsed
++++ specification EQ from eq successfully parsed
++++ specification Crafted from 3-in.txt successfully parsed
++++ Listing
+         1: specification Crafted
+         2: sorts
+         3:      bool nat
+         4: constructors
+         5:      0: -> nat
+         6:      false: -> bool
+         7:      s: nat -> nat
+         8:      true: -> bool
+         9: defined functions
+        10:      &&: bool bool -> bool
+        11:      ==: nat nat -> bool
+        12:      eq: nat nat nat -> bool
+        13: precedence
+        14:      eq > == > && > s > 0 > false = true
+        15: axioms
+        16:      0 == 0 = true;
+        17:      0 == s(x) = false;
+        18:      s(x) == 0 = false;
+        19:      eq(0, 0, 0) = true;
+        20:      true && true = true;
+        21:      false && true = false;
+        22:      s(x) == s(y) = x == y;
+        23:      true && false = false;
+        24:      eq(0, s(y), z) = false;
+        25:      eq(0, y, s(z)) = false;
+        26:      eq(s(x), 0, z) = false;
+        27:      eq(s(x), y, 0) = false;
+        28:      false && false = false;
+        29:      eq(s(x), s(y), s(z)) = eq(x, y, z);
+        30: conjectures
+        31:      eq(x, y, z) = (x == y) && (y == z);
+        32: end
++++ finitary sorts: bool
++++ Rewrite System 
+	0 == 0 -> true
+	0 == s(x) -> false
+	s(x) == 0 -> false
+	eq(0, 0, 0) -> true
+	true && true -> true
+	false && true -> false
+	s(x) == s(y) -> x == y
+	true && false -> false
+	eq(0, s(y), z) -> false
+	eq(0, y, s(z)) -> false
+	eq(s(x), 0, z) -> false
+	eq(s(x), y, 0) -> false
+	false && false -> false
+	eq(s(x), s(y), s(z)) -> eq(x, y, z)
++++ inductive positions:
+... for &&: 0 1
+... for ==: 0 1
+... for eq: 0 1 2
++++ maximal depths of left-hand sides:
+... for &&: 1
+... for eq: 2
+... for ==: 2
++++ general maximal depth = 2
++++ sort dependence: <empty>
++++ test sets for defined functions and sorts:
+... for eq
+... ... nat
+		0
+		s(x)
+... for ==
+... ... nat
+		0
+		s(x)
+... for &&
+... ... bool
+		x
+
++++ conjecture(s)
+	eq(x, y, z) = (x == y) && (y == z)
+
++++ inference system initiated
++++ treating clause
+	eq(x, y, z) = (x == y) && (y == z)
++++ inductive narrowing on conjecture
+	eq(x, y, z) = (x == y) && (y == z)
+... induction variables of
+	eq(x, y, z) = (x == y) && (y == z)
+... are:
+	x:nat
+	y:nat
+	z:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	eq(x, y, z) = (x == y) && (y == z)
+... with variable x
++++ creating new conjecture
+	eq(0, y, z) = (0 == y) && (y == z)
++++ creating new conjecture
+	eq(s(xts), y, z) = (s(xts) == y) && (y == z)
++++ non-reduced clause(s)
+	eq(0, y, z) = (0 == y) && (y == z)
+... need recursive treatment for next inductive variable
++++ perform INDUCTIVE NARROWING on conjecture 
+	eq(0, y, z) = (0 == y) && (y == z)
+... with variable y
++++ creating new conjecture
+	eq(0, 0, z) = (0 == 0) && (0 == z)
++++ creating new conjecture
+	eq(0, s(xts), z) = (0 == s(xts)) && (s(xts) == z)
+--- clause
+	eq(0, 0, z) = (0 == 0) && (0 == z)
+... reduced in 1 step to
+	eq(0, 0, z) = true && (0 == z)
+--- clause
+	eq(0, s(xts), z) = (0 == s(xts)) && (s(xts) == z)
+... reduced in 2 steps to
+	false = false && (s(xts) == z)
++++ inductive narrowing succeeded
+--- clause
+	eq(0, y, z) = (0 == y) && (y == z)
+... oriented to rule
+	eq(0, y, z) -> (0 == y) && (y == z)
++++ added new clause(s)
+	eq(s(xts), y, z) = (s(xts) == y) && (y == z)
+	eq(0, 0, z) = true && (0 == z)
+	false = false && (s(xts) == z)
+... to conjectures
+--- clause
+	eq(0, 0, z) = true && (0 == z)
+... reduced in 1 step to
+	(0 == 0) && (0 == z) = true && (0 == z)
+
++++ Status of the Inference System
+--- Conjectures:
+	eq(s(xts), y, z) = (s(xts) == y) && (y == z)
+	(0 == 0) && (0 == z) = true && (0 == z)
+	false = false && (s(xts) == z)
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	eq(0, y, z) -> (0 == y) && (y == z)
+--- Primal Grammar:
+	<empty>
+
+--- clause
+	(0 == 0) && (0 == z) = true && (0 == z)
+... reduced to tautology
+	true && (0 == z) = true && (0 == z)
++++ treating clause
+	eq(s(xts), y, z) = (s(xts) == y) && (y == z)
++++ inductive narrowing on conjecture
+	eq(s(xts), y, z) = (s(xts) == y) && (y == z)
+... induction variables of
+	eq(s(xts), y, z) = (s(xts) == y) && (y == z)
+... are:
+	y:nat
+	z:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	eq(s(xts), y, z) = (s(xts) == y) && (y == z)
+... with variable y
++++ creating new conjecture
+	eq(s(xts), 0, z) = (s(xts) == 0) && (0 == z)
++++ creating new conjecture
+	eq(s(xts2), s(xts1), z) = (s(xts2) == s(xts1)) && (s(xts1) == z)
+--- clause
+	eq(s(xts), 0, z) = (s(xts) == 0) && (0 == z)
+... reduced in 2 steps to
+	false = false && (0 == z)
+--- clause
+	eq(s(xts2), s(xts1), z) = (s(xts2) == s(xts1)) && (s(xts1) == z)
+... reduced in 1 step to
+	eq(s(xts2), s(xts1), z) = (xts2 == xts1) && (s(xts1) == z)
++++ inductive narrowing succeeded
+--- clause
+	eq(s(xts), y, z) = (s(xts) == y) && (y == z)
+... oriented to rule
+	eq(s(xts), y, z) -> (s(xts) == y) && (y == z)
++++ added new clause(s)
+	false = false && (0 == z)
+	eq(s(xts2), s(xts1), z) = (xts2 == xts1) && (s(xts1) == z)
+... to conjectures
+--- clause
+	eq(s(xts2), s(xts1), z) = (xts2 == xts1) && (s(xts1) == z)
+... reduced in 1 step to
+	(s(xts2) == s(xts1)) && (s(xts1) == z) = (xts2 == xts1) && (s(xts1) == z)
+
++++ Status of the Inference System
+--- Conjectures:
+	false = false && (s(xts) == z)
+	false = false && (0 == z)
+	(s(xts2) == s(xts1)) && (s(xts1) == z) = (xts2 == xts1) && (s(xts1) == z)
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	eq(0, y, z) -> (0 == y) && (y == z)
+	eq(s(xts), y, z) -> (s(xts) == y) && (y == z)
+--- Primal Grammar:
+	<empty>
+
+--- clause
+	(s(xts2) == s(xts1)) && (s(xts1) == z) = (xts2 == xts1) && (s(xts1) == z)
+... reduced to tautology
+	(xts2 == xts1) && (s(xts1) == z) = (xts2 == xts1) && (s(xts1) == z)
++++ treating clause
+	false = false && (s(xts) == z)
++++ inductive narrowing on conjecture
+	false = false && (s(xts) == z)
+... induction variables of
+	false = false && (s(xts) == z)
+... are:
+	z:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	false = false && (s(xts) == z)
+... with variable z
++++ creating new conjecture
+	false = false && (s(xts) == 0)
++++ creating new conjecture
+	false = false && (s(xts2) == s(xts1))
+--- clause
+	false = false && (s(xts) == 0)
+... reduced to tautology
+	false = false
+--- clause
+	false = false && (s(xts2) == s(xts1))
+... reduced in 1 step to
+	false = false && (xts2 == xts1)
++++ inductive narrowing succeeded
+--- clause
+	false = false && (s(xts) == z)
+... oriented to rule
+	false && (s(xts) == z) -> false
++++ added new clause(s)
+	false = false && (xts2 == xts1)
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	false = false && (0 == z)
+	false = false && (xts2 == xts1)
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	false && (s(xts) == z) -> false
+	eq(0, y, z) -> (0 == y) && (y == z)
+	eq(s(xts), y, z) -> (s(xts) == y) && (y == z)
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	false = false && (0 == z)
++++ inductive narrowing on conjecture
+	false = false && (0 == z)
+... induction variables of
+	false = false && (0 == z)
+... are:
+	z:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	false = false && (0 == z)
+... with variable z
++++ creating new conjecture
+	false = false && (0 == 0)
++++ creating new conjecture
+	false = false && (0 == s(xts))
+--- clause
+	false = false && (0 == 0)
+... reduced to tautology
+	false = false
+--- clause
+	false = false && (0 == s(xts))
+... reduced to tautology
+	false = false
++++ inductive narrowing succeeded
+--- clause
+	false = false && (0 == z)
+... oriented to rule
+	false && (0 == z) -> false
+
++++ Status of the Inference System
+--- Conjectures:
+	false = false && (xts2 == xts1)
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	false && (0 == z) -> false
+	false && (s(xts) == z) -> false
+	eq(0, y, z) -> (0 == y) && (y == z)
+	eq(s(xts), y, z) -> (s(xts) == y) && (y == z)
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	false = false && (xts2 == xts1)
++++ inductive narrowing on conjecture
+	false = false && (xts2 == xts1)
+... induction variables of
+	false = false && (xts2 == xts1)
+... are:
+	xts1:nat
+	xts2:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	false = false && (xts2 == xts1)
+... with variable xts1
++++ creating new conjecture
+	false = false && (xts == 0)
++++ creating new conjecture
+	false = false && (xts2 == s(xts1))
++++ inductive narrowing succeeded
+--- clause
+	false = false && (xts2 == xts1)
+... oriented to rule
+	false && (xts2 == xts1) -> false
++++ added new clause(s)
+	false = false && (xts == 0)
+	false = false && (xts2 == s(xts1))
+... to conjectures
+--- clause
+	false = false && (xts == 0)
+... reduced to tautology
+	false = false
+--- clause
+	false = false && (xts2 == s(xts1))
+... reduced to tautology
+	false = false
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	false && (0 == z) -> false
+	false && (s(xts) == z) -> false
+	false && (xts2 == xts1) -> false
+	eq(0, y, z) -> (0 == y) && (y == z)
+	eq(s(xts), y, z) -> (s(xts) == y) && (y == z)
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 5
+... Number of induction steps      = 6
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.004

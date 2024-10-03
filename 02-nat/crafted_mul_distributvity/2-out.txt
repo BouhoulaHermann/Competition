@@ -1,0 +1,146 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 2-in.txt
++++ output      = 2-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification ADD from add successfully parsed
++++ specification MULT from mult successfully parsed
++++ specification Crafted from 2-in.txt successfully parsed
++++ Listing
+         1: specification Crafted
+         2: sorts
+         3:      nat
+         4: constructors
+         5:      0: -> nat
+         6:      s: nat -> nat
+         7: defined functions
+         8:      *: nat nat -> nat
+         9:      +: nat nat -> nat
+        10: precedence
+        11:      * > + > s > 0
+        12: axioms
+        13:      x * 0 = 0;
+        14:      x + 0 = x;
+        15:      x + s(y) = s(x + y);
+        16:      x * s(y) = (x * y) + x;
+        17: conjectures
+        18:      (x + y) * z = (z * x) + (y * z);
+        19: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	x * 0 -> 0
+	x + 0 -> x
+	x + s(y) -> s(x + y)
+	x * s(y) -> (x * y) + x
++++ inductive positions:
+... for *: 1
+... for +: 1
++++ maximal depths of left-hand sides:
+... for +: 2
+... for *: 2
++++ general maximal depth = 2
++++ sort dependence: <empty>
++++ test sets for defined functions and sorts:
+... for +
+... ... nat
+		0
+		s(x)
+... for *
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	(x + y) * z = (z * x) + (y * z)
+
++++ inference system initiated
++++ treating clause
+	(x + y) * z = (z * x) + (y * z)
++++ inductive narrowing on conjecture
+	(x + y) * z = (z * x) + (y * z)
+... induction variables of
+	(x + y) * z = (z * x) + (y * z)
+... are:
+	x:nat
+	y:nat
+	z:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	(x + y) * z = (z * x) + (y * z)
+... with variable x
++++ creating new conjecture
+	(0 + y) * z = (z * 0) + (y * z)
++++ creating new conjecture
+	(s(xts) + y) * z = (z * s(xts)) + (y * z)
+--- clause
+	(0 + y) * z = (z * 0) + (y * z)
+... reduced in 1 step to
+	(0 + y) * z = 0 + (y * z)
+--- clause
+	(s(xts) + y) * z = (z * s(xts)) + (y * z)
+... reduced in 1 step to
+	(s(xts) + y) * z = ((z * xts) + z) + (y * z)
++++ inductive narrowing succeeded
+--- clause
+	(x + y) * z = (z * x) + (y * z)
+... oriented to rule
+	(x + y) * z -> (z * x) + (y * z)
++++ added new clause(s)
+	(0 + y) * z = 0 + (y * z)
+	(s(xts) + y) * z = ((z * xts) + z) + (y * z)
+... to conjectures
+--- clause
+	(0 + y) * z = 0 + (y * z)
+... reduced in 1 step to
+	(z * 0) + (y * z) = 0 + (y * z)
+--- clause
+	(s(xts) + y) * z = ((z * xts) + z) + (y * z)
+... reduced in 1 step to
+	(z * s(xts)) + (y * z) = ((z * xts) + z) + (y * z)
+
++++ Status of the Inference System
+--- Conjectures:
+	(z * 0) + (y * z) = 0 + (y * z)
+	(z * s(xts)) + (y * z) = ((z * xts) + z) + (y * z)
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	(x + y) * z -> (z * x) + (y * z)
+--- Primal Grammar:
+	<empty>
+
+--- clause
+	(z * 0) + (y * z) = 0 + (y * z)
+... reduced to tautology
+	0 + (y * z) = 0 + (y * z)
+--- clause
+	(z * s(xts)) + (y * z) = ((z * xts) + z) + (y * z)
+... reduced to tautology
+	((z * xts) + z) + (y * z) = ((z * xts) + z) + (y * z)
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	(x + y) * z -> (z * x) + (y * z)
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 2
+... Number of induction steps      = 1
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0

@@ -1,0 +1,25 @@
+# Programming and Proving In Isabelle/HOL
+# page 14
+#
+# Proox of double.
+# We do not need commutativity and associativity of of +
+
+specification double
+
+include <add>
+
+defined functions
+	dbl: nat -> nat
+
+precedence
+
+	dbl > + > s > 0
+
+axioms
+	dbl(0) = 0;
+	dbl(s(x)) = s(s(dbl(x)));
+
+conjectures
+	dbl(x) = x + x;
+
+end

@@ -1,0 +1,192 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 16-in.txt
++++ output      = 16-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LIST from list successfully parsed
++++ specification LENGTH from length successfully parsed
++++ specification APPEND from append successfully parsed
++++ specification REVERSE from reverse successfully parsed
++++ specification BOOL from bool successfully parsed
++++ specification LEQ from leq successfully parsed
++++ specification ListReverseLength from 16-in.txt successfully parsed
++++ Listing
+         1: specification ListReverseLength
+         2: sorts
+         3:      bool list nat
+         4: constructors
+         5:      0: -> nat
+         6:      cons: nat list -> list
+         7:      false: -> bool
+         8:      nil: -> list
+         9:      s: nat -> nat
+        10:      true: -> bool
+        11: defined functions
+        12:      <=: nat nat -> bool
+        13:      app: list list -> list
+        14:      len: list -> nat
+        15:      rev: list -> list
+        16: precedence
+        17:      rev > len > <= > app > cons > nil > s > 0 > false = true
+        18: axioms
+        19:      len(nil) = 0;
+        20:      0 <= x = true;
+        21:      rev(nil) = nil;
+        22:      app(nil, y) = y;
+        23:      s(x) <= 0 = false;
+        24:      s(x) <= s(y) = x <= y;
+        25:      len(cons(x, y)) = s(len(y));
+        26:      app(cons(x, y), z) = cons(x, app(y, z));
+        27:      rev(cons(x, y)) = app(rev(y), cons(x, nil));
+        28: conjectures
+        29:      len(x) <= s(0) = true => rev(x) = x;
+        30: end
++++ finitary sorts: bool
++++ Rewrite System 
+	len(nil) -> 0
+	0 <= x -> true
+	rev(nil) -> nil
+	app(nil, y) -> y
+	s(x) <= 0 -> false
+	s(x) <= s(y) -> x <= y
+	len(cons(x, y)) -> s(len(y))
+	app(cons(x, y), z) -> cons(x, app(y, z))
+	rev(cons(x, y)) -> app(rev(y), cons(x, nil))
++++ inductive positions:
+... for <=: 0 1
+... for app: 0
+... for len: 0
+... for rev: 0
++++ maximal depths of left-hand sides:
+... for app: 2
+... for rev: 2
+... for <=: 2
+... for len: 2
++++ general maximal depth = 2
++++ sort dependence: nat < list
++++ test sets for defined functions and sorts:
+... for rev
+... ... list
+		nil
+		cons(x, y)
+... for len
+... ... list
+		nil
+		cons(x, y)
+... for app
+... ... list
+		nil
+		cons(x, y)
+... for <=
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	len(x) <= s(0) = true => rev(x) = x
+
++++ inference system initiated
++++ treating clause
+	len(x) <= s(0) = true => rev(x) = x
++++ inductive narrowing on conjecture
+	len(x) <= s(0) = true => rev(x) = x
+... induction variables of
+	len(x) <= s(0) = true => rev(x) = x
+... are:
+	x:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	len(x) <= s(0) = true => rev(x) = x
+... with variable x
++++ creating new conjecture
+	len(nil) <= s(0) = true => rev(nil) = nil
++++ creating new conjecture
+	len(cons(xts, yts)) <= s(0) = true => rev(cons(xts, yts)) = cons(xts, yts)
+--- clause
+	len(nil) <= s(0) = true => rev(nil) = nil
+... reduced to tautology
+	nil = nil
+--- clause
+	len(cons(xts, yts)) <= s(0) = true => rev(cons(xts, yts)) = cons(xts, yts)
+... reduced in 3 steps to
+	len(yts) <= 0 = true => app(rev(yts), cons(xts, nil)) = cons(xts, yts)
++++ inductive narrowing succeeded
+--- clause
+	len(x) <= s(0) = true => rev(x) = x
+... oriented to rule
+	len(x) <= s(0) = true => rev(x) -> x
++++ added new clause(s)
+	len(yts) <= 0 = true => app(rev(yts), cons(xts, nil)) = cons(xts, yts)
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	len(yts) <= 0 = true => app(rev(yts), cons(xts, nil)) = cons(xts, yts)
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	len(x) <= s(0) = true => rev(x) -> x
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	len(yts) <= 0 = true => app(rev(yts), cons(xts, nil)) = cons(xts, yts)
++++ inductive narrowing on conjecture
+	len(yts) <= 0 = true => app(rev(yts), cons(xts, nil)) = cons(xts, yts)
+... induction variables of
+	len(yts) <= 0 = true => app(rev(yts), cons(xts, nil)) = cons(xts, yts)
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	len(yts) <= 0 = true => app(rev(yts), cons(xts, nil)) = cons(xts, yts)
+... with variable yts
++++ creating new conjecture
+	len(nil) <= 0 = true => app(rev(nil), cons(xts, nil)) = cons(xts, nil)
++++ creating new conjecture
+	len(cons(xts2, yts)) <= 0 = true => app(rev(cons(xts2, yts)), cons(xts1, nil)) = cons(xts1, cons(xts2, yts))
+--- clause
+	len(nil) <= 0 = true => app(rev(nil), cons(xts, nil)) = cons(xts, nil)
+... reduced to tautology
+	cons(xts, nil) = cons(xts, nil)
+--- clause
+	len(cons(xts2, yts)) <= 0 = true => app(rev(cons(xts2, yts)), cons(xts1, nil)) = cons(xts1, cons(xts2, yts))
+... reduced in 3 steps to
+	false = true => app(app(rev(yts), cons(xts2, nil)), cons(xts1, nil)) = cons(xts1, cons(xts2, yts))
+--- clause
+	false = true => app(app(rev(yts), cons(xts2, nil)), cons(xts1, nil)) = cons(xts1, cons(xts2, yts))
+... contains a ground negative condition
+	false = true
+... and is therefore discarded (false => t is always true)
++++ inductive narrowing succeeded
+--- clause
+	len(yts) <= 0 = true => app(rev(yts), cons(xts, nil)) = cons(xts, yts)
+... oriented to rule
+	len(yts) <= 0 = true => app(rev(yts), cons(xts, nil)) -> cons(xts, yts)
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	len(x) <= s(0) = true => rev(x) -> x
+	len(yts) <= 0 = true => app(rev(yts), cons(xts, nil)) -> cons(xts, yts)
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 2
+... Number of induction steps      = 2
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.001

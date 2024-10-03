@@ -1,0 +1,138 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 0-in.txt
++++ output      = 0-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LIST from list successfully parsed
++++ specification APPEND from append successfully parsed
++++ specification TREE from tree successfully parsed
++++ specification FLATTEN from flatten successfully parsed
++++ specification ROTATEleft from rotateleft successfully parsed
++++ specification CraftedTrees from 0-in.txt successfully parsed
++++ Listing
+         1: specification CraftedTrees
+         2: sorts
+         3:      list nat tree
+         4: constructors
+         5:      0: -> nat
+         6:      cons: nat list -> list
+         7:      leaf: -> tree
+         8:      nil: -> list
+         9:      node: tree nat tree -> tree
+        10:      s: nat -> nat
+        11: defined functions
+        12:      app: list list -> list
+        13:      flatten: tree -> list
+        14:      rotL: tree -> tree
+        15: precedence
+        16:      rotL > app > flatten > cons > node > leaf > nil > s > 0
+        17: axioms
+        18:      app(nil, y) = y;
+        19:      rotL(leaf) = leaf;
+        20:      flatten(leaf) = nil;
+        21:      app(cons(x, y), z) = cons(x, app(y, z));
+        22:      rotL(node(xl, y, leaf)) = node(xl, y, leaf);
+        23:      flatten(node(xl, y, xr)) = app(flatten(xl), cons(y, flatten(xr)));
+        24:      rotL(node(xP, x, node(xQ, y, xR))) = rotL(node(node(xP, x, xQ), y, xR));
+        25: conjectures
+        26:      flatten(rotL(x)) = flatten(x);
+        27: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	app(nil, y) -> y
+	rotL(leaf) -> leaf
+	flatten(leaf) -> nil
+	app(cons(x, y), z) -> cons(x, app(y, z))
+	rotL(node(xl, y, leaf)) -> node(xl, y, leaf)
+	app(flatten(xl), cons(y, flatten(xr))) -> flatten(node(xl, y, xr))
+	rotL(node(node(xP, x, xQ), y, xR)) -> rotL(node(xP, x, node(xQ, y, xR)))
++++ inductive positions:
+... for app: 0 1 1.1
+... for flatten: 0
+... for rotL: 0 0.0 0.2
++++ maximal depths of left-hand sides:
+... for flatten: 1
+... for rotL: 3
+... for app: 3
++++ general maximal depth = 3
++++ sort dependence: nat < tree < list
++++ test sets for defined functions and sorts:
+... for rotL
+... ... tree
+		leaf
+		node(leaf, 0, leaf)
+		node(leaf, s(x), leaf)
+		node(leaf, 0, node(x, y, z))
+		node(node(x, y, z), 0, leaf)
+		node(leaf, s(x), node(y, z, u))
+		node(node(x, y, z), s(u), leaf)
+		node(node(x, y, z), 0, node(u, v, w))
+		node(node(x, y, z), s(u), node(v, w, xy))
+... for flatten
+... ... tree
+		x
+... for app
+... ... list
+		nil
+		cons(0, nil)
+		cons(s(x), nil)
+		cons(0, cons(x, y))
+		cons(s(x), cons(y, z))
+
++++ conjecture(s)
+	flatten(rotL(x)) = flatten(x)
+
++++ inference system initiated
++++ treating clause
+	flatten(rotL(x)) = flatten(x)
++++ inductive narrowing on conjecture
+	flatten(rotL(x)) = flatten(x)
+... induction variables of
+	flatten(rotL(x)) = flatten(x)
+... are:
+	x:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	flatten(rotL(x)) = flatten(x)
+... with variable x
++++ creating new conjecture
+	flatten(rotL(xts)) = flatten(xts)
++++ inductive narrowing succeeded
+--- clause
+	flatten(rotL(x)) = flatten(x)
+... oriented to rule
+	flatten(rotL(x)) -> flatten(x)
++++ added new clause(s)
+	flatten(rotL(xts)) = flatten(xts)
+... to conjectures
+--- clause
+	flatten(rotL(xts)) = flatten(xts)
+... reduced to tautology
+	flatten(xts) = flatten(xts)
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	flatten(rotL(x)) -> flatten(x)
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 1
+... Number of induction steps      = 1
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.025

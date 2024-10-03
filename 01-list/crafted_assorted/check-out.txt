@@ -1,0 +1,26 @@
+Number of output files       = 21
+Number of successful proofs  = 16
+... without primal grammars  = 5
+	1-out.txt
+	13-out.txt
+	16-out.txt
+	2-out.txt
+	20-out.txt
+Number of disproofs          = 1
+	15-out.txt
+Number of loop limits        = 4
+	14-out.txt
+	22-out.txt
+	5-out.txt
+	6-out.txt
+No primal grammars possible  = 0
+Total number of correct runs = 21
+Number of crashes            = 0
+Elapsed time:
+	min     = 0
+	max     = 0.157 (7-out.txt)
+	mean    = 0.02
+	std.dev = 0.03
+	median  = 0.01
+Examples which run longer than 1 second:
+	<none>

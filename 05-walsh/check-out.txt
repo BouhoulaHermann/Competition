@@ -1,0 +1,28 @@
+Number of output files       = 38
+Number of successful proofs  = 36
+... without primal grammars  = 9
+	03-len-out.txt
+	04-len-out.txt
+	20-len+rev-out.txt
+	23-len+qrev-out.txt
+	27-nth-out.txt
+	28-nth-out.txt
+	28a-nth-out.txt
+	32-mult-out.txt
+	33-add-out.txt
+Number of disproofs          = 0
+Number of loop limits        = 2
+	15-rot+len-out.txt
+	34-qrev-out.txt
+No primal grammars possible  = 0
+Total number of correct runs = 38
+Number of crashes            = 0
+Elapsed time:
+	min     = 0
+	max     = 6.007 (30-sorted-out.txt)
+	mean    = 0.25
+	std.dev = 1.08
+	median  = 0
+Examples which run longer than 1 second:
+	   6.007s: 30-sorted-out.txt
+	   3.225s: 15-rot+len-out.txt

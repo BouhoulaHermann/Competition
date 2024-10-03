@@ -1,0 +1,14 @@
+specification ListExample
+
+include
+	<append>
+
+precedence
+	app > cons > nil
+
+conjectures
+	app(app(x,app(x,app(x,app(x,app(x,x))))),x)
+	=
+	app(x,app(app(x,x),app(app(app(x,x),x),x)));
+
+end

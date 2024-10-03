@@ -1,0 +1,14 @@
+specification ListCountngth
+
+include <length>
+	<count>
+	<eq>
+
+precedence
+	count > len > == > cons > nil > s > 0 > true = false
+
+conjectures
+
+	count(z, x) = count(z, y) => len(x) = len(y);
+
+end

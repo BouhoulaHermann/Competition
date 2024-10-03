@@ -1,0 +1,628 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 0-in.txt
++++ output      = 0-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LIST from list successfully parsed
++++ specification APPEND from append successfully parsed
++++ specification TREE from tree successfully parsed
++++ specification FLATTEN from flatten successfully parsed
++++ specification CraftedTrees from 0-in.txt successfully parsed
++++ Listing
+         1: specification CraftedTrees
+         2: sorts
+         3:      list nat tree
+         4: constructors
+         5:      0: -> nat
+         6:      cons: nat list -> list
+         7:      leaf: -> tree
+         8:      nil: -> list
+         9:      node: tree nat tree -> tree
+        10:      s: nat -> nat
+        11: defined functions
+        12:      app: list list -> list
+        13:      flatten: tree -> list
+        14: precedence
+        15:      flatten > app > cons > node > leaf > nil > s > 0
+        16: axioms
+        17:      app(nil, y) = y;
+        18:      flatten(leaf) = nil;
+        19:      app(cons(x, y), z) = cons(x, app(y, z));
+        20:      flatten(node(xl, y, xr)) = app(flatten(xl), cons(y, flatten(xr)));
+        21: conjectures
+        22:      flatten(node(node(xP, x, xQ), y, xR)) = flatten(node(xP, x, node(xQ, y, xR)));
+        23: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	app(nil, y) -> y
+	flatten(leaf) -> nil
+	app(cons(x, y), z) -> cons(x, app(y, z))
+	flatten(node(xl, y, xr)) -> app(flatten(xl), cons(y, flatten(xr)))
++++ inductive positions:
+... for app: 0
+... for flatten: 0
++++ maximal depths of left-hand sides:
+... for flatten: 2
+... for app: 2
++++ general maximal depth = 2
++++ sort dependence: nat < tree < list
++++ test sets for defined functions and sorts:
+... for flatten
+... ... tree
+		leaf
+		node(x, y, z)
+... for app
+... ... list
+		nil
+		cons(x, y)
+
++++ conjecture(s)
+	flatten(node(node(xP, x, xQ), y, xR)) = flatten(node(xP, x, node(xQ, y, xR)))
+
++++ inference system initiated
+--- clause
+	flatten(node(node(xP, x, xQ), y, xR)) = flatten(node(xP, x, node(xQ, y, xR)))
+... reduced in 4 steps to
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) = app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
++++ treating clause
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) = app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
++++ inductive narrowing on conjecture
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) = app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+... induction variables of
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) = app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+... are:
+	xP:tree
+	xQ:tree
+	xR:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) = app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+... with variable xP
++++ creating new conjecture
+	app(app(flatten(leaf), cons(x, flatten(xQ))), cons(y, flatten(xR))) = app(flatten(leaf), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
++++ creating new conjecture
+	app(app(flatten(node(xts, yts, zts)), cons(x, flatten(xQ))), cons(y, flatten(xR))) = app(flatten(node(xts, yts, zts)), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+--- clause
+	app(app(flatten(leaf), cons(x, flatten(xQ))), cons(y, flatten(xR))) = app(flatten(leaf), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+... reduced to tautology
+	cons(x, app(flatten(xQ), cons(y, flatten(xR)))) = cons(x, app(flatten(xQ), cons(y, flatten(xR))))
+--- clause
+	app(app(flatten(node(xts, yts, zts)), cons(x, flatten(xQ))), cons(y, flatten(xR))) = app(flatten(node(xts, yts, zts)), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+... reduced in 2 steps to
+	app(app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, flatten(xQ))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
++++ inductive narrowing succeeded
+--- clause
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) = app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+... oriented to rule
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) -> app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
++++ added new clause(s)
+	app(app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, flatten(xQ))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+... to conjectures
+--- clause
+	app(app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, flatten(xQ))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+... reduced in 1 step to
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+
++++ Status of the Inference System
+--- Conjectures:
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) -> app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
++++ inductive narrowing on conjecture
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+... induction variables of
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+... are:
+	xQ:tree
+	xR:tree
+	xts:tree
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+... with variable xQ
++++ creating new conjecture
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(leaf))))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(leaf), cons(y, flatten(xR)))))
++++ creating new conjecture
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, flatten(node(xts1, yts1, zts1)))))), cons(y, flatten(xR))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(node(xts1, yts1, zts1)), cons(y, flatten(xR)))))
+--- clause
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(leaf))))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(leaf), cons(y, flatten(xR)))))
+... reduced in 3 steps to
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
+--- clause
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, flatten(node(xts1, yts1, zts1)))))), cons(y, flatten(xR))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(node(xts1, yts1, zts1)), cons(y, flatten(xR)))))
+... reduced in 3 steps to
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
++++ inductive narrowing succeeded
+--- clause
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+... oriented to rule
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
++++ added new clause(s)
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) -> app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
++++ inductive narrowing on conjecture
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
+... induction variables of
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
+... are:
+	xR:tree
+	xts:tree
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
+... with variable xR
++++ creating new conjecture
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(leaf))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(leaf))))
++++ creating new conjecture
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, flatten(node(xts1, yts1, zts1)))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, flatten(node(xts1, yts1, zts1)))))
+--- clause
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(leaf))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(leaf))))
+... reduced in 2 steps to
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+--- clause
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, flatten(node(xts1, yts1, zts1)))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, flatten(node(xts1, yts1, zts1)))))
+... reduced in 2 steps to
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
++++ inductive narrowing succeeded
+--- clause
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
+... oriented to rule
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
++++ added new clause(s)
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) -> app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
++++ inductive narrowing on conjecture
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
+... induction variables of
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
+... are:
+	xR:tree
+	xts1:tree
+	xts2:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
+... with variable xR
++++ creating new conjecture
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(leaf))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(leaf)))))))
++++ creating new conjecture
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, flatten(node(xts1, yts1, zts1)))) = app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, flatten(node(xts1, yts1, zts1))))))))
+--- clause
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(leaf))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(leaf)))))))
+... reduced in 2 steps to
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+--- clause
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, flatten(node(xts1, yts1, zts1)))) = app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, flatten(node(xts1, yts1, zts1))))))))
+... reduced in 2 steps to
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1)))))))))
++++ inductive narrowing succeeded
+--- clause
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
+... oriented to rule
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
++++ added new clause(s)
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1)))))))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1)))))))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) -> app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
++++ inductive narrowing on conjecture
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+... induction variables of
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+... are:
+	xts:tree
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+... with variable xts
++++ creating new conjecture
+	app(app(flatten(leaf), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) = app(app(flatten(leaf), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
++++ creating new conjecture
+	app(app(flatten(node(xts, yts2, zts2)), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(node(xts, yts2, zts2)), cons(yts1, flatten(zts1))), cons(x, cons(y, nil)))
+--- clause
+	app(app(flatten(leaf), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) = app(app(flatten(leaf), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+... reduced in 6 steps to
+	cons(yts, app(app(flatten(zts), cons(x, nil)), cons(y, nil))) = cons(yts, app(flatten(zts), cons(x, cons(y, nil))))
+--- clause
+	app(app(flatten(node(xts, yts2, zts2)), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(node(xts, yts2, zts2)), cons(yts1, flatten(zts1))), cons(x, cons(y, nil)))
+... reduced in 3 steps to
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+... decomposed into new clause(s)
+	app(app(flatten(zts), cons(x, nil)), cons(y, nil)) = app(flatten(zts), cons(x, cons(y, nil)))
++++ inductive narrowing succeeded
+--- clause
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+... oriented to rule
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
++++ added new clause(s)
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+	app(app(flatten(zts), cons(x, nil)), cons(y, nil)) = app(flatten(zts), cons(x, cons(y, nil)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1)))))))))
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+	app(app(flatten(zts), cons(x, nil)), cons(y, nil)) = app(flatten(zts), cons(x, cons(y, nil)))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) -> app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
++++ inductive narrowing on conjecture
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
+... induction variables of
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
+... are:
+	xts1:tree
+	xts2:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
+... with variable xts1
++++ creating new conjecture
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(leaf), cons(yts1, flatten(zts1))))) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(leaf), cons(yts1, flatten(zts1))))))
++++ creating new conjecture
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, nil)))), cons(y, app(flatten(node(xts1, yts2, zts2)), cons(yts1, flatten(zts1))))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, cons(y, app(flatten(node(xts1, yts2, zts2)), cons(yts1, flatten(zts1))))))
+--- clause
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(leaf), cons(yts1, flatten(zts1))))) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(leaf), cons(yts1, flatten(zts1))))))
+... reduced in 4 steps to
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, cons(yts1, flatten(zts1)))) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, cons(y, cons(yts1, flatten(zts1)))))
+--- clause
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, nil)))), cons(y, app(flatten(node(xts1, yts2, zts2)), cons(yts1, flatten(zts1))))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, cons(y, app(flatten(node(xts1, yts2, zts2)), cons(yts1, flatten(zts1))))))
+... reduced in 4 steps to
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))))
++++ inductive narrowing succeeded
+--- clause
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
+... oriented to rule
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
++++ added new clause(s)
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, cons(yts1, flatten(zts1)))) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, cons(y, cons(yts1, flatten(zts1)))))
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1)))))))))
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+	app(app(flatten(zts), cons(x, nil)), cons(y, nil)) = app(flatten(zts), cons(x, cons(y, nil)))
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, cons(yts1, flatten(zts1)))) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, cons(y, cons(yts1, flatten(zts1)))))
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) -> app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, nil))))))
++++ inductive narrowing on conjecture
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+... induction variables of
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+... are:
+	xts1:tree
+	xts2:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+... with variable xts1
++++ creating new conjecture
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, app(flatten(leaf), cons(yts1, flatten(zts1))))))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, app(flatten(leaf), cons(yts1, app(flatten(zts1), cons(y, nil))))))
++++ creating new conjecture
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, app(flatten(node(xts1, yts2, zts2)), cons(yts1, flatten(zts1))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, app(flatten(node(xts1, yts2, zts2)), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+--- clause
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, app(flatten(leaf), cons(yts1, flatten(zts1))))))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, app(flatten(leaf), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+... reduced in 4 steps to
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, cons(yts1, flatten(zts1)))))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, cons(yts1, app(flatten(zts1), cons(y, nil)))))
+--- clause
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, app(flatten(node(xts1, yts2, zts2)), cons(yts1, flatten(zts1))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, app(flatten(node(xts1, yts2, zts2)), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+... reduced in 3 steps to
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, app(app(flatten(xts1), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(y, nil))))))
++++ inductive narrowing succeeded
+--- clause
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+... oriented to rule
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, nil)) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, nil))))))
++++ added new clause(s)
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, cons(yts1, flatten(zts1)))))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, cons(yts1, app(flatten(zts1), cons(y, nil)))))
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, app(app(flatten(xts1), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1)))))))))
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+	app(app(flatten(zts), cons(x, nil)), cons(y, nil)) = app(flatten(zts), cons(x, cons(y, nil)))
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, cons(yts1, flatten(zts1)))) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, cons(y, cons(yts1, flatten(zts1)))))
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))))
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, cons(yts1, flatten(zts1)))))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, cons(yts1, app(flatten(zts1), cons(y, nil)))))
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, app(app(flatten(xts1), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) -> app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, nil)) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1)))))))))
++++ inductive narrowing on conjecture
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1)))))))))
+... induction variables of
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1)))))))))
+... are:
+	xts1:tree
+	xts2:tree
+	xts3:tree
+	zts1:tree
+	zts2:tree
+	zts3:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1)))))))))
+... with variable xts1
++++ creating new conjecture
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts1), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(leaf), cons(yts1, flatten(zts1))))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(y, app(flatten(leaf), cons(yts1, flatten(zts1)))))))))
++++ creating new conjecture
+	app(app(flatten(xts3), cons(yts4, app(flatten(zts4), cons(x, app(flatten(xts2), cons(yts3, flatten(zts3))))))), cons(y, app(flatten(node(xts1, yts2, zts2)), cons(yts1, flatten(zts1))))) = app(app(flatten(xts3), cons(yts4, flatten(zts4))), cons(x, app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(y, app(flatten(node(xts1, yts2, zts2)), cons(yts1, flatten(zts1)))))))))
+--- clause
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts1), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(leaf), cons(yts1, flatten(zts1))))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(y, app(flatten(leaf), cons(yts1, flatten(zts1)))))))))
+... reduced in 4 steps to
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts1), cons(yts2, flatten(zts2))))))), cons(y, cons(yts1, flatten(zts1)))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(y, cons(yts1, flatten(zts1))))))))
+--- clause
+	app(app(flatten(xts3), cons(yts4, app(flatten(zts4), cons(x, app(flatten(xts2), cons(yts3, flatten(zts3))))))), cons(y, app(flatten(node(xts1, yts2, zts2)), cons(yts1, flatten(zts1))))) = app(app(flatten(xts3), cons(yts4, flatten(zts4))), cons(x, app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(y, app(flatten(node(xts1, yts2, zts2)), cons(yts1, flatten(zts1)))))))))
+... reduced in 4 steps to
+	app(app(flatten(xts3), cons(yts4, app(flatten(zts4), cons(x, app(flatten(xts2), cons(yts3, flatten(zts3))))))), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))) = app(app(flatten(xts3), cons(yts4, flatten(zts4))), cons(x, app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1)))))))))))
++++ inductive narrowing succeeded
+--- clause
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) = app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1)))))))))
+... oriented to rule
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) -> app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1)))))))))
++++ added new clause(s)
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts1), cons(yts2, flatten(zts2))))))), cons(y, cons(yts1, flatten(zts1)))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(y, cons(yts1, flatten(zts1))))))))
+	app(app(flatten(xts3), cons(yts4, app(flatten(zts4), cons(x, app(flatten(xts2), cons(yts3, flatten(zts3))))))), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))) = app(app(flatten(xts3), cons(yts4, flatten(zts4))), cons(x, app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1)))))))))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+	app(app(flatten(zts), cons(x, nil)), cons(y, nil)) = app(flatten(zts), cons(x, cons(y, nil)))
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, cons(yts1, flatten(zts1)))) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, cons(y, cons(yts1, flatten(zts1)))))
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))))
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, cons(yts1, flatten(zts1)))))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, cons(yts1, app(flatten(zts1), cons(y, nil)))))
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, app(app(flatten(xts1), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts1), cons(yts2, flatten(zts2))))))), cons(y, cons(yts1, flatten(zts1)))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(y, cons(yts1, flatten(zts1))))))))
+	app(app(flatten(xts3), cons(yts4, app(flatten(zts4), cons(x, app(flatten(xts2), cons(yts3, flatten(zts3))))))), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))) = app(app(flatten(xts3), cons(yts4, flatten(zts4))), cons(x, app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1)))))))))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) -> app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, nil)) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) -> app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1)))))))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
++++ inductive narrowing on conjecture
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+... induction variables of
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+... are:
+	xts:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+... with variable xts
++++ creating new conjecture
+	app(app(app(flatten(leaf), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(leaf), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
++++ creating new conjecture
+	app(app(app(flatten(node(xts, yts3, zts3)), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(node(xts, yts3, zts3)), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+--- clause
+	app(app(app(flatten(leaf), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(leaf), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+... reduced to tautology
+	cons(yts2, app(app(flatten(zts2), cons(yts1, flatten(zts1))), cons(x, cons(y, nil)))) = cons(yts2, app(app(flatten(zts2), cons(yts1, flatten(zts1))), cons(x, cons(y, nil))))
+--- clause
+	app(app(app(flatten(node(xts, yts3, zts3)), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(node(xts, yts3, zts3)), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+... reduced in 3 steps to
+	app(app(app(flatten(xts), cons(yts3, app(flatten(zts3), cons(yts2, flatten(zts2))))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
++++ inductive narrowing succeeded
+--- clause
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+... oriented to rule
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) -> app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
++++ added new clause(s)
+	app(app(app(flatten(xts), cons(yts3, app(flatten(zts3), cons(yts2, flatten(zts2))))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	app(app(flatten(zts), cons(x, nil)), cons(y, nil)) = app(flatten(zts), cons(x, cons(y, nil)))
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, cons(yts1, flatten(zts1)))) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, cons(y, cons(yts1, flatten(zts1)))))
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))))
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, cons(yts1, flatten(zts1)))))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, cons(yts1, app(flatten(zts1), cons(y, nil)))))
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, app(app(flatten(xts1), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts1), cons(yts2, flatten(zts2))))))), cons(y, cons(yts1, flatten(zts1)))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(y, cons(yts1, flatten(zts1))))))))
+	app(app(flatten(xts3), cons(yts4, app(flatten(zts4), cons(x, app(flatten(xts2), cons(yts3, flatten(zts3))))))), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))) = app(app(flatten(xts3), cons(yts4, flatten(zts4))), cons(x, app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1)))))))))))
+	app(app(app(flatten(xts), cons(yts3, app(flatten(zts3), cons(yts2, flatten(zts2))))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) -> app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) -> app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, nil)) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) -> app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1)))))))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	app(app(flatten(zts), cons(x, nil)), cons(y, nil)) = app(flatten(zts), cons(x, cons(y, nil)))
++++ inductive narrowing on conjecture
+	app(app(flatten(zts), cons(x, nil)), cons(y, nil)) = app(flatten(zts), cons(x, cons(y, nil)))
+... induction variables of
+	app(app(flatten(zts), cons(x, nil)), cons(y, nil)) = app(flatten(zts), cons(x, cons(y, nil)))
+... are:
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(app(flatten(zts), cons(x, nil)), cons(y, nil)) = app(flatten(zts), cons(x, cons(y, nil)))
+... with variable zts
++++ creating new conjecture
+	app(app(flatten(leaf), cons(x, nil)), cons(y, nil)) = app(flatten(leaf), cons(x, cons(y, nil)))
++++ creating new conjecture
+	app(app(flatten(node(xts, yts, zts)), cons(x, nil)), cons(y, nil)) = app(flatten(node(xts, yts, zts)), cons(x, cons(y, nil)))
+--- clause
+	app(app(flatten(leaf), cons(x, nil)), cons(y, nil)) = app(flatten(leaf), cons(x, cons(y, nil)))
+... reduced to tautology
+	cons(x, cons(y, nil)) = cons(x, cons(y, nil))
+--- clause
+	app(app(flatten(node(xts, yts, zts)), cons(x, nil)), cons(y, nil)) = app(flatten(node(xts, yts, zts)), cons(x, cons(y, nil)))
+... reduced in 2 steps to
+	app(app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, nil)), cons(y, nil)) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
++++ inductive narrowing succeeded
+--- clause
+	app(app(flatten(zts), cons(x, nil)), cons(y, nil)) = app(flatten(zts), cons(x, cons(y, nil)))
+... oriented to rule
+	app(app(flatten(zts), cons(x, nil)), cons(y, nil)) -> app(flatten(zts), cons(x, cons(y, nil)))
++++ added new clause(s)
+	app(app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, nil)), cons(y, nil)) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, cons(yts1, flatten(zts1)))) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, cons(y, cons(yts1, flatten(zts1)))))
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))))
+	app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(x, cons(yts1, flatten(zts1)))))), cons(y, nil)) = app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(x, cons(yts1, app(flatten(zts1), cons(y, nil)))))
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))))), cons(y, nil)) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, app(app(flatten(xts1), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+	app(app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts1), cons(yts2, flatten(zts2))))))), cons(y, cons(yts1, flatten(zts1)))) = app(app(flatten(xts2), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(y, cons(yts1, flatten(zts1))))))))
+	app(app(flatten(xts3), cons(yts4, app(flatten(zts4), cons(x, app(flatten(xts2), cons(yts3, flatten(zts3))))))), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))))) = app(app(flatten(xts3), cons(yts4, flatten(zts4))), cons(x, app(flatten(xts2), cons(yts3, app(flatten(zts3), cons(y, app(flatten(xts1), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1)))))))))))
+	app(app(app(flatten(xts), cons(yts3, app(flatten(zts3), cons(yts2, flatten(zts2))))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) = app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+	app(app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, nil)), cons(y, nil)) = app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	app(app(flatten(zts), cons(x, nil)), cons(y, nil)) -> app(flatten(zts), cons(x, cons(y, nil)))
+	app(app(flatten(xP), cons(x, flatten(xQ))), cons(y, flatten(xR))) -> app(flatten(xP), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, nil)) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, nil)))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, nil)))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, cons(y, flatten(xR))))
+	app(app(flatten(xts), cons(yts, app(flatten(zts), cons(x, flatten(xQ))))), cons(y, flatten(xR))) -> app(app(flatten(xts), cons(yts, flatten(zts))), cons(x, app(flatten(xQ), cons(y, flatten(xR)))))
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, app(flatten(zts1), cons(x, nil)))), cons(y, nil)) -> app(app(flatten(xts), cons(yts2, app(flatten(zts2), cons(yts1, flatten(zts1))))), cons(x, cons(y, nil)))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, nil)))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, nil)) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, nil))))))
+	app(app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(x, app(flatten(xts1), cons(yts1, flatten(zts1))))))), cons(y, flatten(xR))) -> app(app(flatten(xts2), cons(yts2, flatten(zts2))), cons(x, app(flatten(xts1), cons(yts1, app(flatten(zts1), cons(y, flatten(xR)))))))
+	app(app(flatten(xts3), cons(yts3, app(flatten(zts3), cons(x, app(flatten(xts2), cons(yts2, flatten(zts2))))))), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1))))) -> app(app(flatten(xts3), cons(yts3, flatten(zts3))), cons(x, app(flatten(xts2), cons(yts2, app(flatten(zts2), cons(y, app(flatten(xts1), cons(yts1, flatten(zts1)))))))))
+--- Primal Grammar:
+	<empty>
+
++++ loop limit reached
++++ Statistics:
+... Number of proof steps          = 10
+... Number of induction steps      = 10
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.193

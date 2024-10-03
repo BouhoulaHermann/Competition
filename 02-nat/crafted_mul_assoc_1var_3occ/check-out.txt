@@ -1,0 +1,17 @@
+Number of output files       = 1
+Number of successful proofs  = 0
+... without primal grammars  = 0
+Number of disproofs          = 1
+	0-out.txt
+Number of loop limits        = 0
+No primal grammars possible  = 0
+Total number of correct runs = 1
+Number of crashes            = 0
+Elapsed time:
+	min     = 0.038
+	max     = 0.038 (0-out.txt)
+	mean    = 0.04
+	std.dev = 0
+	median  = 0.04
+Examples which run longer than 1 second:
+	<none>

@@ -1,0 +1,277 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = seqA-in.txt
++++ output      = seqA-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification SEQ from seqA-in.txt successfully parsed
++++ Listing
+         1: specification SEQ
+         2: sorts
+         3:      nat seq
+         4: constructors
+         5:      0: -> nat
+         6:      Empty: -> seq
+         7:      Seq: nat seq -> seq
+         8:      s: nat -> nat
+         9: defined functions
+        10:      conc: seq seq -> seq
+        11:      reverse: seq -> seq
+        12: precedence
+        13:      reverse > conc > Seq > Empty > s > 0
+        14: axioms
+        15:      conc(Empty, ys) = ys;
+        16:      reverse(Empty) = Empty;
+        17:      conc(Seq(x, xs), ys) = Seq(x, conc(xs, ys));
+        18:      reverse(Seq(x, xs)) = conc(reverse(xs), Seq(x, Empty));
+        19: conjectures
+        20:      conc(xs, Empty) = xs;
+        21:      conc(conc(xs, ys), zs) = conc(xs, conc(ys, zs));
+        22:      reverse(conc(xs, ys)) = conc(reverse(ys), reverse(xs));
+        23:      reverse(reverse(xs)) = xs;
+        24: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	conc(Empty, ys) -> ys
+	reverse(Empty) -> Empty
+	conc(Seq(x, xs), ys) -> Seq(x, conc(xs, ys))
+	reverse(Seq(x, xs)) -> conc(reverse(xs), Seq(x, Empty))
++++ inductive positions:
+... for conc: 0
+... for reverse: 0
++++ maximal depths of left-hand sides:
+... for reverse: 2
+... for conc: 2
++++ general maximal depth = 2
++++ sort dependence: nat < seq
++++ test sets for defined functions and sorts:
+... for reverse
+... ... seq
+		Empty
+		Seq(x, y)
+... for conc
+... ... seq
+		Empty
+		Seq(x, y)
+
++++ conjecture(s)
+	conc(xs, Empty) = xs
+	conc(conc(xs, ys), zs) = conc(xs, conc(ys, zs))
+	reverse(conc(xs, ys)) = conc(reverse(ys), reverse(xs))
+	reverse(reverse(xs)) = xs
+
++++ inference system initiated
++++ treating clause
+	conc(xs, Empty) = xs
++++ inductive narrowing on conjecture
+	conc(xs, Empty) = xs
+... induction variables of
+	conc(xs, Empty) = xs
+... are:
+	xs:seq
++++ perform INDUCTIVE NARROWING on conjecture 
+	conc(xs, Empty) = xs
+... with variable xs
++++ creating new conjecture
+	conc(Empty, Empty) = Empty
++++ creating new conjecture
+	conc(Seq(xts, yts), Empty) = Seq(xts, yts)
+--- clause
+	conc(Empty, Empty) = Empty
+... reduced to tautology
+	Empty = Empty
+--- clause
+	conc(Seq(xts, yts), Empty) = Seq(xts, yts)
+... reduced in 1 step to
+	Seq(xts, conc(yts, Empty)) = Seq(xts, yts)
+... decomposed into new clause(s)
+	conc(yts, Empty) = yts
++++ inductive narrowing succeeded
+--- clause
+	conc(xs, Empty) = xs
+... oriented to rule
+	conc(xs, Empty) -> xs
++++ added new clause(s)
+	conc(yts, Empty) = yts
+... to conjectures
+--- clause
+	conc(yts, Empty) = yts
+... reduced to tautology
+	yts = yts
+
++++ Status of the Inference System
+--- Conjectures:
+	conc(conc(xs, ys), zs) = conc(xs, conc(ys, zs))
+	reverse(conc(xs, ys)) = conc(reverse(ys), reverse(xs))
+	reverse(reverse(xs)) = xs
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	conc(xs, Empty) -> xs
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	conc(conc(xs, ys), zs) = conc(xs, conc(ys, zs))
++++ inductive narrowing on conjecture
+	conc(conc(xs, ys), zs) = conc(xs, conc(ys, zs))
+... induction variables of
+	conc(conc(xs, ys), zs) = conc(xs, conc(ys, zs))
+... are:
+	xs:seq
+	ys:seq
++++ perform INDUCTIVE NARROWING on conjecture 
+	conc(conc(xs, ys), zs) = conc(xs, conc(ys, zs))
+... with variable xs
++++ creating new conjecture
+	conc(conc(Empty, ys), zs) = conc(Empty, conc(ys, zs))
++++ creating new conjecture
+	conc(conc(Seq(xts, yts), ys), zs) = conc(Seq(xts, yts), conc(ys, zs))
+--- clause
+	conc(conc(Empty, ys), zs) = conc(Empty, conc(ys, zs))
+... reduced to tautology
+	conc(ys, zs) = conc(ys, zs)
+--- clause
+	conc(conc(Seq(xts, yts), ys), zs) = conc(Seq(xts, yts), conc(ys, zs))
+... reduced in 3 steps to
+	Seq(xts, conc(conc(yts, ys), zs)) = Seq(xts, conc(yts, conc(ys, zs)))
+... decomposed into new clause(s)
+	conc(conc(yts, ys), zs) = conc(yts, conc(ys, zs))
++++ inductive narrowing succeeded
+--- clause
+	conc(conc(xs, ys), zs) = conc(xs, conc(ys, zs))
+... oriented to rule
+	conc(conc(xs, ys), zs) -> conc(xs, conc(ys, zs))
++++ added new clause(s)
+	conc(conc(yts, ys), zs) = conc(yts, conc(ys, zs))
+... to conjectures
+--- clause
+	conc(conc(yts, ys), zs) = conc(yts, conc(ys, zs))
+... reduced to tautology
+	conc(yts, conc(ys, zs)) = conc(yts, conc(ys, zs))
+
++++ Status of the Inference System
+--- Conjectures:
+	reverse(conc(xs, ys)) = conc(reverse(ys), reverse(xs))
+	reverse(reverse(xs)) = xs
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	conc(xs, Empty) -> xs
+	conc(conc(xs, ys), zs) -> conc(xs, conc(ys, zs))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	reverse(conc(xs, ys)) = conc(reverse(ys), reverse(xs))
++++ inductive narrowing on conjecture
+	reverse(conc(xs, ys)) = conc(reverse(ys), reverse(xs))
+... induction variables of
+	reverse(conc(xs, ys)) = conc(reverse(ys), reverse(xs))
+... are:
+	xs:seq
+	ys:seq
++++ perform INDUCTIVE NARROWING on conjecture 
+	reverse(conc(xs, ys)) = conc(reverse(ys), reverse(xs))
+... with variable xs
++++ creating new conjecture
+	reverse(conc(Empty, ys)) = conc(reverse(ys), reverse(Empty))
++++ creating new conjecture
+	reverse(conc(Seq(xts, yts), ys)) = conc(reverse(ys), reverse(Seq(xts, yts)))
+--- clause
+	reverse(conc(Empty, ys)) = conc(reverse(ys), reverse(Empty))
+... reduced to tautology
+	reverse(ys) = reverse(ys)
+--- clause
+	reverse(conc(Seq(xts, yts), ys)) = conc(reverse(ys), reverse(Seq(xts, yts)))
+... reduced in 3 steps to
+	conc(reverse(conc(yts, ys)), Seq(xts, Empty)) = conc(reverse(ys), conc(reverse(yts), Seq(xts, Empty)))
++++ inductive narrowing succeeded
+--- clause
+	reverse(conc(xs, ys)) = conc(reverse(ys), reverse(xs))
+... oriented to rule
+	reverse(conc(xs, ys)) -> conc(reverse(ys), reverse(xs))
++++ added new clause(s)
+	conc(reverse(conc(yts, ys)), Seq(xts, Empty)) = conc(reverse(ys), conc(reverse(yts), Seq(xts, Empty)))
+... to conjectures
+--- clause
+	conc(reverse(conc(yts, ys)), Seq(xts, Empty)) = conc(reverse(ys), conc(reverse(yts), Seq(xts, Empty)))
+... reduced to tautology
+	conc(reverse(ys), conc(reverse(yts), Seq(xts, Empty))) = conc(reverse(ys), conc(reverse(yts), Seq(xts, Empty)))
+
++++ Status of the Inference System
+--- Conjectures:
+	reverse(reverse(xs)) = xs
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	conc(xs, Empty) -> xs
+	conc(conc(xs, ys), zs) -> conc(xs, conc(ys, zs))
+	reverse(conc(xs, ys)) -> conc(reverse(ys), reverse(xs))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	reverse(reverse(xs)) = xs
++++ inductive narrowing on conjecture
+	reverse(reverse(xs)) = xs
+... induction variables of
+	reverse(reverse(xs)) = xs
+... are:
+	xs:seq
++++ perform INDUCTIVE NARROWING on conjecture 
+	reverse(reverse(xs)) = xs
+... with variable xs
++++ creating new conjecture
+	reverse(reverse(Empty)) = Empty
++++ creating new conjecture
+	reverse(reverse(Seq(xts, yts))) = Seq(xts, yts)
+--- clause
+	reverse(reverse(Empty)) = Empty
+... reduced to tautology
+	Empty = Empty
+--- clause
+	reverse(reverse(Seq(xts, yts))) = Seq(xts, yts)
+... reduced in 2 steps to
+	conc(reverse(Seq(xts, Empty)), reverse(reverse(yts))) = Seq(xts, yts)
++++ inductive narrowing succeeded
+--- clause
+	reverse(reverse(xs)) = xs
+... oriented to rule
+	reverse(reverse(xs)) -> xs
++++ added new clause(s)
+	conc(reverse(Seq(xts, Empty)), reverse(reverse(yts))) = Seq(xts, yts)
+... to conjectures
+--- clause
+	conc(reverse(Seq(xts, Empty)), reverse(reverse(yts))) = Seq(xts, yts)
+... reduced to tautology
+	Seq(xts, yts) = Seq(xts, yts)
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	conc(xs, Empty) -> xs
+	reverse(reverse(xs)) -> xs
+	conc(conc(xs, ys), zs) -> conc(xs, conc(ys, zs))
+	reverse(conc(xs, ys)) -> conc(reverse(ys), reverse(xs))
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 4
+... Number of induction steps      = 4
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.001

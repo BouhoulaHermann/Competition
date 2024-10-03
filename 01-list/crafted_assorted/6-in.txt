@@ -1,0 +1,13 @@
+specification ListCountReverse
+
+include <reverse>
+	<count> <eqid>
+
+precedence
+	count > == > rev > app > cons > nil > s > 0 > true = false
+
+conjectures
+
+	count(y, x) = count(y, rev(x));
+
+end

@@ -1,0 +1,309 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 0b-in.txt
++++ output      = 0b-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LISTsymb from listsymb successfully parsed
++++ specification APPENDsymb from appendsymb successfully parsed
++++ specification ListFunctions from 0b-in.txt successfully parsed
++++ Listing
+         1: specification ListFunctions
+         2: sorts
+         3:      list nat
+         4: constructors
+         5:      ..: nat list -> list
+         6:      0: -> nat
+         7:      :: nat list -> list
+         8:      nil: -> list
+         9:      s: nat -> nat
+        10: defined functions
+        11:      @@: list list -> list
+        12: precedence
+        13:      @@ > .. > nil
+        14: axioms
+        15:      nil @@ y = y;
+        16:      (x .. y) @@ z = x .. (y @@ z);
+        17: conjectures
+        18:      x @@ (y @@ (x @@ x)) = (x @@ y) @@ (x @@ x);
+        19: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	nil @@ y -> y
+	(x .. y) @@ z -> x .. (y @@ z)
++++ inductive positions:
+... for @@: 0
++++ maximal depths of left-hand sides:
+... for @@: 2
++++ general maximal depth = 2
++++ sort dependence: nat < list
++++ test sets for defined functions and sorts:
+... for @@
+... ... list
+		nil
+		x : y
+		x .. y
+
++++ conjecture(s)
+	x @@ (y @@ (x @@ x)) = (x @@ y) @@ (x @@ x)
+
++++ inference system initiated
++++ treating clause
+	x @@ (y @@ (x @@ x)) = (x @@ y) @@ (x @@ x)
++++ inductive narrowing on conjecture
+	x @@ (y @@ (x @@ x)) = (x @@ y) @@ (x @@ x)
+... induction variables of
+	x @@ (y @@ (x @@ x)) = (x @@ y) @@ (x @@ x)
+... are:
+	x:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	x @@ (y @@ (x @@ x)) = (x @@ y) @@ (x @@ x)
+... with variable x
++++ creating new conjecture
+	nil @@ (y @@ (nil @@ nil)) = (nil @@ y) @@ (nil @@ nil)
++++ creating new conjecture
+	(xts : yts) @@ (y @@ ((xts : yts) @@ (xts : yts))) = ((xts : yts) @@ y) @@ ((xts : yts) @@ (xts : yts))
++++ creating new conjecture
+	(xts .. yts) @@ (y @@ ((xts .. yts) @@ (xts .. yts))) = ((xts .. yts) @@ y) @@ ((xts .. yts) @@ (xts .. yts))
+--- clause
+	nil @@ (y @@ (nil @@ nil)) = (nil @@ y) @@ (nil @@ nil)
+... reduced to tautology
+	y @@ nil = y @@ nil
+--- clause
+	(xts .. yts) @@ (y @@ ((xts .. yts) @@ (xts .. yts))) = ((xts .. yts) @@ y) @@ ((xts .. yts) @@ (xts .. yts))
+... reduced in 5 steps to
+	xts .. (yts @@ (y @@ (xts .. (yts @@ (xts .. yts))))) = xts .. ((yts @@ y) @@ (xts .. (yts @@ (xts .. yts))))
+... decomposed into new clause(s)
+	yts @@ (y @@ (xts .. (yts @@ (xts .. yts)))) = (yts @@ y) @@ (xts .. (yts @@ (xts .. yts)))
++++ inductive narrowing succeeded
+--- clause
+	x @@ (y @@ (x @@ x)) = (x @@ y) @@ (x @@ x)
+... oriented to rule
+	x @@ (y @@ (x @@ x)) -> (x @@ y) @@ (x @@ x)
++++ added new clause(s)
+	(xts : yts) @@ (y @@ ((xts : yts) @@ (xts : yts))) = ((xts : yts) @@ y) @@ ((xts : yts) @@ (xts : yts))
+	yts @@ (y @@ (xts .. (yts @@ (xts .. yts)))) = (yts @@ y) @@ (xts .. (yts @@ (xts .. yts)))
+... to conjectures
+--- clause
+	(xts : yts) @@ (y @@ ((xts : yts) @@ (xts : yts))) = ((xts : yts) @@ y) @@ ((xts : yts) @@ (xts : yts))
+... reduced to tautology
+	((xts : yts) @@ y) @@ ((xts : yts) @@ (xts : yts)) = ((xts : yts) @@ y) @@ ((xts : yts) @@ (xts : yts))
+
++++ Status of the Inference System
+--- Conjectures:
+	yts @@ (y @@ (xts .. (yts @@ (xts .. yts)))) = (yts @@ y) @@ (xts .. (yts @@ (xts .. yts)))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	x @@ (y @@ (x @@ x)) -> (x @@ y) @@ (x @@ x)
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	yts @@ (y @@ (xts .. (yts @@ (xts .. yts)))) = (yts @@ y) @@ (xts .. (yts @@ (xts .. yts)))
++++ inductive narrowing on conjecture
+	yts @@ (y @@ (xts .. (yts @@ (xts .. yts)))) = (yts @@ y) @@ (xts .. (yts @@ (xts .. yts)))
+... induction variables of
+	yts @@ (y @@ (xts .. (yts @@ (xts .. yts)))) = (yts @@ y) @@ (xts .. (yts @@ (xts .. yts)))
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	yts @@ (y @@ (xts .. (yts @@ (xts .. yts)))) = (yts @@ y) @@ (xts .. (yts @@ (xts .. yts)))
+... with variable yts
++++ creating new conjecture
+	nil @@ (y @@ (xts .. (nil @@ (xts .. nil)))) = (nil @@ y) @@ (xts .. (nil @@ (xts .. nil)))
++++ creating new conjecture
+	(xts2 : yts) @@ (y @@ (xts1 .. ((xts2 : yts) @@ (xts1 .. xts2 : yts)))) = ((xts2 : yts) @@ y) @@ (xts1 .. ((xts2 : yts) @@ (xts1 .. xts2 : yts)))
++++ creating new conjecture
+	(xts2 .. yts) @@ (y @@ (xts1 .. ((xts2 .. yts) @@ (xts1 .. xts2 .. yts)))) = ((xts2 .. yts) @@ y) @@ (xts1 .. ((xts2 .. yts) @@ (xts1 .. xts2 .. yts)))
+--- clause
+	nil @@ (y @@ (xts .. (nil @@ (xts .. nil)))) = (nil @@ y) @@ (xts .. (nil @@ (xts .. nil)))
+... reduced to tautology
+	y @@ (xts .. (xts .. nil)) = y @@ (xts .. (xts .. nil))
+--- clause
+	(xts2 .. yts) @@ (y @@ (xts1 .. ((xts2 .. yts) @@ (xts1 .. xts2 .. yts)))) = ((xts2 .. yts) @@ y) @@ (xts1 .. ((xts2 .. yts) @@ (xts1 .. xts2 .. yts)))
+... reduced in 5 steps to
+	xts2 .. (yts @@ (y @@ (xts1 .. (xts2 .. (yts @@ (xts1 .. xts2 .. yts)))))) = xts2 .. ((yts @@ y) @@ (xts1 .. (xts2 .. (yts @@ (xts1 .. xts2 .. yts)))))
+... decomposed into new clause(s)
+	yts @@ (y @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))) = (yts @@ y) @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))
++++ inductive narrowing succeeded
+--- clause
+	yts @@ (y @@ (xts .. (yts @@ (xts .. yts)))) = (yts @@ y) @@ (xts .. (yts @@ (xts .. yts)))
+... oriented to rule
+	yts @@ (y @@ (xts .. (yts @@ (xts .. yts)))) -> (yts @@ y) @@ (xts .. (yts @@ (xts .. yts)))
++++ added new clause(s)
+	(xts2 : yts) @@ (y @@ (xts1 .. ((xts2 : yts) @@ (xts1 .. xts2 : yts)))) = ((xts2 : yts) @@ y) @@ (xts1 .. ((xts2 : yts) @@ (xts1 .. xts2 : yts)))
+	yts @@ (y @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))) = (yts @@ y) @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))
+... to conjectures
+--- clause
+	(xts2 : yts) @@ (y @@ (xts1 .. ((xts2 : yts) @@ (xts1 .. xts2 : yts)))) = ((xts2 : yts) @@ y) @@ (xts1 .. ((xts2 : yts) @@ (xts1 .. xts2 : yts)))
+... reduced to tautology
+	((xts2 : yts) @@ y) @@ (xts1 .. ((xts2 : yts) @@ (xts1 .. xts2 : yts))) = ((xts2 : yts) @@ y) @@ (xts1 .. ((xts2 : yts) @@ (xts1 .. xts2 : yts)))
+
++++ Status of the Inference System
+--- Conjectures:
+	yts @@ (y @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))) = (yts @@ y) @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	x @@ (y @@ (x @@ x)) -> (x @@ y) @@ (x @@ x)
+	yts @@ (y @@ (xts .. (yts @@ (xts .. yts)))) -> (yts @@ y) @@ (xts .. (yts @@ (xts .. yts)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	yts @@ (y @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))) = (yts @@ y) @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))
++++ inductive narrowing on conjecture
+	yts @@ (y @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))) = (yts @@ y) @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))
+... induction variables of
+	yts @@ (y @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))) = (yts @@ y) @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	yts @@ (y @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))) = (yts @@ y) @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))
+... with variable yts
++++ creating new conjecture
+	nil @@ (y @@ (xts2 .. (xts1 .. (nil @@ (xts2 .. xts1 .. nil))))) = (nil @@ y) @@ (xts2 .. (xts1 .. (nil @@ (xts2 .. xts1 .. nil))))
++++ creating new conjecture
+	(xts3 : yts) @@ (y @@ (xts2 .. (xts1 .. ((xts3 : yts) @@ (xts2 .. xts1 .. xts3 : yts))))) = ((xts3 : yts) @@ y) @@ (xts2 .. (xts1 .. ((xts3 : yts) @@ (xts2 .. xts1 .. xts3 : yts))))
++++ creating new conjecture
+	(xts3 .. yts) @@ (y @@ (xts2 .. (xts1 .. ((xts3 .. yts) @@ (xts2 .. xts1 .. xts3 .. yts))))) = ((xts3 .. yts) @@ y) @@ (xts2 .. (xts1 .. ((xts3 .. yts) @@ (xts2 .. xts1 .. xts3 .. yts))))
+--- clause
+	nil @@ (y @@ (xts2 .. (xts1 .. (nil @@ (xts2 .. xts1 .. nil))))) = (nil @@ y) @@ (xts2 .. (xts1 .. (nil @@ (xts2 .. xts1 .. nil))))
+... reduced to tautology
+	y @@ (xts2 .. (xts1 .. (xts2 .. xts1 .. nil))) = y @@ (xts2 .. (xts1 .. (xts2 .. xts1 .. nil)))
+--- clause
+	(xts3 .. yts) @@ (y @@ (xts2 .. (xts1 .. ((xts3 .. yts) @@ (xts2 .. xts1 .. xts3 .. yts))))) = ((xts3 .. yts) @@ y) @@ (xts2 .. (xts1 .. ((xts3 .. yts) @@ (xts2 .. xts1 .. xts3 .. yts))))
+... reduced in 5 steps to
+	xts3 .. (yts @@ (y @@ (xts2 .. (xts1 .. (xts3 .. (yts @@ (xts2 .. xts1 .. xts3 .. yts))))))) = xts3 .. ((yts @@ y) @@ (xts2 .. (xts1 .. (xts3 .. (yts @@ (xts2 .. xts1 .. xts3 .. yts))))))
+... decomposed into new clause(s)
+	yts @@ (y @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))) = (yts @@ y) @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))
++++ inductive narrowing succeeded
+--- clause
+	yts @@ (y @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))) = (yts @@ y) @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))
+... oriented to rule
+	yts @@ (y @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))) -> (yts @@ y) @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))
++++ added new clause(s)
+	(xts3 : yts) @@ (y @@ (xts2 .. (xts1 .. ((xts3 : yts) @@ (xts2 .. xts1 .. xts3 : yts))))) = ((xts3 : yts) @@ y) @@ (xts2 .. (xts1 .. ((xts3 : yts) @@ (xts2 .. xts1 .. xts3 : yts))))
+	yts @@ (y @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))) = (yts @@ y) @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))
+... to conjectures
+--- clause
+	(xts3 : yts) @@ (y @@ (xts2 .. (xts1 .. ((xts3 : yts) @@ (xts2 .. xts1 .. xts3 : yts))))) = ((xts3 : yts) @@ y) @@ (xts2 .. (xts1 .. ((xts3 : yts) @@ (xts2 .. xts1 .. xts3 : yts))))
+... reduced to tautology
+	((xts3 : yts) @@ y) @@ (xts2 .. (xts1 .. ((xts3 : yts) @@ (xts2 .. xts1 .. xts3 : yts)))) = ((xts3 : yts) @@ y) @@ (xts2 .. (xts1 .. ((xts3 : yts) @@ (xts2 .. xts1 .. xts3 : yts))))
+
++++ Status of the Inference System
+--- Conjectures:
+	yts @@ (y @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))) = (yts @@ y) @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	x @@ (y @@ (x @@ x)) -> (x @@ y) @@ (x @@ x)
+	yts @@ (y @@ (xts .. (yts @@ (xts .. yts)))) -> (yts @@ y) @@ (xts .. (yts @@ (xts .. yts)))
+	yts @@ (y @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))) -> (yts @@ y) @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	yts @@ (y @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))) = (yts @@ y) @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))
++++ inductive narrowing on conjecture
+	yts @@ (y @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))) = (yts @@ y) @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))
+... induction variables of
+	yts @@ (y @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))) = (yts @@ y) @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	yts @@ (y @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))) = (yts @@ y) @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))
+... with variable yts
++++ creating new conjecture
+	nil @@ (y @@ (xts3 .. (xts2 .. (xts1 .. (nil @@ (xts3 .. xts2 .. xts1 .. nil)))))) = (nil @@ y) @@ (xts3 .. (xts2 .. (xts1 .. (nil @@ (xts3 .. xts2 .. xts1 .. nil)))))
++++ creating new conjecture
+	(xts4 : yts) @@ (y @@ (xts3 .. (xts2 .. (xts1 .. ((xts4 : yts) @@ (xts3 .. xts2 .. xts1 .. xts4 : yts)))))) = ((xts4 : yts) @@ y) @@ (xts3 .. (xts2 .. (xts1 .. ((xts4 : yts) @@ (xts3 .. xts2 .. xts1 .. xts4 : yts)))))
++++ creating new conjecture
+	(xts4 .. yts) @@ (y @@ (xts3 .. (xts2 .. (xts1 .. ((xts4 .. yts) @@ (xts3 .. xts2 .. xts1 .. xts4 .. yts)))))) = ((xts4 .. yts) @@ y) @@ (xts3 .. (xts2 .. (xts1 .. ((xts4 .. yts) @@ (xts3 .. xts2 .. xts1 .. xts4 .. yts)))))
+--- clause
+	nil @@ (y @@ (xts3 .. (xts2 .. (xts1 .. (nil @@ (xts3 .. xts2 .. xts1 .. nil)))))) = (nil @@ y) @@ (xts3 .. (xts2 .. (xts1 .. (nil @@ (xts3 .. xts2 .. xts1 .. nil)))))
+... reduced to tautology
+	y @@ (xts3 .. (xts2 .. (xts1 .. (xts3 .. xts2 .. xts1 .. nil)))) = y @@ (xts3 .. (xts2 .. (xts1 .. (xts3 .. xts2 .. xts1 .. nil))))
+--- clause
+	(xts4 .. yts) @@ (y @@ (xts3 .. (xts2 .. (xts1 .. ((xts4 .. yts) @@ (xts3 .. xts2 .. xts1 .. xts4 .. yts)))))) = ((xts4 .. yts) @@ y) @@ (xts3 .. (xts2 .. (xts1 .. ((xts4 .. yts) @@ (xts3 .. xts2 .. xts1 .. xts4 .. yts)))))
+... reduced in 5 steps to
+	xts4 .. (yts @@ (y @@ (xts3 .. (xts2 .. (xts1 .. (xts4 .. (yts @@ (xts3 .. xts2 .. xts1 .. xts4 .. yts)))))))) = xts4 .. ((yts @@ y) @@ (xts3 .. (xts2 .. (xts1 .. (xts4 .. (yts @@ (xts3 .. xts2 .. xts1 .. xts4 .. yts)))))))
+... decomposed into new clause(s)
+	yts @@ (y @@ (xts4 .. (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts4 .. xts3 .. xts2 .. xts1 .. yts))))))) = (yts @@ y) @@ (xts4 .. (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts4 .. xts3 .. xts2 .. xts1 .. yts))))))
++++ inductive narrowing succeeded
+--- clause
+	yts @@ (y @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))) = (yts @@ y) @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))
+... oriented to rule
+	yts @@ (y @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))) -> (yts @@ y) @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))
++++ added new clause(s)
+	(xts4 : yts) @@ (y @@ (xts3 .. (xts2 .. (xts1 .. ((xts4 : yts) @@ (xts3 .. xts2 .. xts1 .. xts4 : yts)))))) = ((xts4 : yts) @@ y) @@ (xts3 .. (xts2 .. (xts1 .. ((xts4 : yts) @@ (xts3 .. xts2 .. xts1 .. xts4 : yts)))))
+	yts @@ (y @@ (xts4 .. (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts4 .. xts3 .. xts2 .. xts1 .. yts))))))) = (yts @@ y) @@ (xts4 .. (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts4 .. xts3 .. xts2 .. xts1 .. yts))))))
+... to conjectures
+--- clause
+	(xts4 : yts) @@ (y @@ (xts3 .. (xts2 .. (xts1 .. ((xts4 : yts) @@ (xts3 .. xts2 .. xts1 .. xts4 : yts)))))) = ((xts4 : yts) @@ y) @@ (xts3 .. (xts2 .. (xts1 .. ((xts4 : yts) @@ (xts3 .. xts2 .. xts1 .. xts4 : yts)))))
+... reduced to tautology
+	((xts4 : yts) @@ y) @@ (xts3 .. (xts2 .. (xts1 .. ((xts4 : yts) @@ (xts3 .. xts2 .. xts1 .. xts4 : yts))))) = ((xts4 : yts) @@ y) @@ (xts3 .. (xts2 .. (xts1 .. ((xts4 : yts) @@ (xts3 .. xts2 .. xts1 .. xts4 : yts)))))
++++ active wrap
+	yts @@ (y @@ (. .. .)) = (yts @@ y) @@ (. .. .)
+... with sequence
+	yts @@ (y @@ (xts .. (yts @@ (xts .. yts)))) = (yts @@ y) @@ (xts .. (yts @@ (xts .. yts)))
+	yts @@ (y @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))) = (yts @@ y) @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))
+	yts @@ (y @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))) = (yts @@ y) @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))
++++ primal grammar found for head
+	{.., @@}
+... and wrap
+	yts @@ (y @@ (. .. .)) = (yts @@ y) @@ (. .. .)
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> xts$n0 .. ^f0($n0; yts, xts@)
+	^f1(0, $n0; yts, xts@) -> yts @@ (xts0 .. ^f0($n0; yts, xts@))
+	^f1($n1 + 1, $n0; yts, xts@) -> xts$n1 .. ^f1($n1, $n0 + 1; yts, xts@)
++++ }
++++ Lemma(s)           = 
+	yts @@ (y @@ (xts$n .. ^f1($n, 0; yts, xts@))) = (yts @@ y) @@ (xts$n .. ^f1($n, 0; yts, xts))
+--- clause
+	yts @@ (y @@ (xts4 .. (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts4 .. xts3 .. xts2 .. xts1 .. yts))))))) = (yts @@ y) @@ (xts4 .. (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts4 .. xts3 .. xts2 .. xts1 .. yts))))))
+... subsumed by lemma
+	yts @@ (y @@ (xts$n .. ^f1($n, 0; yts, xts@))) = (yts @@ y) @@ (xts$n .. ^f1($n, 0; yts, xts))
+... with substitution
+	$n <- 3
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	x @@ (y @@ (x @@ x)) -> (x @@ y) @@ (x @@ x)
+	yts @@ (y @@ (xts .. (yts @@ (xts .. yts)))) -> (yts @@ y) @@ (xts .. (yts @@ (xts .. yts)))
+	yts @@ (y @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))) -> (yts @@ y) @@ (xts2 .. (xts1 .. (yts @@ (xts2 .. xts1 .. yts))))
+	yts @@ (y @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))) -> (yts @@ y) @@ (xts3 .. (xts2 .. (xts1 .. (yts @@ (xts3 .. xts2 .. xts1 .. yts)))))
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> xts$n0 .. ^f0($n0; yts, xts@)
+	^f1(0, $n0; yts, xts@) -> yts @@ (xts0 .. ^f0($n0; yts, xts@))
+	^f1($n1 + 1, $n0; yts, xts@) -> xts$n1 .. ^f1($n1, $n0 + 1; yts, xts@)
++++ }
++++ Lemma(s)           = 
+	yts @@ (y @@ (xts$n .. ^f1($n, 0; yts, xts@))) = (yts @@ y) @@ (xts$n .. ^f1($n, 0; yts, xts))
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 4
+... Number of induction steps      = 4
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Number of PG defined symbols   = 2
+... Number of PG lemmas            = 1
+... Elapsed time (seconds)         = 0.011

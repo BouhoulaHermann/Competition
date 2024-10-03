@@ -1,0 +1,274 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 2-in.txt
++++ output      = 2-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LIST from list successfully parsed
++++ specification LENGTH from length successfully parsed
++++ specification BOOL from bool successfully parsed
++++ specification EQ from eq successfully parsed
++++ specification COUNT from count successfully parsed
++++ specification GT from gt successfully parsed
++++ specification GTid from gtid successfully parsed
++++ specification ListLenGetCount from 2-in.txt successfully parsed
++++ Listing
+         1: specification ListLenGetCount
+         2: sorts
+         3:      bool list nat
+         4: constructors
+         5:      0: -> nat
+         6:      cons: nat list -> list
+         7:      false: -> bool
+         8:      nil: -> list
+         9:      outOfBounds: -> nat
+        10:      s: nat -> nat
+        11:      true: -> bool
+        12: defined functions
+        13:      ==: nat nat -> bool
+        14:      >: nat nat -> bool
+        15:      count: nat list -> nat
+        16:      get: list nat -> nat
+        17:      len: list -> nat
+        18: precedence
+        19:      count > get = len > == = > > cons > nil > outOfBounds > s > 0 > false = true
+        20: axioms
+        21:      len(nil) = 0;
+        22:      0 == 0 = true;
+        23:      x > x = false;
+        24:      s(x) > 0 = true;
+        25:      0 > s(x) = false;
+        26:      0 == s(x) = false;
+        27:      count(x, nil) = 0;
+        28:      s(x) == 0 = false;
+        29:      s(x) > s(y) = x > y;
+        30:      s(x) == s(y) = x == y;
+        31:      get(cons(x, y), 0) = x;
+        32:      get(nil, x) = outOfBounds;
+        33:      len(cons(x, y)) = s(len(y));
+        34:      get(cons(x, y), s(z)) = get(y, z);
+        35:      x == y = false => count(x, cons(y, ys)) = count(x, ys);
+        36:      x == y = true => count(x, cons(y, ys)) = s(count(x, ys));
+        37: conjectures
+        38:      (len(x) > 0 = true) & (get(x, y) = z) => count(z, v) > 0 = true;
+        39: end
++++ finitary sorts: bool
++++ Rewrite System 
+	len(nil) -> 0
+	0 == 0 -> true
+	x > x -> false
+	s(x) > 0 -> true
+	0 > s(x) -> false
+	0 == s(x) -> false
+	count(x, nil) -> 0
+	s(x) == 0 -> false
+	s(x) > s(y) -> x > y
+	s(x) == s(y) -> x == y
+	get(cons(x, y), 0) -> x
+	get(nil, x) -> outOfBounds
+	len(cons(x, y)) -> s(len(y))
+	get(cons(x, y), s(z)) -> get(y, z)
+	x == y = false => count(x, cons(y, ys)) -> count(x, ys)
+	x == y = true => count(x, cons(y, ys)) -> s(count(x, ys))
++++ inductive positions:
+... for ==: 0 1
+... for >: 0 1
+... for count: 1
+... for get: 0 1
+... for len: 0
++++ maximal depths of left-hand sides:
+... for get: 2
+... for count: 2
+... for >: 2
+... for ==: 2
+... for len: 2
++++ general maximal depth = 2
++++ sort dependence: nat < list
++++ test sets for defined functions and sorts:
+... for get
+... ... nat
+		0
+		s(x)
+		outOfBounds
+... ... list
+		nil
+		cons(x, y)
+... for count
+... ... list
+		nil
+		cons(x, y)
+... for >
+... ... nat
+		0
+		s(x)
+		outOfBounds
+... for len
+... ... list
+		nil
+		cons(x, y)
+... for ==
+... ... nat
+		0
+		s(x)
+		outOfBounds
+
++++ conjecture(s)
+	(len(x) > 0 = true) & (get(x, y) = z) => count(z, v) > 0 = true
+
++++ inference system initiated
++++ treating clause
+	(len(x) > 0 = true) & (get(x, y) = z) => count(z, v) > 0 = true
++++ inductive narrowing on conjecture
+	(len(x) > 0 = true) & (get(x, y) = z) => count(z, v) > 0 = true
+... induction variables of
+	(len(x) > 0 = true) & (get(x, y) = z) => count(z, v) > 0 = true
+... are:
+	v:list
+	x:list
+	y:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	(len(x) > 0 = true) & (get(x, y) = z) => count(z, v) > 0 = true
+... with variable v
++++ creating new conjecture
+	(len(x) > 0 = true) & (get(x, y) = z) => count(z, nil) > 0 = true
++++ creating new conjecture
+	(len(x) > 0 = true) & (get(x, y) = z) => count(z, cons(xts, yts)) > 0 = true
+--- clause
+	(len(x) > 0 = true) & (get(x, y) = z) => count(z, nil) > 0 = true
+... reduced in 2 steps to
+	(len(x) > 0 = true) & (get(x, y) = z) => false = true
++++ inductive narrowing succeeded
+--- clause
+	(len(x) > 0 = true) & (get(x, y) = z) => count(z, v) > 0 = true
+... oriented to rule
+	get(x, y) = z & len(x) > 0 = true => count(z, v) > 0 -> true
++++ added new clause(s)
+	(len(x) > 0 = true) & (get(x, y) = z) => false = true
+	(len(x) > 0 = true) & (get(x, y) = z) => count(z, cons(xts, yts)) > 0 = true
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(len(x) > 0 = true) & (get(x, y) = z) => false = true
+	(len(x) > 0 = true) & (get(x, y) = z) => count(z, cons(xts, yts)) > 0 = true
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	get(x, y) = z & len(x) > 0 = true => count(z, v) > 0 -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(len(x) > 0 = true) & (get(x, y) = z) => false = true
++++ inductive narrowing on conjecture
+	(len(x) > 0 = true) & (get(x, y) = z) => false = true
+... induction variables of
+	(len(x) > 0 = true) & (get(x, y) = z) => false = true
+... are:
+	x:list
+	y:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	(len(x) > 0 = true) & (get(x, y) = z) => false = true
+... with variable x
++++ creating new conjecture
+	(len(nil) > 0 = true) & (get(nil, y) = z) => false = true
++++ creating new conjecture
+	(len(cons(xts, yts)) > 0 = true) & (get(cons(xts, yts), y) = z) => false = true
+--- clause
+	(len(nil) > 0 = true) & (get(nil, y) = z) => false = true
+... reduced in 3 steps to
+	(false = true) & (outOfBounds = z) => false = true
+--- condition
+	false = true
+... is equal to consequent
+	false = true
+... in clause
+	(false = true) & (outOfBounds = z) => false = true
+... and is therefore discared (always true)
+--- clause
+	(len(cons(xts, yts)) > 0 = true) & (get(cons(xts, yts), y) = z) => false = true
+... reduced in 2 steps to
+	get(cons(xts, yts), y) = z => false = true
++++ inductive narrowing succeeded
+--- non-orientable clause
+	false = true
++++ moved
+	(len(x) > 0 = true) & (get(x, y) = z) => false = true
+... to non-orientable hypotheses
++++ added new clause(s)
+	get(cons(xts, yts), y) = z => false = true
+... to conjectures
+--- succeeded to apply non-orientable hypothese
+	(len(x) > 0 = true) & (get(x, y) = z) => false = true
+... to clause
+	(len(x) > 0 = true) & (get(x, y) = z) => count(z, cons(xts, yts)) > 0 = true
+... modified clause
+	false = true => count(z, cons(xts, yts)) > 0 = true
+--- clause
+	false = true => count(z, cons(xts, yts)) > 0 = true
+... contains a ground negative condition
+	false = true
+... and is therefore discarded (false => t is always true)
+
++++ Status of the Inference System
+--- Conjectures:
+	get(cons(xts, yts), y) = z => false = true
+--- Non-orientable hypotheses:
+	(len(x) > 0 = true) & (get(x, y) = z) => false = true
+--- Oriented hypotheses:
+	get(x, y) = z & len(x) > 0 = true => count(z, v) > 0 -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	get(cons(xts, yts), y) = z => false = true
++++ inductive narrowing on conjecture
+	get(cons(xts, yts), y) = z => false = true
+... induction variables of
+	get(cons(xts, yts), y) = z => false = true
+... are:
+	y:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	get(cons(xts, yts), y) = z => false = true
+... with variable y
++++ creating new conjecture
+	get(cons(xts, yts), 0) = z => false = true
++++ creating new conjecture
+	get(cons(xts2, yts), s(xts1)) = z => false = true
++++ creating new conjecture
+	get(cons(xts, yts), outOfBounds) = z => false = true
+--- clause
+	get(cons(xts, yts), 0) = z => false = true
+... reduced in 1 step to
+	xts = z => false = true
+--- clause
+	get(cons(xts2, yts), s(xts1)) = z => false = true
+... reduced in 1 step to
+	get(yts, xts) = z => false = true
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	(len(x) > 0 = true) & (get(x, y) = z) => false = true
+--- Oriented hypotheses:
+	get(x, y) = z & len(x) > 0 = true => count(z, v) > 0 -> true
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 3
+... Number of induction steps      = 3
+... Number of equational steps     = 1
+... Number of case rewriting steps = 1
+... Elapsed time (seconds)         = 0.004

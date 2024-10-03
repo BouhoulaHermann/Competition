@@ -1,0 +1,19 @@
+specification EVEN
+
+include <add> <bool>
+
+defined functions
+	even: nat -> bool
+
+precedence
+	even > + > s > 0 > true = false
+
+axioms
+	even(0) = true;
+	even(s(0)) = false;
+	even(s(s(x))) = even(x);
+
+conjectures
+	even(x + x) = true;
+
+end

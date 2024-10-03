@@ -1,0 +1,12 @@
+specification Crafted
+
+include <add>
+
+precedence 
+	+ > s > 0
+
+conjectures
+	x + y = y + x;
+
+end
+

@@ -1,0 +1,730 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 9-in.txt
++++ output      = 9-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification TREE from tree successfully parsed
++++ specification ADD from add successfully parsed
++++ specification SIZE from size successfully parsed
++++ specification ROTATEright from rotateright successfully parsed
++++ specification CraftedTrees from 9-in.txt successfully parsed
++++ Listing
+         1: specification CraftedTrees
+         2: sorts
+         3:      nat tree
+         4: constructors
+         5:      0: -> nat
+         6:      leaf: -> tree
+         7:      node: tree nat tree -> tree
+         8:      s: nat -> nat
+         9: defined functions
+        10:      +: nat nat -> nat
+        11:      rotR: tree -> tree
+        12:      size: tree -> nat
+        13: precedence
+        14:      size > rotR > + > node > leaf > s > 0
+        15: axioms
+        16:      x + 0 = x;
+        17:      size(leaf) = 0;
+        18:      rotR(leaf) = leaf;
+        19:      x + s(y) = s(x + y);
+        20:      rotR(node(leaf, y, xr)) = node(leaf, y, xr);
+        21:      size(node(xl, y, xr)) = s(size(xl) + size(xr));
+        22:      rotR(node(node(xP, x, xQ), y, xR)) = rotR(node(xP, x, node(xQ, y, xR)));
+        23: conjectures
+        24:      size(rotR(x)) = size(x);
+        25: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	x + 0 -> x
+	size(leaf) -> 0
+	rotR(leaf) -> leaf
+	x + s(y) -> s(x + y)
+	rotR(node(leaf, y, xr)) -> node(leaf, y, xr)
+	size(node(xl, y, xr)) -> s(size(xl) + size(xr))
+	rotR(node(node(xP, x, xQ), y, xR)) -> rotR(node(xP, x, node(xQ, y, xR)))
++++ inductive positions:
+... for +: 1
+... for rotR: 0 0.0
+... for size: 0
++++ maximal depths of left-hand sides:
+... for size: 2
+... for rotR: 3
+... for +: 2
++++ general maximal depth = 3
++++ sort dependence: nat < tree
++++ test sets for defined functions and sorts:
+... for size
+... ... tree
+		leaf
+		node(x, y, z)
+... for rotR
+... ... tree
+		leaf
+		node(leaf, 0, leaf)
+		node(leaf, s(x), leaf)
+		node(leaf, 0, node(x, y, z))
+		node(node(x, y, z), 0, leaf)
+		node(leaf, s(x), node(y, z, u))
+		node(node(x, y, z), s(u), leaf)
+		node(node(x, y, z), 0, node(u, v, w))
+		node(node(x, y, z), s(u), node(v, w, xy))
+... for +
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	size(rotR(x)) = size(x)
+
++++ inference system initiated
++++ treating clause
+	size(rotR(x)) = size(x)
++++ inductive narrowing on conjecture
+	size(rotR(x)) = size(x)
+... induction variables of
+	size(rotR(x)) = size(x)
+... are:
+	x:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	size(rotR(x)) = size(x)
+... with variable x
++++ creating new conjecture
+	size(rotR(leaf)) = size(leaf)
++++ creating new conjecture
+	size(rotR(node(leaf, 0, leaf))) = size(node(leaf, 0, leaf))
++++ creating new conjecture
+	size(rotR(node(leaf, s(xts), leaf))) = size(node(leaf, s(xts), leaf))
++++ creating new conjecture
+	size(rotR(node(leaf, 0, node(xts, yts, zts)))) = size(node(leaf, 0, node(xts, yts, zts)))
++++ creating new conjecture
+	size(rotR(node(node(xts, yts, zts), 0, leaf))) = size(node(node(xts, yts, zts), 0, leaf))
++++ creating new conjecture
+	size(rotR(node(leaf, s(xts), node(yts, zts, uts)))) = size(node(leaf, s(xts), node(yts, zts, uts)))
++++ creating new conjecture
+	size(rotR(node(node(xts, yts, zts), s(uts), leaf))) = size(node(node(xts, yts, zts), s(uts), leaf))
++++ creating new conjecture
+	size(rotR(node(node(xts, yts, zts), 0, node(uts, vts, wts)))) = size(node(node(xts, yts, zts), 0, node(uts, vts, wts)))
++++ creating new conjecture
+	size(rotR(node(node(xts, yts, zts), s(uts), node(vts, wts, xyts)))) = size(node(node(xts, yts, zts), s(uts), node(vts, wts, xyts)))
+--- clause
+	size(rotR(leaf)) = size(leaf)
+... reduced to tautology
+	0 = 0
+--- clause
+	size(rotR(node(leaf, 0, leaf))) = size(node(leaf, 0, leaf))
+... reduced to tautology
+	s(0) = s(0)
+--- clause
+	size(rotR(node(leaf, s(xts), leaf))) = size(node(leaf, s(xts), leaf))
+... reduced to tautology
+	s(0) = s(0)
+--- clause
+	size(rotR(node(leaf, 0, node(xts, yts, zts)))) = size(node(leaf, 0, node(xts, yts, zts)))
+... reduced to tautology
+	s(s(0 + (size(xts) + size(zts)))) = s(s(0 + (size(xts) + size(zts))))
+--- clause
+	size(rotR(node(node(xts, yts, zts), 0, leaf))) = size(node(node(xts, yts, zts), 0, leaf))
+... reduced in 5 steps to
+	size(rotR(node(xts, yts, node(zts, 0, leaf)))) = s(s(size(xts) + size(zts)))
+--- clause
+	size(rotR(node(leaf, s(xts), node(yts, zts, uts)))) = size(node(leaf, s(xts), node(yts, zts, uts)))
+... reduced to tautology
+	s(s(0 + (size(yts) + size(uts)))) = s(s(0 + (size(yts) + size(uts))))
+--- clause
+	size(rotR(node(node(xts, yts, zts), s(uts), leaf))) = size(node(node(xts, yts, zts), s(uts), leaf))
+... reduced in 5 steps to
+	size(rotR(node(xts, yts, node(zts, s(uts), leaf)))) = s(s(size(xts) + size(zts)))
+--- clause
+	size(rotR(node(node(xts, yts, zts), 0, node(uts, vts, wts)))) = size(node(node(xts, yts, zts), 0, node(uts, vts, wts)))
+... reduced in 5 steps to
+	size(rotR(node(xts, yts, node(zts, 0, node(uts, vts, wts))))) = s(s(s(size(xts) + size(zts)) + (size(uts) + size(wts))))
+--- clause
+	size(rotR(node(node(xts, yts, zts), s(uts), node(vts, wts, xyts)))) = size(node(node(xts, yts, zts), s(uts), node(vts, wts, xyts)))
+... reduced in 5 steps to
+	size(rotR(node(xts, yts, node(zts, s(uts), node(vts, wts, xyts))))) = s(s(s(size(xts) + size(zts)) + (size(vts) + size(xyts))))
++++ inductive narrowing succeeded
+--- clause
+	size(rotR(x)) = size(x)
+... oriented to rule
+	size(rotR(x)) -> size(x)
++++ added new clause(s)
+	size(rotR(node(xts, yts, node(zts, 0, leaf)))) = s(s(size(xts) + size(zts)))
+	size(rotR(node(xts, yts, node(zts, s(uts), leaf)))) = s(s(size(xts) + size(zts)))
+	size(rotR(node(xts, yts, node(zts, 0, node(uts, vts, wts))))) = s(s(s(size(xts) + size(zts)) + (size(uts) + size(wts))))
+	size(rotR(node(xts, yts, node(zts, s(uts), node(vts, wts, xyts))))) = s(s(s(size(xts) + size(zts)) + (size(vts) + size(xyts))))
+... to conjectures
+--- clause
+	size(rotR(node(xts, yts, node(zts, 0, leaf)))) = s(s(size(xts) + size(zts)))
+... reduced in 1 step to
+	size(node(xts, yts, node(zts, 0, leaf))) = s(s(size(xts) + size(zts)))
+--- clause
+	size(rotR(node(xts, yts, node(zts, s(uts), leaf)))) = s(s(size(xts) + size(zts)))
+... reduced in 1 step to
+	size(node(xts, yts, node(zts, s(uts), leaf))) = s(s(size(xts) + size(zts)))
+--- clause
+	size(rotR(node(xts, yts, node(zts, 0, node(uts, vts, wts))))) = s(s(s(size(xts) + size(zts)) + (size(uts) + size(wts))))
+... reduced in 1 step to
+	size(node(xts, yts, node(zts, 0, node(uts, vts, wts)))) = s(s(s(size(xts) + size(zts)) + (size(uts) + size(wts))))
+--- clause
+	size(rotR(node(xts, yts, node(zts, s(uts), node(vts, wts, xyts))))) = s(s(s(size(xts) + size(zts)) + (size(vts) + size(xyts))))
+... reduced in 1 step to
+	size(node(xts, yts, node(zts, s(uts), node(vts, wts, xyts)))) = s(s(s(size(xts) + size(zts)) + (size(vts) + size(xyts))))
+
++++ Status of the Inference System
+--- Conjectures:
+	size(node(xts, yts, node(zts, 0, leaf))) = s(s(size(xts) + size(zts)))
+	size(node(xts, yts, node(zts, s(uts), leaf))) = s(s(size(xts) + size(zts)))
+	size(node(xts, yts, node(zts, 0, node(uts, vts, wts)))) = s(s(s(size(xts) + size(zts)) + (size(uts) + size(wts))))
+	size(node(xts, yts, node(zts, s(uts), node(vts, wts, xyts)))) = s(s(s(size(xts) + size(zts)) + (size(vts) + size(xyts))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	size(rotR(x)) -> size(x)
+--- Primal Grammar:
+	<empty>
+
+--- clause
+	size(node(xts, yts, node(zts, 0, leaf))) = s(s(size(xts) + size(zts)))
+... reduced to tautology
+	s(s(size(xts) + size(zts))) = s(s(size(xts) + size(zts)))
+--- clause
+	size(node(xts, yts, node(zts, s(uts), leaf))) = s(s(size(xts) + size(zts)))
+... reduced to tautology
+	s(s(size(xts) + size(zts))) = s(s(size(xts) + size(zts)))
+--- clause
+	size(node(xts, yts, node(zts, 0, node(uts, vts, wts)))) = s(s(s(size(xts) + size(zts)) + (size(uts) + size(wts))))
+... reduced in 6 steps to
+	s(s(s(size(xts) + (size(zts) + (size(uts) + size(wts)))))) = s(s(s(size(xts) + size(zts)) + (size(uts) + size(wts))))
+--- clause
+	size(node(xts, yts, node(zts, s(uts), node(vts, wts, xyts)))) = s(s(s(size(xts) + size(zts)) + (size(vts) + size(xyts))))
+... reduced in 6 steps to
+	s(s(s(size(xts) + (size(zts) + (size(vts) + size(xyts)))))) = s(s(s(size(xts) + size(zts)) + (size(vts) + size(xyts))))
+... decomposed into new clause(s)
+	s(size(xts) + (size(zts) + (size(uts) + size(wts)))) = s(size(xts) + size(zts)) + (size(uts) + size(wts))
+... decomposed into new clause(s)
+	s(size(xts) + (size(zts) + (size(vts) + size(xyts)))) = s(size(xts) + size(zts)) + (size(vts) + size(xyts))
++++ treating clause
+	s(size(xts) + (size(zts) + (size(uts) + size(wts)))) = s(size(xts) + size(zts)) + (size(uts) + size(wts))
++++ inductive narrowing on conjecture
+	s(size(xts) + (size(zts) + (size(uts) + size(wts)))) = s(size(xts) + size(zts)) + (size(uts) + size(wts))
+... induction variables of
+	s(size(xts) + (size(zts) + (size(uts) + size(wts)))) = s(size(xts) + size(zts)) + (size(uts) + size(wts))
+... are:
+	uts:tree
+	wts:tree
+	xts:tree
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(size(xts) + (size(zts) + (size(uts) + size(wts)))) = s(size(xts) + size(zts)) + (size(uts) + size(wts))
+... with variable uts
++++ creating new conjecture
+	s(size(xts) + (size(zts) + (size(leaf) + size(wts)))) = s(size(xts) + size(zts)) + (size(leaf) + size(wts))
++++ creating new conjecture
+	s(size(xts2) + (size(zts2) + (size(node(xts1, yts, zts1)) + size(wts)))) = s(size(xts2) + size(zts2)) + (size(node(xts1, yts, zts1)) + size(wts))
+--- clause
+	s(size(xts) + (size(zts) + (size(leaf) + size(wts)))) = s(size(xts) + size(zts)) + (size(leaf) + size(wts))
+... reduced in 2 steps to
+	s(size(xts) + (size(zts) + (0 + size(wts)))) = s(size(xts) + size(zts)) + (0 + size(wts))
+--- clause
+	s(size(xts2) + (size(zts2) + (size(node(xts1, yts, zts1)) + size(wts)))) = s(size(xts2) + size(zts2)) + (size(node(xts1, yts, zts1)) + size(wts))
+... reduced in 2 steps to
+	s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts)))) = s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts))
++++ inductive narrowing succeeded
+--- clause
+	s(size(xts) + (size(zts) + (size(uts) + size(wts)))) = s(size(xts) + size(zts)) + (size(uts) + size(wts))
+... oriented to rule
+	s(size(xts) + size(zts)) + (size(uts) + size(wts)) -> s(size(xts) + (size(zts) + (size(uts) + size(wts))))
++++ added new clause(s)
+	s(size(xts) + (size(zts) + (0 + size(wts)))) = s(size(xts) + size(zts)) + (0 + size(wts))
+	s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts)))) = s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts))
+... to conjectures
+--- clause
+	s(size(xts) + (size(zts) + (size(vts) + size(xyts)))) = s(size(xts) + size(zts)) + (size(vts) + size(xyts))
+... reduced to tautology
+	s(size(xts) + (size(zts) + (size(vts) + size(xyts)))) = s(size(xts) + (size(zts) + (size(vts) + size(xyts))))
+
++++ Status of the Inference System
+--- Conjectures:
+	s(size(xts) + (size(zts) + (0 + size(wts)))) = s(size(xts) + size(zts)) + (0 + size(wts))
+	s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts)))) = s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	size(rotR(x)) -> size(x)
+	s(size(xts) + size(zts)) + (size(uts) + size(wts)) -> s(size(xts) + (size(zts) + (size(uts) + size(wts))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(size(xts) + (size(zts) + (0 + size(wts)))) = s(size(xts) + size(zts)) + (0 + size(wts))
++++ inductive narrowing on conjecture
+	s(size(xts) + (size(zts) + (0 + size(wts)))) = s(size(xts) + size(zts)) + (0 + size(wts))
+... induction variables of
+	s(size(xts) + (size(zts) + (0 + size(wts)))) = s(size(xts) + size(zts)) + (0 + size(wts))
+... are:
+	wts:tree
+	xts:tree
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(size(xts) + (size(zts) + (0 + size(wts)))) = s(size(xts) + size(zts)) + (0 + size(wts))
+... with variable wts
++++ creating new conjecture
+	s(size(xts) + (size(zts) + (0 + size(leaf)))) = s(size(xts) + size(zts)) + (0 + size(leaf))
++++ creating new conjecture
+	s(size(xts2) + (size(zts2) + (0 + size(node(xts1, yts, zts1))))) = s(size(xts2) + size(zts2)) + (0 + size(node(xts1, yts, zts1)))
+--- clause
+	s(size(xts) + (size(zts) + (0 + size(leaf)))) = s(size(xts) + size(zts)) + (0 + size(leaf))
+... reduced to tautology
+	s(size(xts) + size(zts)) = s(size(xts) + size(zts))
+--- clause
+	s(size(xts2) + (size(zts2) + (0 + size(node(xts1, yts, zts1))))) = s(size(xts2) + size(zts2)) + (0 + size(node(xts1, yts, zts1)))
+... reduced in 7 steps to
+	s(s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1)))))) = s(s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1))))
+... decomposed into new clause(s)
+	s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1))))) = s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1)))
++++ inductive narrowing succeeded
+--- clause
+	s(size(xts) + (size(zts) + (0 + size(wts)))) = s(size(xts) + size(zts)) + (0 + size(wts))
+... oriented to rule
+	s(size(xts) + size(zts)) + (0 + size(wts)) -> s(size(xts) + (size(zts) + (0 + size(wts))))
++++ added new clause(s)
+	s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1))))) = s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts)))) = s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts))
+	s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1))))) = s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1)))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	size(rotR(x)) -> size(x)
+	s(size(xts) + size(zts)) + (0 + size(wts)) -> s(size(xts) + (size(zts) + (0 + size(wts))))
+	s(size(xts) + size(zts)) + (size(uts) + size(wts)) -> s(size(xts) + (size(zts) + (size(uts) + size(wts))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts)))) = s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts))
++++ inductive narrowing on conjecture
+	s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts)))) = s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts))
+... induction variables of
+	s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts)))) = s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts))
+... are:
+	wts:tree
+	xts1:tree
+	xts2:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts)))) = s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts))
+... with variable wts
++++ creating new conjecture
+	s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(leaf)))) = s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(leaf))
++++ creating new conjecture
+	s(size(xts3) + (size(zts3) + (s(size(xts2) + size(zts2)) + size(node(xts1, yts, zts1))))) = s(size(xts3) + size(zts3)) + (s(size(xts2) + size(zts2)) + size(node(xts1, yts, zts1)))
+--- clause
+	s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(leaf)))) = s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(leaf))
+... reduced to tautology
+	s(s(size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))) = s(s(size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))))
+--- clause
+	s(size(xts3) + (size(zts3) + (s(size(xts2) + size(zts2)) + size(node(xts1, yts, zts1))))) = s(size(xts3) + size(zts3)) + (s(size(xts2) + size(zts2)) + size(node(xts1, yts, zts1)))
+... reduced in 9 steps to
+	s(s(size(xts3) + (size(zts3) + s(size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))))) = s(s(size(xts3) + size(zts3)) + s(size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))))
+... decomposed into new clause(s)
+	s(size(xts3) + (size(zts3) + s(size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))))) = s(size(xts3) + size(zts3)) + s(size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))
++++ inductive narrowing succeeded
+--- clause
+	s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts)))) = s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts))
+... oriented to rule
+	s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts)) -> s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts))))
++++ added new clause(s)
+	s(size(xts3) + (size(zts3) + s(size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))))) = s(size(xts3) + size(zts3)) + s(size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))
+... to conjectures
+--- clause
+	s(size(xts3) + (size(zts3) + s(size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))))) = s(size(xts3) + size(zts3)) + s(size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))
+... reduced in 3 steps to
+	s(s(size(xts3) + (size(zts3) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))))) = s(s(size(xts3) + size(zts3)) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))))
+... decomposed into new clause(s)
+	s(size(xts3) + (size(zts3) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))))) = s(size(xts3) + size(zts3)) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))
+
++++ Status of the Inference System
+--- Conjectures:
+	s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1))))) = s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1)))
+	s(size(xts3) + (size(zts3) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))))) = s(size(xts3) + size(zts3)) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	size(rotR(x)) -> size(x)
+	s(size(xts) + size(zts)) + (0 + size(wts)) -> s(size(xts) + (size(zts) + (0 + size(wts))))
+	s(size(xts) + size(zts)) + (size(uts) + size(wts)) -> s(size(xts) + (size(zts) + (size(uts) + size(wts))))
+	s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts)) -> s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1))))) = s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1)))
++++ inductive narrowing on conjecture
+	s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1))))) = s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1)))
+... induction variables of
+	s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1))))) = s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1)))
+... are:
+	xts1:tree
+	xts2:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1))))) = s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1)))
+... with variable xts1
++++ creating new conjecture
+	s(size(xts) + (size(zts2) + (0 + (size(leaf) + size(zts1))))) = s(size(xts) + size(zts2)) + (0 + (size(leaf) + size(zts1)))
++++ creating new conjecture
+	s(size(xts2) + (size(zts3) + (0 + (size(node(xts1, yts, zts2)) + size(zts1))))) = s(size(xts2) + size(zts3)) + (0 + (size(node(xts1, yts, zts2)) + size(zts1)))
+--- clause
+	s(size(xts) + (size(zts2) + (0 + (size(leaf) + size(zts1))))) = s(size(xts) + size(zts2)) + (0 + (size(leaf) + size(zts1)))
+... reduced in 2 steps to
+	s(size(xts) + (size(zts2) + (0 + (0 + size(zts1))))) = s(size(xts) + size(zts2)) + (0 + (0 + size(zts1)))
+--- clause
+	s(size(xts2) + (size(zts3) + (0 + (size(node(xts1, yts, zts2)) + size(zts1))))) = s(size(xts2) + size(zts3)) + (0 + (size(node(xts1, yts, zts2)) + size(zts1)))
+... reduced in 2 steps to
+	s(size(xts2) + (size(zts3) + (0 + (s(size(xts1) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts3)) + (0 + (s(size(xts1) + size(zts2)) + size(zts1)))
++++ inductive narrowing succeeded
+--- clause
+	s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1))))) = s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1)))
+... oriented to rule
+	s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1))) -> s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1)))))
++++ added new clause(s)
+	s(size(xts) + (size(zts2) + (0 + (0 + size(zts1))))) = s(size(xts) + size(zts2)) + (0 + (0 + size(zts1)))
+	s(size(xts2) + (size(zts3) + (0 + (s(size(xts1) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts3)) + (0 + (s(size(xts1) + size(zts2)) + size(zts1)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(size(xts3) + (size(zts3) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))))) = s(size(xts3) + size(zts3)) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))
+	s(size(xts) + (size(zts2) + (0 + (0 + size(zts1))))) = s(size(xts) + size(zts2)) + (0 + (0 + size(zts1)))
+	s(size(xts2) + (size(zts3) + (0 + (s(size(xts1) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts3)) + (0 + (s(size(xts1) + size(zts2)) + size(zts1)))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	size(rotR(x)) -> size(x)
+	s(size(xts) + size(zts)) + (0 + size(wts)) -> s(size(xts) + (size(zts) + (0 + size(wts))))
+	s(size(xts) + size(zts)) + (size(uts) + size(wts)) -> s(size(xts) + (size(zts) + (size(uts) + size(wts))))
+	s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1))) -> s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1)))))
+	s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts)) -> s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(size(xts3) + (size(zts3) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))))) = s(size(xts3) + size(zts3)) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))
++++ inductive narrowing on conjecture
+	s(size(xts3) + (size(zts3) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))))) = s(size(xts3) + size(zts3)) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))
+... induction variables of
+	s(size(xts3) + (size(zts3) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))))) = s(size(xts3) + size(zts3)) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))
+... are:
+	xts1:tree
+	xts2:tree
+	xts3:tree
+	zts1:tree
+	zts2:tree
+	zts3:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(size(xts3) + (size(zts3) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))))) = s(size(xts3) + size(zts3)) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))
+... with variable xts1
++++ creating new conjecture
+	s(size(xts2) + (size(zts3) + (size(xts1) + (size(zts2) + (size(leaf) + size(zts1)))))) = s(size(xts2) + size(zts3)) + (size(xts1) + (size(zts2) + (size(leaf) + size(zts1))))
++++ creating new conjecture
+	s(size(xts3) + (size(zts4) + (size(xts2) + (size(zts3) + (size(node(xts1, yts, zts2)) + size(zts1)))))) = s(size(xts3) + size(zts4)) + (size(xts2) + (size(zts3) + (size(node(xts1, yts, zts2)) + size(zts1))))
+--- clause
+	s(size(xts2) + (size(zts3) + (size(xts1) + (size(zts2) + (size(leaf) + size(zts1)))))) = s(size(xts2) + size(zts3)) + (size(xts1) + (size(zts2) + (size(leaf) + size(zts1))))
+... reduced in 2 steps to
+	s(size(xts2) + (size(zts3) + (size(xts1) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts3)) + (size(xts1) + (size(zts2) + (0 + size(zts1))))
+--- clause
+	s(size(xts3) + (size(zts4) + (size(xts2) + (size(zts3) + (size(node(xts1, yts, zts2)) + size(zts1)))))) = s(size(xts3) + size(zts4)) + (size(xts2) + (size(zts3) + (size(node(xts1, yts, zts2)) + size(zts1))))
+... reduced in 2 steps to
+	s(size(xts3) + (size(zts4) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts4)) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1))))
++++ inductive narrowing succeeded
+--- clause
+	s(size(xts3) + (size(zts3) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))))) = s(size(xts3) + size(zts3)) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))
+... oriented to rule
+	s(size(xts3) + size(zts3)) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))) -> s(size(xts3) + (size(zts3) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))))
++++ added new clause(s)
+	s(size(xts2) + (size(zts3) + (size(xts1) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts3)) + (size(xts1) + (size(zts2) + (0 + size(zts1))))
+	s(size(xts3) + (size(zts4) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts4)) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(size(xts) + (size(zts2) + (0 + (0 + size(zts1))))) = s(size(xts) + size(zts2)) + (0 + (0 + size(zts1)))
+	s(size(xts2) + (size(zts3) + (0 + (s(size(xts1) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts3)) + (0 + (s(size(xts1) + size(zts2)) + size(zts1)))
+	s(size(xts2) + (size(zts3) + (size(xts1) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts3)) + (size(xts1) + (size(zts2) + (0 + size(zts1))))
+	s(size(xts3) + (size(zts4) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts4)) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	size(rotR(x)) -> size(x)
+	s(size(xts) + size(zts)) + (0 + size(wts)) -> s(size(xts) + (size(zts) + (0 + size(wts))))
+	s(size(xts) + size(zts)) + (size(uts) + size(wts)) -> s(size(xts) + (size(zts) + (size(uts) + size(wts))))
+	s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1))) -> s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1)))))
+	s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts)) -> s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts))))
+	s(size(xts3) + size(zts3)) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))) -> s(size(xts3) + (size(zts3) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(size(xts) + (size(zts2) + (0 + (0 + size(zts1))))) = s(size(xts) + size(zts2)) + (0 + (0 + size(zts1)))
++++ inductive narrowing on conjecture
+	s(size(xts) + (size(zts2) + (0 + (0 + size(zts1))))) = s(size(xts) + size(zts2)) + (0 + (0 + size(zts1)))
+... induction variables of
+	s(size(xts) + (size(zts2) + (0 + (0 + size(zts1))))) = s(size(xts) + size(zts2)) + (0 + (0 + size(zts1)))
+... are:
+	xts:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(size(xts) + (size(zts2) + (0 + (0 + size(zts1))))) = s(size(xts) + size(zts2)) + (0 + (0 + size(zts1)))
+... with variable xts
++++ creating new conjecture
+	s(size(leaf) + (size(zts2) + (0 + (0 + size(zts1))))) = s(size(leaf) + size(zts2)) + (0 + (0 + size(zts1)))
++++ creating new conjecture
+	s(size(node(xts, yts, zts3)) + (size(zts2) + (0 + (0 + size(zts1))))) = s(size(node(xts, yts, zts3)) + size(zts2)) + (0 + (0 + size(zts1)))
+--- clause
+	s(size(leaf) + (size(zts2) + (0 + (0 + size(zts1))))) = s(size(leaf) + size(zts2)) + (0 + (0 + size(zts1)))
+... reduced in 2 steps to
+	s(0 + (size(zts2) + (0 + (0 + size(zts1))))) = s(0 + size(zts2)) + (0 + (0 + size(zts1)))
+--- clause
+	s(size(node(xts, yts, zts3)) + (size(zts2) + (0 + (0 + size(zts1))))) = s(size(node(xts, yts, zts3)) + size(zts2)) + (0 + (0 + size(zts1)))
+... reduced in 2 steps to
+	s(s(size(xts) + size(zts3)) + (size(zts2) + (0 + (0 + size(zts1))))) = s(s(size(xts) + size(zts3)) + size(zts2)) + (0 + (0 + size(zts1)))
++++ inductive narrowing succeeded
+--- clause
+	s(size(xts) + (size(zts2) + (0 + (0 + size(zts1))))) = s(size(xts) + size(zts2)) + (0 + (0 + size(zts1)))
+... oriented to rule
+	s(size(xts) + size(zts2)) + (0 + (0 + size(zts1))) -> s(size(xts) + (size(zts2) + (0 + (0 + size(zts1)))))
++++ added new clause(s)
+	s(0 + (size(zts2) + (0 + (0 + size(zts1))))) = s(0 + size(zts2)) + (0 + (0 + size(zts1)))
+	s(s(size(xts) + size(zts3)) + (size(zts2) + (0 + (0 + size(zts1))))) = s(s(size(xts) + size(zts3)) + size(zts2)) + (0 + (0 + size(zts1)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(size(xts2) + (size(zts3) + (0 + (s(size(xts1) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts3)) + (0 + (s(size(xts1) + size(zts2)) + size(zts1)))
+	s(size(xts2) + (size(zts3) + (size(xts1) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts3)) + (size(xts1) + (size(zts2) + (0 + size(zts1))))
+	s(size(xts3) + (size(zts4) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts4)) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1))))
+	s(0 + (size(zts2) + (0 + (0 + size(zts1))))) = s(0 + size(zts2)) + (0 + (0 + size(zts1)))
+	s(s(size(xts) + size(zts3)) + (size(zts2) + (0 + (0 + size(zts1))))) = s(s(size(xts) + size(zts3)) + size(zts2)) + (0 + (0 + size(zts1)))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	size(rotR(x)) -> size(x)
+	s(size(xts) + size(zts)) + (0 + size(wts)) -> s(size(xts) + (size(zts) + (0 + size(wts))))
+	s(size(xts) + size(zts)) + (size(uts) + size(wts)) -> s(size(xts) + (size(zts) + (size(uts) + size(wts))))
+	s(size(xts) + size(zts2)) + (0 + (0 + size(zts1))) -> s(size(xts) + (size(zts2) + (0 + (0 + size(zts1)))))
+	s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1))) -> s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1)))))
+	s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts)) -> s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts))))
+	s(size(xts3) + size(zts3)) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))) -> s(size(xts3) + (size(zts3) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(size(xts2) + (size(zts3) + (0 + (s(size(xts1) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts3)) + (0 + (s(size(xts1) + size(zts2)) + size(zts1)))
++++ inductive narrowing on conjecture
+	s(size(xts2) + (size(zts3) + (0 + (s(size(xts1) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts3)) + (0 + (s(size(xts1) + size(zts2)) + size(zts1)))
+... induction variables of
+	s(size(xts2) + (size(zts3) + (0 + (s(size(xts1) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts3)) + (0 + (s(size(xts1) + size(zts2)) + size(zts1)))
+... are:
+	xts1:tree
+	xts2:tree
+	zts1:tree
+	zts2:tree
+	zts3:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(size(xts2) + (size(zts3) + (0 + (s(size(xts1) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts3)) + (0 + (s(size(xts1) + size(zts2)) + size(zts1)))
+... with variable xts1
++++ creating new conjecture
+	s(size(xts) + (size(zts3) + (0 + (s(size(leaf) + size(zts2)) + size(zts1))))) = s(size(xts) + size(zts3)) + (0 + (s(size(leaf) + size(zts2)) + size(zts1)))
++++ creating new conjecture
+	s(size(xts2) + (size(zts4) + (0 + (s(size(node(xts1, yts, zts3)) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts4)) + (0 + (s(size(node(xts1, yts, zts3)) + size(zts2)) + size(zts1)))
+--- clause
+	s(size(xts) + (size(zts3) + (0 + (s(size(leaf) + size(zts2)) + size(zts1))))) = s(size(xts) + size(zts3)) + (0 + (s(size(leaf) + size(zts2)) + size(zts1)))
+... reduced in 2 steps to
+	s(size(xts) + (size(zts3) + (0 + (s(0 + size(zts2)) + size(zts1))))) = s(size(xts) + size(zts3)) + (0 + (s(0 + size(zts2)) + size(zts1)))
+--- clause
+	s(size(xts2) + (size(zts4) + (0 + (s(size(node(xts1, yts, zts3)) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts4)) + (0 + (s(size(node(xts1, yts, zts3)) + size(zts2)) + size(zts1)))
+... reduced in 2 steps to
+	s(size(xts2) + (size(zts4) + (0 + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts4)) + (0 + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1)))
++++ inductive narrowing succeeded
+--- clause
+	s(size(xts2) + (size(zts3) + (0 + (s(size(xts1) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts3)) + (0 + (s(size(xts1) + size(zts2)) + size(zts1)))
+... oriented to rule
+	s(size(xts2) + size(zts3)) + (0 + (s(size(xts1) + size(zts2)) + size(zts1))) -> s(size(xts2) + (size(zts3) + (0 + (s(size(xts1) + size(zts2)) + size(zts1)))))
++++ added new clause(s)
+	s(size(xts) + (size(zts3) + (0 + (s(0 + size(zts2)) + size(zts1))))) = s(size(xts) + size(zts3)) + (0 + (s(0 + size(zts2)) + size(zts1)))
+	s(size(xts2) + (size(zts4) + (0 + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts4)) + (0 + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(size(xts2) + (size(zts3) + (size(xts1) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts3)) + (size(xts1) + (size(zts2) + (0 + size(zts1))))
+	s(size(xts3) + (size(zts4) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts4)) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1))))
+	s(0 + (size(zts2) + (0 + (0 + size(zts1))))) = s(0 + size(zts2)) + (0 + (0 + size(zts1)))
+	s(s(size(xts) + size(zts3)) + (size(zts2) + (0 + (0 + size(zts1))))) = s(s(size(xts) + size(zts3)) + size(zts2)) + (0 + (0 + size(zts1)))
+	s(size(xts) + (size(zts3) + (0 + (s(0 + size(zts2)) + size(zts1))))) = s(size(xts) + size(zts3)) + (0 + (s(0 + size(zts2)) + size(zts1)))
+	s(size(xts2) + (size(zts4) + (0 + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts4)) + (0 + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1)))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	size(rotR(x)) -> size(x)
+	s(size(xts) + size(zts)) + (0 + size(wts)) -> s(size(xts) + (size(zts) + (0 + size(wts))))
+	s(size(xts) + size(zts)) + (size(uts) + size(wts)) -> s(size(xts) + (size(zts) + (size(uts) + size(wts))))
+	s(size(xts) + size(zts2)) + (0 + (0 + size(zts1))) -> s(size(xts) + (size(zts2) + (0 + (0 + size(zts1)))))
+	s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1))) -> s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1)))))
+	s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts)) -> s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts))))
+	s(size(xts2) + size(zts3)) + (0 + (s(size(xts1) + size(zts2)) + size(zts1))) -> s(size(xts2) + (size(zts3) + (0 + (s(size(xts1) + size(zts2)) + size(zts1)))))
+	s(size(xts3) + size(zts3)) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))) -> s(size(xts3) + (size(zts3) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(size(xts2) + (size(zts3) + (size(xts1) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts3)) + (size(xts1) + (size(zts2) + (0 + size(zts1))))
++++ inductive narrowing on conjecture
+	s(size(xts2) + (size(zts3) + (size(xts1) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts3)) + (size(xts1) + (size(zts2) + (0 + size(zts1))))
+... induction variables of
+	s(size(xts2) + (size(zts3) + (size(xts1) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts3)) + (size(xts1) + (size(zts2) + (0 + size(zts1))))
+... are:
+	xts1:tree
+	xts2:tree
+	zts1:tree
+	zts2:tree
+	zts3:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(size(xts2) + (size(zts3) + (size(xts1) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts3)) + (size(xts1) + (size(zts2) + (0 + size(zts1))))
+... with variable xts1
++++ creating new conjecture
+	s(size(xts) + (size(zts3) + (size(leaf) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts) + size(zts3)) + (size(leaf) + (size(zts2) + (0 + size(zts1))))
++++ creating new conjecture
+	s(size(xts2) + (size(zts4) + (size(node(xts1, yts, zts3)) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts4)) + (size(node(xts1, yts, zts3)) + (size(zts2) + (0 + size(zts1))))
+--- clause
+	s(size(xts) + (size(zts3) + (size(leaf) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts) + size(zts3)) + (size(leaf) + (size(zts2) + (0 + size(zts1))))
+... reduced in 2 steps to
+	s(size(xts) + (size(zts3) + (0 + (size(zts2) + (0 + size(zts1)))))) = s(size(xts) + size(zts3)) + (0 + (size(zts2) + (0 + size(zts1))))
+--- clause
+	s(size(xts2) + (size(zts4) + (size(node(xts1, yts, zts3)) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts4)) + (size(node(xts1, yts, zts3)) + (size(zts2) + (0 + size(zts1))))
+... reduced in 2 steps to
+	s(size(xts2) + (size(zts4) + (s(size(xts1) + size(zts3)) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts4)) + (s(size(xts1) + size(zts3)) + (size(zts2) + (0 + size(zts1))))
++++ inductive narrowing succeeded
+--- clause
+	s(size(xts2) + (size(zts3) + (size(xts1) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts3)) + (size(xts1) + (size(zts2) + (0 + size(zts1))))
+... oriented to rule
+	s(size(xts2) + size(zts3)) + (size(xts1) + (size(zts2) + (0 + size(zts1)))) -> s(size(xts2) + (size(zts3) + (size(xts1) + (size(zts2) + (0 + size(zts1))))))
++++ added new clause(s)
+	s(size(xts) + (size(zts3) + (0 + (size(zts2) + (0 + size(zts1)))))) = s(size(xts) + size(zts3)) + (0 + (size(zts2) + (0 + size(zts1))))
+	s(size(xts2) + (size(zts4) + (s(size(xts1) + size(zts3)) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts4)) + (s(size(xts1) + size(zts3)) + (size(zts2) + (0 + size(zts1))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(size(xts3) + (size(zts4) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts4)) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1))))
+	s(0 + (size(zts2) + (0 + (0 + size(zts1))))) = s(0 + size(zts2)) + (0 + (0 + size(zts1)))
+	s(s(size(xts) + size(zts3)) + (size(zts2) + (0 + (0 + size(zts1))))) = s(s(size(xts) + size(zts3)) + size(zts2)) + (0 + (0 + size(zts1)))
+	s(size(xts) + (size(zts3) + (0 + (s(0 + size(zts2)) + size(zts1))))) = s(size(xts) + size(zts3)) + (0 + (s(0 + size(zts2)) + size(zts1)))
+	s(size(xts2) + (size(zts4) + (0 + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts4)) + (0 + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1)))
+	s(size(xts) + (size(zts3) + (0 + (size(zts2) + (0 + size(zts1)))))) = s(size(xts) + size(zts3)) + (0 + (size(zts2) + (0 + size(zts1))))
+	s(size(xts2) + (size(zts4) + (s(size(xts1) + size(zts3)) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts4)) + (s(size(xts1) + size(zts3)) + (size(zts2) + (0 + size(zts1))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	size(rotR(x)) -> size(x)
+	s(size(xts) + size(zts)) + (0 + size(wts)) -> s(size(xts) + (size(zts) + (0 + size(wts))))
+	s(size(xts) + size(zts)) + (size(uts) + size(wts)) -> s(size(xts) + (size(zts) + (size(uts) + size(wts))))
+	s(size(xts) + size(zts2)) + (0 + (0 + size(zts1))) -> s(size(xts) + (size(zts2) + (0 + (0 + size(zts1)))))
+	s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1))) -> s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1)))))
+	s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts)) -> s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts))))
+	s(size(xts2) + size(zts3)) + (size(xts1) + (size(zts2) + (0 + size(zts1)))) -> s(size(xts2) + (size(zts3) + (size(xts1) + (size(zts2) + (0 + size(zts1))))))
+	s(size(xts2) + size(zts3)) + (0 + (s(size(xts1) + size(zts2)) + size(zts1))) -> s(size(xts2) + (size(zts3) + (0 + (s(size(xts1) + size(zts2)) + size(zts1)))))
+	s(size(xts3) + size(zts3)) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))) -> s(size(xts3) + (size(zts3) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(size(xts3) + (size(zts4) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts4)) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1))))
++++ inductive narrowing on conjecture
+	s(size(xts3) + (size(zts4) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts4)) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1))))
+... induction variables of
+	s(size(xts3) + (size(zts4) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts4)) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1))))
+... are:
+	xts1:tree
+	xts2:tree
+	xts3:tree
+	zts1:tree
+	zts2:tree
+	zts3:tree
+	zts4:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(size(xts3) + (size(zts4) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts4)) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1))))
+... with variable xts1
++++ creating new conjecture
+	s(size(xts2) + (size(zts4) + (size(xts1) + (size(zts3) + (s(size(leaf) + size(zts2)) + size(zts1)))))) = s(size(xts2) + size(zts4)) + (size(xts1) + (size(zts3) + (s(size(leaf) + size(zts2)) + size(zts1))))
++++ creating new conjecture
+	s(size(xts3) + (size(zts5) + (size(xts2) + (size(zts4) + (s(size(node(xts1, yts, zts3)) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts5)) + (size(xts2) + (size(zts4) + (s(size(node(xts1, yts, zts3)) + size(zts2)) + size(zts1))))
+--- clause
+	s(size(xts2) + (size(zts4) + (size(xts1) + (size(zts3) + (s(size(leaf) + size(zts2)) + size(zts1)))))) = s(size(xts2) + size(zts4)) + (size(xts1) + (size(zts3) + (s(size(leaf) + size(zts2)) + size(zts1))))
+... reduced in 2 steps to
+	s(size(xts2) + (size(zts4) + (size(xts1) + (size(zts3) + (s(0 + size(zts2)) + size(zts1)))))) = s(size(xts2) + size(zts4)) + (size(xts1) + (size(zts3) + (s(0 + size(zts2)) + size(zts1))))
+--- clause
+	s(size(xts3) + (size(zts5) + (size(xts2) + (size(zts4) + (s(size(node(xts1, yts, zts3)) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts5)) + (size(xts2) + (size(zts4) + (s(size(node(xts1, yts, zts3)) + size(zts2)) + size(zts1))))
+... reduced in 2 steps to
+	s(size(xts3) + (size(zts5) + (size(xts2) + (size(zts4) + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts5)) + (size(xts2) + (size(zts4) + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1))))
++++ inductive narrowing succeeded
+--- clause
+	s(size(xts3) + (size(zts4) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts4)) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1))))
+... oriented to rule
+	s(size(xts3) + size(zts4)) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1)))) -> s(size(xts3) + (size(zts4) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1))))))
++++ added new clause(s)
+	s(size(xts2) + (size(zts4) + (size(xts1) + (size(zts3) + (s(0 + size(zts2)) + size(zts1)))))) = s(size(xts2) + size(zts4)) + (size(xts1) + (size(zts3) + (s(0 + size(zts2)) + size(zts1))))
+	s(size(xts3) + (size(zts5) + (size(xts2) + (size(zts4) + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts5)) + (size(xts2) + (size(zts4) + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(0 + (size(zts2) + (0 + (0 + size(zts1))))) = s(0 + size(zts2)) + (0 + (0 + size(zts1)))
+	s(s(size(xts) + size(zts3)) + (size(zts2) + (0 + (0 + size(zts1))))) = s(s(size(xts) + size(zts3)) + size(zts2)) + (0 + (0 + size(zts1)))
+	s(size(xts) + (size(zts3) + (0 + (s(0 + size(zts2)) + size(zts1))))) = s(size(xts) + size(zts3)) + (0 + (s(0 + size(zts2)) + size(zts1)))
+	s(size(xts2) + (size(zts4) + (0 + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1))))) = s(size(xts2) + size(zts4)) + (0 + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1)))
+	s(size(xts) + (size(zts3) + (0 + (size(zts2) + (0 + size(zts1)))))) = s(size(xts) + size(zts3)) + (0 + (size(zts2) + (0 + size(zts1))))
+	s(size(xts2) + (size(zts4) + (s(size(xts1) + size(zts3)) + (size(zts2) + (0 + size(zts1)))))) = s(size(xts2) + size(zts4)) + (s(size(xts1) + size(zts3)) + (size(zts2) + (0 + size(zts1))))
+	s(size(xts2) + (size(zts4) + (size(xts1) + (size(zts3) + (s(0 + size(zts2)) + size(zts1)))))) = s(size(xts2) + size(zts4)) + (size(xts1) + (size(zts3) + (s(0 + size(zts2)) + size(zts1))))
+	s(size(xts3) + (size(zts5) + (size(xts2) + (size(zts4) + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1)))))) = s(size(xts3) + size(zts5)) + (size(xts2) + (size(zts4) + (s(s(size(xts1) + size(zts3)) + size(zts2)) + size(zts1))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	size(rotR(x)) -> size(x)
+	s(size(xts) + size(zts)) + (0 + size(wts)) -> s(size(xts) + (size(zts) + (0 + size(wts))))
+	s(size(xts) + size(zts)) + (size(uts) + size(wts)) -> s(size(xts) + (size(zts) + (size(uts) + size(wts))))
+	s(size(xts) + size(zts2)) + (0 + (0 + size(zts1))) -> s(size(xts) + (size(zts2) + (0 + (0 + size(zts1)))))
+	s(size(xts2) + size(zts2)) + (0 + (size(xts1) + size(zts1))) -> s(size(xts2) + (size(zts2) + (0 + (size(xts1) + size(zts1)))))
+	s(size(xts2) + size(zts2)) + (s(size(xts1) + size(zts1)) + size(wts)) -> s(size(xts2) + (size(zts2) + (s(size(xts1) + size(zts1)) + size(wts))))
+	s(size(xts2) + size(zts3)) + (size(xts1) + (size(zts2) + (0 + size(zts1)))) -> s(size(xts2) + (size(zts3) + (size(xts1) + (size(zts2) + (0 + size(zts1))))))
+	s(size(xts2) + size(zts3)) + (0 + (s(size(xts1) + size(zts2)) + size(zts1))) -> s(size(xts2) + (size(zts3) + (0 + (s(size(xts1) + size(zts2)) + size(zts1)))))
+	s(size(xts3) + size(zts3)) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1)))) -> s(size(xts3) + (size(zts3) + (size(xts2) + (size(zts2) + (size(xts1) + size(zts1))))))
+	s(size(xts3) + size(zts4)) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1)))) -> s(size(xts3) + (size(zts4) + (size(xts2) + (size(zts3) + (s(size(xts1) + size(zts2)) + size(zts1))))))
+--- Primal Grammar:
+	<empty>
+
++++ loop limit reached
++++ Statistics:
+... Number of proof steps          = 10
+... Number of induction steps      = 10
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.13

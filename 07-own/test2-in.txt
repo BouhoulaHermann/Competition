@@ -1,0 +1,49 @@
+specification even2odd
+
+sorts
+	nat bool
+
+constructors
+
+	0: -> nat
+	s: nat -> nat
+	true: -> bool
+	false: -> bool
+
+defined functions
+
+	even: nat -> bool
+	odd : nat -> bool
+	+: nat nat -> nat
+	fun7: nat nat nat nat nat nat nat nat -> nat
+
+precedence
+
+	fun7 > + > odd > even > s > 0 > true = false
+
+axioms
+
+	0 + x = x;
+	s(x) + y = s(x + y);
+
+	even(0) = true;
+	even(s(0)) = false;
+	even(s(s(x))) = even(x);
+
+	odd(0) = false;
+	odd(s(0)) = true;
+	odd(s(s(x))) = odd(x);
+
+	fun7(s(x), s(0), s(y), s(0),
+	     s(z), s(0), s(u), s(0))
+	=
+	fun7(x, 0, y, 0, z, 0, u, 0);
+
+conjectures
+
+	x + 0 = x;
+	x + s(y) = s(x + y);
+
+	even(x + x) = true;
+
+end

@@ -1,0 +1,11 @@
+specification ListFunc
+
+include <prefix> <eqid>
+
+precedence
+	pref > app > && > == > cons > nil > s > 0 > true = false
+
+conjectures
+	pref(app(x, app(app(x, x), app(x, x))), app(app(x, x), app(app(x, x), app(app(x, x), app(app(x, x), x))))) = true;
+
+end

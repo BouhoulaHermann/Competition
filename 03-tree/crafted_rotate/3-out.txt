@@ -1,0 +1,172 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 3-in.txt
++++ output      = 3-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LIST from list successfully parsed
++++ specification APPEND from append successfully parsed
++++ specification TREE from tree successfully parsed
++++ specification FLATTEN from flatten successfully parsed
++++ specification ROTATEright from rotateright successfully parsed
++++ specification CraftedTrees from 3-in.txt successfully parsed
++++ Listing
+         1: specification CraftedTrees
+         2: sorts
+         3:      list nat tree
+         4: constructors
+         5:      0: -> nat
+         6:      cons: nat list -> list
+         7:      leaf: -> tree
+         8:      nil: -> list
+         9:      node: tree nat tree -> tree
+        10:      s: nat -> nat
+        11: defined functions
+        12:      app: list list -> list
+        13:      flatten: tree -> list
+        14:      flatten2: tree list -> list
+        15:      rotR: tree -> tree
+        16: precedence
+        17:      rotR > flatten = flatten2 > app > cons > node > leaf > nil > s > 0
+        18: axioms
+        19:      app(nil, y) = y;
+        20:      rotR(leaf) = leaf;
+        21:      flatten(leaf) = nil;
+        22:      flatten2(leaf, x) = x;
+        23:      app(cons(x, y), z) = cons(x, app(y, z));
+        24:      rotR(node(leaf, y, xr)) = node(leaf, y, xr);
+        25:      flatten(node(xl, y, xr)) = app(flatten(xl), cons(y, flatten(xr)));
+        26:      flatten2(node(x, y, z), v) = flatten2(x, cons(y, flatten2(z, v)));
+        27:      rotR(node(node(xP, x, xQ), y, xR)) = rotR(node(xP, x, node(xQ, y, xR)));
+        28: conjectures
+        29:      flatten2(rotR(x), nil) = flatten(x);
+        30: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	app(nil, y) -> y
+	rotR(leaf) -> leaf
+	flatten(leaf) -> nil
+	flatten2(leaf, x) -> x
+	app(cons(x, y), z) -> cons(x, app(y, z))
+	rotR(node(leaf, y, xr)) -> node(leaf, y, xr)
+	flatten(node(xl, y, xr)) -> app(flatten(xl), cons(y, flatten(xr)))
+	flatten2(node(x, y, z), v) -> flatten2(x, cons(y, flatten2(z, v)))
+	rotR(node(node(xP, x, xQ), y, xR)) -> rotR(node(xP, x, node(xQ, y, xR)))
++++ inductive positions:
+... for app: 0
+... for flatten: 0
+... for flatten2: 0
+... for rotR: 0 0.0
++++ maximal depths of left-hand sides:
+... for flatten2: 2
+... for flatten: 2
+... for rotR: 3
+... for app: 2
++++ general maximal depth = 3
++++ sort dependence: nat < tree < list
++++ test sets for defined functions and sorts:
+... for rotR
+... ... tree
+		leaf
+		node(leaf, 0, leaf)
+		node(leaf, s(x), leaf)
+		node(leaf, 0, node(x, y, z))
+		node(node(x, y, z), 0, leaf)
+		node(leaf, s(x), node(y, z, u))
+		node(node(x, y, z), s(u), leaf)
+		node(node(x, y, z), 0, node(u, v, w))
+		node(node(x, y, z), s(u), node(v, w, xy))
+... for flatten2
+... ... tree
+		leaf
+		node(x, y, z)
+... for flatten
+... ... tree
+		leaf
+		node(x, y, z)
+... for app
+... ... list
+		nil
+		cons(x, y)
+
++++ conjecture(s)
+	flatten2(rotR(x), nil) = flatten(x)
+
++++ inference system initiated
++++ treating clause
+	flatten2(rotR(x), nil) = flatten(x)
++++ inductive narrowing on conjecture
+	flatten2(rotR(x), nil) = flatten(x)
+... induction variables of
+	flatten2(rotR(x), nil) = flatten(x)
+... are:
+	x:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	flatten2(rotR(x), nil) = flatten(x)
+... with variable x
++++ creating new conjecture
+	flatten2(rotR(leaf), nil) = flatten(leaf)
++++ creating new conjecture
+	flatten2(rotR(node(xts, yts, zts)), nil) = flatten(node(xts, yts, zts))
+--- clause
+	flatten2(rotR(leaf), nil) = flatten(leaf)
+... reduced to tautology
+	nil = nil
+--- clause
+	flatten2(rotR(node(xts, yts, zts)), nil) = flatten(node(xts, yts, zts))
+... reduced in 1 step to
+	flatten2(rotR(node(xts, yts, zts)), nil) = app(flatten(xts), cons(yts, flatten(zts)))
++++ inductive narrowing succeeded
+--- clause
+	flatten2(rotR(x), nil) = flatten(x)
+... oriented to rule
+	flatten2(rotR(x), nil) -> flatten(x)
++++ added new clause(s)
+	flatten2(rotR(node(xts, yts, zts)), nil) = app(flatten(xts), cons(yts, flatten(zts)))
+... to conjectures
+--- clause
+	flatten2(rotR(node(xts, yts, zts)), nil) = app(flatten(xts), cons(yts, flatten(zts)))
+... reduced in 1 step to
+	flatten(node(xts, yts, zts)) = app(flatten(xts), cons(yts, flatten(zts)))
+
++++ Status of the Inference System
+--- Conjectures:
+	flatten(node(xts, yts, zts)) = app(flatten(xts), cons(yts, flatten(zts)))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	flatten2(rotR(x), nil) -> flatten(x)
+--- Primal Grammar:
+	<empty>
+
+--- clause
+	flatten(node(xts, yts, zts)) = app(flatten(xts), cons(yts, flatten(zts)))
+... reduced to tautology
+	app(flatten(xts), cons(yts, flatten(zts))) = app(flatten(xts), cons(yts, flatten(zts)))
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	flatten2(rotR(x), nil) -> flatten(x)
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 2
+... Number of induction steps      = 1
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.024

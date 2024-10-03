@@ -1,0 +1,11 @@
+specification CraftedTrees
+
+include <flatten> <mirror> <reverse>
+
+precedence
+	mirror > rev > app > flatten > == > && > cons > node > leaf > nil > s > 0 > true = false
+
+conjectures
+	mirror(x, y) = true => rev(flatten(x)) = flatten(y);
+
+end

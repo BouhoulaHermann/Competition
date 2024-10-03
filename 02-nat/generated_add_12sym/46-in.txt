@@ -1,0 +1,13 @@
+specification Generated
+
+include <add>
+
+precedence
+	+ > s > 0 
+
+conjectures
+	 s(s(s(s(s(V1)) + (s(V3) + V4))) + s(V2)) + V0
+	 =
+	 s(((s(s(V2)) + s(s(V3) + s(V4))) + V1) + s(V0));
+
+end

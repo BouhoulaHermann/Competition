@@ -1,0 +1,134 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 02a-in.txt
++++ output      = 02a-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LISTsymb from listsymb successfully parsed
++++ specification APPENDsymb from appendsymb successfully parsed
++++ specification ADD from add successfully parsed
++++ specification assoc from 02a-in.txt successfully parsed
++++ Listing
+         1: specification assoc
+         2: sorts
+         3:      list nat
+         4: constructors
+         5:      ..: nat list -> list
+         6:      0: -> nat
+         7:      :: nat list -> list
+         8:      nil: -> list
+         9:      s: nat -> nat
+        10: defined functions
+        11:      +: nat nat -> nat
+        12:      @@: list list -> list
+        13: precedence
+        14:      @@ > + > .. > nil > s > 0
+        15: axioms
+        16:      x + 0 = x;
+        17:      nil @@ y = y;
+        18:      x + s(y) = s(x + y);
+        19:      (x .. y) @@ z = x .. (y @@ z);
+        20: conjectures
+        21:      (xs @@ ys) @@ zs = xs @@ (ys @@ zs);
+        22: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	x + 0 -> x
+	nil @@ y -> y
+	x + s(y) -> s(x + y)
+	(x .. y) @@ z -> x .. (y @@ z)
++++ inductive positions:
+... for +: 1
+... for @@: 0
++++ maximal depths of left-hand sides:
+... for @@: 2
+... for +: 2
++++ general maximal depth = 2
++++ sort dependence: nat < list
++++ test sets for defined functions and sorts:
+... for @@
+... ... list
+		nil
+		x : y
+		x .. y
+... for +
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	(xs @@ ys) @@ zs = xs @@ (ys @@ zs)
+
++++ inference system initiated
++++ treating clause
+	(xs @@ ys) @@ zs = xs @@ (ys @@ zs)
++++ inductive narrowing on conjecture
+	(xs @@ ys) @@ zs = xs @@ (ys @@ zs)
+... induction variables of
+	(xs @@ ys) @@ zs = xs @@ (ys @@ zs)
+... are:
+	xs:list
+	ys:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(xs @@ ys) @@ zs = xs @@ (ys @@ zs)
+... with variable xs
++++ creating new conjecture
+	(nil @@ ys) @@ zs = nil @@ (ys @@ zs)
++++ creating new conjecture
+	((xts : yts) @@ ys) @@ zs = (xts : yts) @@ (ys @@ zs)
++++ creating new conjecture
+	((xts .. yts) @@ ys) @@ zs = (xts .. yts) @@ (ys @@ zs)
+--- clause
+	(nil @@ ys) @@ zs = nil @@ (ys @@ zs)
+... reduced to tautology
+	ys @@ zs = ys @@ zs
+--- clause
+	((xts .. yts) @@ ys) @@ zs = (xts .. yts) @@ (ys @@ zs)
+... reduced in 3 steps to
+	xts .. ((yts @@ ys) @@ zs) = xts .. (yts @@ (ys @@ zs))
+... decomposed into new clause(s)
+	(yts @@ ys) @@ zs = yts @@ (ys @@ zs)
++++ inductive narrowing succeeded
+--- clause
+	(xs @@ ys) @@ zs = xs @@ (ys @@ zs)
+... oriented to rule
+	(xs @@ ys) @@ zs -> xs @@ (ys @@ zs)
++++ added new clause(s)
+	((xts : yts) @@ ys) @@ zs = (xts : yts) @@ (ys @@ zs)
+	(yts @@ ys) @@ zs = yts @@ (ys @@ zs)
+... to conjectures
+--- clause
+	((xts : yts) @@ ys) @@ zs = (xts : yts) @@ (ys @@ zs)
+... reduced to tautology
+	(xts : yts) @@ (ys @@ zs) = (xts : yts) @@ (ys @@ zs)
+--- clause
+	(yts @@ ys) @@ zs = yts @@ (ys @@ zs)
+... reduced to tautology
+	yts @@ (ys @@ zs) = yts @@ (ys @@ zs)
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	(xs @@ ys) @@ zs -> xs @@ (ys @@ zs)
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 1
+... Number of induction steps      = 1
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0

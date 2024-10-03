@@ -1,0 +1,326 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 01a-in.txt
++++ output      = 01a-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LISTsymb from listsymb successfully parsed
++++ specification APPENDsymb from appendsymb successfully parsed
++++ specification REVERSEsymb from reversesymb successfully parsed
++++ specification ADD from add successfully parsed
++++ specification rev from 01a-in.txt successfully parsed
++++ Listing
+         1: specification rev
+         2: sorts
+         3:      list nat
+         4: constructors
+         5:      ..: nat list -> list
+         6:      0: -> nat
+         7:      :: nat list -> list
+         8:      nil: -> list
+         9:      s: nat -> nat
+        10: defined functions
+        11:      +: nat nat -> nat
+        12:      @@: list list -> list
+        13:      rev: list -> list
+        14: precedence
+        15:      rev > @@ > + > .. > nil > s > 0
+        16: axioms
+        17:      x + 0 = x;
+        18:      nil @@ y = y;
+        19:      rev(nil) = nil;
+        20:      x + s(y) = s(x + y);
+        21:      (x .. y) @@ z = x .. (y @@ z);
+        22:      rev(x .. y) = rev(y) @@ (x .. nil);
+        23: conjectures
+        24:      rev(rev(x)) = x;
+        25: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	x + 0 -> x
+	nil @@ y -> y
+	rev(nil) -> nil
+	x + s(y) -> s(x + y)
+	(x .. y) @@ z -> x .. (y @@ z)
+	rev(x .. y) -> rev(y) @@ (x .. nil)
++++ inductive positions:
+... for +: 1
+... for @@: 0
+... for rev: 0
++++ maximal depths of left-hand sides:
+... for rev: 2
+... for @@: 2
+... for +: 2
++++ general maximal depth = 2
++++ sort dependence: nat < list
++++ test sets for defined functions and sorts:
+... for rev
+... ... list
+		nil
+		x : y
+		x .. y
+... for @@
+... ... list
+		nil
+		x : y
+		x .. y
+... for +
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	rev(rev(x)) = x
+
++++ inference system initiated
++++ treating clause
+	rev(rev(x)) = x
++++ inductive narrowing on conjecture
+	rev(rev(x)) = x
+... induction variables of
+	rev(rev(x)) = x
+... are:
+	x:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	rev(rev(x)) = x
+... with variable x
++++ creating new conjecture
+	rev(rev(nil)) = nil
++++ creating new conjecture
+	rev(rev(xts : yts)) = xts : yts
++++ creating new conjecture
+	rev(rev(xts .. yts)) = xts .. yts
+--- clause
+	rev(rev(nil)) = nil
+... reduced to tautology
+	nil = nil
+--- clause
+	rev(rev(xts .. yts)) = xts .. yts
+... reduced in 1 step to
+	rev(rev(yts) @@ (xts .. nil)) = xts .. yts
++++ inductive narrowing succeeded
+--- clause
+	rev(rev(x)) = x
+... oriented to rule
+	rev(rev(x)) -> x
++++ added new clause(s)
+	rev(rev(xts : yts)) = xts : yts
+	rev(rev(yts) @@ (xts .. nil)) = xts .. yts
+... to conjectures
+--- clause
+	rev(rev(xts : yts)) = xts : yts
+... reduced to tautology
+	xts : yts = xts : yts
+
++++ Status of the Inference System
+--- Conjectures:
+	rev(rev(yts) @@ (xts .. nil)) = xts .. yts
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	rev(rev(x)) -> x
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	rev(rev(yts) @@ (xts .. nil)) = xts .. yts
++++ inductive narrowing on conjecture
+	rev(rev(yts) @@ (xts .. nil)) = xts .. yts
+... induction variables of
+	rev(rev(yts) @@ (xts .. nil)) = xts .. yts
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	rev(rev(yts) @@ (xts .. nil)) = xts .. yts
+... with variable yts
++++ creating new conjecture
+	rev(rev(nil) @@ (xts .. nil)) = xts .. nil
++++ creating new conjecture
+	rev(rev(xts2 : yts) @@ (xts1 .. nil)) = xts1 .. xts2 : yts
++++ creating new conjecture
+	rev(rev(xts2 .. yts) @@ (xts1 .. nil)) = xts1 .. xts2 .. yts
+--- clause
+	rev(rev(nil) @@ (xts .. nil)) = xts .. nil
+... reduced to tautology
+	xts .. nil = xts .. nil
+--- clause
+	rev(rev(xts2 .. yts) @@ (xts1 .. nil)) = xts1 .. xts2 .. yts
+... reduced in 1 step to
+	rev((rev(yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. yts
++++ inductive narrowing succeeded
+--- clause
+	rev(rev(yts) @@ (xts .. nil)) = xts .. yts
+... oriented to rule
+	rev(rev(yts) @@ (xts .. nil)) -> xts .. yts
++++ added new clause(s)
+	rev(rev(xts2 : yts) @@ (xts1 .. nil)) = xts1 .. xts2 : yts
+	rev((rev(yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. yts
+... to conjectures
+--- clause
+	rev(rev(xts2 : yts) @@ (xts1 .. nil)) = xts1 .. xts2 : yts
+... reduced to tautology
+	xts2 .. xts1 : yts = xts2 .. xts1 : yts
+
++++ Status of the Inference System
+--- Conjectures:
+	rev((rev(yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. yts
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	rev(rev(x)) -> x
+	rev(rev(yts) @@ (xts .. nil)) -> xts .. yts
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	rev((rev(yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. yts
++++ inductive narrowing on conjecture
+	rev((rev(yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. yts
+... induction variables of
+	rev((rev(yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. yts
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	rev((rev(yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. yts
+... with variable yts
++++ creating new conjecture
+	rev((rev(nil) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. nil
++++ creating new conjecture
+	rev((rev(xts3 : yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 : yts
++++ creating new conjecture
+	rev((rev(xts3 .. yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. yts
+--- clause
+	rev((rev(nil) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. nil
+... reduced to tautology
+	xts2 .. (xts1 .. nil) = xts2 .. xts1 .. nil
+--- clause
+	rev((rev(xts3 .. yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. yts
+... reduced in 1 step to
+	rev(((rev(yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. yts
++++ inductive narrowing succeeded
+--- clause
+	rev((rev(yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. yts
+... oriented to rule
+	rev((rev(yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) -> xts2 .. xts1 .. yts
++++ added new clause(s)
+	rev((rev(xts3 : yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 : yts
+	rev(((rev(yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. yts
+... to conjectures
+--- clause
+	rev((rev(xts3 : yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 : yts
+... reduced to tautology
+	xts3 .. xts2 .. xts1 : yts = xts3 .. xts2 .. xts1 : yts
+
++++ Status of the Inference System
+--- Conjectures:
+	rev(((rev(yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. yts
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	rev(rev(x)) -> x
+	rev(rev(yts) @@ (xts .. nil)) -> xts .. yts
+	rev((rev(yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) -> xts2 .. xts1 .. yts
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	rev(((rev(yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. yts
++++ inductive narrowing on conjecture
+	rev(((rev(yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. yts
+... induction variables of
+	rev(((rev(yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. yts
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	rev(((rev(yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. yts
+... with variable yts
++++ creating new conjecture
+	rev(((rev(nil) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. nil
++++ creating new conjecture
+	rev(((rev(xts4 : yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. xts4 : yts
++++ creating new conjecture
+	rev(((rev(xts4 .. yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. xts4 .. yts
+--- clause
+	rev(((rev(nil) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. nil
+... reduced to tautology
+	xts3 .. (xts2 .. (xts1 .. nil)) = xts3 .. xts2 .. xts1 .. nil
+--- clause
+	rev(((rev(xts4 .. yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. xts4 .. yts
+... reduced in 1 step to
+	rev((((rev(yts) @@ (xts4 .. nil)) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. xts4 .. yts
++++ inductive narrowing succeeded
+--- clause
+	rev(((rev(yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. yts
+... oriented to rule
+	rev(((rev(yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) -> xts3 .. xts2 .. xts1 .. yts
++++ added new clause(s)
+	rev(((rev(xts4 : yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. xts4 : yts
+	rev((((rev(yts) @@ (xts4 .. nil)) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. xts4 .. yts
+... to conjectures
+--- clause
+	rev(((rev(xts4 : yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. xts4 : yts
+... reduced to tautology
+	xts4 .. xts3 .. xts2 .. xts1 : yts = xts4 .. xts3 .. xts2 .. xts1 : yts
++++ active wrap
+	rev(. @@ (xts .. nil)) = xts .. .
+... with sequence
+	rev(rev(yts) @@ (xts .. nil)) = xts .. yts
+	rev((rev(yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. yts
+	rev(((rev(yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. yts
++++ primal grammar found for head
+	{.., @@, nil, rev}
+... and wrap
+	rev(. @@ (xts .. nil)) = xts .. .
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> rev(yts)
+	^f0($n0 + 1; yts, xts@) -> ^f0($n0; yts, xts@) @@ (xts$n0 .. nil)
+	^f1(0; yts, xts@) -> yts
+	^f1($n1 + 1; yts, xts@) -> xts$n1 .. ^f1($n1; yts, xts@)
++++ }
++++ Lemma(s)           = 
+	rev(^f0($n; yts, xts@) @@ (xts$n .. nil)) = xts$n .. ^f1($n; yts, xts@)
+--- clause
+	rev((((rev(yts) @@ (xts4 .. nil)) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) = xts1 .. xts2 .. xts3 .. xts4 .. yts
+... subsumed by lemma
+	rev(^f0($n; yts, xts@) @@ (xts$n .. nil)) = xts$n .. ^f1($n; yts, xts@)
+... with substitution
+	$n <- 3
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	rev(rev(x)) -> x
+	rev(rev(yts) @@ (xts .. nil)) -> xts .. yts
+	rev((rev(yts) @@ (xts2 .. nil)) @@ (xts1 .. nil)) -> xts2 .. xts1 .. yts
+	rev(((rev(yts) @@ (xts3 .. nil)) @@ (xts2 .. nil)) @@ (xts1 .. nil)) -> xts3 .. xts2 .. xts1 .. yts
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> rev(yts)
+	^f0($n0 + 1; yts, xts@) -> ^f0($n0; yts, xts@) @@ (xts$n0 .. nil)
+	^f1(0; yts, xts@) -> yts
+	^f1($n1 + 1; yts, xts@) -> xts$n1 .. ^f1($n1; yts, xts@)
++++ }
++++ Lemma(s)           = 
+	rev(^f0($n; yts, xts@) @@ (xts$n .. nil)) = xts$n .. ^f1($n; yts, xts@)
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 4
+... Number of induction steps      = 4
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Number of PG defined symbols   = 2
+... Number of PG lemmas            = 1
+... Elapsed time (seconds)         = 0.005

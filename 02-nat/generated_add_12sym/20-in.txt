@@ -1,0 +1,13 @@
+specification Generated
+
+include <add>
+
+precedence
+	+ > s > 0 
+
+conjectures
+	(s(s(s(v)) + (u + s(s(s(s(s(w))))))))
+	=
+	(s(s(s(v + s(w)))) + s(s(s(s(u)))));
+
+end

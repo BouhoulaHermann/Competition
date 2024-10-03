@@ -1,0 +1,18 @@
+# Programming and Proving In Isabelle/HOL
+# page 12
+#
+# Proof of associativity of app
+
+specification assoc
+
+include <appendsymb> <add>
+
+precedence
+
+	@@ > + > .. > nil > s > 0
+
+conjectures
+
+	(xs @@ ys) @@ zs = xs @@ (ys @@ zs);
+
+end

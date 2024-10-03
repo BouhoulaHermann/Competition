@@ -1,0 +1,542 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 0a-in.txt
++++ output      = 0a-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification ADD from add successfully parsed
++++ specification LIST from list successfully parsed
++++ specification APPEND from append successfully parsed
++++ specification Append from 0a-in.txt successfully parsed
++++ Listing
+         1: specification Append
+         2: sorts
+         3:      list nat
+         4: constructors
+         5:      0: -> nat
+         6:      cons: nat list -> list
+         7:      nil: -> list
+         8:      s: nat -> nat
+         9: defined functions
+        10:      +: nat nat -> nat
+        11:      app: list list -> list
+        12: precedence
+        13:      + > app > s > 0 > cons > nil
+        14: axioms
+        15:      x + 0 = x;
+        16:      app(nil, y) = y;
+        17:      x + s(y) = s(x + y);
+        18:      app(cons(x, y), z) = cons(x, app(y, z));
+        19: conjectures
+        20:      app(cons(y + s(y), x), app(x, x)) = app(app(cons(s(y) + y, x), x), x);
+        21: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	x + 0 -> x
+	app(nil, y) -> y
+	x + s(y) -> s(x + y)
+	app(cons(x, y), z) -> cons(x, app(y, z))
++++ inductive positions:
+... for +: 1
+... for app: 0
++++ maximal depths of left-hand sides:
+... for app: 2
+... for +: 2
++++ general maximal depth = 2
++++ sort dependence: nat < list
++++ test sets for defined functions and sorts:
+... for app
+... ... list
+		nil
+		cons(x, y)
+... for +
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	app(cons(y + s(y), x), app(x, x)) = app(app(cons(s(y) + y, x), x), x)
+
++++ inference system initiated
+--- clause
+	app(cons(y + s(y), x), app(x, x)) = app(app(cons(s(y) + y, x), x), x)
+... reduced in 4 steps to
+	cons(s(y + y), app(x, app(x, x))) = cons(s(y) + y, app(app(x, x), x))
+... decomposed into new clause(s)
+	s(y + y) = s(y) + y
+	app(x, app(x, x)) = app(app(x, x), x)
++++ treating clause
+	s(y + y) = s(y) + y
++++ inductive narrowing on conjecture
+	s(y + y) = s(y) + y
+... induction variables of
+	s(y + y) = s(y) + y
+... are:
+	y:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(y + y) = s(y) + y
+... with variable y
++++ creating new conjecture
+	s(0 + 0) = s(0) + 0
++++ creating new conjecture
+	s(s(xts) + s(xts)) = s(s(xts)) + s(xts)
+--- clause
+	s(0 + 0) = s(0) + 0
+... reduced to tautology
+	s(0) = s(0)
+--- clause
+	s(s(xts) + s(xts)) = s(s(xts)) + s(xts)
+... reduced in 2 steps to
+	s(s(s(xts) + xts)) = s(s(s(xts)) + xts)
+... decomposed into new clause(s)
+	s(s(xts) + xts) = s(s(xts)) + xts
++++ inductive narrowing succeeded
+--- clause
+	s(y + y) = s(y) + y
+... oriented to rule
+	s(y) + y -> s(y + y)
++++ added new clause(s)
+	s(s(xts) + xts) = s(s(xts)) + xts
+... to conjectures
+--- clause
+	s(s(xts) + xts) = s(s(xts)) + xts
+... reduced in 1 step to
+	s(s(xts + xts)) = s(s(xts)) + xts
+
++++ Status of the Inference System
+--- Conjectures:
+	app(x, app(x, x)) = app(app(x, x), x)
+	s(s(xts + xts)) = s(s(xts)) + xts
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	s(y) + y -> s(y + y)
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	app(x, app(x, x)) = app(app(x, x), x)
++++ inductive narrowing on conjecture
+	app(x, app(x, x)) = app(app(x, x), x)
+... induction variables of
+	app(x, app(x, x)) = app(app(x, x), x)
+... are:
+	x:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(x, app(x, x)) = app(app(x, x), x)
+... with variable x
++++ creating new conjecture
+	app(nil, app(nil, nil)) = app(app(nil, nil), nil)
++++ creating new conjecture
+	app(cons(xts, yts), app(cons(xts, yts), cons(xts, yts))) = app(app(cons(xts, yts), cons(xts, yts)), cons(xts, yts))
+--- clause
+	app(nil, app(nil, nil)) = app(app(nil, nil), nil)
+... reduced to tautology
+	nil = nil
+--- clause
+	app(cons(xts, yts), app(cons(xts, yts), cons(xts, yts))) = app(app(cons(xts, yts), cons(xts, yts)), cons(xts, yts))
+... reduced in 4 steps to
+	cons(xts, app(yts, cons(xts, app(yts, cons(xts, yts))))) = cons(xts, app(app(yts, cons(xts, yts)), cons(xts, yts)))
+... decomposed into new clause(s)
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) = app(app(yts, cons(xts, yts)), cons(xts, yts))
++++ inductive narrowing succeeded
+--- clause
+	app(x, app(x, x)) = app(app(x, x), x)
+... oriented to rule
+	app(app(x, x), x) -> app(x, app(x, x))
++++ added new clause(s)
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) = app(app(yts, cons(xts, yts)), cons(xts, yts))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(xts + xts)) = s(s(xts)) + xts
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) = app(app(yts, cons(xts, yts)), cons(xts, yts))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	s(y) + y -> s(y + y)
+	app(app(x, x), x) -> app(x, app(x, x))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(xts + xts)) = s(s(xts)) + xts
++++ inductive narrowing on conjecture
+	s(s(xts + xts)) = s(s(xts)) + xts
+... induction variables of
+	s(s(xts + xts)) = s(s(xts)) + xts
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(xts + xts)) = s(s(xts)) + xts
+... with variable xts
++++ creating new conjecture
+	s(s(0 + 0)) = s(s(0)) + 0
++++ creating new conjecture
+	s(s(s(xts) + s(xts))) = s(s(s(xts))) + s(xts)
+--- clause
+	s(s(0 + 0)) = s(s(0)) + 0
+... reduced to tautology
+	s(s(0)) = s(s(0))
+--- clause
+	s(s(s(xts) + s(xts))) = s(s(s(xts))) + s(xts)
+... reduced in 3 steps to
+	s(s(s(s(xts + xts)))) = s(s(s(s(xts))) + xts)
+... decomposed into new clause(s)
+	s(s(s(xts + xts))) = s(s(s(xts))) + xts
++++ inductive narrowing succeeded
+--- clause
+	s(s(xts + xts)) = s(s(xts)) + xts
+... oriented to rule
+	s(s(xts)) + xts -> s(s(xts + xts))
++++ added new clause(s)
+	s(s(s(xts + xts))) = s(s(s(xts))) + xts
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) = app(app(yts, cons(xts, yts)), cons(xts, yts))
+	s(s(s(xts + xts))) = s(s(s(xts))) + xts
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	s(y) + y -> s(y + y)
+	s(s(xts)) + xts -> s(s(xts + xts))
+	app(app(x, x), x) -> app(x, app(x, x))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) = app(app(yts, cons(xts, yts)), cons(xts, yts))
++++ inductive narrowing on conjecture
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) = app(app(yts, cons(xts, yts)), cons(xts, yts))
+... induction variables of
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) = app(app(yts, cons(xts, yts)), cons(xts, yts))
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) = app(app(yts, cons(xts, yts)), cons(xts, yts))
+... with variable yts
++++ creating new conjecture
+	app(nil, cons(xts, app(nil, cons(xts, nil)))) = app(app(nil, cons(xts, nil)), cons(xts, nil))
++++ creating new conjecture
+	app(cons(xts2, yts), cons(xts1, app(cons(xts2, yts), cons(xts1, cons(xts2, yts))))) = app(app(cons(xts2, yts), cons(xts1, cons(xts2, yts))), cons(xts1, cons(xts2, yts)))
+--- clause
+	app(nil, cons(xts, app(nil, cons(xts, nil)))) = app(app(nil, cons(xts, nil)), cons(xts, nil))
+... reduced to tautology
+	cons(xts, cons(xts, nil)) = cons(xts, cons(xts, nil))
+--- clause
+	app(cons(xts2, yts), cons(xts1, app(cons(xts2, yts), cons(xts1, cons(xts2, yts))))) = app(app(cons(xts2, yts), cons(xts1, cons(xts2, yts))), cons(xts1, cons(xts2, yts)))
+... reduced in 4 steps to
+	cons(xts2, app(yts, cons(xts1, cons(xts2, app(yts, cons(xts1, cons(xts2, yts))))))) = cons(xts2, app(app(yts, cons(xts1, cons(xts2, yts))), cons(xts1, cons(xts2, yts))))
+... decomposed into new clause(s)
+	app(yts, cons(xts2, cons(xts1, app(yts, cons(xts2, cons(xts1, yts)))))) = app(app(yts, cons(xts2, cons(xts1, yts))), cons(xts2, cons(xts1, yts)))
++++ inductive narrowing succeeded
+--- clause
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) = app(app(yts, cons(xts, yts)), cons(xts, yts))
+... oriented to rule
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) -> app(app(yts, cons(xts, yts)), cons(xts, yts))
++++ added new clause(s)
+	app(yts, cons(xts2, cons(xts1, app(yts, cons(xts2, cons(xts1, yts)))))) = app(app(yts, cons(xts2, cons(xts1, yts))), cons(xts2, cons(xts1, yts)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(xts + xts))) = s(s(s(xts))) + xts
+	app(yts, cons(xts2, cons(xts1, app(yts, cons(xts2, cons(xts1, yts)))))) = app(app(yts, cons(xts2, cons(xts1, yts))), cons(xts2, cons(xts1, yts)))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	s(y) + y -> s(y + y)
+	s(s(xts)) + xts -> s(s(xts + xts))
+	app(app(x, x), x) -> app(x, app(x, x))
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) -> app(app(yts, cons(xts, yts)), cons(xts, yts))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(xts + xts))) = s(s(s(xts))) + xts
++++ inductive narrowing on conjecture
+	s(s(s(xts + xts))) = s(s(s(xts))) + xts
+... induction variables of
+	s(s(s(xts + xts))) = s(s(s(xts))) + xts
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(xts + xts))) = s(s(s(xts))) + xts
+... with variable xts
++++ creating new conjecture
+	s(s(s(0 + 0))) = s(s(s(0))) + 0
++++ creating new conjecture
+	s(s(s(s(xts) + s(xts)))) = s(s(s(s(xts)))) + s(xts)
+--- clause
+	s(s(s(0 + 0))) = s(s(s(0))) + 0
+... reduced to tautology
+	s(s(s(0))) = s(s(s(0)))
+--- clause
+	s(s(s(s(xts) + s(xts)))) = s(s(s(s(xts)))) + s(xts)
+... reduced in 3 steps to
+	s(s(s(s(s(xts + xts))))) = s(s(s(s(s(xts)))) + xts)
+... decomposed into new clause(s)
+	s(s(s(s(xts + xts)))) = s(s(s(s(xts)))) + xts
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(xts + xts))) = s(s(s(xts))) + xts
+... oriented to rule
+	s(s(s(xts))) + xts -> s(s(s(xts + xts)))
++++ added new clause(s)
+	s(s(s(s(xts + xts)))) = s(s(s(s(xts)))) + xts
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	app(yts, cons(xts2, cons(xts1, app(yts, cons(xts2, cons(xts1, yts)))))) = app(app(yts, cons(xts2, cons(xts1, yts))), cons(xts2, cons(xts1, yts)))
+	s(s(s(s(xts + xts)))) = s(s(s(s(xts)))) + xts
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	s(y) + y -> s(y + y)
+	s(s(xts)) + xts -> s(s(xts + xts))
+	app(app(x, x), x) -> app(x, app(x, x))
+	s(s(s(xts))) + xts -> s(s(s(xts + xts)))
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) -> app(app(yts, cons(xts, yts)), cons(xts, yts))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	app(yts, cons(xts2, cons(xts1, app(yts, cons(xts2, cons(xts1, yts)))))) = app(app(yts, cons(xts2, cons(xts1, yts))), cons(xts2, cons(xts1, yts)))
++++ inductive narrowing on conjecture
+	app(yts, cons(xts2, cons(xts1, app(yts, cons(xts2, cons(xts1, yts)))))) = app(app(yts, cons(xts2, cons(xts1, yts))), cons(xts2, cons(xts1, yts)))
+... induction variables of
+	app(yts, cons(xts2, cons(xts1, app(yts, cons(xts2, cons(xts1, yts)))))) = app(app(yts, cons(xts2, cons(xts1, yts))), cons(xts2, cons(xts1, yts)))
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(yts, cons(xts2, cons(xts1, app(yts, cons(xts2, cons(xts1, yts)))))) = app(app(yts, cons(xts2, cons(xts1, yts))), cons(xts2, cons(xts1, yts)))
+... with variable yts
++++ creating new conjecture
+	app(nil, cons(xts2, cons(xts1, app(nil, cons(xts2, cons(xts1, nil)))))) = app(app(nil, cons(xts2, cons(xts1, nil))), cons(xts2, cons(xts1, nil)))
++++ creating new conjecture
+	app(cons(xts3, yts), cons(xts2, cons(xts1, app(cons(xts3, yts), cons(xts2, cons(xts1, cons(xts3, yts))))))) = app(app(cons(xts3, yts), cons(xts2, cons(xts1, cons(xts3, yts)))), cons(xts2, cons(xts1, cons(xts3, yts))))
+--- clause
+	app(nil, cons(xts2, cons(xts1, app(nil, cons(xts2, cons(xts1, nil)))))) = app(app(nil, cons(xts2, cons(xts1, nil))), cons(xts2, cons(xts1, nil)))
+... reduced to tautology
+	cons(xts2, cons(xts1, cons(xts2, cons(xts1, nil)))) = cons(xts2, cons(xts1, cons(xts2, cons(xts1, nil))))
+--- clause
+	app(cons(xts3, yts), cons(xts2, cons(xts1, app(cons(xts3, yts), cons(xts2, cons(xts1, cons(xts3, yts))))))) = app(app(cons(xts3, yts), cons(xts2, cons(xts1, cons(xts3, yts)))), cons(xts2, cons(xts1, cons(xts3, yts))))
+... reduced in 4 steps to
+	cons(xts3, app(yts, cons(xts2, cons(xts1, cons(xts3, app(yts, cons(xts2, cons(xts1, cons(xts3, yts))))))))) = cons(xts3, app(app(yts, cons(xts2, cons(xts1, cons(xts3, yts)))), cons(xts2, cons(xts1, cons(xts3, yts)))))
+... decomposed into new clause(s)
+	app(yts, cons(xts3, cons(xts2, cons(xts1, app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))))))) = app(app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))), cons(xts3, cons(xts2, cons(xts1, yts))))
++++ inductive narrowing succeeded
+--- clause
+	app(yts, cons(xts2, cons(xts1, app(yts, cons(xts2, cons(xts1, yts)))))) = app(app(yts, cons(xts2, cons(xts1, yts))), cons(xts2, cons(xts1, yts)))
+... oriented to rule
+	app(yts, cons(xts2, cons(xts1, app(yts, cons(xts2, cons(xts1, yts)))))) -> app(app(yts, cons(xts2, cons(xts1, yts))), cons(xts2, cons(xts1, yts)))
++++ added new clause(s)
+	app(yts, cons(xts3, cons(xts2, cons(xts1, app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))))))) = app(app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))), cons(xts3, cons(xts2, cons(xts1, yts))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	s(s(s(s(xts + xts)))) = s(s(s(s(xts)))) + xts
+	app(yts, cons(xts3, cons(xts2, cons(xts1, app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))))))) = app(app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))), cons(xts3, cons(xts2, cons(xts1, yts))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	s(y) + y -> s(y + y)
+	s(s(xts)) + xts -> s(s(xts + xts))
+	app(app(x, x), x) -> app(x, app(x, x))
+	s(s(s(xts))) + xts -> s(s(s(xts + xts)))
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) -> app(app(yts, cons(xts, yts)), cons(xts, yts))
+	app(yts, cons(xts2, cons(xts1, app(yts, cons(xts2, cons(xts1, yts)))))) -> app(app(yts, cons(xts2, cons(xts1, yts))), cons(xts2, cons(xts1, yts)))
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	s(s(s(s(xts + xts)))) = s(s(s(s(xts)))) + xts
++++ inductive narrowing on conjecture
+	s(s(s(s(xts + xts)))) = s(s(s(s(xts)))) + xts
+... induction variables of
+	s(s(s(s(xts + xts)))) = s(s(s(s(xts)))) + xts
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(s(s(xts + xts)))) = s(s(s(s(xts)))) + xts
+... with variable xts
++++ creating new conjecture
+	s(s(s(s(0 + 0)))) = s(s(s(s(0)))) + 0
++++ creating new conjecture
+	s(s(s(s(s(xts) + s(xts))))) = s(s(s(s(s(xts))))) + s(xts)
+--- clause
+	s(s(s(s(0 + 0)))) = s(s(s(s(0)))) + 0
+... reduced to tautology
+	s(s(s(s(0)))) = s(s(s(s(0))))
+--- clause
+	s(s(s(s(s(xts) + s(xts))))) = s(s(s(s(s(xts))))) + s(xts)
+... reduced in 3 steps to
+	s(s(s(s(s(s(xts + xts)))))) = s(s(s(s(s(s(xts))))) + xts)
+... decomposed into new clause(s)
+	s(s(s(s(s(xts + xts))))) = s(s(s(s(s(xts))))) + xts
++++ inductive narrowing succeeded
+--- clause
+	s(s(s(s(xts + xts)))) = s(s(s(s(xts)))) + xts
+... oriented to rule
+	s(s(s(s(xts)))) + xts -> s(s(s(s(xts + xts))))
++++ added new clause(s)
+	s(s(s(s(s(xts + xts))))) = s(s(s(s(s(xts))))) + xts
+... to conjectures
++++ active wrap
+	s(.) = s(.) + .
+... with sequence
+	s(s(xts + xts)) = s(s(xts)) + xts
+	s(s(s(xts + xts))) = s(s(s(xts))) + xts
+	s(s(s(s(xts + xts)))) = s(s(s(s(xts)))) + xts
++++ primal grammar found for head
+	{+, s}
+... and wrap
+	s(.) = s(.) + .
++++ Presburger system  = {
+	^f1(0; xts) -> xts + xts
+	^f1($n1 + 1; xts) -> s(^f1($n1; xts))
+	^f2(0; xts) -> xts
+	^f2($n2 + 1; xts) -> s(^f2($n2; xts))
++++ }
++++ Lemma(s)           = 
+	s(s(^f1($n; xts))) = s(s(^f2($n; xts))) + xts
+--- clause
+	s(s(s(s(s(xts + xts))))) = s(s(s(s(s(xts))))) + xts
+... subsumed by lemma
+	s(s(^f1($n; xts))) = s(s(^f2($n; xts))) + xts
+... with substitution
+	$n <- 3
+
++++ Status of the Inference System
+--- Conjectures:
+	app(yts, cons(xts3, cons(xts2, cons(xts1, app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))))))) = app(app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))), cons(xts3, cons(xts2, cons(xts1, yts))))
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	s(y) + y -> s(y + y)
+	s(s(xts)) + xts -> s(s(xts + xts))
+	app(app(x, x), x) -> app(x, app(x, x))
+	s(s(s(xts))) + xts -> s(s(s(xts + xts)))
+	s(s(s(s(xts)))) + xts -> s(s(s(s(xts + xts))))
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) -> app(app(yts, cons(xts, yts)), cons(xts, yts))
+	app(yts, cons(xts2, cons(xts1, app(yts, cons(xts2, cons(xts1, yts)))))) -> app(app(yts, cons(xts2, cons(xts1, yts))), cons(xts2, cons(xts1, yts)))
+--- Primal Grammar:
++++ Presburger system  = {
+	^f1(0; xts) -> xts + xts
+	^f1($n1 + 1; xts) -> s(^f1($n1; xts))
+	^f2(0; xts) -> xts
+	^f2($n2 + 1; xts) -> s(^f2($n2; xts))
++++ }
++++ Lemma(s)           = 
+	s(s(^f1($n; xts))) = s(s(^f2($n; xts))) + xts
+
++++ treating clause
+	app(yts, cons(xts3, cons(xts2, cons(xts1, app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))))))) = app(app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))), cons(xts3, cons(xts2, cons(xts1, yts))))
++++ inductive narrowing on conjecture
+	app(yts, cons(xts3, cons(xts2, cons(xts1, app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))))))) = app(app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))), cons(xts3, cons(xts2, cons(xts1, yts))))
+... induction variables of
+	app(yts, cons(xts3, cons(xts2, cons(xts1, app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))))))) = app(app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))), cons(xts3, cons(xts2, cons(xts1, yts))))
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(yts, cons(xts3, cons(xts2, cons(xts1, app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))))))) = app(app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))), cons(xts3, cons(xts2, cons(xts1, yts))))
+... with variable yts
++++ creating new conjecture
+	app(nil, cons(xts3, cons(xts2, cons(xts1, app(nil, cons(xts3, cons(xts2, cons(xts1, nil)))))))) = app(app(nil, cons(xts3, cons(xts2, cons(xts1, nil)))), cons(xts3, cons(xts2, cons(xts1, nil))))
++++ creating new conjecture
+	app(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, app(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, cons(xts4, yts))))))))) = app(app(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, cons(xts4, yts))))), cons(xts3, cons(xts2, cons(xts1, cons(xts4, yts)))))
+--- clause
+	app(nil, cons(xts3, cons(xts2, cons(xts1, app(nil, cons(xts3, cons(xts2, cons(xts1, nil)))))))) = app(app(nil, cons(xts3, cons(xts2, cons(xts1, nil)))), cons(xts3, cons(xts2, cons(xts1, nil))))
+... reduced to tautology
+	cons(xts3, cons(xts2, cons(xts1, cons(xts3, cons(xts2, cons(xts1, nil)))))) = cons(xts3, cons(xts2, cons(xts1, cons(xts3, cons(xts2, cons(xts1, nil))))))
+--- clause
+	app(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, app(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, cons(xts4, yts))))))))) = app(app(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, cons(xts4, yts))))), cons(xts3, cons(xts2, cons(xts1, cons(xts4, yts)))))
+... reduced in 4 steps to
+	cons(xts4, app(yts, cons(xts3, cons(xts2, cons(xts1, cons(xts4, app(yts, cons(xts3, cons(xts2, cons(xts1, cons(xts4, yts))))))))))) = cons(xts4, app(app(yts, cons(xts3, cons(xts2, cons(xts1, cons(xts4, yts))))), cons(xts3, cons(xts2, cons(xts1, cons(xts4, yts))))))
+... decomposed into new clause(s)
+	app(yts, cons(xts4, cons(xts3, cons(xts2, cons(xts1, app(yts, cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts)))))))))) = app(app(yts, cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts))))), cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts)))))
++++ inductive narrowing succeeded
+--- clause
+	app(yts, cons(xts3, cons(xts2, cons(xts1, app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))))))) = app(app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))), cons(xts3, cons(xts2, cons(xts1, yts))))
+... oriented to rule
+	app(yts, cons(xts3, cons(xts2, cons(xts1, app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))))))) -> app(app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))), cons(xts3, cons(xts2, cons(xts1, yts))))
++++ added new clause(s)
+	app(yts, cons(xts4, cons(xts3, cons(xts2, cons(xts1, app(yts, cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts)))))))))) = app(app(yts, cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts))))), cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts)))))
+... to conjectures
++++ active wrap
+	app(yts, cons(., .)) = app(app(yts, cons(., .)), cons(., .))
+... with sequence
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) = app(app(yts, cons(xts, yts)), cons(xts, yts))
+	app(yts, cons(xts2, cons(xts1, app(yts, cons(xts2, cons(xts1, yts)))))) = app(app(yts, cons(xts2, cons(xts1, yts))), cons(xts2, cons(xts1, yts)))
+	app(yts, cons(xts3, cons(xts2, cons(xts1, app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))))))) = app(app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))), cons(xts3, cons(xts2, cons(xts1, yts))))
++++ primal grammar found for head
+	{app, cons}
+... and wrap
+	app(yts, cons(., .)) = app(app(yts, cons(., .)), cons(., .))
++++ Presburger system  = {
+	^f3(0; yts, xts@) -> yts
+	^f3($n3 + 1; yts, xts@) -> cons(xts$n3, ^f3($n3; yts, xts@))
+	^f4(0, $n3; yts, xts@) -> app(yts, cons(xts0, ^f3($n3; yts, xts@)))
+	^f4($n4 + 1, $n3; yts, xts@) -> cons(xts$n4, ^f4($n4, $n3 + 1; yts, xts@))
++++ }
++++ Lemma(s)           = 
+	app(yts, cons(xts$n, ^f4($n, 0; yts, xts@))) = app(app(yts, cons(xts$n, ^f3($n; yts, xts))), cons(xts$n, ^f3($n; yts, xts)))
+--- clause
+	app(yts, cons(xts4, cons(xts3, cons(xts2, cons(xts1, app(yts, cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts)))))))))) = app(app(yts, cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts))))), cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts)))))
+... subsumed by lemma
+	app(yts, cons(xts$n, ^f4($n, 0; yts, xts@))) = app(app(yts, cons(xts$n, ^f3($n; yts, xts))), cons(xts$n, ^f3($n; yts, xts)))
+... with substitution
+	$n <- 3
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	s(y) + y -> s(y + y)
+	s(s(xts)) + xts -> s(s(xts + xts))
+	app(app(x, x), x) -> app(x, app(x, x))
+	s(s(s(xts))) + xts -> s(s(s(xts + xts)))
+	s(s(s(s(xts)))) + xts -> s(s(s(s(xts + xts))))
+	app(yts, cons(xts, app(yts, cons(xts, yts)))) -> app(app(yts, cons(xts, yts)), cons(xts, yts))
+	app(yts, cons(xts2, cons(xts1, app(yts, cons(xts2, cons(xts1, yts)))))) -> app(app(yts, cons(xts2, cons(xts1, yts))), cons(xts2, cons(xts1, yts)))
+	app(yts, cons(xts3, cons(xts2, cons(xts1, app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))))))) -> app(app(yts, cons(xts3, cons(xts2, cons(xts1, yts)))), cons(xts3, cons(xts2, cons(xts1, yts))))
+--- Primal Grammar:
++++ Presburger system  = {
+	^f1(0; xts) -> xts + xts
+	^f1($n1 + 1; xts) -> s(^f1($n1; xts))
+	^f2(0; xts) -> xts
+	^f2($n2 + 1; xts) -> s(^f2($n2; xts))
+	^f3(0; yts, xts@) -> yts
+	^f3($n3 + 1; yts, xts@) -> cons(xts$n3, ^f3($n3; yts, xts@))
+	^f4(0, $n3; yts, xts@) -> app(yts, cons(xts0, ^f3($n3; yts, xts@)))
+	^f4($n4 + 1, $n3; yts, xts@) -> cons(xts$n4, ^f4($n4, $n3 + 1; yts, xts@))
++++ }
++++ Lemma(s)           = 
+	s(s(^f1($n; xts))) = s(s(^f2($n; xts))) + xts
+	app(yts, cons(xts$n, ^f4($n, 0; yts, xts@))) = app(app(yts, cons(xts$n, ^f3($n; yts, xts))), cons(xts$n, ^f3($n; yts, xts)))
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 8
+... Number of induction steps      = 8
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Number of PG defined symbols   = 4
+... Number of PG lemmas            = 2
+... Elapsed time (seconds)         = 0.014

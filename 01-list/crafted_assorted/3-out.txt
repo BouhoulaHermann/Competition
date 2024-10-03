@@ -1,0 +1,438 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 3-in.txt
++++ output      = 3-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LIST from list successfully parsed
++++ specification LENGTH from length successfully parsed
++++ specification BOOL from bool successfully parsed
++++ specification EQ from eq successfully parsed
++++ specification COUNT from count successfully parsed
++++ specification ListCountngth from 3-in.txt successfully parsed
++++ Listing
+         1: specification ListCountngth
+         2: sorts
+         3:      bool list nat
+         4: constructors
+         5:      0: -> nat
+         6:      cons: nat list -> list
+         7:      false: -> bool
+         8:      nil: -> list
+         9:      s: nat -> nat
+        10:      true: -> bool
+        11: defined functions
+        12:      ==: nat nat -> bool
+        13:      count: nat list -> nat
+        14:      len: list -> nat
+        15: precedence
+        16:      count > len > == > cons > nil > s > 0 > false = true
+        17: axioms
+        18:      len(nil) = 0;
+        19:      0 == 0 = true;
+        20:      0 == s(x) = false;
+        21:      count(x, nil) = 0;
+        22:      s(x) == 0 = false;
+        23:      s(x) == s(y) = x == y;
+        24:      len(cons(x, y)) = s(len(y));
+        25:      x == y = false => count(x, cons(y, ys)) = count(x, ys);
+        26:      x == y = true => count(x, cons(y, ys)) = s(count(x, ys));
+        27: conjectures
+        28:      count(z, x) = count(z, y) => len(x) = len(y);
+        29: end
++++ finitary sorts: bool
++++ Rewrite System 
+	len(nil) -> 0
+	0 == 0 -> true
+	0 == s(x) -> false
+	count(x, nil) -> 0
+	s(x) == 0 -> false
+	s(x) == s(y) -> x == y
+	len(cons(x, y)) -> s(len(y))
+	x == y = false => count(x, cons(y, ys)) -> count(x, ys)
+	x == y = true => count(x, cons(y, ys)) -> s(count(x, ys))
++++ inductive positions:
+... for ==: 0 1
+... for count: 1
+... for len: 0
++++ maximal depths of left-hand sides:
+... for count: 2
+... for ==: 2
+... for len: 2
++++ general maximal depth = 2
++++ sort dependence: nat < list
++++ test sets for defined functions and sorts:
+... for count
+... ... list
+		nil
+		cons(x, y)
+... for len
+... ... list
+		nil
+		cons(x, y)
+... for ==
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	count(z, x) = count(z, y) => len(x) = len(y)
+
++++ inference system initiated
++++ treating clause
+	count(z, x) = count(z, y) => len(x) = len(y)
++++ inductive narrowing on conjecture
+	count(z, x) = count(z, y) => len(x) = len(y)
+... induction variables of
+	count(z, x) = count(z, y) => len(x) = len(y)
+... are:
+	x:list
+	y:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	count(z, x) = count(z, y) => len(x) = len(y)
+... with variable x
++++ creating new conjecture
+	count(z, nil) = count(z, y) => len(nil) = len(y)
++++ creating new conjecture
+	count(z, cons(xts, yts)) = count(z, y) => len(cons(xts, yts)) = len(y)
+--- clause
+	count(z, nil) = count(z, y) => len(nil) = len(y)
+... reduced in 2 steps to
+	0 = count(z, y) => 0 = len(y)
+--- clause
+	count(z, cons(xts, yts)) = count(z, y) => len(cons(xts, yts)) = len(y)
+... reduced in 1 step to
+	count(z, cons(xts, yts)) = count(z, y) => s(len(yts)) = len(y)
++++ inductive narrowing succeeded
+--- non-orientable clause
+	len(x) = len(y)
++++ moved
+	count(z, x) = count(z, y) => len(x) = len(y)
+... to non-orientable hypotheses
++++ added new clause(s)
+	0 = count(z, y) => 0 = len(y)
+	count(z, cons(xts, yts)) = count(z, y) => s(len(yts)) = len(y)
+... to conjectures
+--- succeeded to apply non-orientable hypothese
+	count(z, x) = count(z, y) => len(x) = len(y)
+... to clause
+	count(z, cons(xts, yts)) = count(z, y) => s(len(yts)) = len(y)
+... modified clause
+	len(cons(xts, yts)) = len(y) => s(len(yts)) = len(y)
+--- clause
+	len(cons(xts, yts)) = len(y) => s(len(yts)) = len(y)
+... reduced in 1 step to
+	s(len(yts)) = len(y) => s(len(yts)) = len(y)
+--- condition
+	s(len(yts)) = len(y)
+... is equal to consequent
+	s(len(yts)) = len(y)
+... in clause
+	s(len(yts)) = len(y) => s(len(yts)) = len(y)
+... and is therefore discared (always true)
+
++++ Status of the Inference System
+--- Conjectures:
+	0 = count(z, y) => 0 = len(y)
+--- Non-orientable hypotheses:
+	count(z, x) = count(z, y) => len(x) = len(y)
+--- Oriented hypotheses:
+	<empty>
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	0 = count(z, y) => 0 = len(y)
++++ inductive narrowing on conjecture
+	0 = count(z, y) => 0 = len(y)
+... induction variables of
+	0 = count(z, y) => 0 = len(y)
+... are:
+	y:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	0 = count(z, y) => 0 = len(y)
+... with variable y
++++ creating new conjecture
+	0 = count(z, nil) => 0 = len(nil)
++++ creating new conjecture
+	0 = count(z, cons(xts, yts)) => 0 = len(cons(xts, yts))
+--- clause
+	0 = count(z, nil) => 0 = len(nil)
+... reduced to tautology
+	0 = 0
+--- clause
+	0 = count(z, cons(xts, yts)) => 0 = len(cons(xts, yts))
+... reduced in 1 step to
+	0 = count(z, cons(xts, yts)) => 0 = s(len(yts))
++++ inductive narrowing succeeded
+--- clause
+	0 = count(z, y) => 0 = len(y)
+... oriented to rule
+	0 = count(z, y) => len(y) -> 0
++++ added new clause(s)
+	0 = count(z, cons(xts, yts)) => 0 = s(len(yts))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	0 = count(z, cons(xts, yts)) => 0 = s(len(yts))
+--- Non-orientable hypotheses:
+	count(z, x) = count(z, y) => len(x) = len(y)
+--- Oriented hypotheses:
+	0 = count(z, y) => len(y) -> 0
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	0 = count(z, cons(xts, yts)) => 0 = s(len(yts))
++++ inductive narrowing on conjecture
+	0 = count(z, cons(xts, yts)) => 0 = s(len(yts))
+... induction variables of
+	0 = count(z, cons(xts, yts)) => 0 = s(len(yts))
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	0 = count(z, cons(xts, yts)) => 0 = s(len(yts))
+... with variable yts
++++ creating new conjecture
+	0 = count(z, cons(xts, nil)) => 0 = s(len(nil))
++++ creating new conjecture
+	0 = count(z, cons(xts2, cons(xts1, yts))) => 0 = s(len(cons(xts1, yts)))
+--- clause
+	0 = count(z, cons(xts, nil)) => 0 = s(len(nil))
+... reduced in 1 step to
+	0 = count(z, cons(xts, nil)) => 0 = s(0)
+--- clause
+	0 = count(z, cons(xts2, cons(xts1, yts))) => 0 = s(len(cons(xts1, yts)))
+... reduced in 1 step to
+	0 = count(z, cons(xts2, cons(xts1, yts))) => 0 = s(s(len(yts)))
++++ inductive narrowing succeeded
+--- clause
+	0 = count(z, cons(xts, yts)) => 0 = s(len(yts))
+... oriented to rule
+	0 = count(z, cons(xts, yts)) => s(len(yts)) -> 0
++++ added new clause(s)
+	0 = count(z, cons(xts, nil)) => 0 = s(0)
+	0 = count(z, cons(xts2, cons(xts1, yts))) => 0 = s(s(len(yts)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	0 = count(z, cons(xts, nil)) => 0 = s(0)
+	0 = count(z, cons(xts2, cons(xts1, yts))) => 0 = s(s(len(yts)))
+--- Non-orientable hypotheses:
+	count(z, x) = count(z, y) => len(x) = len(y)
+--- Oriented hypotheses:
+	0 = count(z, y) => len(y) -> 0
+	0 = count(z, cons(xts, yts)) => s(len(yts)) -> 0
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	0 = count(z, cons(xts, nil)) => 0 = s(0)
+--- no new clauses created
++++ attempting case rewriting
++++ case rewriting generated new clauses
+    which have been subsequently reduced to tautologies,
+    therefore no new clauses were added
+
++++ Status of the Inference System
+--- Conjectures:
+	0 = count(z, cons(xts2, cons(xts1, yts))) => 0 = s(s(len(yts)))
+--- Non-orientable hypotheses:
+	count(z, x) = count(z, y) => len(x) = len(y)
+--- Oriented hypotheses:
+	0 = count(z, y) => len(y) -> 0
+	0 = count(z, cons(xts, yts)) => s(len(yts)) -> 0
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	0 = count(z, cons(xts2, cons(xts1, yts))) => 0 = s(s(len(yts)))
++++ inductive narrowing on conjecture
+	0 = count(z, cons(xts2, cons(xts1, yts))) => 0 = s(s(len(yts)))
+... induction variables of
+	0 = count(z, cons(xts2, cons(xts1, yts))) => 0 = s(s(len(yts)))
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	0 = count(z, cons(xts2, cons(xts1, yts))) => 0 = s(s(len(yts)))
+... with variable yts
++++ creating new conjecture
+	0 = count(z, cons(xts2, cons(xts1, nil))) => 0 = s(s(len(nil)))
++++ creating new conjecture
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, yts)))) => 0 = s(s(len(cons(xts1, yts))))
+--- clause
+	0 = count(z, cons(xts2, cons(xts1, nil))) => 0 = s(s(len(nil)))
+... reduced in 1 step to
+	0 = count(z, cons(xts2, cons(xts1, nil))) => 0 = s(s(0))
+--- clause
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, yts)))) => 0 = s(s(len(cons(xts1, yts))))
+... reduced in 1 step to
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, yts)))) => 0 = s(s(s(len(yts))))
++++ inductive narrowing succeeded
+--- clause
+	0 = count(z, cons(xts2, cons(xts1, yts))) => 0 = s(s(len(yts)))
+... oriented to rule
+	0 = count(z, cons(xts2, cons(xts1, yts))) => s(s(len(yts))) -> 0
++++ added new clause(s)
+	0 = count(z, cons(xts2, cons(xts1, nil))) => 0 = s(s(0))
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, yts)))) => 0 = s(s(s(len(yts))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	0 = count(z, cons(xts2, cons(xts1, nil))) => 0 = s(s(0))
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, yts)))) => 0 = s(s(s(len(yts))))
+--- Non-orientable hypotheses:
+	count(z, x) = count(z, y) => len(x) = len(y)
+--- Oriented hypotheses:
+	0 = count(z, y) => len(y) -> 0
+	0 = count(z, cons(xts, yts)) => s(len(yts)) -> 0
+	0 = count(z, cons(xts2, cons(xts1, yts))) => s(s(len(yts))) -> 0
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	0 = count(z, cons(xts2, cons(xts1, nil))) => 0 = s(s(0))
+--- no new clauses created
++++ attempting case rewriting
++++ case rewriting generated new clauses
+    which have been subsequently reduced to tautologies,
+    therefore no new clauses were added
+
++++ Status of the Inference System
+--- Conjectures:
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, yts)))) => 0 = s(s(s(len(yts))))
+--- Non-orientable hypotheses:
+	count(z, x) = count(z, y) => len(x) = len(y)
+--- Oriented hypotheses:
+	0 = count(z, y) => len(y) -> 0
+	0 = count(z, cons(xts, yts)) => s(len(yts)) -> 0
+	0 = count(z, cons(xts2, cons(xts1, yts))) => s(s(len(yts))) -> 0
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, yts)))) => 0 = s(s(s(len(yts))))
++++ inductive narrowing on conjecture
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, yts)))) => 0 = s(s(s(len(yts))))
+... induction variables of
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, yts)))) => 0 = s(s(s(len(yts))))
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, yts)))) => 0 = s(s(s(len(yts))))
+... with variable yts
++++ creating new conjecture
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, nil)))) => 0 = s(s(s(len(nil))))
++++ creating new conjecture
+	0 = count(z, cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts))))) => 0 = s(s(s(len(cons(xts1, yts)))))
+--- clause
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, nil)))) => 0 = s(s(s(len(nil))))
+... reduced in 1 step to
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, nil)))) => 0 = s(s(s(0)))
+--- clause
+	0 = count(z, cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts))))) => 0 = s(s(s(len(cons(xts1, yts)))))
+... reduced in 1 step to
+	0 = count(z, cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts))))) => 0 = s(s(s(s(len(yts)))))
++++ inductive narrowing succeeded
+--- clause
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, yts)))) => 0 = s(s(s(len(yts))))
+... oriented to rule
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, yts)))) => s(s(s(len(yts)))) -> 0
++++ added new clause(s)
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, nil)))) => 0 = s(s(s(0)))
+	0 = count(z, cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts))))) => 0 = s(s(s(s(len(yts)))))
+... to conjectures
++++ active wrap
+	0 = count(z, cons(., .)) => 0 = s(.)
+... with sequence
+	0 = count(z, cons(xts, yts)) => 0 = s(len(yts))
+	0 = count(z, cons(xts2, cons(xts1, yts))) => 0 = s(s(len(yts)))
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, yts)))) => 0 = s(s(s(len(yts))))
++++ primal grammar found for head
+	{0, cons, count, len, s}
+... and wrap
+	0 = count(z, cons(., .)) => 0 = s(.)
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> cons(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
++++ }
++++ Lemma(s)           = 
+	0 = count(z, cons(xts$n, ^f0($n; yts, xts@))) => 0 = s(^f1($n; yts))
+--- clause
+	0 = count(z, cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts))))) => 0 = s(s(s(s(len(yts)))))
+... subsumed by lemma
+	0 = count(z, cons(xts$n, ^f0($n; yts, xts@))) => 0 = s(^f1($n; yts))
+... with substitution
+	$n <- 3
+
++++ Status of the Inference System
+--- Conjectures:
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, nil)))) => 0 = s(s(s(0)))
+--- Non-orientable hypotheses:
+	count(z, x) = count(z, y) => len(x) = len(y)
+--- Oriented hypotheses:
+	0 = count(z, y) => len(y) -> 0
+	0 = count(z, cons(xts, yts)) => s(len(yts)) -> 0
+	0 = count(z, cons(xts2, cons(xts1, yts))) => s(s(len(yts))) -> 0
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, yts)))) => s(s(s(len(yts)))) -> 0
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> cons(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
++++ }
++++ Lemma(s)           = 
+	0 = count(z, cons(xts$n, ^f0($n; yts, xts@))) => 0 = s(^f1($n; yts))
+
++++ treating clause
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, nil)))) => 0 = s(s(s(0)))
+--- no new clauses created
++++ attempting case rewriting
++++ case rewriting generated new clauses
+    which have been subsequently reduced to tautologies,
+    therefore no new clauses were added
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	count(z, x) = count(z, y) => len(x) = len(y)
+--- Oriented hypotheses:
+	0 = count(z, y) => len(y) -> 0
+	0 = count(z, cons(xts, yts)) => s(len(yts)) -> 0
+	0 = count(z, cons(xts2, cons(xts1, yts))) => s(s(len(yts))) -> 0
+	0 = count(z, cons(xts3, cons(xts2, cons(xts1, yts)))) => s(s(s(len(yts)))) -> 0
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> cons(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
++++ }
++++ Lemma(s)           = 
+	0 = count(z, cons(xts$n, ^f0($n; yts, xts@))) => 0 = s(^f1($n; yts))
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 8
+... Number of induction steps      = 5
+... Number of equational steps     = 1
+... Number of case rewriting steps = 3
+... Number of PG defined symbols   = 2
+... Number of PG lemmas            = 1
+... Elapsed time (seconds)         = 0.007

@@ -1,0 +1,107 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = zeroadd-in.txt
++++ output      = zeroadd-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification zeroadd from zeroadd-in.txt successfully parsed
++++ Listing
+         1: specification zeroadd
+         2: sorts
+         3:      nat
+         4: constructors
+         5:      0: -> nat
+         6:      s: nat -> nat
+         7: defined functions
+         8:      +: nat nat -> nat
+         9: precedence
+        10:      + > s > 0
+        11: axioms
+        12:      0 + x = x;
+        13:      s(x) + y = s(x + y);
+        14: conjectures
+        15:      x + 0 = x;
+        16: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	0 + x -> x
+	s(x) + y -> s(x + y)
++++ inductive positions:
+... for +: 0
++++ maximal depths of left-hand sides:
+... for +: 2
++++ general maximal depth = 2
++++ sort dependence: <empty>
++++ test sets for defined functions and sorts:
+... for +
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	x + 0 = x
+
++++ inference system initiated
++++ treating clause
+	x + 0 = x
++++ inductive narrowing on conjecture
+	x + 0 = x
+... induction variables of
+	x + 0 = x
+... are:
+	x:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	x + 0 = x
+... with variable x
++++ creating new conjecture
+	0 + 0 = 0
++++ creating new conjecture
+	s(xts) + 0 = s(xts)
+--- clause
+	0 + 0 = 0
+... reduced to tautology
+	0 = 0
+--- clause
+	s(xts) + 0 = s(xts)
+... reduced in 1 step to
+	s(xts + 0) = s(xts)
+... decomposed into new clause(s)
+	xts + 0 = xts
++++ inductive narrowing succeeded
+--- clause
+	x + 0 = x
+... oriented to rule
+	x + 0 -> x
++++ added new clause(s)
+	xts + 0 = xts
+... to conjectures
+--- clause
+	xts + 0 = xts
+... reduced to tautology
+	xts = xts
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	x + 0 -> x
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 1
+... Number of induction steps      = 1
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0

@@ -1,0 +1,15 @@
+specification LenRev
+
+include
+	<length>
+	<reverse>
+
+precedence
+	
+	rev > len > app > s > 0 > cons > nil
+
+conjectures
+
+	len(rev(x)) = len(x);
+
+end

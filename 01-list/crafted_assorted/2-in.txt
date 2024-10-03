@@ -1,0 +1,24 @@
+specification ListLenGetCount
+
+include <length>
+	<count>
+	<gtid>
+
+constructors
+	outOfBounds: -> nat
+
+defined functions
+	get: list nat -> nat
+
+precedence
+	count > get = len > > = == > cons > nil > outOfBounds > s > 0 > true = false
+
+axioms
+	get(nil, x) = outOfBounds;
+	get(cons(x,y), 0) = x;
+	get(cons(x, y), s(z)) = get(y, z);
+
+conjectures
+	len(x) > 0 = true & get(x, y) = z => count(z, v) > 0 = true;
+
+end

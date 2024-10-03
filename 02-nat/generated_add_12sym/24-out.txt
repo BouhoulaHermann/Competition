@@ -1,0 +1,115 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 24-in.txt
++++ output      = 24-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification ADD from add successfully parsed
++++ specification Generated from 24-in.txt successfully parsed
++++ Listing
+         1: specification Generated
+         2: sorts
+         3:      nat
+         4: constructors
+         5:      0: -> nat
+         6:      s: nat -> nat
+         7: defined functions
+         8:      +: nat nat -> nat
+         9: precedence
+        10:      + > s > 0
+        11: axioms
+        12:      x + 0 = x;
+        13:      x + s(y) = s(x + y);
+        14: conjectures
+        15:      s(s(s(s(s(s(x)) + (s(0) + (s(0) + y)))))) = (s(s(s(s(x)) + s(s(s(s(y)))))) + 0) + 0;
+        16: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	x + 0 -> x
+	x + s(y) -> s(x + y)
++++ inductive positions:
+... for +: 1
++++ maximal depths of left-hand sides:
+... for +: 2
++++ general maximal depth = 2
++++ sort dependence: <empty>
++++ test sets for defined functions and sorts:
+... for +
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	s(s(s(s(s(s(x)) + (s(0) + (s(0) + y)))))) = (s(s(s(s(x)) + s(s(s(s(y)))))) + 0) + 0
+
++++ inference system initiated
+--- clause
+	s(s(s(s(s(s(x)) + (s(0) + (s(0) + y)))))) = (s(s(s(s(x)) + s(s(s(s(y)))))) + 0) + 0
+... reduced in 6 steps to
+	s(s(s(s(s(s(x)) + (s(0) + (s(0) + y)))))) = s(s(s(s(s(s(s(s(x)) + y))))))
+... decomposed into new clause(s)
+	s(s(x)) + (s(0) + (s(0) + y)) = s(s(s(s(x)) + y))
++++ treating clause
+	s(s(x)) + (s(0) + (s(0) + y)) = s(s(s(s(x)) + y))
++++ inductive narrowing on conjecture
+	s(s(x)) + (s(0) + (s(0) + y)) = s(s(s(s(x)) + y))
+... induction variables of
+	s(s(x)) + (s(0) + (s(0) + y)) = s(s(s(s(x)) + y))
+... are:
+	y:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	s(s(x)) + (s(0) + (s(0) + y)) = s(s(s(s(x)) + y))
+... with variable y
++++ creating new conjecture
+	s(s(x)) + (s(0) + (s(0) + 0)) = s(s(s(s(x)) + 0))
++++ creating new conjecture
+	s(s(x)) + (s(0) + (s(0) + s(xts))) = s(s(s(s(x)) + s(xts)))
+--- clause
+	s(s(x)) + (s(0) + (s(0) + 0)) = s(s(s(s(x)) + 0))
+... reduced to tautology
+	s(s(s(s(x)))) = s(s(s(s(x))))
+--- clause
+	s(s(x)) + (s(0) + (s(0) + s(xts))) = s(s(s(s(x)) + s(xts)))
+... reduced in 4 steps to
+	s(s(s(x)) + (s(0) + (s(0) + xts))) = s(s(s(s(s(x)) + xts)))
+... decomposed into new clause(s)
+	s(s(x)) + (s(0) + (s(0) + xts)) = s(s(s(s(x)) + xts))
++++ inductive narrowing succeeded
+--- clause
+	s(s(x)) + (s(0) + (s(0) + y)) = s(s(s(s(x)) + y))
+... oriented to rule
+	s(s(x)) + (s(0) + (s(0) + y)) -> s(s(s(s(x)) + y))
++++ added new clause(s)
+	s(s(x)) + (s(0) + (s(0) + xts)) = s(s(s(s(x)) + xts))
+... to conjectures
+--- clause
+	s(s(x)) + (s(0) + (s(0) + xts)) = s(s(s(s(x)) + xts))
+... reduced to tautology
+	s(s(s(s(x)) + xts)) = s(s(s(s(x)) + xts))
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	s(s(x)) + (s(0) + (s(0) + y)) -> s(s(s(s(x)) + y))
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 1
+... Number of induction steps      = 1
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0

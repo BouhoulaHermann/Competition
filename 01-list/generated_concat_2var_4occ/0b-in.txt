@@ -1,0 +1,11 @@
+specification ListFunctions
+
+include <appendsymb>
+
+precedence
+	@@ > .. > nil
+
+conjectures
+	(x @@ (y @@ (x @@ x))) = (x @@ y) @@ (x @@ x);
+
+end

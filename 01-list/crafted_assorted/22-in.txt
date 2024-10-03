@@ -1,0 +1,15 @@
+specification Appendv
+
+include
+	<append>
+	<reverse>
+
+precedence
+	
+	rev > app > s > 0 > cons > nil
+
+conjectures
+
+	rev(app(x,y)) = app(rev(y), rev(x));
+
+end

@@ -1,0 +1,325 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 0-in.txt
++++ output      = 0-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LIST from list successfully parsed
++++ specification APPEND from append successfully parsed
++++ specification TREE from tree successfully parsed
++++ specification FLATTEN from flatten successfully parsed
++++ specification CraftedTrees from 0-in.txt successfully parsed
++++ Listing
+         1: specification CraftedTrees
+         2: sorts
+         3:      list nat tree
+         4: constructors
+         5:      0: -> nat
+         6:      cons: nat list -> list
+         7:      leaf: -> tree
+         8:      nil: -> list
+         9:      node: tree nat tree -> tree
+        10:      s: nat -> nat
+        11: defined functions
+        12:      app: list list -> list
+        13:      flatten: tree -> list
+        14:      flatten2: tree list -> list
+        15: precedence
+        16:      flatten = flatten2 > app > cons > node > leaf > nil > s > 0
+        17: axioms
+        18:      app(nil, y) = y;
+        19:      flatten(leaf) = nil;
+        20:      flatten2(leaf, x) = x;
+        21:      app(cons(x, y), z) = cons(x, app(y, z));
+        22:      flatten(node(xl, y, xr)) = app(flatten(xl), cons(y, flatten(xr)));
+        23:      flatten2(node(x, y, z), v) = flatten2(x, cons(y, flatten2(z, v)));
+        24: conjectures
+        25:      app(flatten(x), y) = flatten2(x, y);
+        26: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	app(nil, y) -> y
+	flatten(leaf) -> nil
+	flatten2(leaf, x) -> x
+	app(cons(x, y), z) -> cons(x, app(y, z))
+	flatten(node(xl, y, xr)) -> app(flatten(xl), cons(y, flatten(xr)))
+	flatten2(node(x, y, z), v) -> flatten2(x, cons(y, flatten2(z, v)))
++++ inductive positions:
+... for app: 0
+... for flatten: 0
+... for flatten2: 0
++++ maximal depths of left-hand sides:
+... for flatten2: 2
+... for flatten: 2
+... for app: 2
++++ general maximal depth = 2
++++ sort dependence: nat < tree < list
++++ test sets for defined functions and sorts:
+... for flatten2
+... ... tree
+		leaf
+		node(x, y, z)
+... for flatten
+... ... tree
+		leaf
+		node(x, y, z)
+... for app
+... ... list
+		nil
+		cons(x, y)
+
++++ conjecture(s)
+	app(flatten(x), y) = flatten2(x, y)
+
++++ inference system initiated
++++ treating clause
+	app(flatten(x), y) = flatten2(x, y)
++++ inductive narrowing on conjecture
+	app(flatten(x), y) = flatten2(x, y)
+... induction variables of
+	app(flatten(x), y) = flatten2(x, y)
+... are:
+	x:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(flatten(x), y) = flatten2(x, y)
+... with variable x
++++ creating new conjecture
+	app(flatten(leaf), y) = flatten2(leaf, y)
++++ creating new conjecture
+	app(flatten(node(xts, yts, zts)), y) = flatten2(node(xts, yts, zts), y)
+--- clause
+	app(flatten(leaf), y) = flatten2(leaf, y)
+... reduced to tautology
+	y = y
+--- clause
+	app(flatten(node(xts, yts, zts)), y) = flatten2(node(xts, yts, zts), y)
+... reduced in 2 steps to
+	app(app(flatten(xts), cons(yts, flatten(zts))), y) = flatten2(xts, cons(yts, flatten2(zts, y)))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(flatten(x), y) = flatten2(x, y)
++++ moved
+	app(flatten(x), y) = flatten2(x, y)
+... to non-orientable hypotheses
++++ added new clause(s)
+	app(app(flatten(xts), cons(yts, flatten(zts))), y) = flatten2(xts, cons(yts, flatten2(zts, y)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	app(app(flatten(xts), cons(yts, flatten(zts))), y) = flatten2(xts, cons(yts, flatten2(zts, y)))
+--- Non-orientable hypotheses:
+	app(flatten(x), y) = flatten2(x, y)
+--- Oriented hypotheses:
+	<empty>
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	app(app(flatten(xts), cons(yts, flatten(zts))), y) = flatten2(xts, cons(yts, flatten2(zts, y)))
++++ inductive narrowing on conjecture
+	app(app(flatten(xts), cons(yts, flatten(zts))), y) = flatten2(xts, cons(yts, flatten2(zts, y)))
+... induction variables of
+	app(app(flatten(xts), cons(yts, flatten(zts))), y) = flatten2(xts, cons(yts, flatten2(zts, y)))
+... are:
+	xts:tree
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(app(flatten(xts), cons(yts, flatten(zts))), y) = flatten2(xts, cons(yts, flatten2(zts, y)))
+... with variable xts
++++ creating new conjecture
+	app(app(flatten(leaf), cons(yts, flatten(zts))), y) = flatten2(leaf, cons(yts, flatten2(zts, y)))
++++ creating new conjecture
+	app(app(flatten(node(xts, yts2, zts2)), cons(yts1, flatten(zts1))), y) = flatten2(node(xts, yts2, zts2), cons(yts1, flatten2(zts1, y)))
+--- clause
+	app(app(flatten(leaf), cons(yts, flatten(zts))), y) = flatten2(leaf, cons(yts, flatten2(zts, y)))
+... reduced in 4 steps to
+	cons(yts, app(flatten(zts), y)) = cons(yts, flatten2(zts, y))
+--- clause
+	app(app(flatten(node(xts, yts2, zts2)), cons(yts1, flatten(zts1))), y) = flatten2(node(xts, yts2, zts2), cons(yts1, flatten2(zts1, y)))
+... reduced in 2 steps to
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
+... decomposed into new clause(s)
+	app(flatten(zts), y) = flatten2(zts, y)
+--- clause
+	app(flatten(zts), y) = flatten2(zts, y)
+... subsumed by hypothese
+	app(flatten(x), y) = flatten2(x, y)
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(app(flatten(xts), cons(yts, flatten(zts))), y) = flatten2(xts, cons(yts, flatten2(zts, y)))
++++ moved
+	app(app(flatten(xts), cons(yts, flatten(zts))), y) = flatten2(xts, cons(yts, flatten2(zts, y)))
+... to non-orientable hypotheses
++++ added new clause(s)
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
+--- Non-orientable hypotheses:
+	app(flatten(x), y) = flatten2(x, y)
+	app(app(flatten(xts), cons(yts, flatten(zts))), y) = flatten2(xts, cons(yts, flatten2(zts, y)))
+--- Oriented hypotheses:
+	<empty>
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
++++ inductive narrowing on conjecture
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
+... induction variables of
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
+... are:
+	xts:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
+... with variable xts
++++ creating new conjecture
+	app(app(app(flatten(leaf), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(leaf, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
++++ creating new conjecture
+	app(app(app(flatten(node(xts, yts3, zts3)), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(node(xts, yts3, zts3), cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
+--- clause
+	app(app(app(flatten(leaf), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(leaf, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
+... reduced in 5 steps to
+	cons(yts2, app(app(flatten(zts2), cons(yts1, flatten(zts1))), y)) = cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y))))
+--- clause
+	app(app(app(flatten(node(xts, yts3, zts3)), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(node(xts, yts3, zts3), cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
+... reduced in 2 steps to
+	app(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))
+... decomposed into new clause(s)
+	app(app(flatten(zts2), cons(yts, flatten(zts1))), y) = flatten2(zts2, cons(yts, flatten2(zts1, y)))
+--- clause
+	app(app(flatten(zts2), cons(yts, flatten(zts1))), y) = flatten2(zts2, cons(yts, flatten2(zts1, y)))
+... subsumed by hypothese
+	app(app(flatten(xts), cons(yts, flatten(zts))), y) = flatten2(xts, cons(yts, flatten2(zts, y)))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
++++ moved
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
+... to non-orientable hypotheses
++++ added new clause(s)
+	app(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	app(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))
+--- Non-orientable hypotheses:
+	app(flatten(x), y) = flatten2(x, y)
+	app(app(flatten(xts), cons(yts, flatten(zts))), y) = flatten2(xts, cons(yts, flatten2(zts, y)))
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
+--- Oriented hypotheses:
+	<empty>
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	app(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))
++++ inductive narrowing on conjecture
+	app(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))
+... induction variables of
+	app(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))
+... are:
+	xts:tree
+	zts1:tree
+	zts2:tree
+	zts3:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	app(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))
+... with variable xts
++++ creating new conjecture
+	app(app(app(app(flatten(leaf), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(leaf, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))
++++ creating new conjecture
+	app(app(app(app(flatten(node(xts, yts4, zts4)), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(node(xts, yts4, zts4), cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))
+--- clause
+	app(app(app(app(flatten(leaf), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(leaf, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))
+... reduced in 6 steps to
+	cons(yts3, app(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y)) = cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y))))))
+--- clause
+	app(app(app(app(flatten(node(xts, yts4, zts4)), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(node(xts, yts4, zts4), cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))
+... reduced in 2 steps to
+	app(app(app(app(app(flatten(xts), cons(yts4, flatten(zts4))), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts4, flatten2(zts4, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))))
+... decomposed into new clause(s)
+	app(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
+--- clause
+	app(app(app(flatten(zts3), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
+... subsumed by hypothese
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
++++ inductive narrowing succeeded
+--- non-orientable clause
+	app(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))
++++ moved
+	app(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))
+... to non-orientable hypotheses
++++ added new clause(s)
+	app(app(app(app(app(flatten(xts), cons(yts4, flatten(zts4))), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts4, flatten2(zts4, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))))
+... to conjectures
++++ active wrap
+	app(app(., cons(yts, flatten(zts))), y) = flatten2(xts, cons(., flatten2(., .)))
+... with sequence
+	app(app(flatten(xts), cons(yts, flatten(zts))), y) = flatten2(xts, cons(yts, flatten2(zts, y)))
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
+	app(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))
++++ primal grammar found for head
+	{app, cons, flatten, flatten2}
+... and wrap
+	app(app(., cons(yts, flatten(zts))), y) = flatten2(xts, cons(., flatten2(., .)))
++++ Presburger system  = {
+	^f0(0; xts, yts@, zts@) -> flatten(xts)
+	^f0($n0 + 1; xts, yts@, zts@) -> app(^f0($n0; xts, yts@, zts@), cons(yts$n0, flatten(zts$n0)))
+	^f1(0; y, yts@, zts@) -> y
+	^f1($n1 + 1; y, yts@, zts@) -> cons(yts$n1, flatten2(zts$n1, ^f1($n1; y, yts@, zts@)))
++++ }
++++ Lemma(s)           = 
+	app(app(^f0($n; xts, yts@, zts@), cons(yts$n, flatten(zts$n))), y) = flatten2(xts, cons(yts$n, flatten2(zts$n, ^f1($n; y, yts@, zts@))))
+--- clause
+	app(app(app(app(app(flatten(xts), cons(yts4, flatten(zts4))), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts4, flatten2(zts4, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))))
+... subsumed by lemma
+	app(app(^f0($n; xts, yts@, zts@), cons(yts$n, flatten(zts$n))), y) = flatten2(xts, cons(yts$n, flatten2(zts$n, ^f1($n; y, yts@, zts@))))
+... with substitution
+	$n <- 3
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	app(flatten(x), y) = flatten2(x, y)
+	app(app(flatten(xts), cons(yts, flatten(zts))), y) = flatten2(xts, cons(yts, flatten2(zts, y)))
+	app(app(app(flatten(xts), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))
+	app(app(app(app(flatten(xts), cons(yts3, flatten(zts3))), cons(yts2, flatten(zts2))), cons(yts1, flatten(zts1))), y) = flatten2(xts, cons(yts3, flatten2(zts3, cons(yts2, flatten2(zts2, cons(yts1, flatten2(zts1, y)))))))
+--- Oriented hypotheses:
+	<empty>
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; xts, yts@, zts@) -> flatten(xts)
+	^f0($n0 + 1; xts, yts@, zts@) -> app(^f0($n0; xts, yts@, zts@), cons(yts$n0, flatten(zts$n0)))
+	^f1(0; y, yts@, zts@) -> y
+	^f1($n1 + 1; y, yts@, zts@) -> cons(yts$n1, flatten2(zts$n1, ^f1($n1; y, yts@, zts@)))
++++ }
++++ Lemma(s)           = 
+	app(app(^f0($n; xts, yts@, zts@), cons(yts$n, flatten(zts$n))), y) = flatten2(xts, cons(yts$n, flatten2(zts$n, ^f1($n; y, yts@, zts@))))
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 4
+... Number of induction steps      = 4
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Number of PG defined symbols   = 2
+... Number of PG lemmas            = 1
+... Elapsed time (seconds)         = 0.016

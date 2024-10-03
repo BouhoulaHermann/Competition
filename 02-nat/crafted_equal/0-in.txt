@@ -1,0 +1,23 @@
+specification Crafted
+
+include <nat>
+	<bool>
+
+defined functions
+	eq: nat nat nat -> bool
+
+precedence
+	eq > s > 0 > true = false
+
+axioms
+	eq(0,0,0) = true;
+	eq(0,s(y),z) = false;
+	eq(0,y,s(z)) = false;
+	eq(s(x),0,z) = false;
+	eq(s(x),y,0) = false;
+	eq(s(x),s(y),s(z)) = eq(x,y,z);
+
+conjectures
+	eq(x,x,x) = true;
+
+end

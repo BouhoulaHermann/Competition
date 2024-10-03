@@ -1,0 +1,181 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 0-in.txt
++++ output      = 0-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LIST from list successfully parsed
++++ specification APPEND from append successfully parsed
++++ specification TREE from tree successfully parsed
++++ specification FLATTEN from flatten successfully parsed
++++ specification BOOL from bool successfully parsed
++++ specification AND from and successfully parsed
++++ specification EQ from eq successfully parsed
++++ specification MIRROR from mirror successfully parsed
++++ specification REVERSE from reverse successfully parsed
++++ specification CraftedTrees from 0-in.txt successfully parsed
++++ Listing
+         1: specification CraftedTrees
+         2: sorts
+         3:      bool list nat tree
+         4: constructors
+         5:      0: -> nat
+         6:      cons: nat list -> list
+         7:      false: -> bool
+         8:      leaf: -> tree
+         9:      nil: -> list
+        10:      node: tree nat tree -> tree
+        11:      s: nat -> nat
+        12:      true: -> bool
+        13: defined functions
+        14:      &&: bool bool -> bool
+        15:      ==: nat nat -> bool
+        16:      app: list list -> list
+        17:      flatten: tree -> list
+        18:      mirror: tree tree -> bool
+        19:      rev: list -> list
+        20: precedence
+        21:      mirror > rev > app > flatten > == > && > cons > node > leaf > nil > s > 0 > false = true
+        22: axioms
+        23:      0 == 0 = true;
+        24:      rev(nil) = nil;
+        25:      app(nil, y) = y;
+        26:      0 == s(x) = false;
+        27:      s(x) == 0 = false;
+        28:      flatten(leaf) = nil;
+        29:      true && true = true;
+        30:      false && true = false;
+        31:      s(x) == s(y) = x == y;
+        32:      true && false = false;
+        33:      false && false = false;
+        34:      mirror(leaf, leaf) = true;
+        35:      mirror(leaf, node(x, y, z)) = false;
+        36:      mirror(node(x, y, z), leaf) = false;
+        37:      app(cons(x, y), z) = cons(x, app(y, z));
+        38:      rev(cons(x, y)) = app(rev(y), cons(x, nil));
+        39:      flatten(node(xl, y, xr)) = app(flatten(xl), cons(y, flatten(xr)));
+        40:      mirror(node(u, v, w), node(x, y, z)) = (v == y) && (mirror(u, z) && mirror(w, x));
+        41: conjectures
+        42:      mirror(x, y) = true => rev(flatten(x)) = flatten(y);
+        43: end
++++ finitary sorts: bool
++++ Rewrite System 
+	0 == 0 -> true
+	rev(nil) -> nil
+	app(nil, y) -> y
+	0 == s(x) -> false
+	s(x) == 0 -> false
+	flatten(leaf) -> nil
+	true && true -> true
+	false && true -> false
+	s(x) == s(y) -> x == y
+	true && false -> false
+	false && false -> false
+	mirror(leaf, leaf) -> true
+	mirror(leaf, node(x, y, z)) -> false
+	mirror(node(x, y, z), leaf) -> false
+	app(cons(x, y), z) -> cons(x, app(y, z))
+	rev(cons(x, y)) -> app(rev(y), cons(x, nil))
+	app(flatten(xl), cons(y, flatten(xr))) -> flatten(node(xl, y, xr))
+	mirror(node(u, v, w), node(x, y, z)) -> (v == y) && (mirror(u, z) && mirror(w, x))
++++ inductive positions:
+... for &&: 0 1
+... for ==: 0 1
+... for app: 0 1 1.1
+... for flatten: 0
+... for mirror: 0 1
+... for rev: 0
++++ maximal depths of left-hand sides:
+... for flatten: 1
+... for &&: 1
+... for app: 3
+... for mirror: 2
+... for rev: 2
+... for ==: 2
++++ general maximal depth = 3
++++ sort dependence: nat < tree < list
++++ test sets for defined functions and sorts:
+... for rev
+... ... list
+		nil
+		cons(x, y)
+... for mirror
+... ... tree
+		leaf
+		node(x, y, z)
+... for flatten
+... ... tree
+		x
+... for ==
+... ... nat
+		0
+		s(x)
+... for app
+... ... list
+		nil
+		cons(0, nil)
+		cons(s(x), nil)
+		cons(0, cons(x, y))
+		cons(s(x), cons(y, z))
+... for &&
+... ... bool
+		x
+
++++ conjecture(s)
+	mirror(x, y) = true => rev(flatten(x)) = flatten(y)
+
++++ inference system initiated
++++ treating clause
+	mirror(x, y) = true => rev(flatten(x)) = flatten(y)
++++ inductive narrowing on conjecture
+	mirror(x, y) = true => rev(flatten(x)) = flatten(y)
+... induction variables of
+	mirror(x, y) = true => rev(flatten(x)) = flatten(y)
+... are:
+	x:tree
+	y:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	mirror(x, y) = true => rev(flatten(x)) = flatten(y)
+... with variable x
++++ creating new conjecture
+	mirror(xts, y) = true => rev(flatten(xts)) = flatten(y)
++++ inductive narrowing succeeded
+--- non-orientable clause
+	rev(flatten(x)) = flatten(y)
++++ moved
+	mirror(x, y) = true => rev(flatten(x)) = flatten(y)
+... to non-orientable hypotheses
++++ added new clause(s)
+	mirror(xts, y) = true => rev(flatten(xts)) = flatten(y)
+... to conjectures
+--- clause
+	mirror(xts, y) = true => rev(flatten(xts)) = flatten(y)
+... subsumed by hypothese
+	mirror(x, y) = true => rev(flatten(x)) = flatten(y)
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	mirror(x, y) = true => rev(flatten(x)) = flatten(y)
+--- Oriented hypotheses:
+	<empty>
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 1
+... Number of induction steps      = 1
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.025

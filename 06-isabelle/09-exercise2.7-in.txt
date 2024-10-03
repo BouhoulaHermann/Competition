@@ -1,0 +1,62 @@
+# Programming and Proving In Isabelle/HOL
+# page 18
+#
+# Traverse a tree in pre- and post-order.
+
+specification PREandPOSTorder
+
+sorts
+
+	nat list tree
+
+constructors
+
+	0: -> nat
+	s: nat -> nat
+	nil: -> list
+	: : nat list -> list		# cons
+	leaf: -> tree
+	node: tree nat tree -> tree
+
+defined functions
+
+	app: list list -> list
+	rev: list -> list
+	preorder, postorder: tree -> list
+	mirror: tree -> tree
+
+precedence
+
+	preorder = postorder >
+	mirror >
+	rev >
+	app >
+	node >
+	: >
+	leaf >
+	nil >
+	s >
+	0
+
+axioms
+
+	app(nil, y) = y;
+	app(x : y, z) = x : app(y, z);
+
+	rev(nil) = nil;
+	rev(x : y) = app(rev(y), x : nil);
+
+	mirror(leaf) = leaf;
+	mirror(node(xl, y, xr)) = node(mirror(xr), y, mirror(xl));
+
+	preorder(leaf) = nil;
+	preorder(node(xl, y, xr)) = y : app(preorder(xl), preorder(xr));
+	
+	postorder(leaf) = nil;
+	postorder(node(xl, y, xr)) = app(app(postorder(xl), postorder(xr)), y : nil);
+	
+conjectures
+
+	preorder(mirror(xt)) = rev(postorder(xt));
+	
+end

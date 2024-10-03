@@ -1,0 +1,11 @@
+specification ListFunc
+
+include <prefix>
+
+precedence
+	pref > app > && > == > cons > nil > s > 0 > true = false
+
+conjectures
+	pref(x, app(x,y)) = true;
+
+end

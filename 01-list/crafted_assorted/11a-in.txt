@@ -1,0 +1,13 @@
+specification LengthOfList
+
+include <mult>
+	<append>
+	<length>
+
+precedence
+	* > + > len > app  > cons > nil> s > 0
+
+conjectures
+	len(app(x, app(x, x))) = len(x) * s(s(s(0)));
+
+end

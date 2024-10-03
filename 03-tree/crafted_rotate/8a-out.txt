@@ -1,0 +1,322 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 8a-in.txt
++++ output      = 8a-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification TREE from tree successfully parsed
++++ specification ADD from add successfully parsed
++++ specification SIZE from size successfully parsed
++++ specification ADDalt from addalt successfully parsed
++++ specification ROTATE from rotate successfully parsed
++++ specification CraftedTrees from 8a-in.txt successfully parsed
++++ Listing
+         1: specification CraftedTrees
+         2: sorts
+         3:      nat tree
+         4: constructors
+         5:      0: -> nat
+         6:      leaf: -> tree
+         7:      node: tree nat tree -> tree
+         8:      s: nat -> nat
+         9: defined functions
+        10:      +: nat nat -> nat
+        11:      rotate: tree -> tree
+        12:      size: tree -> nat
+        13: precedence
+        14:      rotate > size > + > node > leaf > s > 0
+        15: axioms
+        16:      0 + y = y;
+        17:      x + 0 = x;
+        18:      size(leaf) = 0;
+        19:      rotate(leaf) = leaf;
+        20:      s(x) + y = s(x + y);
+        21:      x + s(y) = s(x + y);
+        22:      size(node(xl, y, xr)) = s(size(xl) + size(xr));
+        23:      rotate(node(xl, ya, xr)) = node(rotate(xr), ya, rotate(xl));
+        24: conjectures
+        25:      size(rotate(x)) = size(x);
+        26: end
++++ finitary sorts: <empty>
++++ Rewrite System 
+	0 + y -> y
+	x + 0 -> x
+	size(leaf) -> 0
+	rotate(leaf) -> leaf
+	s(x) + y -> s(x + y)
+	x + s(y) -> s(x + y)
+	size(node(xl, y, xr)) -> s(size(xl) + size(xr))
+	rotate(node(xl, ya, xr)) -> node(rotate(xr), ya, rotate(xl))
++++ inductive positions:
+... for +: 0 1
+... for rotate: 0
+... for size: 0
++++ maximal depths of left-hand sides:
+... for rotate: 2
+... for size: 2
+... for +: 2
++++ general maximal depth = 2
++++ sort dependence: nat < tree
++++ test sets for defined functions and sorts:
+... for size
+... ... tree
+		leaf
+		node(x, y, z)
+... for rotate
+... ... tree
+		leaf
+		node(x, y, z)
+... for +
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	size(rotate(x)) = size(x)
+
++++ inference system initiated
++++ treating clause
+	size(rotate(x)) = size(x)
++++ inductive narrowing on conjecture
+	size(rotate(x)) = size(x)
+... induction variables of
+	size(rotate(x)) = size(x)
+... are:
+	x:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	size(rotate(x)) = size(x)
+... with variable x
++++ creating new conjecture
+	size(rotate(leaf)) = size(leaf)
++++ creating new conjecture
+	size(rotate(node(xts, yts, zts))) = size(node(xts, yts, zts))
+--- clause
+	size(rotate(leaf)) = size(leaf)
+... reduced to tautology
+	0 = 0
+--- clause
+	size(rotate(node(xts, yts, zts))) = size(node(xts, yts, zts))
+... reduced in 3 steps to
+	s(size(rotate(zts)) + size(rotate(xts))) = s(size(xts) + size(zts))
+... decomposed into new clause(s)
+	size(rotate(zts)) + size(rotate(xts)) = size(xts) + size(zts)
++++ inductive narrowing succeeded
+--- clause
+	size(rotate(x)) = size(x)
+... oriented to rule
+	size(rotate(x)) -> size(x)
++++ added new clause(s)
+	size(rotate(zts)) + size(rotate(xts)) = size(xts) + size(zts)
+... to conjectures
+--- clause
+	size(rotate(zts)) + size(rotate(xts)) = size(xts) + size(zts)
+... reduced in 2 steps to
+	size(zts) + size(xts) = size(xts) + size(zts)
+
++++ Status of the Inference System
+--- Conjectures:
+	size(zts) + size(xts) = size(xts) + size(zts)
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	size(rotate(x)) -> size(x)
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	size(zts) + size(xts) = size(xts) + size(zts)
++++ inductive narrowing on conjecture
+	size(zts) + size(xts) = size(xts) + size(zts)
+... induction variables of
+	size(zts) + size(xts) = size(xts) + size(zts)
+... are:
+	xts:tree
+	zts:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	size(zts) + size(xts) = size(xts) + size(zts)
+... with variable xts
++++ creating new conjecture
+	size(zts) + size(leaf) = size(leaf) + size(zts)
++++ creating new conjecture
+	size(zts2) + size(node(xts, yts, zts1)) = size(node(xts, yts, zts1)) + size(zts2)
+--- clause
+	size(zts) + size(leaf) = size(leaf) + size(zts)
+... reduced to tautology
+	size(zts) = size(zts)
+--- clause
+	size(zts2) + size(node(xts, yts, zts1)) = size(node(xts, yts, zts1)) + size(zts2)
+... reduced in 4 steps to
+	s(size(zts2) + (size(xts) + size(zts1))) = s((size(xts) + size(zts1)) + size(zts2))
+... decomposed into new clause(s)
+	size(zts2) + (size(xts) + size(zts1)) = (size(xts) + size(zts1)) + size(zts2)
++++ inductive narrowing succeeded
+--- non-orientable clause
+	size(zts) + size(xts) = size(xts) + size(zts)
++++ moved
+	size(zts) + size(xts) = size(xts) + size(zts)
+... to non-orientable hypotheses
++++ added new clause(s)
+	size(zts2) + (size(xts) + size(zts1)) = (size(xts) + size(zts1)) + size(zts2)
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	size(zts2) + (size(xts) + size(zts1)) = (size(xts) + size(zts1)) + size(zts2)
+--- Non-orientable hypotheses:
+	size(zts) + size(xts) = size(xts) + size(zts)
+--- Oriented hypotheses:
+	size(rotate(x)) -> size(x)
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	size(zts2) + (size(xts) + size(zts1)) = (size(xts) + size(zts1)) + size(zts2)
++++ inductive narrowing on conjecture
+	size(zts2) + (size(xts) + size(zts1)) = (size(xts) + size(zts1)) + size(zts2)
+... induction variables of
+	size(zts2) + (size(xts) + size(zts1)) = (size(xts) + size(zts1)) + size(zts2)
+... are:
+	xts:tree
+	zts1:tree
+	zts2:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	size(zts2) + (size(xts) + size(zts1)) = (size(xts) + size(zts1)) + size(zts2)
+... with variable xts
++++ creating new conjecture
+	size(zts2) + (size(leaf) + size(zts1)) = (size(leaf) + size(zts1)) + size(zts2)
++++ creating new conjecture
+	size(zts3) + (size(node(xts, yts, zts2)) + size(zts1)) = (size(node(xts, yts, zts2)) + size(zts1)) + size(zts3)
+--- clause
+	size(zts2) + (size(leaf) + size(zts1)) = (size(leaf) + size(zts1)) + size(zts2)
+... reduced in 4 steps to
+	size(zts2) + size(zts1) = size(zts1) + size(zts2)
+--- clause
+	size(zts3) + (size(node(xts, yts, zts2)) + size(zts1)) = (size(node(xts, yts, zts2)) + size(zts1)) + size(zts3)
+... reduced in 6 steps to
+	s(size(zts3) + ((size(xts) + size(zts2)) + size(zts1))) = s(((size(xts) + size(zts2)) + size(zts1)) + size(zts3))
+... decomposed into new clause(s)
+	size(zts3) + ((size(xts) + size(zts2)) + size(zts1)) = ((size(xts) + size(zts2)) + size(zts1)) + size(zts3)
+--- clause
+	size(zts2) + size(zts1) = size(zts1) + size(zts2)
+... subsumed by hypothese
+	size(zts) + size(xts) = size(xts) + size(zts)
++++ inductive narrowing succeeded
+--- non-orientable clause
+	size(zts2) + (size(xts) + size(zts1)) = (size(xts) + size(zts1)) + size(zts2)
++++ moved
+	size(zts2) + (size(xts) + size(zts1)) = (size(xts) + size(zts1)) + size(zts2)
+... to non-orientable hypotheses
++++ added new clause(s)
+	size(zts3) + ((size(xts) + size(zts2)) + size(zts1)) = ((size(xts) + size(zts2)) + size(zts1)) + size(zts3)
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	size(zts3) + ((size(xts) + size(zts2)) + size(zts1)) = ((size(xts) + size(zts2)) + size(zts1)) + size(zts3)
+--- Non-orientable hypotheses:
+	size(zts) + size(xts) = size(xts) + size(zts)
+	size(zts2) + (size(xts) + size(zts1)) = (size(xts) + size(zts1)) + size(zts2)
+--- Oriented hypotheses:
+	size(rotate(x)) -> size(x)
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	size(zts3) + ((size(xts) + size(zts2)) + size(zts1)) = ((size(xts) + size(zts2)) + size(zts1)) + size(zts3)
++++ inductive narrowing on conjecture
+	size(zts3) + ((size(xts) + size(zts2)) + size(zts1)) = ((size(xts) + size(zts2)) + size(zts1)) + size(zts3)
+... induction variables of
+	size(zts3) + ((size(xts) + size(zts2)) + size(zts1)) = ((size(xts) + size(zts2)) + size(zts1)) + size(zts3)
+... are:
+	xts:tree
+	zts1:tree
+	zts2:tree
+	zts3:tree
++++ perform INDUCTIVE NARROWING on conjecture 
+	size(zts3) + ((size(xts) + size(zts2)) + size(zts1)) = ((size(xts) + size(zts2)) + size(zts1)) + size(zts3)
+... with variable xts
++++ creating new conjecture
+	size(zts3) + ((size(leaf) + size(zts2)) + size(zts1)) = ((size(leaf) + size(zts2)) + size(zts1)) + size(zts3)
++++ creating new conjecture
+	size(zts4) + ((size(node(xts, yts, zts3)) + size(zts2)) + size(zts1)) = ((size(node(xts, yts, zts3)) + size(zts2)) + size(zts1)) + size(zts4)
+--- clause
+	size(zts3) + ((size(leaf) + size(zts2)) + size(zts1)) = ((size(leaf) + size(zts2)) + size(zts1)) + size(zts3)
+... reduced in 4 steps to
+	size(zts3) + (size(zts2) + size(zts1)) = (size(zts2) + size(zts1)) + size(zts3)
+--- clause
+	size(zts4) + ((size(node(xts, yts, zts3)) + size(zts2)) + size(zts1)) = ((size(node(xts, yts, zts3)) + size(zts2)) + size(zts1)) + size(zts4)
+... reduced in 8 steps to
+	s(size(zts4) + (((size(xts) + size(zts3)) + size(zts2)) + size(zts1))) = s((((size(xts) + size(zts3)) + size(zts2)) + size(zts1)) + size(zts4))
+... decomposed into new clause(s)
+	size(zts4) + (((size(xts) + size(zts3)) + size(zts2)) + size(zts1)) = (((size(xts) + size(zts3)) + size(zts2)) + size(zts1)) + size(zts4)
+--- clause
+	size(zts3) + (size(zts2) + size(zts1)) = (size(zts2) + size(zts1)) + size(zts3)
+... subsumed by hypothese
+	size(zts2) + (size(xts) + size(zts1)) = (size(xts) + size(zts1)) + size(zts2)
++++ inductive narrowing succeeded
+--- non-orientable clause
+	size(zts3) + ((size(xts) + size(zts2)) + size(zts1)) = ((size(xts) + size(zts2)) + size(zts1)) + size(zts3)
++++ moved
+	size(zts3) + ((size(xts) + size(zts2)) + size(zts1)) = ((size(xts) + size(zts2)) + size(zts1)) + size(zts3)
+... to non-orientable hypotheses
++++ added new clause(s)
+	size(zts4) + (((size(xts) + size(zts3)) + size(zts2)) + size(zts1)) = (((size(xts) + size(zts3)) + size(zts2)) + size(zts1)) + size(zts4)
+... to conjectures
++++ active wrap
+	size(.) + . = . + size(.)
+... with sequence
+	size(zts) + size(xts) = size(xts) + size(zts)
+	size(zts2) + (size(xts) + size(zts1)) = (size(xts) + size(zts1)) + size(zts2)
+	size(zts3) + ((size(xts) + size(zts2)) + size(zts1)) = ((size(xts) + size(zts2)) + size(zts1)) + size(zts3)
++++ primal grammar found for head
+	{+, size}
+... and wrap
+	size(.) + . = . + size(.)
++++ Presburger system  = {
+	^f0(0; xts, zts@) -> size(xts)
+	^f0($n0 + 1; xts, zts@) -> ^f0($n0; xts, zts@) + size(zts$n0)
++++ }
++++ Lemma(s)           = 
+	size(zts$n) + ^f0($n; xts, zts@) = ^f0($n; xts, zts) + size(zts$n)
+--- clause
+	size(zts4) + (((size(xts) + size(zts3)) + size(zts2)) + size(zts1)) = (((size(xts) + size(zts3)) + size(zts2)) + size(zts1)) + size(zts4)
+... subsumed by lemma
+	size(zts$n) + ^f0($n; xts, zts@) = ^f0($n; xts, zts) + size(zts$n)
+... with substitution
+	$n <- 3
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	size(zts) + size(xts) = size(xts) + size(zts)
+	size(zts2) + (size(xts) + size(zts1)) = (size(xts) + size(zts1)) + size(zts2)
+	size(zts3) + ((size(xts) + size(zts2)) + size(zts1)) = ((size(xts) + size(zts2)) + size(zts1)) + size(zts3)
+--- Oriented hypotheses:
+	size(rotate(x)) -> size(x)
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; xts, zts@) -> size(xts)
+	^f0($n0 + 1; xts, zts@) -> ^f0($n0; xts, zts@) + size(zts$n0)
++++ }
++++ Lemma(s)           = 
+	size(zts$n) + ^f0($n; xts, zts@) = ^f0($n; xts, zts) + size(zts$n)
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 4
+... Number of induction steps      = 4
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Number of PG defined symbols   = 1
+... Number of PG lemmas            = 1
+... Elapsed time (seconds)         = 0.01

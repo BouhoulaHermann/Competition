@@ -1,0 +1,239 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = test1-in.txt
++++ output      = test1-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 10
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification even2odd from test1-in.txt successfully parsed
++++ Listing
+         1: specification even2odd
+         2: sorts
+         3:      bool nat
+         4: constructors
+         5:      0: -> nat
+         6:      false: -> bool
+         7:      s: nat -> nat
+         8:      true: -> bool
+         9: defined functions
+        10:      +: nat nat -> nat
+        11:      even: nat -> bool
+        12:      odd: nat -> bool
+        13: precedence
+        14:      + > odd > even > s > 0 > false = true
+        15: axioms
+        16:      0 + x = x;
+        17:      even(0) = true;
+        18:      odd(0) = false;
+        19:      odd(s(0)) = true;
+        20:      even(s(0)) = false;
+        21:      s(x) + y = s(x + y);
+        22:      odd(s(s(x))) = odd(x);
+        23:      even(s(s(x))) = even(x);
+        24: conjectures
+        25:      x + 0 = x;
+        26:      x + s(y) = s(x + y);
+        27:      even(x + x) = true;
+        28: end
++++ finitary sorts: bool
++++ Rewrite System 
+	0 + x -> x
+	even(0) -> true
+	odd(0) -> false
+	odd(s(0)) -> true
+	even(s(0)) -> false
+	s(x) + y -> s(x + y)
+	odd(s(s(x))) -> odd(x)
+	even(s(s(x))) -> even(x)
++++ inductive positions:
+... for +: 0
+... for even: 0 0.0
+... for odd: 0 0.0
++++ maximal depths of left-hand sides:
+... for odd: 3
+... for even: 3
+... for +: 2
++++ general maximal depth = 3
++++ sort dependence: <empty>
++++ test sets for defined functions and sorts:
+... for odd
+... ... nat
+		0
+		s(0)
+		s(s(x))
+... for even
+... ... nat
+		0
+		s(0)
+		s(s(x))
+... for +
+... ... nat
+		0
+		s(x)
+
++++ conjecture(s)
+	x + 0 = x
+	x + s(y) = s(x + y)
+	even(x + x) = true
+
++++ inference system initiated
++++ treating clause
+	x + 0 = x
++++ inductive narrowing on conjecture
+	x + 0 = x
+... induction variables of
+	x + 0 = x
+... are:
+	x:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	x + 0 = x
+... with variable x
++++ creating new conjecture
+	0 + 0 = 0
++++ creating new conjecture
+	s(xts) + 0 = s(xts)
+--- clause
+	0 + 0 = 0
+... reduced to tautology
+	0 = 0
+--- clause
+	s(xts) + 0 = s(xts)
+... reduced in 1 step to
+	s(xts + 0) = s(xts)
+... decomposed into new clause(s)
+	xts + 0 = xts
++++ inductive narrowing succeeded
+--- clause
+	x + 0 = x
+... oriented to rule
+	x + 0 -> x
++++ added new clause(s)
+	xts + 0 = xts
+... to conjectures
+--- clause
+	xts + 0 = xts
+... reduced to tautology
+	xts = xts
+
++++ Status of the Inference System
+--- Conjectures:
+	x + s(y) = s(x + y)
+	even(x + x) = true
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	x + 0 -> x
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	x + s(y) = s(x + y)
++++ inductive narrowing on conjecture
+	x + s(y) = s(x + y)
+... induction variables of
+	x + s(y) = s(x + y)
+... are:
+	x:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	x + s(y) = s(x + y)
+... with variable x
++++ creating new conjecture
+	0 + s(y) = s(0 + y)
++++ creating new conjecture
+	s(xts) + s(y) = s(s(xts) + y)
+--- clause
+	0 + s(y) = s(0 + y)
+... reduced to tautology
+	s(y) = s(y)
+--- clause
+	s(xts) + s(y) = s(s(xts) + y)
+... reduced in 2 steps to
+	s(xts + s(y)) = s(s(xts + y))
+... decomposed into new clause(s)
+	xts + s(y) = s(xts + y)
++++ inductive narrowing succeeded
+--- clause
+	x + s(y) = s(x + y)
+... oriented to rule
+	x + s(y) -> s(x + y)
++++ added new clause(s)
+	xts + s(y) = s(xts + y)
+... to conjectures
+--- clause
+	xts + s(y) = s(xts + y)
+... reduced to tautology
+	s(xts + y) = s(xts + y)
+
++++ Status of the Inference System
+--- Conjectures:
+	even(x + x) = true
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	x + 0 -> x
+	x + s(y) -> s(x + y)
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	even(x + x) = true
++++ inductive narrowing on conjecture
+	even(x + x) = true
+... induction variables of
+	even(x + x) = true
+... are:
+	x:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	even(x + x) = true
+... with variable x
++++ creating new conjecture
+	even(0 + 0) = true
++++ creating new conjecture
+	even(s(xts) + s(xts)) = true
+--- clause
+	even(0 + 0) = true
+... reduced to tautology
+	true = true
+--- clause
+	even(s(xts) + s(xts)) = true
+... reduced in 2 steps to
+	even(s(s(xts + xts))) = true
++++ inductive narrowing succeeded
+--- clause
+	even(x + x) = true
+... oriented to rule
+	even(x + x) -> true
++++ added new clause(s)
+	even(s(s(xts + xts))) = true
+... to conjectures
+--- clause
+	even(s(s(xts + xts))) = true
+... reduced to tautology
+	true = true
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	x + 0 -> x
+	even(x + x) -> true
+	x + s(y) -> s(x + y)
+--- Primal Grammar:
+	<empty>
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 3
+... Number of induction steps      = 3
+... Number of equational steps     = 0
+... Number of case rewriting steps = 0
+... Elapsed time (seconds)         = 0.001

@@ -1,0 +1,1708 @@
++++ SPECIFICATION --- bidirectional branch, version 0.99
++++ Parameters:
+    ===========
++++ input       = 7-in.txt
++++ output      = 7-out.txt
++++ trace       = 3
++++ direction   = first-to-last
++++ drop        = yes
++++ verbose     = 3
++++ split       = 4
++++ loop limit  = 24
++++ stdlib      = /usr/local/lib/indy/stdlib/
+-----------------------------------------------------------------------
+
++++ specification NAT from nat successfully parsed
++++ specification LIST from list successfully parsed
++++ specification APPEND from append successfully parsed
++++ specification BOOL from bool successfully parsed
++++ specification AND from and successfully parsed
++++ specification EQ from eq successfully parsed
++++ specification PREFIX from prefix successfully parsed
++++ specification LENGTH from length successfully parsed
++++ specification EQlist from eqlist successfully parsed
++++ specification ListPrefixLength from 7-in.txt successfully parsed
++++ Listing
+         1: specification ListPrefixLength
+         2: sorts
+         3:      bool list nat
+         4: constructors
+         5:      0: -> nat
+         6:      cons: nat list -> list
+         7:      false: -> bool
+         8:      nil: -> list
+         9:      s: nat -> nat
+        10:      true: -> bool
+        11: defined functions
+        12:      &&: bool bool -> bool
+        13:      =:: list list -> bool
+        14:      ==: nat nat -> bool
+        15:      app: list list -> list
+        16:      len: list -> nat
+        17:      pref: list list -> bool
+        18: precedence
+        19:      =: = == > && > pref > len > app > cons > nil > s > 0 > false = true
+        20: axioms
+        21:      len(nil) = 0;
+        22:      0 == 0 = true;
+        23:      app(nil, y) = y;
+        24:      0 == s(x) = false;
+        25:      nil =: nil = true;
+        26:      s(x) == 0 = false;
+        27:      pref(nil, x) = true;
+        28:      true && true = true;
+        29:      false && true = false;
+        30:      s(x) == s(y) = x == y;
+        31:      true && false = false;
+        32:      false && false = false;
+        33:      cons(x, y) =: nil = false;
+        34:      nil =: cons(x, y) = false;
+        35:      len(cons(x, y)) = s(len(y));
+        36:      pref(cons(u, x), nil) = false;
+        37:      cons(x, y) =: cons(x, z) = y =: z;
+        38:      app(cons(x, y), z) = cons(x, app(y, z));
+        39:      pref(cons(u, x), cons(v, y)) = (u == v) && pref(x, y);
+        40: conjectures
+        41:      (pref(x, y) = true) & (len(x) = len(y)) => x =: y = true;
+        42: end
++++ finitary sorts: bool
++++ Rewrite System 
+	len(nil) -> 0
+	0 == 0 -> true
+	app(nil, y) -> y
+	0 == s(x) -> false
+	nil =: nil -> true
+	s(x) == 0 -> false
+	pref(nil, x) -> true
+	true && true -> true
+	false && true -> false
+	s(x) == s(y) -> x == y
+	true && false -> false
+	false && false -> false
+	cons(x, y) =: nil -> false
+	nil =: cons(x, y) -> false
+	len(cons(x, y)) -> s(len(y))
+	pref(cons(u, x), nil) -> false
+	cons(x, y) =: cons(x, z) -> y =: z
+	app(cons(x, y), z) -> cons(x, app(y, z))
+	(u == v) && pref(x, y) -> pref(cons(u, x), cons(v, y))
++++ inductive positions:
+... for &&: 0 1
+... for =:: 0 1
+... for ==: 0 1
+... for app: 0
+... for len: 0
+... for pref: 0 1
++++ maximal depths of left-hand sides:
+... for pref: 2
+... for =:: 2
+... for &&: 2
+... for app: 2
+... for ==: 2
+... for len: 2
++++ general maximal depth = 2
++++ sort dependence: nat < list
++++ test sets for defined functions and sorts:
+... for len
+... ... list
+		nil
+		cons(x, y)
+... for ==
+... ... nat
+		0
+		s(x)
+... for pref
+... ... list
+		nil
+		cons(x, y)
+... for =:
+... ... list
+		nil
+		cons(x, y)
+... for app
+... ... list
+		nil
+		cons(x, y)
+... for &&
+... ... bool
+		true
+		false
+
++++ conjecture(s)
+	(pref(x, y) = true) & (len(x) = len(y)) => x =: y = true
+
++++ inference system initiated
++++ treating clause
+	(pref(x, y) = true) & (len(x) = len(y)) => x =: y = true
++++ inductive narrowing on conjecture
+	(pref(x, y) = true) & (len(x) = len(y)) => x =: y = true
+... induction variables of
+	(pref(x, y) = true) & (len(x) = len(y)) => x =: y = true
+... are:
+	x:list
+	y:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(pref(x, y) = true) & (len(x) = len(y)) => x =: y = true
+... with variable x
++++ creating new conjecture
+	(pref(nil, y) = true) & (len(nil) = len(y)) => nil =: y = true
++++ creating new conjecture
+	(pref(cons(xts, yts), y) = true) & (len(cons(xts, yts)) = len(y)) => cons(xts, yts) =: y = true
+--- clause
+	(pref(nil, y) = true) & (len(nil) = len(y)) => nil =: y = true
+... reduced in 2 steps to
+	0 = len(y) => nil =: y = true
+--- clause
+	(pref(cons(xts, yts), y) = true) & (len(cons(xts, yts)) = len(y)) => cons(xts, yts) =: y = true
+... reduced in 1 step to
+	(pref(cons(xts, yts), y) = true) & (s(len(yts)) = len(y)) => cons(xts, yts) =: y = true
++++ inductive narrowing succeeded
+--- clause
+	(pref(x, y) = true) & (len(x) = len(y)) => x =: y = true
+... oriented to rule
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
++++ added new clause(s)
+	0 = len(y) => nil =: y = true
+	(pref(cons(xts, yts), y) = true) & (s(len(yts)) = len(y)) => cons(xts, yts) =: y = true
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	0 = len(y) => nil =: y = true
+	(pref(cons(xts, yts), y) = true) & (s(len(yts)) = len(y)) => cons(xts, yts) =: y = true
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	0 = len(y) => nil =: y = true
++++ inductive narrowing on conjecture
+	0 = len(y) => nil =: y = true
+... induction variables of
+	0 = len(y) => nil =: y = true
+... are:
+	y:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	0 = len(y) => nil =: y = true
+... with variable y
++++ creating new conjecture
+	0 = len(nil) => nil =: nil = true
++++ creating new conjecture
+	0 = len(cons(xts, yts)) => nil =: cons(xts, yts) = true
+--- clause
+	0 = len(nil) => nil =: nil = true
+... reduced to tautology
+	true = true
+--- clause
+	0 = len(cons(xts, yts)) => nil =: cons(xts, yts) = true
+... reduced in 2 steps to
+	0 = s(len(yts)) => false = true
++++ inductive narrowing succeeded
+--- clause
+	0 = len(y) => nil =: y = true
+... oriented to rule
+	0 = len(y) => nil =: y -> true
++++ added new clause(s)
+	0 = s(len(yts)) => false = true
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(pref(cons(xts, yts), y) = true) & (s(len(yts)) = len(y)) => cons(xts, yts) =: y = true
+	0 = s(len(yts)) => false = true
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(pref(cons(xts, yts), y) = true) & (s(len(yts)) = len(y)) => cons(xts, yts) =: y = true
++++ inductive narrowing on conjecture
+	(pref(cons(xts, yts), y) = true) & (s(len(yts)) = len(y)) => cons(xts, yts) =: y = true
+... induction variables of
+	(pref(cons(xts, yts), y) = true) & (s(len(yts)) = len(y)) => cons(xts, yts) =: y = true
+... are:
+	y:list
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(pref(cons(xts, yts), y) = true) & (s(len(yts)) = len(y)) => cons(xts, yts) =: y = true
+... with variable y
++++ creating new conjecture
+	(pref(cons(xts, yts), nil) = true) & (s(len(yts)) = len(nil)) => cons(xts, yts) =: nil = true
++++ creating new conjecture
+	(pref(cons(xts2, yts2), cons(xts1, yts1)) = true) & (s(len(yts2)) = len(cons(xts1, yts1))) => cons(xts2, yts2) =: cons(xts1, yts1) = true
+--- clause
+	(pref(cons(xts, yts), nil) = true) & (s(len(yts)) = len(nil)) => cons(xts, yts) =: nil = true
+... reduced in 3 steps to
+	(false = true) & (s(len(yts)) = 0) => false = true
+--- condition
+	false = true
+... is equal to consequent
+	false = true
+... in clause
+	(false = true) & (s(len(yts)) = 0) => false = true
+... and is therefore discared (always true)
+--- clause
+	(pref(cons(xts2, yts2), cons(xts1, yts1)) = true) & (s(len(yts2)) = len(cons(xts1, yts1))) => cons(xts2, yts2) =: cons(xts1, yts1) = true
+... reduced in 1 step to
+	(pref(cons(xts2, yts2), cons(xts1, yts1)) = true) & (s(len(yts2)) = s(len(yts1))) => cons(xts2, yts2) =: cons(xts1, yts1) = true
++++ inductive narrowing succeeded
+--- clause
+	(pref(cons(xts, yts), y) = true) & (s(len(yts)) = len(y)) => cons(xts, yts) =: y = true
+... oriented to rule
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
++++ added new clause(s)
+	(pref(cons(xts2, yts2), cons(xts1, yts1)) = true) & (s(len(yts2)) = s(len(yts1))) => cons(xts2, yts2) =: cons(xts1, yts1) = true
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	0 = s(len(yts)) => false = true
+	(pref(cons(xts2, yts2), cons(xts1, yts1)) = true) & (s(len(yts2)) = s(len(yts1))) => cons(xts2, yts2) =: cons(xts1, yts1) = true
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	0 = s(len(yts)) => false = true
++++ inductive narrowing on conjecture
+	0 = s(len(yts)) => false = true
+... induction variables of
+	0 = s(len(yts)) => false = true
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	0 = s(len(yts)) => false = true
+... with variable yts
++++ creating new conjecture
+	0 = s(len(nil)) => false = true
++++ creating new conjecture
+	0 = s(len(cons(xts, yts))) => false = true
+--- clause
+	0 = s(len(nil)) => false = true
+... reduced in 1 step to
+	0 = s(0) => false = true
+--- clause
+	0 = s(0) => false = true
+... contains a ground negative condition
+	0 = s(0)
+... and is therefore discarded (false => t is always true)
+--- clause
+	0 = s(len(cons(xts, yts))) => false = true
+... reduced in 1 step to
+	0 = s(s(len(yts))) => false = true
++++ inductive narrowing succeeded
+--- non-orientable clause
+	false = true
++++ moved
+	0 = s(len(yts)) => false = true
+... to non-orientable hypotheses
++++ added new clause(s)
+	0 = s(s(len(yts))) => false = true
+... to conjectures
+--- succeeded to apply non-orientable hypothese
+	0 = s(len(yts)) => false = true
+... to clause
+	0 = s(s(len(yts))) => false = true
+... modified clause
+	0 = s(s(len(yts))) => 0 = s(len(yts))
+
++++ Status of the Inference System
+--- Conjectures:
+	(pref(cons(xts2, yts2), cons(xts1, yts1)) = true) & (s(len(yts2)) = s(len(yts1))) => cons(xts2, yts2) =: cons(xts1, yts1) = true
+	0 = s(s(len(yts))) => 0 = s(len(yts))
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(pref(cons(xts2, yts2), cons(xts1, yts1)) = true) & (s(len(yts2)) = s(len(yts1))) => cons(xts2, yts2) =: cons(xts1, yts1) = true
++++ inductive narrowing on conjecture
+	(pref(cons(xts2, yts2), cons(xts1, yts1)) = true) & (s(len(yts2)) = s(len(yts1))) => cons(xts2, yts2) =: cons(xts1, yts1) = true
+... induction variables of
+	(pref(cons(xts2, yts2), cons(xts1, yts1)) = true) & (s(len(yts2)) = s(len(yts1))) => cons(xts2, yts2) =: cons(xts1, yts1) = true
+... are:
+	yts1:list
+	yts2:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(pref(cons(xts2, yts2), cons(xts1, yts1)) = true) & (s(len(yts2)) = s(len(yts1))) => cons(xts2, yts2) =: cons(xts1, yts1) = true
+... with variable yts1
++++ creating new conjecture
+	(pref(cons(xts2, yts), cons(xts1, nil)) = true) & (s(len(yts)) = s(len(nil))) => cons(xts2, yts) =: cons(xts1, nil) = true
++++ creating new conjecture
+	(pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true) & (s(len(yts2)) = s(len(cons(xts1, yts1)))) => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) = true
+--- clause
+	(pref(cons(xts2, yts), cons(xts1, nil)) = true) & (s(len(yts)) = s(len(nil))) => cons(xts2, yts) =: cons(xts1, nil) = true
+... reduced in 1 step to
+	(pref(cons(xts2, yts), cons(xts1, nil)) = true) & (s(len(yts)) = s(0)) => cons(xts2, yts) =: cons(xts1, nil) = true
+--- clause
+	(pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true) & (s(len(yts2)) = s(len(cons(xts1, yts1)))) => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) = true
+... reduced in 1 step to
+	(pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true) & (s(len(yts2)) = s(s(len(yts1)))) => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) = true
++++ inductive narrowing succeeded
+--- clause
+	(pref(cons(xts2, yts2), cons(xts1, yts1)) = true) & (s(len(yts2)) = s(len(yts1))) => cons(xts2, yts2) =: cons(xts1, yts1) = true
+... oriented to rule
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
++++ added new clause(s)
+	(pref(cons(xts2, yts), cons(xts1, nil)) = true) & (s(len(yts)) = s(0)) => cons(xts2, yts) =: cons(xts1, nil) = true
+	(pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true) & (s(len(yts2)) = s(s(len(yts1)))) => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) = true
+... to conjectures
+--- succeeded to apply non-orientable hypothese
+	0 = s(len(yts)) => false = true
+... to clause
+	0 = s(s(len(yts))) => 0 = s(len(yts))
+... modified clause
+	0 = s(s(len(yts))) => false = true
+
++++ Status of the Inference System
+--- Conjectures:
+	0 = s(s(len(yts))) => false = true
+	(pref(cons(xts2, yts), cons(xts1, nil)) = true) & (s(len(yts)) = s(0)) => cons(xts2, yts) =: cons(xts1, nil) = true
+	(pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true) & (s(len(yts2)) = s(s(len(yts1)))) => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) = true
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	0 = s(s(len(yts))) => false = true
++++ inductive narrowing on conjecture
+	0 = s(s(len(yts))) => false = true
+... induction variables of
+	0 = s(s(len(yts))) => false = true
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	0 = s(s(len(yts))) => false = true
+... with variable yts
++++ creating new conjecture
+	0 = s(s(len(nil))) => false = true
++++ creating new conjecture
+	0 = s(s(len(cons(xts, yts)))) => false = true
+--- clause
+	0 = s(s(len(nil))) => false = true
+... reduced in 1 step to
+	0 = s(s(0)) => false = true
+--- clause
+	0 = s(s(0)) => false = true
+... contains a ground negative condition
+	0 = s(s(0))
+... and is therefore discarded (false => t is always true)
+--- clause
+	0 = s(s(len(cons(xts, yts)))) => false = true
+... reduced in 1 step to
+	0 = s(s(s(len(yts)))) => false = true
++++ inductive narrowing succeeded
+--- non-orientable clause
+	false = true
+--- succeeded to apply non-orientable hypothese
+	0 = s(len(yts)) => false = true
+... to clause
+	0 = s(s(len(yts))) => false = true
+... modified clause
+	0 = s(s(len(yts))) => 0 = s(len(yts))
+
+--- clause
+	0 = s(s(len(yts))) => 0 = s(len(yts))
+... oriented to rule
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
++++ added new clause(s)
+	0 = s(s(s(len(yts)))) => false = true
+... to conjectures
+--- succeeded to apply non-orientable hypothese
+	0 = s(len(yts)) => false = true
+... to clause
+	0 = s(s(s(len(yts)))) => false = true
+... modified clause
+	0 = s(s(s(len(yts)))) => 0 = s(len(yts))
+
++++ Status of the Inference System
+--- Conjectures:
+	(pref(cons(xts2, yts), cons(xts1, nil)) = true) & (s(len(yts)) = s(0)) => cons(xts2, yts) =: cons(xts1, nil) = true
+	(pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true) & (s(len(yts2)) = s(s(len(yts1)))) => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) = true
+	0 = s(s(s(len(yts)))) => 0 = s(len(yts))
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(pref(cons(xts2, yts), cons(xts1, nil)) = true) & (s(len(yts)) = s(0)) => cons(xts2, yts) =: cons(xts1, nil) = true
++++ inductive narrowing on conjecture
+	(pref(cons(xts2, yts), cons(xts1, nil)) = true) & (s(len(yts)) = s(0)) => cons(xts2, yts) =: cons(xts1, nil) = true
+... induction variables of
+	(pref(cons(xts2, yts), cons(xts1, nil)) = true) & (s(len(yts)) = s(0)) => cons(xts2, yts) =: cons(xts1, nil) = true
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(pref(cons(xts2, yts), cons(xts1, nil)) = true) & (s(len(yts)) = s(0)) => cons(xts2, yts) =: cons(xts1, nil) = true
+... with variable yts
++++ creating new conjecture
+	(pref(cons(xts2, nil), cons(xts1, nil)) = true) & (s(len(nil)) = s(0)) => cons(xts2, nil) =: cons(xts1, nil) = true
++++ creating new conjecture
+	(pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true) & (s(len(cons(xts2, yts))) = s(0)) => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) = true
+--- clause
+	(pref(cons(xts2, nil), cons(xts1, nil)) = true) & (s(len(nil)) = s(0)) => cons(xts2, nil) =: cons(xts1, nil) = true
+... reduced in 1 step to
+	pref(cons(xts2, nil), cons(xts1, nil)) = true => cons(xts2, nil) =: cons(xts1, nil) = true
+--- clause
+	(pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true) & (s(len(cons(xts2, yts))) = s(0)) => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) = true
+... reduced in 1 step to
+	(pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true) & (s(s(len(yts))) = s(0)) => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) = true
++++ inductive narrowing succeeded
+--- clause
+	(pref(cons(xts2, yts), cons(xts1, nil)) = true) & (s(len(yts)) = s(0)) => cons(xts2, yts) =: cons(xts1, nil) = true
+... oriented to rule
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
++++ added new clause(s)
+	pref(cons(xts2, nil), cons(xts1, nil)) = true => cons(xts2, nil) =: cons(xts1, nil) = true
+	(pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true) & (s(s(len(yts))) = s(0)) => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) = true
+... to conjectures
+--- succeeded to apply non-orientable hypothese
+	0 = s(len(yts)) => false = true
+... to clause
+	0 = s(s(s(len(yts)))) => 0 = s(len(yts))
+... modified clause
+	0 = s(s(s(len(yts)))) => false = true
+
++++ Status of the Inference System
+--- Conjectures:
+	(pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true) & (s(len(yts2)) = s(s(len(yts1)))) => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) = true
+	0 = s(s(s(len(yts)))) => false = true
+	pref(cons(xts2, nil), cons(xts1, nil)) = true => cons(xts2, nil) =: cons(xts1, nil) = true
+	(pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true) & (s(s(len(yts))) = s(0)) => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) = true
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true) & (s(len(yts2)) = s(s(len(yts1)))) => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) = true
++++ inductive narrowing on conjecture
+	(pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true) & (s(len(yts2)) = s(s(len(yts1)))) => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) = true
+... induction variables of
+	(pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true) & (s(len(yts2)) = s(s(len(yts1)))) => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) = true
+... are:
+	yts1:list
+	yts2:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true) & (s(len(yts2)) = s(s(len(yts1)))) => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) = true
+... with variable yts1
++++ creating new conjecture
+	(pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true) & (s(len(yts)) = s(s(len(nil)))) => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) = true
++++ creating new conjecture
+	(pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true) & (s(len(yts2)) = s(s(len(cons(xts1, yts1))))) => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) = true
+--- clause
+	(pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true) & (s(len(yts)) = s(s(len(nil)))) => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) = true
+... reduced in 1 step to
+	(pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true) & (s(len(yts)) = s(s(0))) => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) = true
+--- clause
+	(pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true) & (s(len(yts2)) = s(s(len(cons(xts1, yts1))))) => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) = true
+... reduced in 1 step to
+	(pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true) & (s(len(yts2)) = s(s(s(len(yts1))))) => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) = true
++++ inductive narrowing succeeded
+--- clause
+	(pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true) & (s(len(yts2)) = s(s(len(yts1)))) => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) = true
+... oriented to rule
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
++++ added new clause(s)
+	(pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true) & (s(len(yts)) = s(s(0))) => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true) & (s(len(yts2)) = s(s(s(len(yts1))))) => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) = true
+... to conjectures
+--- succeeded to apply non-orientable hypothese
+	0 = s(len(yts)) => false = true
+... to clause
+	0 = s(s(s(len(yts)))) => false = true
+... modified clause
+	0 = s(s(s(len(yts)))) => 0 = s(len(yts))
+
++++ Status of the Inference System
+--- Conjectures:
+	0 = s(s(s(len(yts)))) => 0 = s(len(yts))
+	pref(cons(xts2, nil), cons(xts1, nil)) = true => cons(xts2, nil) =: cons(xts1, nil) = true
+	(pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true) & (s(s(len(yts))) = s(0)) => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) = true
+	(pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true) & (s(len(yts)) = s(s(0))) => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true) & (s(len(yts2)) = s(s(s(len(yts1))))) => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) = true
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	0 = s(s(s(len(yts)))) => 0 = s(len(yts))
++++ inductive narrowing on conjecture
+	0 = s(s(s(len(yts)))) => 0 = s(len(yts))
+... induction variables of
+	0 = s(s(s(len(yts)))) => 0 = s(len(yts))
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	0 = s(s(s(len(yts)))) => 0 = s(len(yts))
+... with variable yts
++++ creating new conjecture
+	0 = s(s(s(len(nil)))) => 0 = s(len(nil))
++++ creating new conjecture
+	0 = s(s(s(len(cons(xts, yts))))) => 0 = s(len(cons(xts, yts)))
+--- clause
+	0 = s(s(s(len(nil)))) => 0 = s(len(nil))
+... reduced in 2 steps to
+	0 = s(s(s(0))) => 0 = s(0)
+--- clause
+	0 = s(s(s(0))) => 0 = s(0)
+... contains a ground negative condition
+	0 = s(s(s(0)))
+... and is therefore discarded (false => t is always true)
+--- clause
+	0 = s(s(s(len(cons(xts, yts))))) => 0 = s(len(cons(xts, yts)))
+... reduced in 2 steps to
+	0 = s(s(s(s(len(yts))))) => 0 = s(s(len(yts)))
++++ inductive narrowing succeeded
+--- clause
+	0 = s(s(s(len(yts)))) => 0 = s(len(yts))
+... oriented to rule
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
++++ added new clause(s)
+	0 = s(s(s(s(len(yts))))) => 0 = s(s(len(yts)))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	pref(cons(xts2, nil), cons(xts1, nil)) = true => cons(xts2, nil) =: cons(xts1, nil) = true
+	(pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true) & (s(s(len(yts))) = s(0)) => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) = true
+	(pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true) & (s(len(yts)) = s(s(0))) => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true) & (s(len(yts2)) = s(s(s(len(yts1))))) => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) = true
+	0 = s(s(s(s(len(yts))))) => 0 = s(s(len(yts)))
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	pref(cons(xts2, nil), cons(xts1, nil)) = true => cons(xts2, nil) =: cons(xts1, nil) = true
+--- no new clauses created
++++ attempting case rewriting
++++ case rewriting generated new clauses
+    which have been subsequently reduced to tautologies,
+    therefore no new clauses were added
+
++++ Status of the Inference System
+--- Conjectures:
+	(pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true) & (s(s(len(yts))) = s(0)) => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) = true
+	(pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true) & (s(len(yts)) = s(s(0))) => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true) & (s(len(yts2)) = s(s(s(len(yts1))))) => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) = true
+	0 = s(s(s(s(len(yts))))) => 0 = s(s(len(yts)))
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true) & (s(s(len(yts))) = s(0)) => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) = true
++++ inductive narrowing on conjecture
+	(pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true) & (s(s(len(yts))) = s(0)) => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) = true
+... induction variables of
+	(pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true) & (s(s(len(yts))) = s(0)) => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) = true
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true) & (s(s(len(yts))) = s(0)) => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) = true
+... with variable yts
++++ creating new conjecture
+	(pref(cons(xts3, cons(xts2, nil)), cons(xts1, nil)) = true) & (s(s(len(nil))) = s(0)) => cons(xts3, cons(xts2, nil)) =: cons(xts1, nil) = true
++++ creating new conjecture
+	(pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true) & (s(s(len(cons(xts2, yts)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) = true
+--- clause
+	(pref(cons(xts3, cons(xts2, nil)), cons(xts1, nil)) = true) & (s(s(len(nil))) = s(0)) => cons(xts3, cons(xts2, nil)) =: cons(xts1, nil) = true
+... reduced in 1 step to
+	(pref(cons(xts3, cons(xts2, nil)), cons(xts1, nil)) = true) & (s(s(0)) = s(0)) => cons(xts3, cons(xts2, nil)) =: cons(xts1, nil) = true
+--- clause
+	(pref(cons(xts3, cons(xts2, nil)), cons(xts1, nil)) = true) & (s(s(0)) = s(0)) => cons(xts3, cons(xts2, nil)) =: cons(xts1, nil) = true
+... contains a ground negative condition
+	s(s(0)) = s(0)
+... and is therefore discarded (false => t is always true)
+--- clause
+	(pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true) & (s(s(len(cons(xts2, yts)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) = true
+... reduced in 1 step to
+	(pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true) & (s(s(s(len(yts)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) = true
++++ inductive narrowing succeeded
+--- clause
+	(pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true) & (s(s(len(yts))) = s(0)) => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) = true
+... oriented to rule
+	s(s(len(yts))) = s(0) & pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) -> true
++++ added new clause(s)
+	(pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true) & (s(s(s(len(yts)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) = true
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true) & (s(len(yts)) = s(s(0))) => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true) & (s(len(yts2)) = s(s(s(len(yts1))))) => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) = true
+	0 = s(s(s(s(len(yts))))) => 0 = s(s(len(yts)))
+	(pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true) & (s(s(s(len(yts)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) = true
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(s(len(yts))) = s(0) & pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true) & (s(len(yts)) = s(s(0))) => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) = true
++++ inductive narrowing on conjecture
+	(pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true) & (s(len(yts)) = s(s(0))) => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) = true
+... induction variables of
+	(pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true) & (s(len(yts)) = s(s(0))) => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) = true
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true) & (s(len(yts)) = s(s(0))) => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) = true
+... with variable yts
++++ creating new conjecture
+	(pref(cons(xts3, nil), cons(xts2, cons(xts1, nil))) = true) & (s(len(nil)) = s(s(0))) => cons(xts3, nil) =: cons(xts2, cons(xts1, nil)) = true
++++ creating new conjecture
+	(pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true) & (s(len(cons(xts3, yts))) = s(s(0))) => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) = true
+--- clause
+	(pref(cons(xts3, nil), cons(xts2, cons(xts1, nil))) = true) & (s(len(nil)) = s(s(0))) => cons(xts3, nil) =: cons(xts2, cons(xts1, nil)) = true
+... reduced in 1 step to
+	(pref(cons(xts3, nil), cons(xts2, cons(xts1, nil))) = true) & (s(0) = s(s(0))) => cons(xts3, nil) =: cons(xts2, cons(xts1, nil)) = true
+--- clause
+	(pref(cons(xts3, nil), cons(xts2, cons(xts1, nil))) = true) & (s(0) = s(s(0))) => cons(xts3, nil) =: cons(xts2, cons(xts1, nil)) = true
+... contains a ground negative condition
+	s(0) = s(s(0))
+... and is therefore discarded (false => t is always true)
+--- clause
+	(pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true) & (s(len(cons(xts3, yts))) = s(s(0))) => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) = true
+... reduced in 1 step to
+	(pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(yts))) = s(s(0))) => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) = true
++++ inductive narrowing succeeded
+--- clause
+	(pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true) & (s(len(yts)) = s(s(0))) => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) = true
+... oriented to rule
+	s(len(yts)) = s(s(0)) & pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) -> true
++++ added new clause(s)
+	(pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(yts))) = s(s(0))) => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) = true
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true) & (s(len(yts2)) = s(s(s(len(yts1))))) => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) = true
+	0 = s(s(s(s(len(yts))))) => 0 = s(s(len(yts)))
+	(pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true) & (s(s(s(len(yts)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) = true
+	(pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(yts))) = s(s(0))) => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) = true
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(len(yts)) = s(s(0)) & pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(len(yts))) = s(0) & pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	(pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true) & (s(len(yts2)) = s(s(s(len(yts1))))) => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) = true
++++ inductive narrowing on conjecture
+	(pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true) & (s(len(yts2)) = s(s(s(len(yts1))))) => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) = true
+... induction variables of
+	(pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true) & (s(len(yts2)) = s(s(s(len(yts1))))) => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) = true
+... are:
+	yts1:list
+	yts2:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true) & (s(len(yts2)) = s(s(s(len(yts1))))) => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) = true
+... with variable yts1
++++ creating new conjecture
+	(pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(yts)) = s(s(s(len(nil))))) => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
++++ creating new conjecture
+	(pref(cons(xts5, yts2), cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts1))))) = true) & (s(len(yts2)) = s(s(s(len(cons(xts1, yts1)))))) => cons(xts5, yts2) =: cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts1)))) = true
+--- clause
+	(pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(yts)) = s(s(s(len(nil))))) => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... reduced in 1 step to
+	(pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(yts)) = s(s(s(0)))) => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+--- clause
+	(pref(cons(xts5, yts2), cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts1))))) = true) & (s(len(yts2)) = s(s(s(len(cons(xts1, yts1)))))) => cons(xts5, yts2) =: cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts1)))) = true
+... reduced in 1 step to
+	(pref(cons(xts5, yts2), cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts1))))) = true) & (s(len(yts2)) = s(s(s(s(len(yts1)))))) => cons(xts5, yts2) =: cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts1)))) = true
++++ inductive narrowing succeeded
+--- clause
+	(pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true) & (s(len(yts2)) = s(s(s(len(yts1))))) => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) = true
+... oriented to rule
+	s(len(yts)) = s(s(s(len(yts)))) & pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) -> true
++++ added new clause(s)
+	(pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(yts)) = s(s(s(0)))) => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+	(pref(cons(xts5, yts2), cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts1))))) = true) & (s(len(yts2)) = s(s(s(s(len(yts1)))))) => cons(xts5, yts2) =: cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts1)))) = true
+... to conjectures
++++ active wrap
+	(pref(cons(., .), .) = true) & (s(len(.)) = .) => cons(., .) =: . = true
+... with sequence
+	(pref(cons(xts2, yts2), cons(xts1, yts1)) = true) & (s(len(yts2)) = s(len(yts1))) => cons(xts2, yts2) =: cons(xts1, yts1) = true
+	(pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true) & (s(len(yts2)) = s(s(len(yts1)))) => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) = true
+	(pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true) & (s(len(yts2)) = s(s(s(len(yts1))))) => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) = true
++++ primal grammar found for head
+	{=:, cons, len, pref, s, true}
+... and wrap
+	(pref(cons(., .), .) = true) & (s(len(.)) = .) => cons(., .) =: . = true
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> cons(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, yts2), cons(xts$n, ^f0($n; yts1, xts@))) = true) & (s(len(yts2)) = s(^f1($n; yts1))) => cons(xts$n, yts2) =: cons(xts$n, ^f0($n; yts1, xts)) = true
+--- clause
+	(pref(cons(xts5, yts2), cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts1))))) = true) & (s(len(yts2)) = s(s(s(s(len(yts1)))))) => cons(xts5, yts2) =: cons(xts4, cons(xts3, cons(xts2, cons(xts1, yts1)))) = true
+... subsumed by lemma
+	(pref(cons(xts$n, yts2), cons(xts$n, ^f0($n; yts1, xts@))) = true) & (s(len(yts2)) = s(^f1($n; yts1))) => cons(xts$n, yts2) =: cons(xts$n, ^f0($n; yts1, xts)) = true
+... with substitution
+	$n <- 3
+
++++ Status of the Inference System
+--- Conjectures:
+	0 = s(s(s(s(len(yts))))) => 0 = s(s(len(yts)))
+	(pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true) & (s(s(s(len(yts)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) = true
+	(pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(yts))) = s(s(0))) => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(yts)) = s(s(s(0)))) => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(len(yts)) = s(s(0)) & pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(len(yts))) = s(0) & pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+	s(len(yts)) = s(s(s(len(yts)))) & pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) -> true
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> cons(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, yts2), cons(xts$n, ^f0($n; yts1, xts@))) = true) & (s(len(yts2)) = s(^f1($n; yts1))) => cons(xts$n, yts2) =: cons(xts$n, ^f0($n; yts1, xts)) = true
+
++++ treating clause
+	0 = s(s(s(s(len(yts))))) => 0 = s(s(len(yts)))
++++ inductive narrowing on conjecture
+	0 = s(s(s(s(len(yts))))) => 0 = s(s(len(yts)))
+... induction variables of
+	0 = s(s(s(s(len(yts))))) => 0 = s(s(len(yts)))
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	0 = s(s(s(s(len(yts))))) => 0 = s(s(len(yts)))
+... with variable yts
++++ creating new conjecture
+	0 = s(s(s(s(len(nil))))) => 0 = s(s(len(nil)))
++++ creating new conjecture
+	0 = s(s(s(s(len(cons(xts, yts)))))) => 0 = s(s(len(cons(xts, yts))))
+--- clause
+	0 = s(s(s(s(len(nil))))) => 0 = s(s(len(nil)))
+... reduced in 2 steps to
+	0 = s(s(s(s(0)))) => 0 = s(s(0))
+--- clause
+	0 = s(s(s(s(0)))) => 0 = s(s(0))
+... contains a ground negative condition
+	0 = s(s(s(s(0))))
+... and is therefore discarded (false => t is always true)
+--- clause
+	0 = s(s(s(s(len(cons(xts, yts)))))) => 0 = s(s(len(cons(xts, yts))))
+... reduced in 2 steps to
+	0 = s(s(s(s(s(len(yts)))))) => 0 = s(s(s(len(yts))))
++++ inductive narrowing succeeded
+--- clause
+	0 = s(s(s(s(len(yts))))) => 0 = s(s(len(yts)))
+... oriented to rule
+	0 = s(s(s(s(len(yts))))) => s(s(len(yts))) -> 0
++++ added new clause(s)
+	0 = s(s(s(s(s(len(yts)))))) => 0 = s(s(s(len(yts))))
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true) & (s(s(s(len(yts)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) = true
+	(pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(yts))) = s(s(0))) => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(yts)) = s(s(s(0)))) => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+	0 = s(s(s(s(s(len(yts)))))) => 0 = s(s(s(len(yts))))
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
+	0 = s(s(s(s(len(yts))))) => s(s(len(yts))) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(len(yts)) = s(s(0)) & pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(len(yts))) = s(0) & pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+	s(len(yts)) = s(s(s(len(yts)))) & pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) -> true
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> cons(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, yts2), cons(xts$n, ^f0($n; yts1, xts@))) = true) & (s(len(yts2)) = s(^f1($n; yts1))) => cons(xts$n, yts2) =: cons(xts$n, ^f0($n; yts1, xts)) = true
+
++++ treating clause
+	(pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true) & (s(s(s(len(yts)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) = true
++++ inductive narrowing on conjecture
+	(pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true) & (s(s(s(len(yts)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) = true
+... induction variables of
+	(pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true) & (s(s(s(len(yts)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) = true
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true) & (s(s(s(len(yts)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) = true
+... with variable yts
++++ creating new conjecture
+	(pref(cons(xts4, cons(xts3, cons(xts2, nil))), cons(xts1, nil)) = true) & (s(s(s(len(nil)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, nil))) =: cons(xts1, nil) = true
++++ creating new conjecture
+	(pref(cons(xts5, cons(xts4, cons(xts3, cons(xts2, yts)))), cons(xts1, nil)) = true) & (s(s(s(len(cons(xts2, yts))))) = s(0)) => cons(xts5, cons(xts4, cons(xts3, cons(xts2, yts)))) =: cons(xts1, nil) = true
+--- clause
+	(pref(cons(xts4, cons(xts3, cons(xts2, nil))), cons(xts1, nil)) = true) & (s(s(s(len(nil)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, nil))) =: cons(xts1, nil) = true
+... reduced in 1 step to
+	(pref(cons(xts4, cons(xts3, cons(xts2, nil))), cons(xts1, nil)) = true) & (s(s(s(0))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, nil))) =: cons(xts1, nil) = true
+--- clause
+	(pref(cons(xts4, cons(xts3, cons(xts2, nil))), cons(xts1, nil)) = true) & (s(s(s(0))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, nil))) =: cons(xts1, nil) = true
+... contains a ground negative condition
+	s(s(s(0))) = s(0)
+... and is therefore discarded (false => t is always true)
+--- clause
+	(pref(cons(xts5, cons(xts4, cons(xts3, cons(xts2, yts)))), cons(xts1, nil)) = true) & (s(s(s(len(cons(xts2, yts))))) = s(0)) => cons(xts5, cons(xts4, cons(xts3, cons(xts2, yts)))) =: cons(xts1, nil) = true
+... reduced in 1 step to
+	(pref(cons(xts5, cons(xts4, cons(xts3, cons(xts2, yts)))), cons(xts1, nil)) = true) & (s(s(s(s(len(yts))))) = s(0)) => cons(xts5, cons(xts4, cons(xts3, cons(xts2, yts)))) =: cons(xts1, nil) = true
++++ inductive narrowing succeeded
+--- clause
+	(pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true) & (s(s(s(len(yts)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) = true
+... oriented to rule
+	s(s(s(len(yts)))) = s(0) & pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) -> true
++++ added new clause(s)
+	(pref(cons(xts5, cons(xts4, cons(xts3, cons(xts2, yts)))), cons(xts1, nil)) = true) & (s(s(s(s(len(yts))))) = s(0)) => cons(xts5, cons(xts4, cons(xts3, cons(xts2, yts)))) =: cons(xts1, nil) = true
+... to conjectures
++++ active wrap
+	(pref(cons(., .), cons(xts, nil)) = true) & (s(.) = s(0)) => cons(., .) =: cons(xts, nil) = true
+... with sequence
+	(pref(cons(xts2, yts), cons(xts1, nil)) = true) & (s(len(yts)) = s(0)) => cons(xts2, yts) =: cons(xts1, nil) = true
+	(pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true) & (s(s(len(yts))) = s(0)) => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) = true
+	(pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true) & (s(s(s(len(yts)))) = s(0)) => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) = true
++++ primal grammar found for head
+	{0, =:, cons, len, nil, pref, s, true}
+... and wrap
+	(pref(cons(., .), cons(xts, nil)) = true) & (s(.) = s(0)) => cons(., .) =: cons(xts, nil) = true
++++ Presburger system  = {
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
+	^f2(0; yts, xts@) -> yts
+	^f2($n2 + 1; yts, xts@) -> cons(xts$n2, ^f2($n2; yts, xts@))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, ^f2($n; yts, xts@)), cons(xts$n, nil)) = true) & (s(^f1($n; yts)) = s(0)) => cons(xts$n, ^f2($n; yts, xts)) =: cons(xts$n, nil) = true
+--- clause
+	(pref(cons(xts5, cons(xts4, cons(xts3, cons(xts2, yts)))), cons(xts1, nil)) = true) & (s(s(s(s(len(yts))))) = s(0)) => cons(xts5, cons(xts4, cons(xts3, cons(xts2, yts)))) =: cons(xts1, nil) = true
+... subsumed by lemma
+	(pref(cons(xts$n, ^f2($n; yts, xts@)), cons(xts$n, nil)) = true) & (s(^f1($n; yts)) = s(0)) => cons(xts$n, ^f2($n; yts, xts)) =: cons(xts$n, nil) = true
+... with substitution
+	$n <- 3
+
++++ Status of the Inference System
+--- Conjectures:
+	(pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(yts))) = s(s(0))) => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(yts)) = s(s(s(0)))) => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+	0 = s(s(s(s(s(len(yts)))))) => 0 = s(s(s(len(yts))))
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
+	0 = s(s(s(s(len(yts))))) => s(s(len(yts))) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(len(yts)) = s(s(0)) & pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(len(yts))) = s(0) & pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+	s(s(s(len(yts)))) = s(0) & pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(s(len(yts)))) & pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) -> true
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> cons(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
+	^f2(0; yts, xts@) -> yts
+	^f2($n2 + 1; yts, xts@) -> cons(xts$n2, ^f2($n2; yts, xts@))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, yts2), cons(xts$n, ^f0($n; yts1, xts@))) = true) & (s(len(yts2)) = s(^f1($n; yts1))) => cons(xts$n, yts2) =: cons(xts$n, ^f0($n; yts1, xts)) = true
+	(pref(cons(xts$n, ^f2($n; yts, xts@)), cons(xts$n, nil)) = true) & (s(^f1($n; yts)) = s(0)) => cons(xts$n, ^f2($n; yts, xts)) =: cons(xts$n, nil) = true
+
++++ treating clause
+	(pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(yts))) = s(s(0))) => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) = true
++++ inductive narrowing on conjecture
+	(pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(yts))) = s(s(0))) => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) = true
+... induction variables of
+	(pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(yts))) = s(s(0))) => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) = true
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(yts))) = s(s(0))) => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) = true
+... with variable yts
++++ creating new conjecture
+	(pref(cons(xts4, cons(xts3, nil)), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(nil))) = s(s(0))) => cons(xts4, cons(xts3, nil)) =: cons(xts2, cons(xts1, nil)) = true
++++ creating new conjecture
+	(pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(cons(xts3, yts)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) = true
+--- clause
+	(pref(cons(xts4, cons(xts3, nil)), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(nil))) = s(s(0))) => cons(xts4, cons(xts3, nil)) =: cons(xts2, cons(xts1, nil)) = true
+... reduced in 1 step to
+	pref(cons(xts4, cons(xts3, nil)), cons(xts2, cons(xts1, nil))) = true => cons(xts4, cons(xts3, nil)) =: cons(xts2, cons(xts1, nil)) = true
+--- clause
+	(pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(cons(xts3, yts)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) = true
+... reduced in 1 step to
+	(pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(yts)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) = true
++++ inductive narrowing succeeded
+--- clause
+	(pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(yts))) = s(s(0))) => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) = true
+... oriented to rule
+	s(s(len(yts))) = s(s(0)) & pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) -> true
++++ added new clause(s)
+	pref(cons(xts4, cons(xts3, nil)), cons(xts2, cons(xts1, nil))) = true => cons(xts4, cons(xts3, nil)) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(yts)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) = true
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(yts)) = s(s(s(0)))) => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+	0 = s(s(s(s(s(len(yts)))))) => 0 = s(s(s(len(yts))))
+	pref(cons(xts4, cons(xts3, nil)), cons(xts2, cons(xts1, nil))) = true => cons(xts4, cons(xts3, nil)) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(yts)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) = true
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
+	0 = s(s(s(s(len(yts))))) => s(s(len(yts))) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(len(yts)) = s(s(0)) & pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(len(yts))) = s(0) & pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+	s(s(len(yts))) = s(s(0)) & pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(s(len(yts)))) = s(0) & pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(s(len(yts)))) & pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) -> true
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> cons(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
+	^f2(0; yts, xts@) -> yts
+	^f2($n2 + 1; yts, xts@) -> cons(xts$n2, ^f2($n2; yts, xts@))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, yts2), cons(xts$n, ^f0($n; yts1, xts@))) = true) & (s(len(yts2)) = s(^f1($n; yts1))) => cons(xts$n, yts2) =: cons(xts$n, ^f0($n; yts1, xts)) = true
+	(pref(cons(xts$n, ^f2($n; yts, xts@)), cons(xts$n, nil)) = true) & (s(^f1($n; yts)) = s(0)) => cons(xts$n, ^f2($n; yts, xts)) =: cons(xts$n, nil) = true
+
++++ treating clause
+	(pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(yts)) = s(s(s(0)))) => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
++++ inductive narrowing on conjecture
+	(pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(yts)) = s(s(s(0)))) => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... induction variables of
+	(pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(yts)) = s(s(s(0)))) => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(yts)) = s(s(s(0)))) => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... with variable yts
++++ creating new conjecture
+	(pref(cons(xts4, nil), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(nil)) = s(s(s(0)))) => cons(xts4, nil) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
++++ creating new conjecture
+	(pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(cons(xts4, yts))) = s(s(s(0)))) => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+--- clause
+	(pref(cons(xts4, nil), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(nil)) = s(s(s(0)))) => cons(xts4, nil) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... reduced in 1 step to
+	(pref(cons(xts4, nil), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(0) = s(s(s(0)))) => cons(xts4, nil) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+--- clause
+	(pref(cons(xts4, nil), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(0) = s(s(s(0)))) => cons(xts4, nil) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... contains a ground negative condition
+	s(0) = s(s(s(0)))
+... and is therefore discarded (false => t is always true)
+--- clause
+	(pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(cons(xts4, yts))) = s(s(s(0)))) => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... reduced in 1 step to
+	(pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(yts))) = s(s(s(0)))) => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
++++ inductive narrowing succeeded
+--- clause
+	(pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(yts)) = s(s(s(0)))) => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... oriented to rule
+	s(len(yts)) = s(s(s(0))) & pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) -> true
++++ added new clause(s)
+	(pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(yts))) = s(s(s(0)))) => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... to conjectures
++++ active wrap
+	(pref(cons(., yts), cons(., .)) = true) & (s(len(yts)) = s(.)) => cons(., yts) =: cons(., .) = true
+... with sequence
+	(pref(cons(xts2, yts), cons(xts1, nil)) = true) & (s(len(yts)) = s(0)) => cons(xts2, yts) =: cons(xts1, nil) = true
+	(pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true) & (s(len(yts)) = s(s(0))) => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(yts)) = s(s(s(0)))) => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
++++ primal grammar found for head
+	{0, =:, cons, len, nil, pref, s, true}
+... and wrap
+	(pref(cons(., yts), cons(., .)) = true) & (s(len(yts)) = s(.)) => cons(., yts) =: cons(., .) = true
++++ Presburger system  = {
+	^f3(0; xts@) -> nil
+	^f3($n3 + 1; xts@) -> cons(xts$n3, ^f3($n3; xts@))
+	^f4(0) -> 0
+	^f4($n4 + 1) -> s(^f4($n4))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, yts), cons(xts$n, ^f3($n; xts@))) = true) & (s(len(yts)) = s(^f4($n))) => cons(xts$n, yts) =: cons(xts$n, ^f3($n; xts)) = true
+
++++ Status of the Inference System
+--- Conjectures:
+	0 = s(s(s(s(s(len(yts)))))) => 0 = s(s(s(len(yts))))
+	pref(cons(xts4, cons(xts3, nil)), cons(xts2, cons(xts1, nil))) = true => cons(xts4, cons(xts3, nil)) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(yts)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(yts))) = s(s(s(0)))) => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
+	0 = s(s(s(s(len(yts))))) => s(s(len(yts))) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(len(yts)) = s(s(0)) & pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(len(yts))) = s(0) & pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+	s(len(yts)) = s(s(s(0))) & pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) -> true
+	s(s(len(yts))) = s(s(0)) & pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(s(len(yts)))) = s(0) & pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(s(len(yts)))) & pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) -> true
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> cons(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
+	^f2(0; yts, xts@) -> yts
+	^f2($n2 + 1; yts, xts@) -> cons(xts$n2, ^f2($n2; yts, xts@))
+	^f3(0; xts@) -> nil
+	^f3($n3 + 1; xts@) -> cons(xts$n3, ^f3($n3; xts@))
+	^f4(0) -> 0
+	^f4($n4 + 1) -> s(^f4($n4))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, yts2), cons(xts$n, ^f0($n; yts1, xts@))) = true) & (s(len(yts2)) = s(^f1($n; yts1))) => cons(xts$n, yts2) =: cons(xts$n, ^f0($n; yts1, xts)) = true
+	(pref(cons(xts$n, ^f2($n; yts, xts@)), cons(xts$n, nil)) = true) & (s(^f1($n; yts)) = s(0)) => cons(xts$n, ^f2($n; yts, xts)) =: cons(xts$n, nil) = true
+	(pref(cons(xts$n, yts), cons(xts$n, ^f3($n; xts@))) = true) & (s(len(yts)) = s(^f4($n))) => cons(xts$n, yts) =: cons(xts$n, ^f3($n; xts)) = true
+
++++ treating clause
+	0 = s(s(s(s(s(len(yts)))))) => 0 = s(s(s(len(yts))))
++++ inductive narrowing on conjecture
+	0 = s(s(s(s(s(len(yts)))))) => 0 = s(s(s(len(yts))))
+... induction variables of
+	0 = s(s(s(s(s(len(yts)))))) => 0 = s(s(s(len(yts))))
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	0 = s(s(s(s(s(len(yts)))))) => 0 = s(s(s(len(yts))))
+... with variable yts
++++ creating new conjecture
+	0 = s(s(s(s(s(len(nil)))))) => 0 = s(s(s(len(nil))))
++++ creating new conjecture
+	0 = s(s(s(s(s(len(cons(xts, yts))))))) => 0 = s(s(s(len(cons(xts, yts)))))
+--- clause
+	0 = s(s(s(s(s(len(nil)))))) => 0 = s(s(s(len(nil))))
+... reduced in 2 steps to
+	0 = s(s(s(s(s(0))))) => 0 = s(s(s(0)))
+--- clause
+	0 = s(s(s(s(s(0))))) => 0 = s(s(s(0)))
+... contains a ground negative condition
+	0 = s(s(s(s(s(0)))))
+... and is therefore discarded (false => t is always true)
+--- clause
+	0 = s(s(s(s(s(len(cons(xts, yts))))))) => 0 = s(s(s(len(cons(xts, yts)))))
+... reduced in 2 steps to
+	0 = s(s(s(s(s(s(len(yts))))))) => 0 = s(s(s(s(len(yts)))))
++++ inductive narrowing succeeded
+--- clause
+	0 = s(s(s(s(s(len(yts)))))) => 0 = s(s(s(len(yts))))
+... oriented to rule
+	0 = s(s(s(s(s(len(yts)))))) => s(s(s(len(yts)))) -> 0
++++ added new clause(s)
+	0 = s(s(s(s(s(s(len(yts))))))) => 0 = s(s(s(s(len(yts)))))
+... to conjectures
++++ active wrap
+	0 = s(s(s(.))) => 0 = s(.)
+... with sequence
+	0 = s(s(s(len(yts)))) => 0 = s(len(yts))
+	0 = s(s(s(s(len(yts))))) => 0 = s(s(len(yts)))
+	0 = s(s(s(s(s(len(yts)))))) => 0 = s(s(s(len(yts))))
++++ primal grammar found for head
+	{0, len, s}
+... and wrap
+	0 = s(s(s(.))) => 0 = s(.)
++++ Presburger system  = {
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
++++ }
++++ Lemma(s)           = 
+	0 = s(s(s(^f1($n; yts)))) => 0 = s(^f1($n; yts))
+--- clause
+	0 = s(s(s(s(s(s(len(yts))))))) => 0 = s(s(s(s(len(yts)))))
+... subsumed by lemma
+	0 = s(s(s(^f1($n; yts)))) => 0 = s(^f1($n; yts))
+... with substitution
+	$n <- 3
+
++++ Status of the Inference System
+--- Conjectures:
+	pref(cons(xts4, cons(xts3, nil)), cons(xts2, cons(xts1, nil))) = true => cons(xts4, cons(xts3, nil)) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(yts)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(yts))) = s(s(s(0)))) => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
+	0 = s(s(s(s(len(yts))))) => s(s(len(yts))) -> 0
+	0 = s(s(s(s(s(len(yts)))))) => s(s(s(len(yts)))) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(len(yts)) = s(s(0)) & pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(len(yts))) = s(0) & pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+	s(len(yts)) = s(s(s(0))) & pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) -> true
+	s(s(len(yts))) = s(s(0)) & pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(s(len(yts)))) = s(0) & pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(s(len(yts)))) & pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) -> true
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> cons(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
+	^f2(0; yts, xts@) -> yts
+	^f2($n2 + 1; yts, xts@) -> cons(xts$n2, ^f2($n2; yts, xts@))
+	^f3(0; xts@) -> nil
+	^f3($n3 + 1; xts@) -> cons(xts$n3, ^f3($n3; xts@))
+	^f4(0) -> 0
+	^f4($n4 + 1) -> s(^f4($n4))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, yts2), cons(xts$n, ^f0($n; yts1, xts@))) = true) & (s(len(yts2)) = s(^f1($n; yts1))) => cons(xts$n, yts2) =: cons(xts$n, ^f0($n; yts1, xts)) = true
+	(pref(cons(xts$n, ^f2($n; yts, xts@)), cons(xts$n, nil)) = true) & (s(^f1($n; yts)) = s(0)) => cons(xts$n, ^f2($n; yts, xts)) =: cons(xts$n, nil) = true
+	(pref(cons(xts$n, yts), cons(xts$n, ^f3($n; xts@))) = true) & (s(len(yts)) = s(^f4($n))) => cons(xts$n, yts) =: cons(xts$n, ^f3($n; xts)) = true
+	0 = s(s(s(^f1($n; yts)))) => 0 = s(^f1($n; yts))
+
++++ treating clause
+	pref(cons(xts4, cons(xts3, nil)), cons(xts2, cons(xts1, nil))) = true => cons(xts4, cons(xts3, nil)) =: cons(xts2, cons(xts1, nil)) = true
+--- no new clauses created
++++ attempting case rewriting
++++ case rewriting generated new clauses
+    which have been subsequently reduced to tautologies,
+    therefore no new clauses were added
+
++++ Status of the Inference System
+--- Conjectures:
+	(pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(yts)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(yts))) = s(s(s(0)))) => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
+	0 = s(s(s(s(len(yts))))) => s(s(len(yts))) -> 0
+	0 = s(s(s(s(s(len(yts)))))) => s(s(s(len(yts)))) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(len(yts)) = s(s(0)) & pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(len(yts))) = s(0) & pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+	s(len(yts)) = s(s(s(0))) & pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) -> true
+	s(s(len(yts))) = s(s(0)) & pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(s(len(yts)))) = s(0) & pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(s(len(yts)))) & pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) -> true
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> cons(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
+	^f2(0; yts, xts@) -> yts
+	^f2($n2 + 1; yts, xts@) -> cons(xts$n2, ^f2($n2; yts, xts@))
+	^f3(0; xts@) -> nil
+	^f3($n3 + 1; xts@) -> cons(xts$n3, ^f3($n3; xts@))
+	^f4(0) -> 0
+	^f4($n4 + 1) -> s(^f4($n4))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, yts2), cons(xts$n, ^f0($n; yts1, xts@))) = true) & (s(len(yts2)) = s(^f1($n; yts1))) => cons(xts$n, yts2) =: cons(xts$n, ^f0($n; yts1, xts)) = true
+	(pref(cons(xts$n, ^f2($n; yts, xts@)), cons(xts$n, nil)) = true) & (s(^f1($n; yts)) = s(0)) => cons(xts$n, ^f2($n; yts, xts)) =: cons(xts$n, nil) = true
+	(pref(cons(xts$n, yts), cons(xts$n, ^f3($n; xts@))) = true) & (s(len(yts)) = s(^f4($n))) => cons(xts$n, yts) =: cons(xts$n, ^f3($n; xts)) = true
+	0 = s(s(s(^f1($n; yts)))) => 0 = s(^f1($n; yts))
+
++++ treating clause
+	(pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(yts)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) = true
++++ inductive narrowing on conjecture
+	(pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(yts)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) = true
+... induction variables of
+	(pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(yts)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) = true
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(yts)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) = true
+... with variable yts
++++ creating new conjecture
+	(pref(cons(xts5, cons(xts4, cons(xts3, nil))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(nil)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, nil))) =: cons(xts2, cons(xts1, nil)) = true
++++ creating new conjecture
+	(pref(cons(xts6, cons(xts5, cons(xts4, cons(xts3, yts)))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(cons(xts3, yts))))) = s(s(0))) => cons(xts6, cons(xts5, cons(xts4, cons(xts3, yts)))) =: cons(xts2, cons(xts1, nil)) = true
+--- clause
+	(pref(cons(xts5, cons(xts4, cons(xts3, nil))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(nil)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, nil))) =: cons(xts2, cons(xts1, nil)) = true
+... reduced in 1 step to
+	(pref(cons(xts5, cons(xts4, cons(xts3, nil))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(0))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, nil))) =: cons(xts2, cons(xts1, nil)) = true
+--- clause
+	(pref(cons(xts5, cons(xts4, cons(xts3, nil))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(0))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, nil))) =: cons(xts2, cons(xts1, nil)) = true
+... contains a ground negative condition
+	s(s(s(0))) = s(s(0))
+... and is therefore discarded (false => t is always true)
+--- clause
+	(pref(cons(xts6, cons(xts5, cons(xts4, cons(xts3, yts)))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(cons(xts3, yts))))) = s(s(0))) => cons(xts6, cons(xts5, cons(xts4, cons(xts3, yts)))) =: cons(xts2, cons(xts1, nil)) = true
+... reduced in 1 step to
+	(pref(cons(xts6, cons(xts5, cons(xts4, cons(xts3, yts)))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(s(len(yts))))) = s(s(0))) => cons(xts6, cons(xts5, cons(xts4, cons(xts3, yts)))) =: cons(xts2, cons(xts1, nil)) = true
++++ inductive narrowing succeeded
+--- clause
+	(pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(yts)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) = true
+... oriented to rule
+	s(s(s(len(yts)))) = s(s(0)) & pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) -> true
++++ added new clause(s)
+	(pref(cons(xts6, cons(xts5, cons(xts4, cons(xts3, yts)))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(s(len(yts))))) = s(s(0))) => cons(xts6, cons(xts5, cons(xts4, cons(xts3, yts)))) =: cons(xts2, cons(xts1, nil)) = true
+... to conjectures
++++ active wrap
+	(pref(cons(., .), cons(xts2, cons(xts1, nil))) = true) & (s(.) = s(s(0))) => cons(., .) =: cons(xts2, cons(xts1, nil)) = true
+... with sequence
+	(pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true) & (s(len(yts)) = s(s(0))) => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true) & (s(s(len(yts))) = s(s(0))) => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) = true
+	(pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(len(yts)))) = s(s(0))) => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) = true
++++ primal grammar found for head
+	{0, =:, cons, len, nil, pref, s, true}
+... and wrap
+	(pref(cons(., .), cons(xts2, cons(xts1, nil))) = true) & (s(.) = s(s(0))) => cons(., .) =: cons(xts2, cons(xts1, nil)) = true
++++ Presburger system  = {
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
+	^f5(0; yts, xts@) -> yts
+	^f5($n5 + 1; yts, xts@) -> cons(xts$n5, ^f5($n5; yts, xts@))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, ^f5($n; yts, xts@)), cons(xts$n, cons(xts$n, nil))) = true) & (s(^f1($n; yts)) = s(s(0))) => cons(xts$n, ^f5($n; yts, xts)) =: cons(xts$n, cons(xts$n, nil)) = true
+--- clause
+	(pref(cons(xts6, cons(xts5, cons(xts4, cons(xts3, yts)))), cons(xts2, cons(xts1, nil))) = true) & (s(s(s(s(len(yts))))) = s(s(0))) => cons(xts6, cons(xts5, cons(xts4, cons(xts3, yts)))) =: cons(xts2, cons(xts1, nil)) = true
+... subsumed by lemma
+	(pref(cons(xts$n, ^f5($n; yts, xts@)), cons(xts$n, cons(xts$n, nil))) = true) & (s(^f1($n; yts)) = s(s(0))) => cons(xts$n, ^f5($n; yts, xts)) =: cons(xts$n, cons(xts$n, nil)) = true
+... with substitution
+	$n <- 3
+
++++ Status of the Inference System
+--- Conjectures:
+	(pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(yts))) = s(s(s(0)))) => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
+	0 = s(s(s(s(len(yts))))) => s(s(len(yts))) -> 0
+	0 = s(s(s(s(s(len(yts)))))) => s(s(s(len(yts)))) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(len(yts)) = s(s(0)) & pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(len(yts))) = s(0) & pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+	s(len(yts)) = s(s(s(0))) & pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) -> true
+	s(s(len(yts))) = s(s(0)) & pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(s(len(yts)))) = s(0) & pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(s(len(yts)))) & pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) -> true
+	s(s(s(len(yts)))) = s(s(0)) & pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) -> true
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> cons(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
+	^f2(0; yts, xts@) -> yts
+	^f2($n2 + 1; yts, xts@) -> cons(xts$n2, ^f2($n2; yts, xts@))
+	^f3(0; xts@) -> nil
+	^f3($n3 + 1; xts@) -> cons(xts$n3, ^f3($n3; xts@))
+	^f4(0) -> 0
+	^f4($n4 + 1) -> s(^f4($n4))
+	^f5(0; yts, xts@) -> yts
+	^f5($n5 + 1; yts, xts@) -> cons(xts$n5, ^f5($n5; yts, xts@))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, yts2), cons(xts$n, ^f0($n; yts1, xts@))) = true) & (s(len(yts2)) = s(^f1($n; yts1))) => cons(xts$n, yts2) =: cons(xts$n, ^f0($n; yts1, xts)) = true
+	(pref(cons(xts$n, ^f2($n; yts, xts@)), cons(xts$n, nil)) = true) & (s(^f1($n; yts)) = s(0)) => cons(xts$n, ^f2($n; yts, xts)) =: cons(xts$n, nil) = true
+	(pref(cons(xts$n, yts), cons(xts$n, ^f3($n; xts@))) = true) & (s(len(yts)) = s(^f4($n))) => cons(xts$n, yts) =: cons(xts$n, ^f3($n; xts)) = true
+	0 = s(s(s(^f1($n; yts)))) => 0 = s(^f1($n; yts))
+	(pref(cons(xts$n, ^f5($n; yts, xts@)), cons(xts$n, cons(xts$n, nil))) = true) & (s(^f1($n; yts)) = s(s(0))) => cons(xts$n, ^f5($n; yts, xts)) =: cons(xts$n, cons(xts$n, nil)) = true
+
++++ treating clause
+	(pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(yts))) = s(s(s(0)))) => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
++++ inductive narrowing on conjecture
+	(pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(yts))) = s(s(s(0)))) => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... induction variables of
+	(pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(yts))) = s(s(s(0)))) => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(yts))) = s(s(s(0)))) => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... with variable yts
++++ creating new conjecture
+	(pref(cons(xts5, cons(xts4, nil)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(nil))) = s(s(s(0)))) => cons(xts5, cons(xts4, nil)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
++++ creating new conjecture
+	(pref(cons(xts6, cons(xts5, cons(xts4, yts))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(cons(xts4, yts)))) = s(s(s(0)))) => cons(xts6, cons(xts5, cons(xts4, yts))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+--- clause
+	(pref(cons(xts5, cons(xts4, nil)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(nil))) = s(s(s(0)))) => cons(xts5, cons(xts4, nil)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... reduced in 1 step to
+	(pref(cons(xts5, cons(xts4, nil)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(0)) = s(s(s(0)))) => cons(xts5, cons(xts4, nil)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+--- clause
+	(pref(cons(xts5, cons(xts4, nil)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(0)) = s(s(s(0)))) => cons(xts5, cons(xts4, nil)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... contains a ground negative condition
+	s(s(0)) = s(s(s(0)))
+... and is therefore discarded (false => t is always true)
+--- clause
+	(pref(cons(xts6, cons(xts5, cons(xts4, yts))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(cons(xts4, yts)))) = s(s(s(0)))) => cons(xts6, cons(xts5, cons(xts4, yts))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... reduced in 1 step to
+	(pref(cons(xts6, cons(xts5, cons(xts4, yts))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(len(yts)))) = s(s(s(0)))) => cons(xts6, cons(xts5, cons(xts4, yts))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
++++ inductive narrowing succeeded
+--- clause
+	(pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(yts))) = s(s(s(0)))) => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... oriented to rule
+	s(s(len(yts))) = s(s(s(0))) & pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) -> true
++++ added new clause(s)
+	(pref(cons(xts6, cons(xts5, cons(xts4, yts))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(len(yts)))) = s(s(s(0)))) => cons(xts6, cons(xts5, cons(xts4, yts))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	(pref(cons(xts6, cons(xts5, cons(xts4, yts))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(len(yts)))) = s(s(s(0)))) => cons(xts6, cons(xts5, cons(xts4, yts))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
+	0 = s(s(s(s(len(yts))))) => s(s(len(yts))) -> 0
+	0 = s(s(s(s(s(len(yts)))))) => s(s(s(len(yts)))) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(len(yts)) = s(s(0)) & pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(len(yts))) = s(0) & pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+	s(len(yts)) = s(s(s(0))) & pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) -> true
+	s(s(len(yts))) = s(s(0)) & pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(s(len(yts)))) = s(0) & pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(s(len(yts)))) & pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) -> true
+	s(s(len(yts))) = s(s(s(0))) & pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) -> true
+	s(s(s(len(yts)))) = s(s(0)) & pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) -> true
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> cons(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
+	^f2(0; yts, xts@) -> yts
+	^f2($n2 + 1; yts, xts@) -> cons(xts$n2, ^f2($n2; yts, xts@))
+	^f3(0; xts@) -> nil
+	^f3($n3 + 1; xts@) -> cons(xts$n3, ^f3($n3; xts@))
+	^f4(0) -> 0
+	^f4($n4 + 1) -> s(^f4($n4))
+	^f5(0; yts, xts@) -> yts
+	^f5($n5 + 1; yts, xts@) -> cons(xts$n5, ^f5($n5; yts, xts@))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, yts2), cons(xts$n, ^f0($n; yts1, xts@))) = true) & (s(len(yts2)) = s(^f1($n; yts1))) => cons(xts$n, yts2) =: cons(xts$n, ^f0($n; yts1, xts)) = true
+	(pref(cons(xts$n, ^f2($n; yts, xts@)), cons(xts$n, nil)) = true) & (s(^f1($n; yts)) = s(0)) => cons(xts$n, ^f2($n; yts, xts)) =: cons(xts$n, nil) = true
+	(pref(cons(xts$n, yts), cons(xts$n, ^f3($n; xts@))) = true) & (s(len(yts)) = s(^f4($n))) => cons(xts$n, yts) =: cons(xts$n, ^f3($n; xts)) = true
+	0 = s(s(s(^f1($n; yts)))) => 0 = s(^f1($n; yts))
+	(pref(cons(xts$n, ^f5($n; yts, xts@)), cons(xts$n, cons(xts$n, nil))) = true) & (s(^f1($n; yts)) = s(s(0))) => cons(xts$n, ^f5($n; yts, xts)) =: cons(xts$n, cons(xts$n, nil)) = true
+
++++ treating clause
+	(pref(cons(xts6, cons(xts5, cons(xts4, yts))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(len(yts)))) = s(s(s(0)))) => cons(xts6, cons(xts5, cons(xts4, yts))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
++++ inductive narrowing on conjecture
+	(pref(cons(xts6, cons(xts5, cons(xts4, yts))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(len(yts)))) = s(s(s(0)))) => cons(xts6, cons(xts5, cons(xts4, yts))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... induction variables of
+	(pref(cons(xts6, cons(xts5, cons(xts4, yts))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(len(yts)))) = s(s(s(0)))) => cons(xts6, cons(xts5, cons(xts4, yts))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... are:
+	yts:list
++++ perform INDUCTIVE NARROWING on conjecture 
+	(pref(cons(xts6, cons(xts5, cons(xts4, yts))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(len(yts)))) = s(s(s(0)))) => cons(xts6, cons(xts5, cons(xts4, yts))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... with variable yts
++++ creating new conjecture
+	(pref(cons(xts6, cons(xts5, cons(xts4, nil))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(len(nil)))) = s(s(s(0)))) => cons(xts6, cons(xts5, cons(xts4, nil))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
++++ creating new conjecture
+	(pref(cons(xts7, cons(xts6, cons(xts5, cons(xts4, yts)))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(len(cons(xts4, yts))))) = s(s(s(0)))) => cons(xts7, cons(xts6, cons(xts5, cons(xts4, yts)))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+--- clause
+	(pref(cons(xts6, cons(xts5, cons(xts4, nil))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(len(nil)))) = s(s(s(0)))) => cons(xts6, cons(xts5, cons(xts4, nil))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... reduced in 1 step to
+	pref(cons(xts6, cons(xts5, cons(xts4, nil))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts6, cons(xts5, cons(xts4, nil))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+--- clause
+	(pref(cons(xts7, cons(xts6, cons(xts5, cons(xts4, yts)))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(len(cons(xts4, yts))))) = s(s(s(0)))) => cons(xts7, cons(xts6, cons(xts5, cons(xts4, yts)))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... reduced in 1 step to
+	(pref(cons(xts7, cons(xts6, cons(xts5, cons(xts4, yts)))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(s(len(yts))))) = s(s(s(0)))) => cons(xts7, cons(xts6, cons(xts5, cons(xts4, yts)))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
++++ inductive narrowing succeeded
+--- clause
+	(pref(cons(xts6, cons(xts5, cons(xts4, yts))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(len(yts)))) = s(s(s(0)))) => cons(xts6, cons(xts5, cons(xts4, yts))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... oriented to rule
+	s(s(s(len(yts)))) = s(s(s(0))) & pref(cons(xts6, cons(xts5, cons(xts4, yts))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts6, cons(xts5, cons(xts4, yts))) =: cons(xts3, cons(xts2, cons(xts1, nil))) -> true
++++ added new clause(s)
+	pref(cons(xts6, cons(xts5, cons(xts4, nil))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts6, cons(xts5, cons(xts4, nil))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+	(pref(cons(xts7, cons(xts6, cons(xts5, cons(xts4, yts)))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(s(len(yts))))) = s(s(s(0)))) => cons(xts7, cons(xts6, cons(xts5, cons(xts4, yts)))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... to conjectures
++++ active wrap
+	(pref(cons(., .), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(.) = s(s(s(0)))) => cons(., .) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... with sequence
+	(pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(len(yts)) = s(s(s(0)))) => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+	(pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(len(yts))) = s(s(s(0)))) => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+	(pref(cons(xts6, cons(xts5, cons(xts4, yts))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(len(yts)))) = s(s(s(0)))) => cons(xts6, cons(xts5, cons(xts4, yts))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
++++ primal grammar found for head
+	{0, =:, cons, len, nil, pref, s, true}
+... and wrap
+	(pref(cons(., .), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(.) = s(s(s(0)))) => cons(., .) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
++++ Presburger system  = {
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
+	^f6(0; yts, xts@) -> yts
+	^f6($n6 + 1; yts, xts@) -> cons(xts$n6, ^f6($n6; yts, xts@))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, ^f6($n; yts, xts@)), cons(xts$n, cons(xts$n, cons(xts$n, nil)))) = true) & (s(^f1($n; yts)) = s(s(s(0)))) => cons(xts$n, ^f6($n; yts, xts)) =: cons(xts$n, cons(xts$n, cons(xts$n, nil))) = true
+--- clause
+	(pref(cons(xts7, cons(xts6, cons(xts5, cons(xts4, yts)))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true) & (s(s(s(s(len(yts))))) = s(s(s(0)))) => cons(xts7, cons(xts6, cons(xts5, cons(xts4, yts)))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+... subsumed by lemma
+	(pref(cons(xts$n, ^f6($n; yts, xts@)), cons(xts$n, cons(xts$n, cons(xts$n, nil)))) = true) & (s(^f1($n; yts)) = s(s(s(0)))) => cons(xts$n, ^f6($n; yts, xts)) =: cons(xts$n, cons(xts$n, cons(xts$n, nil))) = true
+... with substitution
+	$n <- 3
+
++++ Status of the Inference System
+--- Conjectures:
+	pref(cons(xts6, cons(xts5, cons(xts4, nil))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts6, cons(xts5, cons(xts4, nil))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
+	0 = s(s(s(s(len(yts))))) => s(s(len(yts))) -> 0
+	0 = s(s(s(s(s(len(yts)))))) => s(s(s(len(yts)))) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(len(yts)) = s(s(0)) & pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(len(yts))) = s(0) & pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+	s(len(yts)) = s(s(s(0))) & pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) -> true
+	s(s(len(yts))) = s(s(0)) & pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(s(len(yts)))) = s(0) & pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(s(len(yts)))) & pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) -> true
+	s(s(len(yts))) = s(s(s(0))) & pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) -> true
+	s(s(s(len(yts)))) = s(s(0)) & pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(s(len(yts)))) = s(s(s(0))) & pref(cons(xts6, cons(xts5, cons(xts4, yts))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts6, cons(xts5, cons(xts4, yts))) =: cons(xts3, cons(xts2, cons(xts1, nil))) -> true
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> cons(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
+	^f2(0; yts, xts@) -> yts
+	^f2($n2 + 1; yts, xts@) -> cons(xts$n2, ^f2($n2; yts, xts@))
+	^f3(0; xts@) -> nil
+	^f3($n3 + 1; xts@) -> cons(xts$n3, ^f3($n3; xts@))
+	^f4(0) -> 0
+	^f4($n4 + 1) -> s(^f4($n4))
+	^f5(0; yts, xts@) -> yts
+	^f5($n5 + 1; yts, xts@) -> cons(xts$n5, ^f5($n5; yts, xts@))
+	^f6(0; yts, xts@) -> yts
+	^f6($n6 + 1; yts, xts@) -> cons(xts$n6, ^f6($n6; yts, xts@))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, yts2), cons(xts$n, ^f0($n; yts1, xts@))) = true) & (s(len(yts2)) = s(^f1($n; yts1))) => cons(xts$n, yts2) =: cons(xts$n, ^f0($n; yts1, xts)) = true
+	(pref(cons(xts$n, ^f2($n; yts, xts@)), cons(xts$n, nil)) = true) & (s(^f1($n; yts)) = s(0)) => cons(xts$n, ^f2($n; yts, xts)) =: cons(xts$n, nil) = true
+	(pref(cons(xts$n, yts), cons(xts$n, ^f3($n; xts@))) = true) & (s(len(yts)) = s(^f4($n))) => cons(xts$n, yts) =: cons(xts$n, ^f3($n; xts)) = true
+	0 = s(s(s(^f1($n; yts)))) => 0 = s(^f1($n; yts))
+	(pref(cons(xts$n, ^f5($n; yts, xts@)), cons(xts$n, cons(xts$n, nil))) = true) & (s(^f1($n; yts)) = s(s(0))) => cons(xts$n, ^f5($n; yts, xts)) =: cons(xts$n, cons(xts$n, nil)) = true
+	(pref(cons(xts$n, ^f6($n; yts, xts@)), cons(xts$n, cons(xts$n, cons(xts$n, nil)))) = true) & (s(^f1($n; yts)) = s(s(s(0)))) => cons(xts$n, ^f6($n; yts, xts)) =: cons(xts$n, cons(xts$n, cons(xts$n, nil))) = true
+
++++ treating clause
+	pref(cons(xts6, cons(xts5, cons(xts4, nil))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts6, cons(xts5, cons(xts4, nil))) =: cons(xts3, cons(xts2, cons(xts1, nil))) = true
+--- no new clauses created
++++ attempting case rewriting
++++ case rewriting generated new clauses
+    which have been subsequently reduced to tautologies,
+    therefore no new clauses were added
+
++++ Status of the Inference System
+--- Conjectures:
+	<empty>
+--- Non-orientable hypotheses:
+	0 = s(len(yts)) => false = true
+--- Oriented hypotheses:
+	0 = len(y) => nil =: y -> true
+	0 = s(s(len(yts))) => s(len(yts)) -> 0
+	0 = s(s(s(len(yts)))) => s(len(yts)) -> 0
+	0 = s(s(s(s(len(yts))))) => s(s(len(yts))) -> 0
+	0 = s(s(s(s(s(len(yts)))))) => s(s(s(len(yts)))) -> 0
+	len(x) = len(y) & pref(x, y) = true => x =: y -> true
+	s(len(yts)) = len(y) & pref(cons(xts, yts), y) = true => cons(xts, yts) =: y -> true
+	s(len(yts)) = s(0) & pref(cons(xts2, yts), cons(xts1, nil)) = true => cons(xts2, yts) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(len(yts)) & pref(cons(xts2, yts2), cons(xts1, yts1)) = true => cons(xts2, yts2) =: cons(xts1, yts1) -> true
+	s(len(yts)) = s(s(0)) & pref(cons(xts3, yts), cons(xts2, cons(xts1, nil))) = true => cons(xts3, yts) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(len(yts))) = s(0) & pref(cons(xts3, cons(xts2, yts)), cons(xts1, nil)) = true => cons(xts3, cons(xts2, yts)) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(len(yts))) & pref(cons(xts3, yts2), cons(xts2, cons(xts1, yts1))) = true => cons(xts3, yts2) =: cons(xts2, cons(xts1, yts1)) -> true
+	s(len(yts)) = s(s(s(0))) & pref(cons(xts4, yts), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts4, yts) =: cons(xts3, cons(xts2, cons(xts1, nil))) -> true
+	s(s(len(yts))) = s(s(0)) & pref(cons(xts4, cons(xts3, yts)), cons(xts2, cons(xts1, nil))) = true => cons(xts4, cons(xts3, yts)) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(s(len(yts)))) = s(0) & pref(cons(xts4, cons(xts3, cons(xts2, yts))), cons(xts1, nil)) = true => cons(xts4, cons(xts3, cons(xts2, yts))) =: cons(xts1, nil) -> true
+	s(len(yts)) = s(s(s(len(yts)))) & pref(cons(xts4, yts2), cons(xts3, cons(xts2, cons(xts1, yts1)))) = true => cons(xts4, yts2) =: cons(xts3, cons(xts2, cons(xts1, yts1))) -> true
+	s(s(len(yts))) = s(s(s(0))) & pref(cons(xts5, cons(xts4, yts)), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts5, cons(xts4, yts)) =: cons(xts3, cons(xts2, cons(xts1, nil))) -> true
+	s(s(s(len(yts)))) = s(s(0)) & pref(cons(xts5, cons(xts4, cons(xts3, yts))), cons(xts2, cons(xts1, nil))) = true => cons(xts5, cons(xts4, cons(xts3, yts))) =: cons(xts2, cons(xts1, nil)) -> true
+	s(s(s(len(yts)))) = s(s(s(0))) & pref(cons(xts6, cons(xts5, cons(xts4, yts))), cons(xts3, cons(xts2, cons(xts1, nil)))) = true => cons(xts6, cons(xts5, cons(xts4, yts))) =: cons(xts3, cons(xts2, cons(xts1, nil))) -> true
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; yts, xts@) -> yts
+	^f0($n0 + 1; yts, xts@) -> cons(xts$n0, ^f0($n0; yts, xts@))
+	^f1(0; yts) -> len(yts)
+	^f1($n1 + 1; yts) -> s(^f1($n1; yts))
+	^f2(0; yts, xts@) -> yts
+	^f2($n2 + 1; yts, xts@) -> cons(xts$n2, ^f2($n2; yts, xts@))
+	^f3(0; xts@) -> nil
+	^f3($n3 + 1; xts@) -> cons(xts$n3, ^f3($n3; xts@))
+	^f4(0) -> 0
+	^f4($n4 + 1) -> s(^f4($n4))
+	^f5(0; yts, xts@) -> yts
+	^f5($n5 + 1; yts, xts@) -> cons(xts$n5, ^f5($n5; yts, xts@))
+	^f6(0; yts, xts@) -> yts
+	^f6($n6 + 1; yts, xts@) -> cons(xts$n6, ^f6($n6; yts, xts@))
++++ }
++++ Lemma(s)           = 
+	(pref(cons(xts$n, yts2), cons(xts$n, ^f0($n; yts1, xts@))) = true) & (s(len(yts2)) = s(^f1($n; yts1))) => cons(xts$n, yts2) =: cons(xts$n, ^f0($n; yts1, xts)) = true
+	(pref(cons(xts$n, ^f2($n; yts, xts@)), cons(xts$n, nil)) = true) & (s(^f1($n; yts)) = s(0)) => cons(xts$n, ^f2($n; yts, xts)) =: cons(xts$n, nil) = true
+	(pref(cons(xts$n, yts), cons(xts$n, ^f3($n; xts@))) = true) & (s(len(yts)) = s(^f4($n))) => cons(xts$n, yts) =: cons(xts$n, ^f3($n; xts)) = true
+	0 = s(s(s(^f1($n; yts)))) => 0 = s(^f1($n; yts))
+	(pref(cons(xts$n, ^f5($n; yts, xts@)), cons(xts$n, cons(xts$n, nil))) = true) & (s(^f1($n; yts)) = s(s(0))) => cons(xts$n, ^f5($n; yts, xts)) =: cons(xts$n, cons(xts$n, nil)) = true
+	(pref(cons(xts$n, ^f6($n; yts, xts@)), cons(xts$n, cons(xts$n, cons(xts$n, nil)))) = true) & (s(^f1($n; yts)) = s(s(s(0)))) => cons(xts$n, ^f6($n; yts, xts)) =: cons(xts$n, cons(xts$n, cons(xts$n, nil))) = true
+
++++ SUCCESS: all conjectures proved
++++ Statistics:
+... Number of proof steps          = 23
+... Number of induction steps      = 20
+... Number of equational steps     = 5
+... Number of case rewriting steps = 3
+... Number of PG defined symbols   = 7
+... Number of PG lemmas            = 6
+... Elapsed time (seconds)         = 0.157

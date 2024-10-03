@@ -1,0 +1,11 @@
+specification CraftedTrees
+
+include <flatten>
+
+precedence
+	flatten > app > cons > node > leaf > nil > s > 0
+
+conjectures
+	flatten(node(node(x,u,x),v,x)) = flatten(node(x,u,node(x,v,x)));
+
+end

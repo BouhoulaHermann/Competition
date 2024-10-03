@@ -1,0 +1,22 @@
+specification Generated
+
+sorts nat 
+
+constructors
+0: -> nat
+s: nat -> nat
+
+defined functions
++: nat nat ->  nat
+
+precedence
++ > s > 0 
+
+axioms
+x + 0 = x;
+x + s(y) = s(x + y);
+
+conjectures
+((w + x) + v + (y + w) + (u + u)) = (v + (w + (x + w) + u) + y + u);
+
+end

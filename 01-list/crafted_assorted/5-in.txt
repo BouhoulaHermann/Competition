@@ -1,0 +1,15 @@
+specification ListCount
+
+include <prefix>
+	<count>
+	<leqid>
+	<andalt>
+
+precedence
+	count > == = <= > && > pref > app > cons > nil > s > 0 > true = false
+
+conjectures
+
+	pref(x, y) = true => count(z, x) <= count(z, y) = true;
+
+end

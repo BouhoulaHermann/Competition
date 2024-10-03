@@ -1,0 +1,43 @@
+specification ListFunctions
+sorts
+	nat lst
+
+constructors
+	0: -> nat
+	s: nat -> nat
+	nil: -> lst
+	cons: nat lst -> lst
+
+defined functions
+	app: lst lst -> lst
+	rev: lst -> lst
+	revAcc: lst -> lst
+	revAccInner: lst lst -> lst
+
+precedence
+	revAcc >
+	revAccInner >
+	rev >
+	app >
+	cons >
+	nil >
+	s >
+	0
+
+axioms
+
+	app(nil, x) = x;
+	app(cons(x, y), z) = cons(x, app(y, z));
+
+	rev(nil) = nil;
+	rev(cons(x, y)) = app(rev(y), cons(x, nil));
+
+	revAccInner(nil, x) = x;
+	revAccInner(cons(x, y), z) = revAccInner(y, cons(x, z));
+
+	revAcc(x) = revAccInner(x, nil);
+
+conjectures
+	revAcc(x) = rev(x);
+
+end

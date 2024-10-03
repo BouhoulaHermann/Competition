@@ -1,0 +1,18 @@
+# Programming and Proving In Isabelle/HOL
+# page 15
+#
+# Example for mirroring a tree
+
+specification TREE
+
+include <rotate>
+
+precedence
+
+	rotate > node > leaf > s > 0
+
+conjectures
+
+	rotate(rotate(x)) = x;
+
+end

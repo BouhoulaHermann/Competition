@@ -1,0 +1,35 @@
+specification LengthOfList
+sorts nat lst
+
+constructors
+	0: -> nat
+	s: nat -> nat
+	nil: -> lst
+	cons: nat lst -> lst
+
+defined functions
+	+: nat nat -> nat
+	*: nat nat -> nat
+	app: lst lst -> lst
+	len: lst -> nat
+
+precedence
+	* > + > len > app  > cons > nil> s > 0
+
+axioms
+	x + 0 = x;
+	x + s(y) = s(x + y);
+
+	x * 0 = 0;
+	x * s(y) = x + (x * y);
+
+	app(nil, y) = y;
+	app(cons(x, y), z) = cons(x, app(y, z));
+
+	len(nil) = 0;
+	len(cons(x, y)) = s(len(y));
+
+conjectures
+	len(app(x, app(x, x))) = s(s(s(0))) * len(x);
+
+end
