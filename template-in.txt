@@ -1,0 +1,17 @@
+specification xxx
+
+include
+
+sorts
+	
+constructors
+
+defined functions
+
+precedence
+
+axioms
+
+conjectures
+
+end
