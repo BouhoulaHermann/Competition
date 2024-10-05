@@ -3,7 +3,7 @@ specification APPENDsymb
 include <listsymb>
 
 # append operator for sort list
-# append as symbol
+# append as symbol @@, cons as symbol ..
 
 defined functions
 

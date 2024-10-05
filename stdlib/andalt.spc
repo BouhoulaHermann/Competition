@@ -1,6 +1,6 @@
 specification ANDalt
 
-include <and>
+include <bool>
 
 # and operator for sort bool
 # with variables

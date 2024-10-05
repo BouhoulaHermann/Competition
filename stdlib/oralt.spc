@@ -1,6 +1,6 @@
 specification ORalt
 
-include <or>
+include <bool>
 
 # or operator for sort bool
 # with variables
