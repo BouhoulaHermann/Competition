@@ -1,7 +1,6 @@
 specification PREFIXsymb
 
 include <appendsymb>
-	<and>
 	<eq>
 
 # prefix predicate for sort list

@@ -1,7 +1,6 @@
 specification PREFIX
 
 include <append>
-	<and>
 	<eq>
 
 # prefix predicate for sort list
