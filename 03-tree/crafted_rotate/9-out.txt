@@ -13,8 +13,8 @@
 -----------------------------------------------------------------------
 
 +++ specification NAT from nat successfully parsed
-+++ specification TREE from tree successfully parsed
 +++ specification ADD from add successfully parsed
++++ specification TREE from tree successfully parsed
 +++ specification SIZE from size successfully parsed
 +++ specification ROTATEright from rotateright successfully parsed
 +++ specification CraftedTrees from 9-in.txt successfully parsed
@@ -727,4 +727,4 @@
 ... Number of induction steps      = 10
 ... Number of equational steps     = 0
 ... Number of case rewriting steps = 0
-... Elapsed time (seconds)         = 0.154
+... Elapsed time (seconds)         = 0.143

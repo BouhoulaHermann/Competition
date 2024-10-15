@@ -13,10 +13,9 @@
 -----------------------------------------------------------------------
 
 +++ specification NAT from nat successfully parsed
-+++ specification TREE from tree successfully parsed
-+++ specification ADD from add successfully parsed
-+++ specification SIZE from size successfully parsed
 +++ specification ADDalt from addalt successfully parsed
++++ specification TREE from tree successfully parsed
++++ specification SIZE from size successfully parsed
 +++ specification ROTATE from rotate successfully parsed
 +++ specification CraftedTrees from 8a-in.txt successfully parsed
 +++ Listing
@@ -319,4 +318,4 @@
 ... Number of case rewriting steps = 0
 ... Number of PG defined symbols   = 1
 ... Number of PG lemmas            = 1
-... Elapsed time (seconds)         = 0.037
+... Elapsed time (seconds)         = 0.011
