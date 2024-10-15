@@ -15,7 +15,6 @@
 +++ specification NAT from nat successfully parsed
 +++ specification LISTsymb from listsymb successfully parsed
 +++ specification APPENDsymb from appendsymb successfully parsed
-+++ specification ADD from add successfully parsed
 +++ specification assoc from 02a-in.txt successfully parsed
 +++ Listing
          1: specification assoc
@@ -28,30 +27,23 @@
          8:      nil: -> list
          9:      s: nat -> nat
         10: defined functions
-        11:      +: nat nat -> nat
-        12:      @@: list list -> list
-        13: precedence
-        14:      @@ > + > .. > nil > s > 0
-        15: axioms
-        16:      x + 0 = x;
-        17:      nil @@ y = y;
-        18:      x + s(y) = s(x + y);
-        19:      (x .. y) @@ z = x .. (y @@ z);
-        20: conjectures
-        21:      (xs @@ ys) @@ zs = xs @@ (ys @@ zs);
-        22: end
+        11:      @@: list list -> list
+        12: precedence
+        13:      @@ > .. > nil > s > 0
+        14: axioms
+        15:      nil @@ y = y;
+        16:      (x .. y) @@ z = x .. (y @@ z);
+        17: conjectures
+        18:      (xs @@ ys) @@ zs = xs @@ (ys @@ zs);
+        19: end
 +++ finitary sorts: <empty>
 +++ Rewrite System 
-	x + 0 -> x
 	nil @@ y -> y
-	x + s(y) -> s(x + y)
 	(x .. y) @@ z -> x .. (y @@ z)
 +++ inductive positions:
-... for +: 1
 ... for @@: 0
 +++ maximal depths of left-hand sides:
 ... for @@: 2
-... for +: 2
 +++ general maximal depth = 2
 +++ sort dependence: nat < list
 +++ test sets for defined functions and sorts:
@@ -60,10 +52,6 @@
 		nil
 		x : y
 		x .. y
-... for +
-... ... nat
-		0
-		s(x)
 
 +++ conjecture(s)
 	(xs @@ ys) @@ zs = xs @@ (ys @@ zs)
@@ -131,4 +119,4 @@
 ... Number of induction steps      = 1
 ... Number of equational steps     = 0
 ... Number of case rewriting steps = 0
-... Elapsed time (seconds)         = 0
+... Elapsed time (seconds)         = 0.001

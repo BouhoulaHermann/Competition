@@ -5,11 +5,11 @@
 
 specification assoc
 
-include <appendsymb> <add>
+include <appendsymb> <nat>
 
 precedence
 
-	@@ > + > .. > nil > s > 0
+	@@ > .. > nil > s > 0
 
 conjectures
 
