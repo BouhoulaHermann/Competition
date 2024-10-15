@@ -5,6 +5,9 @@ include <bool>
 # and operator for sort bool
 # with variables
 
+defined functions
+	&&: bool bool -> bool
+
 axioms
 	false && x = false;
 	x && false = false;

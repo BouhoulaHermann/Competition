@@ -1,8 +1,9 @@
 specification SIZE
 
-include <tree> <add>
+include <tree>
 
 # size of a tree
+# one of the addition modules must be loaded before
 
 defined functions
 	size: tree -> nat

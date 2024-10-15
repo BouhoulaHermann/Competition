@@ -1,7 +1,5 @@
 specification MULT
 
-include <add>
-
 # multiplication operator for sort nat
 
 defined functions

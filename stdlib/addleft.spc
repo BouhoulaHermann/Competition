@@ -1,4 +1,4 @@
-specification ADDalt
+specification ADDleft
 
 include <nat>
 
@@ -8,10 +8,8 @@ defined functions
 
 axioms
 
-# changes under + on positions 0 and 1
+# changes under + on position 0
 
-	x + 0 = x;
-	x + s(y) = s(x + y);
 	0 + y = y;
 	s(x) + y = s(x + y);
 
