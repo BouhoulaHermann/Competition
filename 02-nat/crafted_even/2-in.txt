@@ -1,7 +1,9 @@
+# This specification must end with DISPROOF
+
 specification Crafted
 
 include <bool>
-	<mult>
+	<multalt>
 
 defined functions
 	even: nat -> bool
