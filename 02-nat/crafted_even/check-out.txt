@@ -3,17 +3,17 @@ Number of successful proofs  = 2
 ... without primal grammars  = 2
 	0-out.txt
 	1-out.txt
-Number of disproofs          = 1
+Number of disproofs          = 0
+Number of loop limits        = 1
 	2-out.txt
-Number of loop limits        = 0
 No primal grammars possible  = 0
 Total number of correct runs = 3
 Number of crashes            = 0
 Elapsed time:
-	min     = 0.001
-	max     = 0.004 (0-out.txt)
-	mean    = 0
+	min     = 0.002
+	max     = 0.01 (2-out.txt)
+	mean    = 0.01
 	std.dev = 0
-	median  = 0
+	median  = 0.01
 Examples which run longer than 1 second:
 	<none>

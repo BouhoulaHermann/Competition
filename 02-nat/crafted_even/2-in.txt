@@ -1,5 +1,3 @@
-# This example must end up in a DISPROOF
-
 specification Crafted
 
 include <bool>
@@ -17,6 +15,6 @@ axioms
 	even(s(s(x))) = even(x);
 
 conjectures
-	even(y) = even(x * y);
+	even(y) = true => even(x * y) = true;
 
 end

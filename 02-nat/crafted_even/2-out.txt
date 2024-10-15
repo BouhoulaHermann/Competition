@@ -41,7 +41,7 @@
         21:      x * s(y) = (x * y) + x;
         22:      even(s(s(x))) = even(x);
         23: conjectures
-        24:      even(y) = even(x * y);
+        24:      even(y) = true => even(x * y) = true;
         25: end
 +++ finitary sorts: bool
 +++ Rewrite System 
@@ -78,136 +78,530 @@
 		s(x)
 
 +++ conjecture(s)
-	even(y) = even(x * y)
+	even(y) = true => even(x * y) = true
 
 +++ inference system initiated
 +++ treating clause
-	even(y) = even(x * y)
+	even(y) = true => even(x * y) = true
 +++ inductive narrowing on conjecture
-	even(y) = even(x * y)
+	even(y) = true => even(x * y) = true
 ... induction variables of
-	even(y) = even(x * y)
+	even(y) = true => even(x * y) = true
 ... are:
 	y:nat
 +++ perform INDUCTIVE NARROWING on conjecture 
-	even(y) = even(x * y)
+	even(y) = true => even(x * y) = true
 ... with variable y
 +++ creating new conjecture
-	even(0) = even(x * 0)
+	even(0) = true => even(x * 0) = true
 +++ creating new conjecture
-	even(s(xts)) = even(x * s(xts))
+	even(s(xts)) = true => even(x * s(xts)) = true
 --- clause
-	even(0) = even(x * 0)
+	even(0) = true => even(x * 0) = true
 ... reduced to tautology
 	true = true
 --- clause
-	even(s(xts)) = even(x * s(xts))
+	even(s(xts)) = true => even(x * s(xts)) = true
 ... reduced in 1 step to
-	even(s(xts)) = even((x * xts) + x)
+	even(s(xts)) = true => even((x * xts) + x) = true
 +++ inductive narrowing succeeded
 --- clause
-	even(y) = even(x * y)
+	even(y) = true => even(x * y) = true
 ... oriented to rule
-	even(x * y) -> even(y)
+	even(y) = true => even(x * y) -> true
 +++ added new clause(s)
-	even(s(xts)) = even((x * xts) + x)
+	even(s(xts)) = true => even((x * xts) + x) = true
 ... to conjectures
 
 +++ Status of the Inference System
 --- Conjectures:
-	even(s(xts)) = even((x * xts) + x)
+	even(s(xts)) = true => even((x * xts) + x) = true
 --- Non-orientable hypotheses:
 	<empty>
 --- Oriented hypotheses:
-	even(x * y) -> even(y)
+	even(y) = true => even(x * y) -> true
 --- Primal Grammar:
 	<empty>
 
 +++ treating clause
-	even(s(xts)) = even((x * xts) + x)
+	even(s(xts)) = true => even((x * xts) + x) = true
 +++ inductive narrowing on conjecture
-	even(s(xts)) = even((x * xts) + x)
+	even(s(xts)) = true => even((x * xts) + x) = true
 ... induction variables of
-	even(s(xts)) = even((x * xts) + x)
+	even(s(xts)) = true => even((x * xts) + x) = true
 ... are:
 	xts:nat
 +++ perform INDUCTIVE NARROWING on conjecture 
-	even(s(xts)) = even((x * xts) + x)
+	even(s(xts)) = true => even((x * xts) + x) = true
 ... with variable xts
 +++ creating new conjecture
-	even(s(0)) = even((x * 0) + x)
+	even(s(0)) = true => even((x * 0) + x) = true
 +++ creating new conjecture
-	even(s(s(xts))) = even((x * s(xts)) + x)
+	even(s(s(xts))) = true => even((x * s(xts)) + x) = true
 --- clause
-	even(s(0)) = even((x * 0) + x)
+	even(s(0)) = true => even((x * 0) + x) = true
 ... reduced in 2 steps to
-	false = even(0 + x)
+	false = true => even(0 + x) = true
 --- clause
-	even(s(s(xts))) = even((x * s(xts)) + x)
+	false = true => even(0 + x) = true
+... contains a ground negative condition
+	false = true
+... and is therefore discarded (false => t is always true)
+--- clause
+	even(s(s(xts))) = true => even((x * s(xts)) + x) = true
 ... reduced in 2 steps to
-	even(xts) = even(((x * xts) + x) + x)
+	even(xts) = true => even(((x * xts) + x) + x) = true
 +++ inductive narrowing succeeded
 --- clause
-	even(s(xts)) = even((x * xts) + x)
+	even(s(xts)) = true => even((x * xts) + x) = true
 ... oriented to rule
-	even((x * xts) + x) -> even(s(xts))
+	even(s(xts)) = true => even((x * xts) + x) -> true
 +++ added new clause(s)
-	false = even(0 + x)
-	even(xts) = even(((x * xts) + x) + x)
+	even(xts) = true => even(((x * xts) + x) + x) = true
 ... to conjectures
 
 +++ Status of the Inference System
 --- Conjectures:
-	false = even(0 + x)
-	even(xts) = even(((x * xts) + x) + x)
+	even(xts) = true => even(((x * xts) + x) + x) = true
 --- Non-orientable hypotheses:
 	<empty>
 --- Oriented hypotheses:
-	even(x * y) -> even(y)
-	even((x * xts) + x) -> even(s(xts))
+	even(y) = true => even(x * y) -> true
+	even(s(xts)) = true => even((x * xts) + x) -> true
 --- Primal Grammar:
 	<empty>
 
 +++ treating clause
-	false = even(0 + x)
+	even(xts) = true => even(((x * xts) + x) + x) = true
 +++ inductive narrowing on conjecture
-	false = even(0 + x)
+	even(xts) = true => even(((x * xts) + x) + x) = true
 ... induction variables of
-	false = even(0 + x)
+	even(xts) = true => even(((x * xts) + x) + x) = true
 ... are:
-	x:nat
+	xts:nat
 +++ perform INDUCTIVE NARROWING on conjecture 
-	false = even(0 + x)
-... with variable x
+	even(xts) = true => even(((x * xts) + x) + x) = true
+... with variable xts
 +++ creating new conjecture
-	false = even(0 + 0)
+	even(0) = true => even(((x * 0) + x) + x) = true
 +++ creating new conjecture
-	false = even(0 + s(xts))
+	even(s(xts)) = true => even(((x * s(xts)) + x) + x) = true
 --- clause
-	false = even(0 + 0)
+	even(0) = true => even(((x * 0) + x) + x) = true
 ... reduced in 2 steps to
-	false = true
+	even((0 + x) + x) = true
 --- clause
-	false = true
-... contains a falsifying equation
-	false = true
+	even(s(xts)) = true => even(((x * s(xts)) + x) + x) = true
+... reduced in 1 step to
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) = true
++++ inductive narrowing succeeded
+--- clause
+	even(xts) = true => even(((x * xts) + x) + x) = true
+... oriented to rule
+	even(xts) = true => even(((x * xts) + x) + x) -> true
++++ added new clause(s)
+	even((0 + x) + x) = true
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) = true
+... to conjectures
 
 +++ Status of the Inference System
 --- Conjectures:
-	even(xts) = even(((x * xts) + x) + x)
+	even((0 + x) + x) = true
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) = true
 --- Non-orientable hypotheses:
 	<empty>
 --- Oriented hypotheses:
-	even(x * y) -> even(y)
-	even((x * xts) + x) -> even(s(xts))
+	even(y) = true => even(x * y) -> true
+	even(s(xts)) = true => even((x * xts) + x) -> true
+	even(xts) = true => even(((x * xts) + x) + x) -> true
 --- Primal Grammar:
 	<empty>
 
-+++ DISPROOF: counter example
++++ treating clause
+	even((0 + x) + x) = true
++++ inductive narrowing on conjecture
+	even((0 + x) + x) = true
+... induction variables of
+	even((0 + x) + x) = true
+... are:
+	x:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	even((0 + x) + x) = true
+... with variable x
++++ creating new conjecture
+	even((0 + 0) + 0) = true
++++ creating new conjecture
+	even((0 + s(xts)) + s(xts)) = true
+--- clause
+	even((0 + 0) + 0) = true
+... reduced to tautology
+	true = true
+--- clause
+	even((0 + s(xts)) + s(xts)) = true
+... reduced in 2 steps to
+	even(s(s(0 + xts) + xts)) = true
++++ inductive narrowing succeeded
+--- clause
+	even((0 + x) + x) = true
+... oriented to rule
+	even((0 + x) + x) -> true
++++ added new clause(s)
+	even(s(s(0 + xts) + xts)) = true
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) = true
+	even(s(s(0 + xts) + xts)) = true
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	even((0 + x) + x) -> true
+	even(y) = true => even(x * y) -> true
+	even(s(xts)) = true => even((x * xts) + x) -> true
+	even(xts) = true => even(((x * xts) + x) + x) -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) = true
++++ inductive narrowing on conjecture
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) = true
+... induction variables of
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) = true
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) = true
+... with variable xts
++++ creating new conjecture
+	even(s(0)) = true => even((((x * 0) + x) + x) + x) = true
++++ creating new conjecture
+	even(s(s(xts))) = true => even((((x * s(xts)) + x) + x) + x) = true
+--- clause
+	even(s(0)) = true => even((((x * 0) + x) + x) + x) = true
+... reduced in 2 steps to
+	false = true => even(((0 + x) + x) + x) = true
+--- clause
+	false = true => even(((0 + x) + x) + x) = true
+... contains a ground negative condition
 	false = true
+... and is therefore discarded (false => t is always true)
+--- clause
+	even(s(s(xts))) = true => even((((x * s(xts)) + x) + x) + x) = true
+... reduced in 2 steps to
+	even(xts) = true => even(((((x * xts) + x) + x) + x) + x) = true
++++ inductive narrowing succeeded
+--- clause
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) = true
+... oriented to rule
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) -> true
++++ added new clause(s)
+	even(xts) = true => even(((((x * xts) + x) + x) + x) + x) = true
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	even(s(s(0 + xts) + xts)) = true
+	even(xts) = true => even(((((x * xts) + x) + x) + x) + x) = true
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	even((0 + x) + x) -> true
+	even(y) = true => even(x * y) -> true
+	even(s(xts)) = true => even((x * xts) + x) -> true
+	even(xts) = true => even(((x * xts) + x) + x) -> true
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	even(s(s(0 + xts) + xts)) = true
++++ inductive narrowing on conjecture
+	even(s(s(0 + xts) + xts)) = true
+... induction variables of
+	even(s(s(0 + xts) + xts)) = true
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	even(s(s(0 + xts) + xts)) = true
+... with variable xts
++++ creating new conjecture
+	even(s(s(0 + 0) + 0)) = true
++++ creating new conjecture
+	even(s(s(0 + s(xts)) + s(xts))) = true
+--- clause
+	even(s(s(0 + 0) + 0)) = true
+... reduced to tautology
+	true = true
+--- clause
+	even(s(s(0 + s(xts)) + s(xts))) = true
+... reduced in 3 steps to
+	even(s(s(0 + xts)) + xts) = true
++++ inductive narrowing succeeded
+--- clause
+	even(s(s(0 + xts) + xts)) = true
+... oriented to rule
+	even(s(s(0 + xts) + xts)) -> true
++++ added new clause(s)
+	even(s(s(0 + xts)) + xts) = true
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	even(xts) = true => even(((((x * xts) + x) + x) + x) + x) = true
+	even(s(s(0 + xts)) + xts) = true
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	even((0 + x) + x) -> true
+	even(s(s(0 + xts) + xts)) -> true
+	even(y) = true => even(x * y) -> true
+	even(s(xts)) = true => even((x * xts) + x) -> true
+	even(xts) = true => even(((x * xts) + x) + x) -> true
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	even(xts) = true => even(((((x * xts) + x) + x) + x) + x) = true
++++ inductive narrowing on conjecture
+	even(xts) = true => even(((((x * xts) + x) + x) + x) + x) = true
+... induction variables of
+	even(xts) = true => even(((((x * xts) + x) + x) + x) + x) = true
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	even(xts) = true => even(((((x * xts) + x) + x) + x) + x) = true
+... with variable xts
++++ creating new conjecture
+	even(0) = true => even(((((x * 0) + x) + x) + x) + x) = true
++++ creating new conjecture
+	even(s(xts)) = true => even(((((x * s(xts)) + x) + x) + x) + x) = true
+--- clause
+	even(0) = true => even(((((x * 0) + x) + x) + x) + x) = true
+... reduced in 2 steps to
+	even((((0 + x) + x) + x) + x) = true
+--- clause
+	even(s(xts)) = true => even(((((x * s(xts)) + x) + x) + x) + x) = true
+... reduced in 1 step to
+	even(s(xts)) = true => even((((((x * xts) + x) + x) + x) + x) + x) = true
++++ inductive narrowing succeeded
+--- clause
+	even(xts) = true => even(((((x * xts) + x) + x) + x) + x) = true
+... oriented to rule
+	even(xts) = true => even(((((x * xts) + x) + x) + x) + x) -> true
++++ added new clause(s)
+	even((((0 + x) + x) + x) + x) = true
+	even(s(xts)) = true => even((((((x * xts) + x) + x) + x) + x) + x) = true
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	even(s(s(0 + xts)) + xts) = true
+	even((((0 + x) + x) + x) + x) = true
+	even(s(xts)) = true => even((((((x * xts) + x) + x) + x) + x) + x) = true
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	even((0 + x) + x) -> true
+	even(s(s(0 + xts) + xts)) -> true
+	even(y) = true => even(x * y) -> true
+	even(s(xts)) = true => even((x * xts) + x) -> true
+	even(xts) = true => even(((x * xts) + x) + x) -> true
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) -> true
+	even(xts) = true => even(((((x * xts) + x) + x) + x) + x) -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	even(s(s(0 + xts)) + xts) = true
++++ inductive narrowing on conjecture
+	even(s(s(0 + xts)) + xts) = true
+... induction variables of
+	even(s(s(0 + xts)) + xts) = true
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	even(s(s(0 + xts)) + xts) = true
+... with variable xts
++++ creating new conjecture
+	even(s(s(0 + 0)) + 0) = true
++++ creating new conjecture
+	even(s(s(0 + s(xts))) + s(xts)) = true
+--- clause
+	even(s(s(0 + 0)) + 0) = true
+... reduced to tautology
+	true = true
+--- clause
+	even(s(s(0 + s(xts))) + s(xts)) = true
+... reduced in 2 steps to
+	even(s(s(s(s(0 + xts))) + xts)) = true
++++ inductive narrowing succeeded
+--- clause
+	even(s(s(0 + xts)) + xts) = true
+... oriented to rule
+	even(s(s(0 + xts)) + xts) -> true
++++ added new clause(s)
+	even(s(s(s(s(0 + xts))) + xts)) = true
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	even((((0 + x) + x) + x) + x) = true
+	even(s(xts)) = true => even((((((x * xts) + x) + x) + x) + x) + x) = true
+	even(s(s(s(s(0 + xts))) + xts)) = true
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	even((0 + x) + x) -> true
+	even(s(s(0 + xts) + xts)) -> true
+	even(s(s(0 + xts)) + xts) -> true
+	even(y) = true => even(x * y) -> true
+	even(s(xts)) = true => even((x * xts) + x) -> true
+	even(xts) = true => even(((x * xts) + x) + x) -> true
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) -> true
+	even(xts) = true => even(((((x * xts) + x) + x) + x) + x) -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	even((((0 + x) + x) + x) + x) = true
++++ inductive narrowing on conjecture
+	even((((0 + x) + x) + x) + x) = true
+... induction variables of
+	even((((0 + x) + x) + x) + x) = true
+... are:
+	x:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	even((((0 + x) + x) + x) + x) = true
+... with variable x
++++ creating new conjecture
+	even((((0 + 0) + 0) + 0) + 0) = true
++++ creating new conjecture
+	even((((0 + s(xts)) + s(xts)) + s(xts)) + s(xts)) = true
+--- clause
+	even((((0 + 0) + 0) + 0) + 0) = true
+... reduced to tautology
+	true = true
+--- clause
+	even((((0 + s(xts)) + s(xts)) + s(xts)) + s(xts)) = true
+... reduced in 4 steps to
+	even(s(s(s(s(0 + xts) + xts) + xts) + xts)) = true
++++ inductive narrowing succeeded
+--- clause
+	even((((0 + x) + x) + x) + x) = true
+... oriented to rule
+	even((((0 + x) + x) + x) + x) -> true
++++ added new clause(s)
+	even(s(s(s(s(0 + xts) + xts) + xts) + xts)) = true
+... to conjectures
+
++++ Status of the Inference System
+--- Conjectures:
+	even(s(xts)) = true => even((((((x * xts) + x) + x) + x) + x) + x) = true
+	even(s(s(s(s(0 + xts))) + xts)) = true
+	even(s(s(s(s(0 + xts) + xts) + xts) + xts)) = true
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	even((0 + x) + x) -> true
+	even(s(s(0 + xts) + xts)) -> true
+	even(s(s(0 + xts)) + xts) -> true
+	even((((0 + x) + x) + x) + x) -> true
+	even(y) = true => even(x * y) -> true
+	even(s(xts)) = true => even((x * xts) + x) -> true
+	even(xts) = true => even(((x * xts) + x) + x) -> true
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) -> true
+	even(xts) = true => even(((((x * xts) + x) + x) + x) + x) -> true
+--- Primal Grammar:
+	<empty>
+
++++ treating clause
+	even(s(xts)) = true => even((((((x * xts) + x) + x) + x) + x) + x) = true
++++ inductive narrowing on conjecture
+	even(s(xts)) = true => even((((((x * xts) + x) + x) + x) + x) + x) = true
+... induction variables of
+	even(s(xts)) = true => even((((((x * xts) + x) + x) + x) + x) + x) = true
+... are:
+	xts:nat
++++ perform INDUCTIVE NARROWING on conjecture 
+	even(s(xts)) = true => even((((((x * xts) + x) + x) + x) + x) + x) = true
+... with variable xts
++++ creating new conjecture
+	even(s(0)) = true => even((((((x * 0) + x) + x) + x) + x) + x) = true
++++ creating new conjecture
+	even(s(s(xts))) = true => even((((((x * s(xts)) + x) + x) + x) + x) + x) = true
+--- clause
+	even(s(0)) = true => even((((((x * 0) + x) + x) + x) + x) + x) = true
+... reduced in 2 steps to
+	false = true => even(((((0 + x) + x) + x) + x) + x) = true
+--- clause
+	false = true => even(((((0 + x) + x) + x) + x) + x) = true
+... contains a ground negative condition
+	false = true
+... and is therefore discarded (false => t is always true)
+--- clause
+	even(s(s(xts))) = true => even((((((x * s(xts)) + x) + x) + x) + x) + x) = true
+... reduced in 2 steps to
+	even(xts) = true => even(((((((x * xts) + x) + x) + x) + x) + x) + x) = true
++++ inductive narrowing succeeded
+--- clause
+	even(s(xts)) = true => even((((((x * xts) + x) + x) + x) + x) + x) = true
+... oriented to rule
+	even(s(xts)) = true => even((((((x * xts) + x) + x) + x) + x) + x) -> true
++++ added new clause(s)
+	even(xts) = true => even(((((((x * xts) + x) + x) + x) + x) + x) + x) = true
+... to conjectures
++++ active wrap
+	even(s(xts)) = true => even(. + x) = true
+... with sequence
+	even(s(xts)) = true => even((x * xts) + x) = true
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) = true
+	even(s(xts)) = true => even((((((x * xts) + x) + x) + x) + x) + x) = true
++++ primal grammar found for head
+	{*, +, even, s, true}
+... and wrap
+	even(s(xts)) = true => even(. + x) = true
++++ Presburger system  = {
+	^f0(0; x, xts) -> x * xts
+	^f0($n0 + 1; x, xts) -> (^f0($n0; x, xts) + x) + x
++++ }
++++ Lemma(s)           = 
+	even(s(xts)) = true => even(^f0($n; x, xts) + x) = true
+
++++ Status of the Inference System
+--- Conjectures:
+	even(s(s(s(s(0 + xts))) + xts)) = true
+	even(s(s(s(s(0 + xts) + xts) + xts) + xts)) = true
+	even(xts) = true => even(((((((x * xts) + x) + x) + x) + x) + x) + x) = true
+--- Non-orientable hypotheses:
+	<empty>
+--- Oriented hypotheses:
+	even((0 + x) + x) -> true
+	even(s(s(0 + xts) + xts)) -> true
+	even(s(s(0 + xts)) + xts) -> true
+	even((((0 + x) + x) + x) + x) -> true
+	even(y) = true => even(x * y) -> true
+	even(s(xts)) = true => even((x * xts) + x) -> true
+	even(xts) = true => even(((x * xts) + x) + x) -> true
+	even(s(xts)) = true => even((((x * xts) + x) + x) + x) -> true
+	even(xts) = true => even(((((x * xts) + x) + x) + x) + x) -> true
+	even(s(xts)) = true => even((((((x * xts) + x) + x) + x) + x) + x) -> true
+--- Primal Grammar:
++++ Presburger system  = {
+	^f0(0; x, xts) -> x * xts
+	^f0($n0 + 1; x, xts) -> (^f0($n0; x, xts) + x) + x
++++ }
++++ Lemma(s)           = 
+	even(s(xts)) = true => even(^f0($n; x, xts) + x) = true
+
++++ loop limit reached
 +++ Statistics:
-... Number of proof steps          = 3
-... Number of induction steps      = 3
+... Number of proof steps          = 10
+... Number of induction steps      = 10
 ... Number of equational steps     = 0
 ... Number of case rewriting steps = 0
-... Elapsed time (seconds)         = 0.001
+... Number of PG defined symbols   = 1
+... Number of PG lemmas            = 1
+... Elapsed time (seconds)         = 0.01
