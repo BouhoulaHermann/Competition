@@ -1,6 +1,6 @@
 specification Crafted
 
-include <mult>
+include <add> <mult>
 
 precedence
 	* > + > s > 0

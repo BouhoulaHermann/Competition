@@ -3,7 +3,7 @@
 specification Crafted
 
 include <bool>
-	<multalt>
+	<add> <multalt>
 
 defined functions
 	even: nat -> bool

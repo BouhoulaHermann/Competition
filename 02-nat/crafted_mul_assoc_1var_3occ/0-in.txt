@@ -1,6 +1,6 @@
 specification Crafted
 
-include <multalt>
+include <add> <multalt>
 
 precedence
 	* > + > s > 0
