@@ -91,7 +91,7 @@
 		node(x, y, z)
 ... for flatten
 ... ... tree
-		x
+		leaf
 ... for app
 ... ... list
 		nil
@@ -116,19 +116,16 @@
 	flatten2(rotL(x), nil) = flatten(x)
 ... with variable x
 +++ creating new conjecture
-	flatten2(rotL(xts), nil) = flatten(xts)
+	flatten2(rotL(leaf), nil) = flatten(leaf)
+--- clause
+	flatten2(rotL(leaf), nil) = flatten(leaf)
+... reduced to tautology
+	nil = nil
 +++ inductive narrowing succeeded
 --- clause
 	flatten2(rotL(x), nil) = flatten(x)
 ... oriented to rule
 	flatten2(rotL(x), nil) -> flatten(x)
-+++ added new clause(s)
-	flatten2(rotL(xts), nil) = flatten(xts)
-... to conjectures
---- clause
-	flatten2(rotL(xts), nil) = flatten(xts)
-... reduced to tautology
-	flatten(xts) = flatten(xts)
 
 +++ Status of the Inference System
 --- Conjectures:
@@ -146,4 +143,4 @@
 ... Number of induction steps      = 1
 ... Number of equational steps     = 0
 ... Number of case rewriting steps = 0
-... Elapsed time (seconds)         = 0.024
+... Elapsed time (seconds)         = 0.027

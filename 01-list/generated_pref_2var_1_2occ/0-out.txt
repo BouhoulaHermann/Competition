@@ -90,7 +90,8 @@
 		cons(x, y)
 ... for &&
 ... ... bool
-		x
+		true
+		false
 
 +++ conjecture(s)
 	pref(x, app(x, y)) = true

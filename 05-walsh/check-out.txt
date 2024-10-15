@@ -18,11 +18,11 @@ No primal grammars possible  = 0
 Total number of correct runs = 38
 Number of crashes            = 0
 Elapsed time:
-	min     = 0
-	max     = 6.007 (30-sorted-out.txt)
-	mean    = 0.25
-	std.dev = 1.08
-	median  = 0
+	min     = 0.001
+	max     = 6.733 (30-sorted-out.txt)
+	mean    = 0.29
+	std.dev = 1.21
+	median  = 0.01
 Examples which run longer than 1 second:
-	   6.007s: 30-sorted-out.txt
-	   3.225s: 15-rot+len-out.txt
+	   6.733s: 30-sorted-out.txt
+	   3.704s: 15-rot+len-out.txt

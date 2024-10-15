@@ -87,7 +87,8 @@
 		s(x)
 ... for &&
 ... ... bool
-		x
+		true
+		false
 
 +++ conjecture(s)
 	eq(x, y, z) = (x == y) && (y == z)

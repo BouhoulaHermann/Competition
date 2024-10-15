@@ -16,10 +16,10 @@ Total number of correct runs = 21
 Number of crashes            = 0
 Elapsed time:
 	min     = 0
-	max     = 7.774 (04a-out.txt)
-	mean    = 0.8
-	std.dev = 2.27
-	median  = 0
+	max     = 8.861 (04-exercise2.3-out.txt)
+	mean    = 0.91
+	std.dev = 2.57
+	median  = 0.01
 Examples which run longer than 1 second:
-	   7.774s: 04a-out.txt
-	   7.767s: 04-exercise2.3-out.txt
+	   8.861s: 04-exercise2.3-out.txt
+	   8.763s: 04a-out.txt

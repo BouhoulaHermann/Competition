@@ -100,7 +100,8 @@
 		cons(x, y)
 ... for &&
 ... ... bool
-		x
+		true
+		false
 
 +++ conjecture(s)
 	pref(app(v, v), app(app(v, v), v)) = true
@@ -319,4 +320,4 @@
 ... Number of case rewriting steps = 0
 ... Number of PG defined symbols   = 2
 ... Number of PG lemmas            = 1
-... Elapsed time (seconds)         = 0.011
+... Elapsed time (seconds)         = 0.016

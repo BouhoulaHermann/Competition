@@ -10,7 +10,7 @@ Total number of correct runs = 4
 Number of crashes            = 0
 Elapsed time:
 	min     = 0
-	max     = 0.019 (2-out.txt)
+	max     = 0.023 (2-out.txt)
 	mean    = 0.01
 	std.dev = 0.01
 	median  = 0.01

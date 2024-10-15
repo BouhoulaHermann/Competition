@@ -43,11 +43,11 @@ No primal grammars possible  = 0
 Total number of correct runs = 50
 Number of crashes            = 0
 Elapsed time:
-	min     = 0
-	max     = 5.9 (39-out.txt)
-	mean    = 0.31
-	std.dev = 1.06
-	median  = 0.03
+	min     = 0.001
+	max     = 6.653 (39-out.txt)
+	mean    = 0.35
+	std.dev = 1.18
+	median  = 0.04
 Examples which run longer than 1 second:
-	   5.900s: 39-out.txt
-	   4.818s: 6-out.txt
+	   6.653s: 39-out.txt
+	   5.303s: 6-out.txt

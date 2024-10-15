@@ -7,10 +7,10 @@ No primal grammars possible  = 0
 Total number of correct runs = 50
 Number of crashes            = 0
 Elapsed time:
-	min     = 0.02
-	max     = 0.041 (44-out.txt)
-	mean    = 0.02
-	std.dev = 0
-	median  = 0.02
+	min     = 0.023
+	max     = 0.065 (33-out.txt)
+	mean    = 0.03
+	std.dev = 0.01
+	median  = 0.03
 Examples which run longer than 1 second:
 	<none>

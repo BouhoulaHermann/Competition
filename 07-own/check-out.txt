@@ -19,10 +19,10 @@ Total number of correct runs = 23
 Number of crashes            = 0
 Elapsed time:
 	min     = 0
-	max     = 5.988 (list-out.txt)
-	mean    = 0.35
-	std.dev = 1.26
+	max     = 6.74 (list-out.txt)
+	mean    = 0.4
+	std.dev = 1.42
 	median  = 0
 Examples which run longer than 1 second:
-	   5.988s: list-out.txt
-	   1.906s: qrev2-out.txt
+	   6.740s: list-out.txt
+	   2.205s: qrev2-out.txt

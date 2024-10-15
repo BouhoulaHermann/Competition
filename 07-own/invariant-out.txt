@@ -69,7 +69,8 @@
 +++ test sets for defined functions and sorts:
 ... for or
 ... ... bool
-		x
+		true
+		false
 ... for F3
 ... ... state
 		S0
@@ -219,4 +220,4 @@
 ... Number of induction steps      = 3
 ... Number of equational steps     = 0
 ... Number of case rewriting steps = 0
-... Elapsed time (seconds)         = 0
+... Elapsed time (seconds)         = 0.001

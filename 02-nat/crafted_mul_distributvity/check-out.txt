@@ -9,10 +9,10 @@ No primal grammars possible  = 0
 Total number of correct runs = 3
 Number of crashes            = 0
 Elapsed time:
-	min     = 0
-	max     = 4.691 (1-out.txt)
-	mean    = 1.56
-	std.dev = 2.21
+	min     = 0.001
+	max     = 5.209 (1-out.txt)
+	mean    = 1.74
+	std.dev = 2.45
 	median  = 0
 Examples which run longer than 1 second:
-	   4.691s: 1-out.txt
+	   5.209s: 1-out.txt

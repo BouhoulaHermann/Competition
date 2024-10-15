@@ -18,9 +18,9 @@ Total number of correct runs = 21
 Number of crashes            = 0
 Elapsed time:
 	min     = 0
-	max     = 0.157 (7-out.txt)
-	mean    = 0.02
-	std.dev = 0.03
-	median  = 0.01
+	max     = 0.173 (7-out.txt)
+	mean    = 0.03
+	std.dev = 0.04
+	median  = 0.02
 Examples which run longer than 1 second:
 	<none>

@@ -27,13 +27,13 @@ Total number of correct runs = 56
 Number of crashes            = 0
 Elapsed time:
 	min     = 0
-	max     = 18.395 (54-power-out.txt)
-	mean    = 0.74
-	std.dev = 2.82
-	median  = 0
+	max     = 20.177 (54-power-out.txt)
+	mean    = 0.83
+	std.dev = 3.12
+	median  = 0.01
 Examples which run longer than 1 second:
-	  18.395s: 54-power-out.txt
-	   7.828s: 55-exercise2.3-out.txt
-	   5.962s: 52-isort-out.txt
-	   5.950s: 30-sorted-out.txt
-	   1.949s: 34-qrev-out.txt
+	  20.177s: 54-power-out.txt
+	   8.760s: 55-exercise2.3-out.txt
+	   7.061s: 30-sorted-out.txt
+	   6.761s: 52-isort-out.txt
+	   2.129s: 34-qrev-out.txt

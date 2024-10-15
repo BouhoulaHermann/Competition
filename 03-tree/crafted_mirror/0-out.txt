@@ -114,7 +114,7 @@
 		node(x, y, z)
 ... for flatten
 ... ... tree
-		x
+		leaf
 ... for ==
 ... ... nat
 		0
@@ -128,7 +128,8 @@
 		cons(s(x), cons(y, z))
 ... for &&
 ... ... bool
-		x
+		true
+		false
 
 +++ conjecture(s)
 	mirror(x, y) = true => rev(flatten(x)) = flatten(y)
@@ -147,7 +148,11 @@
 	mirror(x, y) = true => rev(flatten(x)) = flatten(y)
 ... with variable x
 +++ creating new conjecture
-	mirror(xts, y) = true => rev(flatten(xts)) = flatten(y)
+	mirror(leaf, y) = true => rev(flatten(leaf)) = flatten(y)
+--- clause
+	mirror(leaf, y) = true => rev(flatten(leaf)) = flatten(y)
+... reduced in 2 steps to
+	mirror(leaf, y) = true => nil = flatten(y)
 +++ inductive narrowing succeeded
 --- non-orientable clause
 	rev(flatten(x)) = flatten(y)
@@ -155,12 +160,25 @@
 	mirror(x, y) = true => rev(flatten(x)) = flatten(y)
 ... to non-orientable hypotheses
 +++ added new clause(s)
-	mirror(xts, y) = true => rev(flatten(xts)) = flatten(y)
+	mirror(leaf, y) = true => nil = flatten(y)
 ... to conjectures
---- clause
-	mirror(xts, y) = true => rev(flatten(xts)) = flatten(y)
-... subsumed by hypothese
+--- succeeded to apply non-orientable hypothese
 	mirror(x, y) = true => rev(flatten(x)) = flatten(y)
+... to clause
+	mirror(leaf, y) = true => nil = flatten(y)
+... modified clause
+	rev(flatten(leaf)) = flatten(y) => nil = flatten(y)
+--- clause
+	rev(flatten(leaf)) = flatten(y) => nil = flatten(y)
+... reduced in 2 steps to
+	nil = flatten(y) => nil = flatten(y)
+--- condition
+	nil = flatten(y)
+... is equal to consequent
+	nil = flatten(y)
+... in clause
+	nil = flatten(y) => nil = flatten(y)
+... and is therefore discared (always true)
 
 +++ Status of the Inference System
 --- Conjectures:
@@ -176,6 +194,6 @@
 +++ Statistics:
 ... Number of proof steps          = 1
 ... Number of induction steps      = 1
-... Number of equational steps     = 0
+... Number of equational steps     = 1
 ... Number of case rewriting steps = 0
-... Elapsed time (seconds)         = 0.025
+... Elapsed time (seconds)         = 0.05

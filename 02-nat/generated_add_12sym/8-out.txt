@@ -3391,4 +3391,4 @@
 ... Number of induction steps      = 45
 ... Number of equational steps     = 6
 ... Number of case rewriting steps = 0
-... Elapsed time (seconds)         = 0.894
+... Elapsed time (seconds)         = 0.981

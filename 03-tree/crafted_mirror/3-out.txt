@@ -125,7 +125,8 @@
 		cons(x, y)
 ... for &&
 ... ... bool
-		x
+		true
+		false
 
 +++ conjecture(s)
 	mirror(x, y) = true => rev(flatten2(x, nil)) = flatten2(y, nil)
@@ -216,4 +217,4 @@
 ... Number of induction steps      = 1
 ... Number of equational steps     = 2
 ... Number of case rewriting steps = 0
-... Elapsed time (seconds)         = 0.003
+... Elapsed time (seconds)         = 0.005

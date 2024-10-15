@@ -137,7 +137,8 @@
 		cons(x, y)
 ... for &&
 ... ... bool
-		x
+		true
+		false
 
 +++ conjecture(s)
 	mirror(x, y) = true => rev(flatten(x)) = flatten2(y, nil)
@@ -1274,4 +1275,4 @@
 ... Number of case rewriting steps = 0
 ... Number of PG defined symbols   = 6
 ... Number of PG lemmas            = 3
-... Elapsed time (seconds)         = 0.434
+... Elapsed time (seconds)         = 0.483

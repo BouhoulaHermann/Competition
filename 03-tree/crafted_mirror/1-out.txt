@@ -125,7 +125,7 @@
 		node(x, y, z)
 ... for flatten
 ... ... tree
-		x
+		leaf
 ... for ==
 ... ... nat
 		0
@@ -139,7 +139,8 @@
 		cons(s(x), cons(y, z))
 ... for &&
 ... ... bool
-		x
+		true
+		false
 
 +++ conjecture(s)
 	mirror(x, y) = true => rev(flatten2(x, nil)) = flatten(y)
@@ -158,7 +159,11 @@
 	mirror(x, y) = true => rev(flatten2(x, nil)) = flatten(y)
 ... with variable y
 +++ creating new conjecture
-	mirror(x, xts) = true => rev(flatten2(x, nil)) = flatten(xts)
+	mirror(x, leaf) = true => rev(flatten2(x, nil)) = flatten(leaf)
+--- clause
+	mirror(x, leaf) = true => rev(flatten2(x, nil)) = flatten(leaf)
+... reduced in 1 step to
+	mirror(x, leaf) = true => rev(flatten2(x, nil)) = nil
 +++ inductive narrowing succeeded
 --- non-orientable clause
 	rev(flatten2(x, nil)) = flatten(y)
@@ -166,12 +171,25 @@
 	mirror(x, y) = true => rev(flatten2(x, nil)) = flatten(y)
 ... to non-orientable hypotheses
 +++ added new clause(s)
-	mirror(x, xts) = true => rev(flatten2(x, nil)) = flatten(xts)
+	mirror(x, leaf) = true => rev(flatten2(x, nil)) = nil
 ... to conjectures
---- clause
-	mirror(x, xts) = true => rev(flatten2(x, nil)) = flatten(xts)
-... subsumed by hypothese
+--- succeeded to apply non-orientable hypothese
 	mirror(x, y) = true => rev(flatten2(x, nil)) = flatten(y)
+... to clause
+	mirror(x, leaf) = true => rev(flatten2(x, nil)) = nil
+... modified clause
+	rev(flatten2(x, nil)) = flatten(leaf) => rev(flatten2(x, nil)) = nil
+--- clause
+	rev(flatten2(x, nil)) = flatten(leaf) => rev(flatten2(x, nil)) = nil
+... reduced in 1 step to
+	rev(flatten2(x, nil)) = nil => rev(flatten2(x, nil)) = nil
+--- condition
+	rev(flatten2(x, nil)) = nil
+... is equal to consequent
+	rev(flatten2(x, nil)) = nil
+... in clause
+	rev(flatten2(x, nil)) = nil => rev(flatten2(x, nil)) = nil
+... and is therefore discared (always true)
 
 +++ Status of the Inference System
 --- Conjectures:
@@ -187,6 +205,6 @@
 +++ Statistics:
 ... Number of proof steps          = 1
 ... Number of induction steps      = 1
-... Number of equational steps     = 0
+... Number of equational steps     = 1
 ... Number of case rewriting steps = 0
-... Elapsed time (seconds)         = 0.025
+... Elapsed time (seconds)         = 0.028

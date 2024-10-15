@@ -7409,4 +7409,4 @@
 ... Number of case rewriting steps = 0
 ... Number of PG defined symbols   = 19
 ... Number of PG lemmas            = 10
-... Elapsed time (seconds)         = 4.691
+... Elapsed time (seconds)         = 5.209
