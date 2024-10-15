@@ -12,17 +12,16 @@
 +++ stdlib      = /usr/local/lib/indy/stdlib/
 -----------------------------------------------------------------------
 
++++ specification BOOL from bool successfully parsed
++++ specification ANDalt from andalt successfully parsed
 +++ specification NAT from nat successfully parsed
 +++ specification LIST from list successfully parsed
 +++ specification APPEND from append successfully parsed
-+++ specification BOOL from bool successfully parsed
-+++ specification AND from and successfully parsed
 +++ specification EQ from eq successfully parsed
 +++ specification PREFIX from prefix successfully parsed
 +++ specification COUNT from count successfully parsed
 +++ specification LEQ from leq successfully parsed
 +++ specification LEQid from leqid successfully parsed
-+++ specification ANDalt from andalt successfully parsed
 +++ specification ListCount from 5-in.txt successfully parsed
 +++ Listing
          1: specification ListCount
@@ -58,20 +57,16 @@
         31:      false && x = false;
         32:      x && false = false;
         33:      pref(nil, x) = true;
-        34:      true && true = true;
-        35:      false && true = false;
-        36:      s(x) <= s(y) = x <= y;
-        37:      s(x) == s(y) = x == y;
-        38:      true && false = false;
-        39:      false && false = false;
-        40:      pref(cons(u, x), nil) = false;
-        41:      app(cons(x, y), z) = cons(x, app(y, z));
-        42:      pref(cons(u, x), cons(v, y)) = (u == v) && pref(x, y);
-        43:      x == y = false => count(x, cons(y, ys)) = count(x, ys);
-        44:      x == y = true => count(x, cons(y, ys)) = s(count(x, ys));
-        45: conjectures
-        46:      pref(x, y) = true => count(z, x) <= count(z, y) = true;
-        47: end
+        34:      s(x) <= s(y) = x <= y;
+        35:      s(x) == s(y) = x == y;
+        36:      pref(cons(u, x), nil) = false;
+        37:      app(cons(x, y), z) = cons(x, app(y, z));
+        38:      pref(cons(u, x), cons(v, y)) = (u == v) && pref(x, y);
+        39:      x == y = false => count(x, cons(y, ys)) = count(x, ys);
+        40:      x == y = true => count(x, cons(y, ys)) = s(count(x, ys));
+        41: conjectures
+        42:      pref(x, y) = true => count(z, x) <= count(z, y) = true;
+        43: end
 +++ finitary sorts: bool
 +++ Rewrite System 
 	0 <= x -> true
@@ -87,12 +82,8 @@
 	false && x -> false
 	x && false -> false
 	pref(nil, x) -> true
-	true && true -> true
-	false && true -> false
 	s(x) <= s(y) -> x <= y
 	s(x) == s(y) -> x == y
-	true && false -> false
-	false && false -> false
 	pref(cons(u, x), nil) -> false
 	app(cons(x, y), z) -> cons(x, app(y, z))
 	(u == v) && pref(x, y) -> pref(cons(u, x), cons(v, y))
@@ -634,4 +625,4 @@
 ... Number of induction steps      = 11
 ... Number of equational steps     = 0
 ... Number of case rewriting steps = 1
-... Elapsed time (seconds)         = 0.047
+... Elapsed time (seconds)         = 0.044

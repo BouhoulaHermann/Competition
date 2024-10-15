@@ -1,6 +1,8 @@
 specification ListPrefixLength
 
-include <prefix>
+include
+	<and>
+	<prefix>
 	<length>
 	<eqlist>
 

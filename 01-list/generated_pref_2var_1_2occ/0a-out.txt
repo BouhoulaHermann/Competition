@@ -12,11 +12,11 @@
 +++ stdlib      = /usr/local/lib/indy/stdlib/
 -----------------------------------------------------------------------
 
++++ specification BOOL from bool successfully parsed
++++ specification AND from and successfully parsed
 +++ specification NAT from nat successfully parsed
 +++ specification LIST from list successfully parsed
 +++ specification APPEND from append successfully parsed
-+++ specification BOOL from bool successfully parsed
-+++ specification AND from and successfully parsed
 +++ specification EQ from eq successfully parsed
 +++ specification PREFIX from prefix successfully parsed
 +++ specification ListFunc from 0a-in.txt successfully parsed

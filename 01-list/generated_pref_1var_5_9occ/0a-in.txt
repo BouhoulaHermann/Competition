@@ -1,6 +1,6 @@
 specification ListFunc
 
-include <prefix> <eqid>
+include <and> <prefix> <eqid>
 
 precedence
 	pref > app > && > == > cons > nil > s > 0 > true = false

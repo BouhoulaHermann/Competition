@@ -1,6 +1,8 @@
 specification ListFunctions
 
-include <prefix>
+include
+	<and>
+	<prefix>
 	<eqid>
 	
 precedence

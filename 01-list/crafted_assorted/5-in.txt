@@ -1,9 +1,10 @@
 specification ListCount
 
-include <prefix>
+include
+	<andalt>
+	<prefix>
 	<count>
 	<leqid>
-	<andalt>
 
 precedence
 	count > == = <= > && > pref > app > cons > nil > s > 0 > true = false
