@@ -24,10 +24,10 @@ all: 0 1 2 3 4 5 6 7 \
 	indy -i 4-in.txt -o 4-out.txt
 
 5: 5-in.txt
-	indy -i 5-in.txt -o 5-out.txt -d last
+	indy -i 5-in.txt -o 5-out.txt # -d last
 
 6: 6-in.txt
-	indy -i 6-in.txt -o 6-out.txt -d last
+	indy -i 6-in.txt -o 6-out.txt # -d last
 
 7: 7-in.txt
 	indy -i 7-in.txt -o 7-out.txt -r 24

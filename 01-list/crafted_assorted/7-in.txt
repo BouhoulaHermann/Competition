@@ -1,7 +1,8 @@
 specification ListPrefixLength
 
 include
-	<and>
+	<nat>
+	<andalt>
 	<prefix>
 	<length>
 	<eqlist>

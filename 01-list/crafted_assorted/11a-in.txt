@@ -1,6 +1,8 @@
 specification LengthOfList
 
-include <add> <mult>
+include
+	<add>
+	<mult>
 	<append>
 	<length>
 
